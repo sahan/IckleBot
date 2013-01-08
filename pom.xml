@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    
-    <modelVersion>4.0.0</modelVersion>
-    
-    <groupId>com.lonepulse</groupId>
-    <artifactId>icklebot</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
-    <packaging>apklib</packaging>
 
-    <properties>
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.lonepulse</groupId>
+	<artifactId>icklebot</artifactId>
+	<version>0.1.0-SNAPSHOT</version>
+	<packaging>apklib</packaging>
+
+	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.6</java.version>
@@ -22,14 +22,14 @@
 		<project.organization.name>Lonepulse</project.organization.name>
 		<project.organization.url>http://lonepulse.com</project.organization.url>
 		<license.licenseName>apache_v2</license.licenseName>
-        <platform.version>4.0.1.2</platform.version>
+		<platform.version>4.0.1.2</platform.version>
 	</properties>
-    
-    <name>${project.name}</name>
+
+	<name>${project.name}</name>
 	<description>For quick and maintainable Android development.</description>
 	<url>${project.url}</url>
 	<inceptionYear>${project.inceptionYear}</inceptionYear>
-    
+
 	<licenses>
 		<license>
 			<name>Apache License Version 2.0</name>
@@ -37,7 +37,7 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-	
+
 	<developers>
 		<developer>
 			<id>sahan</id>
@@ -51,47 +51,47 @@
 			</roles>
 		</developer>
 	</developers>	
-	
-    <dependencies>
-        <dependency>
-            <groupId>com.google.android</groupId>
-            <artifactId>android</artifactId>
-            <version>${platform.version}</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
-                <artifactId>android-maven-plugin</artifactId>
-                <version>3.5.0</version>
-                <configuration>
-                    <androidManifestFile>${project.basedir}/AndroidManifest.xml</androidManifestFile>
-                    <sourceDirectory>${project.basedir}/src</sourceDirectory>
-                    <assetsDirectory>${project.basedir}/assets</assetsDirectory>
-                    <resourceDirectory>${project.basedir}/res</resourceDirectory>
-                    <nativeLibrariesDirectory>${project.basedir}/src/main/native</nativeLibrariesDirectory>
-                    <sdk>
-                        <platform>15</platform>
-                    </sdk>
+	<dependencies>
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>android</artifactId>
+			<version>${platform.version}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+				<artifactId>android-maven-plugin</artifactId>
+				<version>3.5.0</version>
+				<configuration>
+					<androidManifestFile>${project.basedir}/AndroidManifest.xml</androidManifestFile>
+					<sourceDirectory>${project.basedir}/src</sourceDirectory>
+					<assetsDirectory>${project.basedir}/assets</assetsDirectory>
+					<resourceDirectory>${project.basedir}/res</resourceDirectory>
+					<nativeLibrariesDirectory>${project.basedir}/src/main/native</nativeLibrariesDirectory>
+					<sdk>
+						<platform>15</platform>
+					</sdk>
 					<undeployBeforeDeploy>true</undeployBeforeDeploy>
-                </configuration>
-                <extensions>true</extensions>
-            </plugin>
+				</configuration>
+				<extensions>true</extensions>
+			</plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 				</configuration>
-            </plugin>
-            
-            <plugin>
+			</plugin>
+
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>license-maven-plugin</artifactId>
 				<version>1.3</version>
@@ -110,10 +110,10 @@
 					</execution>
 				</executions>
 			</plugin>
-        </plugins>
-    </build>
-    
-    <pluginRepositories>
+		</plugins>
+	</build>
+
+	<pluginRepositories>
 		<pluginRepository>
 			<id>codehaus</id>
 			<name>Codehaus Release Repo</name>
