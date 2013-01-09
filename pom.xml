@@ -101,7 +101,7 @@
 						<goals>
 							<goal>update-file-header</goal>
 						</goals>
-						<phase>process-sources</phase>
+						<phase>prepare-package</phase>
 						<configuration>
 							<roots>
 								<root>src/main/java</root>
