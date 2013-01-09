@@ -46,7 +46,7 @@ public class DuplicateInjectionException extends RuntimeException {
 	 * whose injection failed and the {@link Annotation} which was used 
 	 * multiple times.</p>
 	 * 
-	 * @param activity
+	 * @param injectorActivity
 	 * 			the {@link Class} of the {@link IckleActivity} which 
 	 * 			contains duplicate injections 
 	 * <br><br>

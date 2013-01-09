@@ -60,7 +60,7 @@ public class ExplicitApplicationInjector implements Injector {
 	@Override
 	public void inject(Configuration config) {
 
-		IckleActivity injectionActivity = config.getInjectionActivity();
+		IckleActivity injectionActivity = config.getIckleActivity();
 		
 		Set<Field> fields = config.getInjectionTargets(InjectionCategory.APPLICATION);
 		

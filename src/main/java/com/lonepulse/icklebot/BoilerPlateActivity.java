@@ -66,7 +66,7 @@ public class BoilerPlateActivity extends Activity {
 	}
 	
 	/**
-	 * <p>See {@link BackgroundTaskService#execute(InjectionActivity, int, Object...)}.</p>
+	 * <p>See {@link BackgroundTaskService#execute(BoilerPlateActivity, int, Object...)}.</p>
 	 * 
 	 * @since 1.0.0
 	 */
@@ -76,7 +76,7 @@ public class BoilerPlateActivity extends Activity {
 	}
 	
 	/**
-	 * <p>See {@link UITaskService#execute(InjectionActivity, int, Object...)}.</p>
+	 * <p>See {@link UITaskService#execute(BoilerPlateActivity, int, Object...)}.</p>
 	 * 
 	 * @since 1.0.0
 	 */

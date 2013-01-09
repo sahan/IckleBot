@@ -64,7 +64,7 @@ public class ExplicitResourceInjector implements Injector {
 	@Override
 	public void inject(Configuration config) {
 		
-		IckleActivity injectionActivity = config.getInjectionActivity();
+		IckleActivity injectionActivity = config.getIckleActivity();
 		
 		injectResource(injectionActivity, 
 					   config.getInjectionTargets(InjectionCategory.RESOURCE_VIEW), 

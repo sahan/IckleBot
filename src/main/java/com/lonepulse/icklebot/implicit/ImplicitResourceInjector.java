@@ -63,7 +63,7 @@ public class ImplicitResourceInjector implements Injector {
 	@Override
 	public void inject(Configuration config) {
 
-		IckleActivity injectionActivity = config.getInjectionActivity();
+		IckleActivity injectionActivity = config.getIckleActivity();
 
 		injectViewResources(injectionActivity, config.getInjectionTargets(InjectionCategory.RESOURCE_VIEW));
 		injectStringResources(injectionActivity, config.getInjectionTargets(InjectionCategory.RESOURCE_STRING));

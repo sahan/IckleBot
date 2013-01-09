@@ -61,7 +61,7 @@ public class ExplicitLayoutInjector implements Injector {
 	@Override
 	public void inject(Configuration config) {
 		
-		IckleActivity injectionActivity = config.getInjectionActivity();
+		IckleActivity injectionActivity = config.getIckleActivity();
 		
 		Layout layout = TypeUtils.getAnnotation(injectionActivity, Layout.class);
 		

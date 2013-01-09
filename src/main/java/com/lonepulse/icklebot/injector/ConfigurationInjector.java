@@ -60,7 +60,7 @@ public class ConfigurationInjector implements Injector {
 	@Override
 	public void inject(Configuration config) {
 		
-		IckleActivity injectionActivity = config.getInjectionActivity();
+		IckleActivity injectionActivity = config.getIckleActivity();
 		
 		configureTitle(injectionActivity);
 		configureWindowFeatures(injectionActivity);

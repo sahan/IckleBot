@@ -44,7 +44,7 @@ public class InjectorRuntimeException extends RuntimeException {
 	}
 
 	/**
-	 * See {@link RuntimeException#RuntimeException(StringResource)} 
+	 * See {@link RuntimeException#RuntimeException(String))} 
 	 */
 	public InjectorRuntimeException(String detailMessage) {
 		super(detailMessage);
@@ -58,7 +58,7 @@ public class InjectorRuntimeException extends RuntimeException {
 	}
 
 	/**
-	 * See {@link RuntimeException#RuntimeException(StringResource, Throwable)} 
+	 * See {@link RuntimeException#RuntimeException(String, Throwable)} 
 	 */
 	public InjectorRuntimeException(String detailMessage, Throwable throwable) {
 		super(detailMessage, throwable);

@@ -105,7 +105,7 @@ public interface Injector {
 			/**
 			 * <p>A delegate for {@link Map#get(Object)} which wraps the {@link #cache}. 
 			 * It takes the new instance of {@link IckleActivity} and updates the 
-			 * {@link Configuration#injectionActivity} property as well.</p>
+			 * {@link Configuration#ickleActivity} property as well.</p>
 			 * 
 			 * @param key
 			 * 			the requesting instance of {@link IckleActivity}
@@ -120,7 +120,7 @@ public interface Injector {
 				Configuration configuration = cache.get(key.getClass());
 				
 				if(configuration != null)
-					configuration.setInjectionActivity(key);
+					configuration.setIckleActivity(key);
 				
 				return configuration;
 			}
@@ -142,11 +142,11 @@ public interface Injector {
 		 * 
 		 * @since 1.0.0
 		 */
-		private IckleActivity injectionActivity;
+		private IckleActivity ickleActivity;
 		
 		
 		/**
-		 * <p>The target {@link Field}s in the {@link #injectionActivity} 
+		 * <p>The target {@link Field}s in the {@link #ickleActivity} 
 		 * activity grouped into their categories by {@link InjectionCategory}.</p>
 		 * 
 		 * @since 1.0.0
@@ -172,7 +172,7 @@ public interface Injector {
 			
 			Configuration config = new Configuration();
 			
-			config.setInjectionActivity(injectionActivity);
+			config.setIckleActivity(injectionActivity);
 		
 			if(injectionActivity.getClass().isAnnotationPresent(InjectAll.class))
 				config.setInjectionMode(InjectionMode.IMPLICIT);
@@ -221,7 +221,7 @@ public interface Injector {
 			
 			if(config != null) {
 
-				config.setInjectionActivity(injectionActivity);
+				config.setIckleActivity(injectionActivity);
 			}
 			else {
 				
@@ -272,29 +272,29 @@ public interface Injector {
 		}
 
 		/**
-		 * <p>Accessor for {@link #injectionActivity}.</p>
+		 * <p>Accessor for {@link #ickleActivity}.</p>
 		 * 
-		 * @return {@link #injectionActivity}
+		 * @return {@link #ickleActivity}
 		 * <br><br>
 		 * @since 1.0.0
 		 */
-		public IckleActivity getInjectionActivity() {
+		public IckleActivity getIckleActivity() {
 			
-			return injectionActivity;
+			return ickleActivity;
 		}
 
 		/**
-		 * <p>Mutator for {@link #injectionActivity}.</p>
+		 * <p>Mutator for {@link #ickleActivity}.</p>
 		 * 
-		 * @param injectionActivity
+		 * @param ickleActivity
 		 * 			the {@link IckleActivity} to populate 
-		 * 			{@link #injectionActivity} 
+		 * 			{@link #ickleActivity} 
 		 * <br><br>
 		 * @since 1.0.0
 		 */
-		private void setInjectionActivity(IckleActivity injectionActivity) {
+		private void setIckleActivity(IckleActivity ickleActivity) {
 			
-			this.injectionActivity = injectionActivity;
+			this.ickleActivity = ickleActivity;
 		}
 
 		/**

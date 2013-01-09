@@ -44,7 +44,7 @@ public class InjectorException extends Exception {
 	}
 
 	/**
-	 * See {@link Exception#Exception(StringResource)} 
+	 * See {@link Exception#Exception(String)} 
 	 */
 	public InjectorException(String detailMessage) {
 		super(detailMessage);
@@ -58,7 +58,7 @@ public class InjectorException extends Exception {
 	}
 
 	/**
-	 * See {@link Exception#Exception(StringResource, Throwable)} 
+	 * See {@link Exception#Exception(String, Throwable)} 
 	 */
 	public InjectorException(String detailMessage, Throwable throwable) {
 		super(detailMessage, throwable);

@@ -22,6 +22,8 @@ package com.lonepulse.icklebot.injector;
 
 import java.lang.reflect.Field;
 
+import com.lonepulse.icklebot.IckleActivity;
+
 /**
  * <p>Identifies the <b>mode</b> of the injection. For example 
  * <b>Explicit</b> or <b>Implicit</b> injection.</p>
@@ -35,11 +37,11 @@ public enum InjectionMode {
 	/**
 	 * <p>Identifies an <b>Explicit Injection</b>.</p>
 	 * 
-	 * <p><i>Explicit Injection</i> is used when an {@link InjectionActivity} 
+	 * <p><i>Explicit Injection</i> is used when an {@link IckleActivity} 
 	 * has all the target injection fields annotated with {@code  @Inject...} 
 	 * type annotations <i>explicitly</i>.</p>
 	 * 
-	 * <p>If {@code @InjectAll} is used on the {@link InjectionActivity}, 
+	 * <p>If {@code @InjectAll} is used on the {@link IckleActivity}, 
 	 * explicit injection is <b>disabled</b>.</p>
 	 * 
 	 * @since 1.0.0
@@ -50,7 +52,7 @@ public enum InjectionMode {
 	 * <p>Identifies an <b>Implicit Injection</b>.</p>
 	 * 
 	 * <p><i>Implicit Injections</i> are enabled if {@code @InjectAll} is used 
-	 * on the {@link InjectionActivity}. All {@link Field}s are <i>resolved</i> 
+	 * on the {@link IckleActivity}. All {@link Field}s are <i>resolved</i> 
 	 * to discover potential injection targets and the dependencies are injected.</p>
 	 * 
 	 * <p>A {@link Field} may exclude itself from injection by using the 

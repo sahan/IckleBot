@@ -53,7 +53,7 @@ public enum ImplicitInjectors implements Injector {
 	
 	/**
 	 * <p>This {@link Injector} is responsible for injecting 
-	 * the <i>Resources</i> of an {@link InjectionActivity}.</p>
+	 * the <i>Resources</i> of an {@link IckleActivity}.</p>
 	 * 
 	 * @since 1.0.0
 	 */
@@ -61,7 +61,7 @@ public enum ImplicitInjectors implements Injector {
 	
 	/**
 	 * <p>This {@link Injector} is responsible for injecting any 
-	 * <i>System Services</i> in an {@link InjectionActivity}.</p>
+	 * <i>System Services</i> in an {@link IckleActivity}.</p>
 	 * 
 	 * @since 1.0.0
 	 */
@@ -69,7 +69,7 @@ public enum ImplicitInjectors implements Injector {
 	
 	/**
 	 * <p>This {@link Injector} is responsible for injecting 
-	 * any <i>POJOs</i> in an {@link InjectionActivity}.</p>
+	 * any <i>POJOs</i> in an {@link IckleActivity}.</p>
 	 * 
 	 * @since 1.0.0
 	 */
@@ -100,7 +100,7 @@ public enum ImplicitInjectors implements Injector {
 
 	/**
 	 * <p>Delegate for invoking the {@link #implicitInjector}'s 
-	 * {@link Injector#inject(Configuration)} service.</p>
+	 * {@link Injector#inject(com.lonepulse.icklebot.injector.Injector.Configuration)} service.</p>
 	 * 
 	 * @since 1.0.0
 	 */
@@ -118,7 +118,7 @@ public enum ImplicitInjectors implements Injector {
 			stringBuilder.append("Injection using ");
 			stringBuilder.append(implicitInjector.getClass().getName());
 			stringBuilder.append(" failed on activity ");
-			stringBuilder.append(config.getInjectionActivity().getClass().getName());
+			stringBuilder.append(config.getIckleActivity().getClass().getName());
 			stringBuilder.append(". ");
 			
 			Log.e(getClass().getName(), stringBuilder.toString(), e);
