@@ -31,7 +31,7 @@ import com.lonepulse.icklebot.injector.Injector;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public class InjectorException extends Exception {
+public class IckleBotException extends Exception {
 
 	
 	private static final long serialVersionUID = 3496883791312392475L;
@@ -40,27 +40,27 @@ public class InjectorException extends Exception {
 	/**
 	 * See {@link Exception#Exception()} 
 	 */
-	public InjectorException() {
+	public IckleBotException() {
 	}
 
 	/**
 	 * See {@link Exception#Exception(String)} 
 	 */
-	public InjectorException(String detailMessage) {
+	public IckleBotException(String detailMessage) {
 		super(detailMessage);
 	}
 
 	/**
 	 * See {@link Exception#Exception(Throwable)} 
 	 */
-	public InjectorException(Throwable throwable) {
+	public IckleBotException(Throwable throwable) {
 		super(throwable);
 	}
 
 	/**
 	 * See {@link Exception#Exception(String, Throwable)} 
 	 */
-	public InjectorException(String detailMessage, Throwable throwable) {
+	public IckleBotException(String detailMessage, Throwable throwable) {
 		super(detailMessage, throwable);
 	}
 }

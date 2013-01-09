@@ -24,11 +24,11 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.Set;
 
-import com.lonepulse.icklebot.InjectorRuntimeException;
+import com.lonepulse.icklebot.IckleBotRuntimeException;
 import com.lonepulse.icklebot.IckleActivity;
 
 /**
- * <p>This {@link InjectorRuntimeException} is thrown when the 
+ * <p>This {@link IckleBotRuntimeException} is thrown when the 
  * type of a field is different from that of the expected type 
  * for the {@link Annotation}.</p>
  * 
