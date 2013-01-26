@@ -11,7 +11,7 @@ simplified threading model. <b>2</b> A dependency injection framework.</p>
 loose-coupling and maintainability by providing a [dependency injection](http://en.wikipedia.org/wiki/Dependency_injection) 
 framework.   
    
-####Annotation based Android development with...
+Annotation based Android development with...
    
 * Dependency Injection   
 	1. Layouts
