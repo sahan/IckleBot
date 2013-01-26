@@ -27,7 +27,7 @@ import java.util.concurrent.Executors;
 import android.util.Log;
 
 import com.lonepulse.icklebot.BoilerPlateActivity;
-import com.lonepulse.icklebot.annotations.BackgroundTask;
+import com.lonepulse.icklebot.annotation.BackgroundTask;
 
 /**
  * <p>This {@link Enum} contains a <b>Cached Thread Pool</b> which is used 

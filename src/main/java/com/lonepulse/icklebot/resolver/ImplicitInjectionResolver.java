@@ -27,10 +27,10 @@ import android.graphics.drawable.Drawable;
 import android.telephony.TelephonyManager;
 import android.view.View;
 
-import com.lonepulse.icklebot.annotations.ApplicationContract;
-import com.lonepulse.icklebot.annotations.IgnoreInjection;
-import com.lonepulse.icklebot.annotations.InjectAll;
-import com.lonepulse.icklebot.annotations.Pojo;
+import com.lonepulse.icklebot.annotation.ApplicationContract;
+import com.lonepulse.icklebot.annotation.IgnoreInjection;
+import com.lonepulse.icklebot.annotation.InjectAll;
+import com.lonepulse.icklebot.annotation.Pojo;
 
 /**
  * <p>An implementation of {@link InjectionResolver} which caters to 

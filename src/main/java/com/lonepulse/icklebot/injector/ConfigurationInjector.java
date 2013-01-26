@@ -24,9 +24,9 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.lonepulse.icklebot.IckleActivity;
-import com.lonepulse.icklebot.annotations.Fullscreen;
-import com.lonepulse.icklebot.annotations.Title;
-import com.lonepulse.icklebot.annotations.WindowFeatures;
+import com.lonepulse.icklebot.annotation.Fullscreen;
+import com.lonepulse.icklebot.annotation.Title;
+import com.lonepulse.icklebot.annotation.WindowFeatures;
 import com.lonepulse.icklebot.util.TypeUtils;
 
 /**

@@ -25,7 +25,7 @@ import java.lang.reflect.Field;
 import android.os.Bundle;
 
 import com.lonepulse.icklebot.BoilerPlateActivity;
-import com.lonepulse.icklebot.annotations.Stateful;
+import com.lonepulse.icklebot.annotation.Stateful;
 
 /**
  * <p>This contract declares the services which are offered for 

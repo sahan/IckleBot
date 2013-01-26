@@ -28,7 +28,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.lonepulse.icklebot.BoilerPlateActivity;
-import com.lonepulse.icklebot.annotations.Stateful;
+import com.lonepulse.icklebot.annotation.Stateful;
 import com.lonepulse.icklebot.util.FieldUtils;
 
 /**

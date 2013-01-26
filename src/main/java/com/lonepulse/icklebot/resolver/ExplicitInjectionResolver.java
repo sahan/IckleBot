@@ -22,13 +22,13 @@ package com.lonepulse.icklebot.resolver;
 
 import java.lang.reflect.Field;
 
-import com.lonepulse.icklebot.annotations.InjectApplication;
-import com.lonepulse.icklebot.annotations.InjectDrawable;
-import com.lonepulse.icklebot.annotations.InjectInteger;
-import com.lonepulse.icklebot.annotations.InjectPojo;
-import com.lonepulse.icklebot.annotations.InjectService;
-import com.lonepulse.icklebot.annotations.InjectString;
-import com.lonepulse.icklebot.annotations.InjectView;
+import com.lonepulse.icklebot.annotation.InjectApplication;
+import com.lonepulse.icklebot.annotation.InjectDrawable;
+import com.lonepulse.icklebot.annotation.InjectInteger;
+import com.lonepulse.icklebot.annotation.InjectPojo;
+import com.lonepulse.icklebot.annotation.InjectService;
+import com.lonepulse.icklebot.annotation.InjectString;
+import com.lonepulse.icklebot.annotation.InjectView;
 
 /**
  * <p>An implementation of {@link InjectionResolver} which caters to 

@@ -29,7 +29,7 @@ import java.util.Set;
 import java.util.WeakHashMap;
 
 import com.lonepulse.icklebot.IckleActivity;
-import com.lonepulse.icklebot.annotations.InjectAll;
+import com.lonepulse.icklebot.annotation.InjectAll;
 import com.lonepulse.icklebot.resolver.InjectionCategory;
 import com.lonepulse.icklebot.resolver.InjectionResolver;
 import com.lonepulse.icklebot.resolver.InjectionResolvers;

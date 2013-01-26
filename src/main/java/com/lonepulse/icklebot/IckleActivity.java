@@ -20,10 +20,10 @@ package com.lonepulse.icklebot;
  * #L%
  */
 
-import com.lonepulse.icklebot.explicit.ExplicitInjectors;
-import com.lonepulse.icklebot.implicit.ImplicitInjectors;
 import com.lonepulse.icklebot.injector.InjectionMode;
 import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.injector.explicit.ExplicitInjectors;
+import com.lonepulse.icklebot.injector.implicit.ImplicitInjectors;
 
 /**
  * <p>All activities that wish to be <i>wired</i> by <b>dependency injection</b> 

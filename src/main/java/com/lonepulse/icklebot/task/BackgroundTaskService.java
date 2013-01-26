@@ -26,7 +26,7 @@ import java.util.Set;
 import android.util.Log;
 
 import com.lonepulse.icklebot.BoilerPlateActivity;
-import com.lonepulse.icklebot.annotations.BackgroundTask;
+import com.lonepulse.icklebot.annotation.BackgroundTask;
 import com.lonepulse.icklebot.util.MethodUtils;
 
 /**
