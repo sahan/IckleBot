@@ -6,7 +6,7 @@ simplified threading model. <b>2</b> A dependency injection framework.</p>
 <br/>
 ##About
 
-**IckleBot** facilitates quick Android development by generating the usual boilerplate code in 
+**IckleBot** facilitates quick Android development by generating boilerplate code in 
 `Activity` instances and offers an alternative simplified threading model. It encourages 
 loose-coupling and maintainability by providing a [dependency injection](http://en.wikipedia.org/wiki/Dependency_injection) 
 framework.   
@@ -20,10 +20,8 @@ Annotation based Android development with...
 	4. Application Instances
 	5. POJOs   
 <br/>
-
 * An alternative threading model which simplifies the execution of worker threads and 
 UI tasks.   
-<br/>   
 
 * Activity state management and configuration of window features.   
 <br/>
