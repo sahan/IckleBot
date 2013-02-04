@@ -40,8 +40,8 @@ Add the following dependency in your project's pom.xml.
 </dependency>
 ```
 
-For information on building Android projects using Maven here's [Chapter 14](http://www.sonatype.com/books/mvnref-book/reference/android-dev.html) of `Maven: The Complete Reference`.
-<br/><br/>   
+For information on building Android projects using Maven here's [Chapter 14](http://www.sonatype.com/books/mvnref-book/reference/android-dev.html) of `Maven: The Complete Reference`.   
+<br/>   
 
 ### 2. For Standard Android Projects
 
