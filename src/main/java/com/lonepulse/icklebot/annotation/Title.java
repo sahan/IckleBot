@@ -26,10 +26,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import android.app.ActionBar;
-import android.view.Window;
 
 /**
- * <p>Spedifies the <b>title</b> to be used on the {@link ActionBar} 
+ * <p>Specifies the <b>title</b> to be used on the {@link ActionBar} 
  * or <b>Title Bar</b> (pre-ICS).</p> 
  * 
  * @version 1.0.0
@@ -61,18 +60,4 @@ public @interface Title {
 	 * @since 1.0.0
 	 */
 	String text() default "";
-	
-	/**
-	 * <p>The array of {@code int}s containing the IDs of the 
-	 * <i>window features</i> to be applied. These constants 
-	 * can be found in {@link Window}.</p>
-	 * 
-	 * <p>Empty by default.</p>
-	 * 
-	 * @return the constant {@code int} IDs representing the  
-	 * 		   {@link Window} features to be used.
-	 * <br><br>
-	 * @since 1.0.0
-	 */
-	int[] windowFeatures() default {};
 }
