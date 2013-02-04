@@ -26,13 +26,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 
 /**
  * <p>This annotation marks a <b>System Service</b> which is to be 
- * injected into the {@link Activity} or {@link Fragment} or any 
- * of their derivatives.</p>
+ * injected into an {@link Activity}.</p>
  * 
  * <p>System services are identified using their constant names 
  * declared in {@link Context}.</p>
