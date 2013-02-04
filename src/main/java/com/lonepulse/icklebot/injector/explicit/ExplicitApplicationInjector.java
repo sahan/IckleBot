@@ -70,7 +70,7 @@ public class ExplicitApplicationInjector implements Injector {
 				
 				if(!field.isAccessible()) field.setAccessible(true);
 				
-				field.set(injectionActivity, injectionActivity.getApplication());
+				field.set(injectionActivity, field.getType().cast(injectionActivity.getApplication()));
 			} 
 			catch (Exception e) {
 				
