@@ -45,7 +45,7 @@ For information on building Android projects using Maven here's [Chapter 14](htt
 
 ### 2. For Standard Android Projects
 
-Clone the [repository](https://github.com/sahan/IckleBot.git) and import it as an **existing project** in Eclipse.
+Clone the repository and import it as an **existing project** in Eclipse.
 
 ```bash
 $ git clone git://github.com/sahan/IckleBot.git
