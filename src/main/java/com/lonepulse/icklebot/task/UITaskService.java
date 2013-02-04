@@ -64,42 +64,55 @@ public class UITaskService implements TaskService {
 		
 		Set<Method> methods = MethodUtils.getAllMethods(boilerPlateActivity, UITask.class);
 		
-		UITask uiTask;
-		
 		for (final Method method : methods) {
 			
-			uiTask = method.getAnnotation(UITask.class);
+			final UITask uiTask = method.getAnnotation(UITask.class);
 			
 			if(uiTask.value() == uiTaskId) {
+			
+				final Runnable runnable = new Runnable() {
 				
-				boilerPlateActivity.getWindow().getDecorView().findViewById(android.R.id.content)
-				.postDelayed(new Runnable() {
-					
 					@Override
 					public void run() {
 					
 						try {
-							
+										
 							if(!method.isAccessible()) method.setAccessible(true);
-							
+										
 							method.invoke(boilerPlateActivity, args);
 						} 
 						catch (Exception e) {
-							
-							StringBuilder stringBuilder = new StringBuilder();
-							
-							stringBuilder.append("Failed to execute UI task ");
-							stringBuilder.append(method.getName());
-							stringBuilder.append(" on ");
-							stringBuilder.append(boilerPlateActivity.getClass().getName() );
-							stringBuilder.append(" with arguments ");
-							stringBuilder.append(args);
-							stringBuilder.append(". ");
-							
+										
+							StringBuilder stringBuilder = new StringBuilder()
+							.append("Failed to execute UI task ")
+							.append(method.getName())
+							.append(" on ")
+							.append(boilerPlateActivity.getClass().getName() )
+							.append(" with arguments ")
+							.append(args)
+							.append(". ");
+										
 							Log.e(UITaskService.class.getName(), stringBuilder.toString(), e);
 						}
 					}
-				}, uiTask.delay());
+				};
+				
+				if(uiTask.delay() == 0l) {
+				
+					boilerPlateActivity.runOnUiThread(runnable);
+				}
+				else {
+				
+					boilerPlateActivity.runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							
+							boilerPlateActivity.getWindow().getDecorView()
+							.postDelayed(runnable, uiTask.delay());
+						}
+					});	
+				}
 				
 				break;
 			}
