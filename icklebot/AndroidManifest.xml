@@ -1,9 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lonepulse.icklebot" android:versionCode="1" android:versionName="1.1.1-SNAPSHOT">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.lonepulse.icklebot"
+    android:versionCode="1"
+    android:versionName="1.1.1-SNAPSHOT" >
 
     <uses-sdk
         android:minSdkVersion="15"
-        android:targetSdkVersion="15" />
+        android:targetSdkVersion="15"
+        tools:ignore="OldTargetApi"/>
 
     <application
         android:allowBackup="true"
