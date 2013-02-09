@@ -107,7 +107,7 @@ public class ConfigurationInjector implements Injector {
 			
 			injectionActivity.requestWindowFeature(Window.FEATURE_NO_TITLE);
 			injectionActivity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
-					WindowManager.LayoutParams.FLAG_FULLSCREEN);
+												   WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		}
 	}
 	
