@@ -1,12 +1,19 @@
 language: java
 
+env:
+    matrix:
+	  - ANDROID_HOME=$PWD/android-sdk-linux
+	
+	global:
+	  - ANDROID_HOME=$PWD/android-sdk-linux
+
 before_install:
   - wget http://dl.google.com/android/android-sdk_r21.0.1-linux.tgz
   - tar -zxf android-sdk_r21.0.1-linux.tgz
-  - export ANDROID_HOME=/home/travis/build/sahan/IckleBot/android-sdk-linux
+  - export ANDROID_HOME=$PWD/android-sdk-linux
   - export PATH=${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${PATH}
   - android update sdk --filter 5 --no-ui --force
 
-install: mvn clean install --quiet -DskipTests=true -Dandroid.sdk.path=/home/travis/build/sahan/IckleBot/android-sdk-linux
+install: mvn clean install --quiet -DskipTests=true -Dandroid.sdk.path=$PWD/android-sdk-linux
 
-script: mvn clean test -P integration-tests -Dandroid.sdk.path=/home/travis/build/sahan/IckleBot/android-sdk-linux
+script: mvn clean test -P integration-tests -Dandroid.sdk.path=$PWD/android-sdk-linux
