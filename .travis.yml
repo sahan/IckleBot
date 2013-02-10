@@ -3,10 +3,10 @@ language: java
 before_install:
   - wget http://dl.google.com/android/android-sdk_r21.0.1-linux.tgz
   - tar -zxf android-sdk_r21.0.1-linux.tgz
-  - export ANDROID_HOME=/home/travis/build/sahan/IckleBot/android-sdk-linux
-  - export PATH=${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${PATH}
-  - android update sdk --filter 5 --no-ui --force
-
+  - export ANDROID_HOME=$PWD/android-sdk-linux
+  - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
+  - android update sdk --filter platform-tools,android-15 --no-ui --force
+  
 install: mvn clean install --quiet -DskipTests=true -X
 
 script: mvn clean test -P integration-tests
