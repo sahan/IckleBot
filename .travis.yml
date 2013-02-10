@@ -1,7 +1,9 @@
 language: java
 
-env: ANDROID_HOME=/home/travis/build/sahan/IckleBot/android-sdk-linux
-
+env:
+    matrix:
+    - ANDROID_SDKS=android-15 ANDROID_TARGET=android-15
+	
 before_install:
   - wget http://dl.google.com/android/android-sdk_r21.0.1-linux.tgz
   - tar -zxf android-sdk_r21.0.1-linux.tgz
