@@ -1,7 +1,8 @@
-#IckleBot
+![IckleBot](https://github.com/sahan/IckleBot/blob/master/logo.png)
 
-> **IckleBot** /'ikəl'bôt/ <em>noun.</em> <b>1</b> A boilerplate code generator with a 
-simplified threading model. <b>2</b> A dependency injection framework.</p>   
+> **IckleBot** /'ikəl'bôt/ <em>noun.</em> **1** A boilerplate code generator with a 
+simplified threading model. **2** A dependency injection framework. 
+[![Build Status](https://travis-ci.org/sahan/IckleBot.png?branch=master)](https://travis-ci.org/sahan/IckleBot)
 
 <br/>
 ##About
