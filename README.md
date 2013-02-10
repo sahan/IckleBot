@@ -1,4 +1,4 @@
-![IckleBot](https://github.com/sahan/IckleBot/blob/master/logo.png)
+![IckleBot](https://raw.github.com/sahan/IckleBot/master/logo.png)
 
 > **IckleBot** /'ikəl'bôt/ <em>noun.</em> **1** A boilerplate code generator with a 
 simplified threading model. **2** A dependency injection framework. 
