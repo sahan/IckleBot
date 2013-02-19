@@ -140,8 +140,6 @@ public final class ReflectiveR {
 	 */
 	private static int getIdentifier(String resourcetype, Context context, String resourceName) {
 		
-		String resourceQualifier = context.getPackageName() + ":" + resourcetype + "/" + resourceName;
-		
-		return context.getResources().getIdentifier(resourceQualifier, null, null);
+		return context.getResources().getIdentifier(resourceName, resourcetype, context.getPackageName());
 	}
 }

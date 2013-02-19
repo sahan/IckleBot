@@ -126,7 +126,8 @@ public class ImplicitInjectionResolver implements InjectionResolver {
 	 */
 	private boolean isCategoryResourceInteger(Field field) {
 		
-		return (Integer.class.isAssignableFrom(field.getType()))? true : false; 
+		return (Integer.class.isAssignableFrom(field.getType())
+				|| int.class.isAssignableFrom(field.getType()))? true : false;
 	}
 	
 	/**
