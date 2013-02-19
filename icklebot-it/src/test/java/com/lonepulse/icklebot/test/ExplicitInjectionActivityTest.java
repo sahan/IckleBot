@@ -23,6 +23,7 @@ package com.lonepulse.icklebot.test;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -118,7 +119,7 @@ public class ExplicitInjectionActivityTest {
 	@Test
 	public final void testInteger() throws Exception {
 		
-		assertTrue(activity.intMajorVersion == 1);
+		assertEquals(activity.intMajorVersion, 1);
 	}
 	
 	/**
