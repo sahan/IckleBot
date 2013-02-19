@@ -2,5 +2,5 @@
 
     <string name="app_name">IckleBot</string>
     <string name="ttl_act_explicit_injection">Explicit Injection</string>
-    
+    <string name="btn_submit">Submit</string>
 </resources>

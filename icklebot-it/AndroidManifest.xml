@@ -7,14 +7,17 @@
 
     <uses-sdk
         android:minSdkVersion="15"
-        android:targetSdkVersion="15" 
-        tools:ignore="OldTargetApi"/>
+        android:targetSdkVersion="15"
+        tools:ignore="OldTargetApi" />
 
     <application
+        android:name="com.lonepulse.icklebot.test.app.ApplicationServiceImpl"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
+        
         <uses-library android:name="android.test.runner" />
+        
     </application>
 
     <instrumentation

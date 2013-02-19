@@ -21,6 +21,7 @@ package com.lonepulse.icklebot.test;
  */
 
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -34,7 +35,7 @@ import com.xtremelabs.robolectric.RobolectricTestRunner;
  * 
  * @category test
  * <br><br>
- * @version 1.1.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -67,14 +68,98 @@ public class ExplicitInjectionActivityTest {
 	 * <p>Test for layout, title and window-features injection.
 	 * 
 	 * @throws Exception
-	 * 			if configuration testing terminated with an error
+	 * 			if test terminated with an error
 	 * 
 	 * @since 1.1.0
 	 */
 	@Test
 	public final void testConfiguration() throws Exception {
 	
-		assertTrue(activity.findViewById(R.id.root) != null);
+		assertNotNull(activity.findViewById(R.id.root));
 		assertTrue(activity.getTitle().toString().equalsIgnoreCase("Explicit Injection"));
+	}
+	
+	/**
+	 * <p>Test application injection.
+	 * 
+	 * @throws Exception
+	 * 			if test terminated with an error
+	 * 
+	 * @since 1.1.1
+	 */
+	@Test
+	public final void testApplication() throws Exception {
+		
+		assertNotNull(activity.application);
+	}
+	
+	/**
+	 * <p>Test string injection.
+	 * 
+	 * @throws Exception
+	 * 			if test terminated with an error
+	 * 
+	 * @since 1.1.1
+	 */
+	@Test
+	public final void testString() throws Exception {
+		
+		assertNotNull(activity.strAppName);
+	}
+	
+	/**
+	 * <p>Test integer injection.
+	 * 
+	 * @throws Exception
+	 * 			if test terminated with an error
+	 * 
+	 * @since 1.1.1
+	 */
+	@Test
+	public final void testInteger() throws Exception {
+		
+		assertTrue(activity.intMajorVersion == 1);
+	}
+	
+	/**
+	 * <p>Test view injection.
+	 * 
+	 * @throws Exception
+	 * 			if test terminated with an error
+	 * 
+	 * @since 1.1.1
+	 */
+	@Test
+	public final void testView() throws Exception {
+		
+		assertNotNull(activity.btnSubmit);
+	}
+	
+	/**
+	 * <p>Test drawable injection.
+	 * 
+	 * @throws Exception
+	 * 			if test terminated with an error
+	 * 
+	 * @since 1.1.1
+	 */
+	@Test
+	public final void testDrawable() throws Exception {
+		
+		assertNotNull(activity.drwLauncherIcon);
+	}
+	
+	/**
+	 * <p>Test system service injection.
+	 * 
+	 * @throws Exception
+	 * 			if test terminated with an error
+	 * 
+	 * @since 1.1.1
+	 */
+	@Test
+	public final void testSystemService() throws Exception {
+		
+		assertNotNull(activity.telephonyManager);
 	}
 }
