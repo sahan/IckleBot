@@ -163,4 +163,18 @@ public class ExplicitInjectionActivityTest {
 		
 		assertNotNull(activity.telephonyManager);
 	}
+	
+	/**
+	 * <p>Test POJO injection.
+	 * 
+	 * @throws Exception
+	 * 			if test terminated with an error
+	 * 
+	 * @since 1.1.1
+	 */
+	@Test
+	public final void testPOJO() throws Exception {
+		
+		assertNotNull(activity.accountsService);
+	}
 }

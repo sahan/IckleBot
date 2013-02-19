@@ -31,12 +31,15 @@ import com.lonepulse.icklebot.IckleActivity;
 import com.lonepulse.icklebot.annotation.InjectApplication;
 import com.lonepulse.icklebot.annotation.InjectDrawable;
 import com.lonepulse.icklebot.annotation.InjectInteger;
+import com.lonepulse.icklebot.annotation.InjectPojo;
 import com.lonepulse.icklebot.annotation.InjectService;
 import com.lonepulse.icklebot.annotation.InjectString;
 import com.lonepulse.icklebot.annotation.InjectView;
 import com.lonepulse.icklebot.annotation.Layout;
 import com.lonepulse.icklebot.annotation.Title;
 import com.lonepulse.icklebot.test.app.ApplicationService;
+import com.lonepulse.icklebot.test.service.AccountsService;
+import com.lonepulse.icklebot.test.service.AccountsServiceImpl;
 
 /**
  * <p>An extension of {@link IckleActivity} which is used to test the 
@@ -65,11 +68,14 @@ public class ExplicitInjectionActivity extends IckleActivity {
 	@InjectView(R.id.btn_submit)
 	Button btnSubmit;
 	
+	@InjectDrawable(R.drawable.ic_launcher)
+	Drawable drwLauncherIcon;
+	
 	@InjectService(Context.TELEPHONY_SERVICE)
 	TelephonyManager telephonyManager;
 	
-	@InjectDrawable(R.drawable.ic_launcher)
-	Drawable drwLauncherIcon;
+	@InjectPojo(AccountsServiceImpl.class)
+	AccountsService accountsService;
 	
 	
 	/**
