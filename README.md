@@ -1,7 +1,7 @@
 ![IckleBot](https://raw.github.com/sahan/IckleBot/master/logo.png)
 
 > **IckleBot** /'ikəl'bôt/ <em>noun.</em> **1** A boilerplate code generator with a 
-simplified threading model. **2** A dependency injection framework. 
+simplified threading model. **2** A runtime dependency injection framework. 
 [![Build Status](https://travis-ci.org/sahan/IckleBot.png?branch=master)](https://travis-ci.org/sahan/IckleBot)
 
 <br/>
@@ -9,7 +9,7 @@ simplified threading model. **2** A dependency injection framework.
 
 **IckleBot** facilitates quick Android development by generating boilerplate code in 
 `Activity` instances and offers an alternative simplified threading model. It encourages 
-loose-coupling and maintainability by providing a [dependency injection](http://en.wikipedia.org/wiki/Dependency_injection) 
+loose-coupling and maintainability by providing a runtime [dependency injection](http://en.wikipedia.org/wiki/Dependency_injection) 
 framework.   
    
 Annotation based Android development with...
