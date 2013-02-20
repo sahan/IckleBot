@@ -105,7 +105,7 @@ public class ImplicitInjectionActivityTest {
 	@Test
 	public final void testString() throws Exception {
 		
-		assertNotNull(activity.btn_submit);
+		assertNotNull(activity.btnSubmit);
 	}
 	
 	/**
@@ -133,7 +133,7 @@ public class ImplicitInjectionActivityTest {
 	@Test
 	public final void testView() throws Exception {
 		
-		assertNotNull(activity.btn_submit);
+		assertNotNull(activity.btnSubmit);
 	}
 	
 	/**

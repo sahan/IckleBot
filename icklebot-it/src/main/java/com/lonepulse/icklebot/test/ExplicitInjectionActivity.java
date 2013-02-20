@@ -65,7 +65,7 @@ public class ExplicitInjectionActivity extends IckleActivity {
 	@InjectInteger(R.integer.major_version)
 	int intMajorVersion;
 	
-	@InjectView(R.id.btn_submit)
+	@InjectView(R.id.btnSubmit)
 	Button btnSubmit;
 	
 	@InjectDrawable(R.drawable.ic_launcher)

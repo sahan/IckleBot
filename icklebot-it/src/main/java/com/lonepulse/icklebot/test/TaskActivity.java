@@ -21,21 +21,18 @@ package com.lonepulse.icklebot.test;
  */
 
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
-import android.widget.Button;
+import android.widget.TextView;
 
 import com.lonepulse.icklebot.IckleActivity;
-import com.lonepulse.icklebot.annotation.InjectAll;
+import com.lonepulse.icklebot.annotation.BackgroundTask;
 import com.lonepulse.icklebot.annotation.Layout;
 import com.lonepulse.icklebot.annotation.Title;
-import com.lonepulse.icklebot.test.app.ApplicationService;
-import com.lonepulse.icklebot.test.service.AccountsService;
+import com.lonepulse.icklebot.annotation.UITask;
 
 /**
  * <p>An extension of {@link IckleActivity} which is used to test the 
- * <b>implicit runtime injection</b> features of IckleBot.
+ * alternate threading model.
  * 
  * @category test
  * <br><br>
@@ -43,26 +40,21 @@ import com.lonepulse.icklebot.test.service.AccountsService;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-@InjectAll
-@Layout(R.layout.act_implicit_injection)
-@Title(id = R.string.ttl_act_implicit_injection)
-public class ImplicitInjectionActivity extends IckleActivity {
+@Layout(R.layout.act_task)
+@Title(id = R.string.ttl_act_task)
+public class TaskActivity extends IckleActivity {
 	
+	
+	private static final int BG_GEN_TOKEN = 1;
+	private static final int BG_GEN_ALIAS = 2;
+	
+	private static final int UI_UPDATE_TOKEN = 1;
+	private static final int UI_UPDATE_ALIAS = 2;
+	
+	
+	public double token = -1;
+	public String alias = "Lonepulse";
 
-	ApplicationService application;
-
-	String app_name;
-	
-	int major_version;
-	
-	Button btnSubmit;
-	
-	Drawable ic_launcher;
-	
-	TelephonyManager telephony_service;
-	
-	AccountsService accountsService;
-	
 	
 	/**
 	 * <p>Exposes {@link #onCreate(Bundle)} and allows unit 
@@ -72,5 +64,36 @@ public class ImplicitInjectionActivity extends IckleActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
+		
+		runBackgroundTask(BG_GEN_TOKEN);
+		runBackgroundTask(BG_GEN_ALIAS, "Ick");
+	}
+	
+	@BackgroundTask(BG_GEN_TOKEN)
+	public void generateToken() {
+		
+		token = Math.random();	
+		
+		runUITask(UI_UPDATE_TOKEN);
+	}
+	
+	@UITask(UI_UPDATE_TOKEN)
+	public void updateToken() {
+		
+		((TextView)findViewById(R.id.txtToken)).setText(String.valueOf(token));
+	}
+	
+	@BackgroundTask(BG_GEN_ALIAS)
+	public void generateAlias(String prefix) {
+		
+		alias = prefix + " le Bot";
+		
+		runUITask(UI_UPDATE_ALIAS, alias);
+	}
+	
+	@UITask(value = UI_UPDATE_ALIAS, delay = 500)
+	public void updateAlias(String generatedAlias) {
+		
+		((TextView)findViewById(R.id.txtAlias)).setText(generatedAlias);
 	}
 }

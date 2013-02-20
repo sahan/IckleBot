@@ -87,7 +87,7 @@ public class UITaskService implements TaskService {
 							.append("Failed to execute UI task ")
 							.append(method.getName())
 							.append(" on ")
-							.append(boilerPlateActivity.getClass().getName() )
+							.append(boilerPlateActivity.getClass().getName())
 							.append(" with arguments ")
 							.append(args)
 							.append(". ");
@@ -97,23 +97,31 @@ public class UITaskService implements TaskService {
 					}
 				};
 				
-				if(uiTask.delay() == 0l) {
+				if(uiTask.delay() > 0l) {
 				
-					boilerPlateActivity.runOnUiThread(runnable);
-				}
-				else {
-				
-					boilerPlateActivity.runOnUiThread(new Runnable() {
+					try {
 						
-						@Override
-						public void run() {
-							
-							boilerPlateActivity.getWindow().getDecorView()
-							.postDelayed(runnable, uiTask.delay());
-						}
-					});	
+						Thread.sleep(uiTask.delay());
+					}
+					catch (InterruptedException ie) {
+						
+						Thread.currentThread().interrupt();
+						
+						StringBuilder stringBuilder = new StringBuilder()
+						.append("UI task delay of ")
+						.append(uiTask.delay())
+						.append(" for ")
+						.append(method.getName())
+						.append(" on ")
+						.append(boilerPlateActivity.getClass().getName())
+						.append(" was interrupted!");
+						
+						Log.e(getClass().getSimpleName(), stringBuilder.toString(), ie);
+					}
 				}
 				
+				boilerPlateActivity.runOnUiThread(runnable);
+								
 				break;
 			}
 		}

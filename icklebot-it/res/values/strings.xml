@@ -3,5 +3,8 @@
     <string name="app_name">IckleBot</string>
     <string name="ttl_act_explicit_injection">Explicit Injection</string>
     <string name="ttl_act_implicit_injection">Implicit Injection</string>
+    <string name="ttl_act_task">Tasks</string>
     <string name="btn_submit">Submit</string>
+    <string name="token">~</string>
+    <string name="alias">Lonepulse</string>
 </resources>
