@@ -22,15 +22,15 @@ package com.lonepulse.icklebot.state;
 
 import java.lang.reflect.Field;
 
+import android.app.Activity;
 import android.os.Bundle;
 
-import com.lonepulse.icklebot.BoilerPlateActivity;
-import com.lonepulse.icklebot.annotation.Stateful;
+import com.lonepulse.icklebot.annotation.state.Stateful;
 
 /**
  * <p>This contract declares the services which are offered for 
  * <i>saving</i> and <i>restoring</i> the <b>instance state</b> 
- * of an {@link BoilerPlateActivity}.</p>
+ * of an {@link Activity}.</p>
  * 
  * @version 1.0.0
  * <br><br>
@@ -40,27 +40,27 @@ public interface StateService {
 
 	/**
 	 * <p><b>Saves</b> the <b>instance state</b> of the given 
-	 * {@link BoilerPlateActivity} by persisting all {@link Field}s 
+	 * {@link Activity} by persisting all {@link Field}s 
 	 * annotated with {@link Stateful} into the passed {@link Bundle}.</p>
 	 * 
-	 * @param boilerPlateActivity
-	 * 			the {@link BoilerPlateActivity} whose state is to be saved
+	 * @param activity
+	 * 			the {@link Activity} whose state is to be saved
 	 * <br><br>
 	 * @param bundle
 	 * 			the {@link Bundle} used for persisting the state
 	 * <br><br>
 	 * @since 1.0.0
 	 */
-	public abstract void save(BoilerPlateActivity boilerPlateActivity, Bundle bundle);
+	public abstract void save(Activity activity, Bundle bundle);
 	
 	/**
 	 * <p><b>Restores</b> the <b>instance state</b> of the given 
-	 * {@link BoilerPlateActivity} by retrieving all persisted 
+	 * {@link Activity} by retrieving all persisted 
 	 * {@link Field}s annotated with {@link Stateful} and injecting 
 	 * their values into the passed {@link Bundle}.</p>
 	 * 
-	 * @param boilerPlateActivity
-	 * 			the {@link BoilerPlateActivity} whose state is to 
+	 * @param activity
+	 * 			the {@link Activity} whose state is to 
 	 * 			be saved
 	 * <br><br>
 	 * @param bundle
@@ -68,5 +68,5 @@ public interface StateService {
 	 * <br><br>
 	 * @since 1.0.0
 	 */
-	public abstract void restore(BoilerPlateActivity boilerPlateActivity, Bundle bundle);
+	public abstract void restore(Activity activity, Bundle bundle);
 }

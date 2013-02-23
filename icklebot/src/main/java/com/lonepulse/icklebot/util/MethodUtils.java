@@ -28,8 +28,6 @@ import java.util.Set;
 
 import android.app.Activity;
 
-import com.lonepulse.icklebot.BoilerPlateActivity;
-
 /**
  * <p>A utility class which performs some common operations involved 
  * in discovering <i>{@link Method} metadata</i>.</p> 

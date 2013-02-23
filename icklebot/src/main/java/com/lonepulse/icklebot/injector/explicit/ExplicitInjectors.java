@@ -20,16 +20,15 @@ package com.lonepulse.icklebot.injector.explicit;
  * #L%
  */
 
+import android.app.Activity;
 import android.app.Application;
 import android.util.Log;
 
-import com.lonepulse.icklebot.IckleActivity;
-import com.lonepulse.icklebot.injector.ConfigurationInjector;
 import com.lonepulse.icklebot.injector.Injector;
 
 /**
  * <p>Maintains a set of {@link Injector} <i>singletons</i> which are used 
- * by any {@link IckleActivity} which implements the {@link IckleActivity}.</p>
+ * by any {@link Activity} which implements the {@link Activity}.</p>
  * 
  * @version 1.0.0
  * <br><br>
@@ -39,11 +38,11 @@ public enum ExplicitInjectors implements Injector {
 
 	/**
 	 * <p>This {@link Injector} is responsible for injecting the 
-	 * <i>configuration</i> of an {@link IckleActivity}.</p>
+	 * <i>configuration</i> of an {@link Activity}.</p>
 	 * 
 	 * @since 1.0.0
 	 */
-	CONFIGURATION(ConfigurationInjector.INSTANCE),
+	CONFIGURATION(ExplicitConfigurationInjector.INSTANCE),
 	
 	/**
 	 * <p>This {@link Injector} is responsible for injecting the 
@@ -60,7 +59,7 @@ public enum ExplicitInjectors implements Injector {
 	
 	/**
 	 * <p>This {@link Injector} is responsible for injecting the 
-	 * <i>layout</i> of an {@link IckleActivity}.</p>
+	 * <i>layout</i> of an {@link Activity}.</p>
 	 * 
 	 * @since 1.0.0
 	 */
@@ -68,7 +67,7 @@ public enum ExplicitInjectors implements Injector {
 	
 	/**
 	 * <p>This {@link Injector} is responsible for injecting the 
-	 * <i>resources</i> of an {@link IckleActivity}.</p>
+	 * <i>resources</i> of an {@link Activity}.</p>
 	 * 
 	 * @since 1.0.0
 	 */
@@ -76,7 +75,7 @@ public enum ExplicitInjectors implements Injector {
 	
 	/**
 	 * <p>This {@link Injector} is responsible for injecting any 
-	 * <i>System Services</i> in an {@link IckleActivity}.</p>
+	 * <i>System Services</i> in an {@link Activity}.</p>
 	 * 
 	 * @since 1.0.0
 	 */
@@ -84,7 +83,7 @@ public enum ExplicitInjectors implements Injector {
 	
 	/**
 	 * <p>This {@link Injector} is responsible for injecting any 
-	 * <i>POJOs</i> in an {@link IckleActivity}.</p>
+	 * <i>POJOs</i> in an {@link Activity}.</p>
 	 * 
 	 * @since 1.0.0
 	 */
@@ -133,7 +132,7 @@ public enum ExplicitInjectors implements Injector {
 			stringBuilder.append("Injection using ");
 			stringBuilder.append(injector.getClass().getName());
 			stringBuilder.append(" failed on activity ");
-			stringBuilder.append(config.getIckleActivity().getClass().getName());
+			stringBuilder.append(config.getActivity().getClass().getName());
 			stringBuilder.append(". ");
 			
 			Log.e(getClass().getName(), stringBuilder.toString(), e);

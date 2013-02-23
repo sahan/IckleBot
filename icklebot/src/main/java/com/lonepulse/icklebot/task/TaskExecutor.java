@@ -24,14 +24,14 @@ import java.lang.reflect.Method;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import android.app.Activity;
 import android.util.Log;
 
-import com.lonepulse.icklebot.BoilerPlateActivity;
-import com.lonepulse.icklebot.annotation.BackgroundTask;
+import com.lonepulse.icklebot.annotation.task.Async;
 
 /**
  * <p>This {@link Enum} contains a <b>Cached Thread Pool</b> which is used 
- * to execute background tasks identified via {@link BackgroundTask}.</p> 
+ * to execute background tasks identified via {@link Async}.</p> 
  * 
  * @version 1.0.0
  * <br><br>
@@ -41,7 +41,7 @@ public enum TaskExecutor {
 
 	/**
 	 * <p>The single instance of the {@link TaskExecutor} used 
-	 * in every {@link BoilerPlateActivity}.</p>
+	 * in every {@link Activity}.</p>
 	 * 
 	 * @since 1.0.0
 	 */
@@ -64,11 +64,11 @@ public enum TaskExecutor {
 	}
 	
 	/**
-	 * <p>Takes an {@link BoilerPlateActivity} and executes the specified 
+	 * <p>Takes an {@link Activity} and executes the specified 
 	 * {@link Method} on it via a worker thread.</p>
 	 * 
-	 * @param boilerPlateActivity
-	 * 			the {@link BoilerPlateActivity} on which a background task 
+	 * @param activity
+	 * 			the {@link Activity} on which a background task 
 	 * 			is to be run
 	 * <br><br>
 	 * @param method
@@ -77,7 +77,7 @@ public enum TaskExecutor {
 	 * <br><br>
 	 * @since 1.0.0
 	 */
-	public void execute(final BoilerPlateActivity boilerPlateActivity, final Method method, final Object... args) {
+	public void execute(final Activity activity, final Method method, final Object... args) {
 		try {
 		
 			executorService.execute(new Runnable() {
@@ -89,7 +89,7 @@ public enum TaskExecutor {
 						
 						if(!method.isAccessible()) method.setAccessible(true);
 							
-						method.invoke(boilerPlateActivity, args);
+						method.invoke(activity, args);
 					} 
 					catch (Exception e) {
 						
@@ -98,7 +98,7 @@ public enum TaskExecutor {
 						stringBuilder.append("Failed to invoke ");
 						stringBuilder.append(method.getName());
 						stringBuilder.append(" on ");
-						stringBuilder.append(boilerPlateActivity.getClass().getName());
+						stringBuilder.append(activity.getClass().getName());
 						stringBuilder.append(" with arguments ");
 						stringBuilder.append(args);
 						stringBuilder.append(". ");
@@ -115,7 +115,7 @@ public enum TaskExecutor {
 			stringBuilder.append("Background task ");
 			stringBuilder.append(method.getName());
 			stringBuilder.append(" failed to execute on ");
-			stringBuilder.append(boilerPlateActivity.getClass().getName());
+			stringBuilder.append(activity.getClass().getName());
 			stringBuilder.append(" with arguments ");
 			stringBuilder.append(args);
 			stringBuilder.append(". ");

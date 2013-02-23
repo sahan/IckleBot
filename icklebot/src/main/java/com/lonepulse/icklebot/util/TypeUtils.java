@@ -23,6 +23,8 @@ package com.lonepulse.icklebot.util;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
+import android.app.Activity;
+
 import com.lonepulse.icklebot.IckleActivity;
 
 /**
@@ -55,10 +57,10 @@ public final class TypeUtils {
 	 * <br><br>
 	 * @since 1.0.0
 	 */
-	public static <T extends Annotation> T getAnnotation(IckleActivity injectorActivity,
+	public static <T extends Annotation> T getAnnotation(Activity injectorActivity,
 									   					 Class<T> annotation) {
 		
-		Class<? extends IckleActivity> injectorActivityClass = injectorActivity.getClass();
+		Class<? extends Activity> injectorActivityClass = injectorActivity.getClass();
 		
 		if(injectorActivityClass.isAnnotationPresent(annotation)) {
 			

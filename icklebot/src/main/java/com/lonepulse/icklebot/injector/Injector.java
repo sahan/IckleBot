@@ -28,11 +28,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
-import com.lonepulse.icklebot.IckleActivity;
-import com.lonepulse.icklebot.annotation.InjectAll;
-import com.lonepulse.icklebot.resolver.InjectionCategory;
-import com.lonepulse.icklebot.resolver.InjectionResolver;
-import com.lonepulse.icklebot.resolver.InjectionResolvers;
+import android.app.Activity;
+
+import com.lonepulse.icklebot.annotation.inject.InjectAll;
+import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
+import com.lonepulse.icklebot.injector.resolver.InjectionResolver;
+import com.lonepulse.icklebot.injector.resolver.InjectionResolvers;
+import com.lonepulse.icklebot.listener.resolver.ListenerCategory;
 
 /**
  * <p>This is the common contract which all injectors must implement.</p>
@@ -45,9 +47,9 @@ public interface Injector {
 	
 	/**
 	 * <p>Stores information about the injection process; such as the 
-	 * {@link IckleActivity} which has requested injection and the 
+	 * {@link activity} which has requested injection and the 
 	 * target {@link Field}s in this activity grouped into their categories
-	 * by {@link InjectionCategory}.</p>
+	 * by {@link ListenerCategory}.</p>
 	 * 
 	 * @version 1.0.0
 	 * <br><br>
@@ -57,7 +59,7 @@ public interface Injector {
 		
 		/**
 		 * <p>A cache of all {@link Injector.Configuration}s processed. Configurations 
-		 * are keyed by the {@link Class} of their {@link IckleActivity} implementations.</p> 
+		 * are keyed by the {@link Class} of their {@link activity} implementations.</p> 
 		 * 
 		 * @version 1.0.0
 		 */
@@ -72,55 +74,55 @@ public interface Injector {
 			
 			
 			/**
-			 * <p>Stores processed {@link Configuration}s, keyed by their {@link IckleActivity} 
+			 * <p>Stores processed {@link Configuration}s, keyed by their {@link activity} 
 			 * {@link Class}. This map is <i>weak</i>, i.e. cached {@link Configuration}s may be 
 			 * silently removed if they are rarely reused.</p>
 			 * 
 			 * @since 1.0.0
 			 */
-			private Map<Class<? extends IckleActivity>, Configuration>  cache
-				= new WeakHashMap<Class<? extends IckleActivity>, Injector.Configuration>();
+			private Map<Class<? extends Activity>, Configuration>  cache
+				= new WeakHashMap<Class<? extends Activity>, Injector.Configuration>();
 			
 			/**
 			 * <p>A delegate for {@link Map#put(Object, Object)} which wraps the 
 			 * {@link #cache}.</p>
 			 * 
 			 * @param key
-			 * 			the requesting instance of {@link IckleActivity}
+			 * 			the requesting instance of {@link activity}
 			 * <br><br>
 			 * @param value
-			 * 			the {@link Configuration} for the {@link IckleActivity} 
+			 * 			the {@link Configuration} for the {@link activity} 
 			 * 			extension
 			 * <br><br>
 			 * @return the previous {@link Configuration} keyed by this 
-			 * 		   {@link IckleActivity} {@link Class}, <b>if any</b>
+			 * 		   {@link activity} {@link Class}, <b>if any</b>
 			 * <br><br>
 			 * @since 1.0.0
 			 */
-			public Configuration put(IckleActivity key, Configuration value) {
+			public Configuration put(Activity key, Configuration value) {
 				
 				return cache.put(key.getClass(), value);
 			}
 			
 			/**
 			 * <p>A delegate for {@link Map#get(Object)} which wraps the {@link #cache}. 
-			 * It takes the new instance of {@link IckleActivity} and updates the 
-			 * {@link Configuration#ickleActivity} property as well.</p>
+			 * It takes the new instance of {@link activity} and updates the 
+			 * {@link Configuration#activity} property as well.</p>
 			 * 
 			 * @param key
-			 * 			the requesting instance of {@link IckleActivity}
+			 * 			the requesting instance of {@link activity}
 			 * <br><br>
-			 * @return the {@link Configuration} keyed by by this {@link IckleActivity} 
+			 * @return the {@link Configuration} keyed by by this {@link activity} 
 			 * 		   {@link Class}; else {@code null} if not found
 			 * <br><br>
 			 * @since 1.0.0
 			 */
-			public Configuration get(IckleActivity key) {
+			public Configuration get(Activity key) {
 				
 				Configuration configuration = cache.get(key.getClass());
 				
 				if(configuration != null)
-					configuration.setIckleActivity(key);
+					configuration.setActivity(key);
 				
 				return configuration;
 			}
@@ -137,17 +139,17 @@ public interface Injector {
 		
 		
 		/**
-		 * <p>The {@link IckleActivity} which has requested 
+		 * <p>The {@link activity} which has requested 
 		 * dependency injection.</p>
 		 * 
 		 * @since 1.0.0
 		 */
-		private IckleActivity ickleActivity;
+		private Activity activity;
 		
 		
 		/**
-		 * <p>The target {@link Field}s in the {@link #ickleActivity} 
-		 * activity grouped into their categories by {@link InjectionCategory}.</p>
+		 * <p>The target {@link Field}s in the {@link #activity} 
+		 * activity grouped into their categories by {@link ListenerCategory}.</p>
 		 * 
 		 * @since 1.0.0
 		 */
@@ -156,23 +158,23 @@ public interface Injector {
 		
 		/**
 		 * <p>Creates a <b>new</b> instance of {@link Injector.Configuration} 
-		 * using the passed {@link IckleActivity}.</p>
+		 * using the passed {@link activity}.</p>
 		 * 
 		 * <p>This is to be used in an <i>instantiated context</i>.</p>
 		 * 
 		 * @param injectionActivity
-		 * 			the {@link IckleActivity} which has requested 
+		 * 			the {@link activity} which has requested 
 		 * 			dependency injection
 		 * <br><br>
 		 * @return a new instance of {@link Injector.Configuration}
 		 * <br><br>
 		 * @since 1.0.0
 		 */
-		public static Configuration newInstance(IckleActivity injectionActivity) {
+		public static Configuration newInstance(Activity injectionActivity) {
 			
 			Configuration config = new Configuration();
 			
-			config.setIckleActivity(injectionActivity);
+			config.setActivity(injectionActivity);
 		
 			if(injectionActivity.getClass().isAnnotationPresent(InjectAll.class))
 				config.setInjectionMode(InjectionMode.IMPLICIT);
@@ -203,25 +205,25 @@ public interface Injector {
 		
 		/**
 		 * <p>Retrieves the <b>cached</b> instance of {@link Injector.Configuration} 
-		 * using the passed {@link IckleActivity}. If cached instance is not 
-		 * found, a new instance is created, via {@link #newInstance(IckleActivity)}, 
+		 * using the passed {@link activity}. If cached instance is not 
+		 * found, a new instance is created, via {@link #newInstance(activity)}, 
 		 * and cached.</p>
 		 * 
 		 * @param injectionActivity
-		 * 			the {@link IckleActivity} which has requested 
+		 * 			the {@link activity} which has requested 
 		 * 			dependency injection
 		 * <br><br>
 		 * @return the <b>cached</b> instance of {@link Injector.Configuration}
 		 * <br><br>
 		 * @since 1.0.0
 		 */
-		public static Configuration getInstance(IckleActivity injectionActivity) {
+		public static Configuration getInstance(Activity injectionActivity) {
 		
 			Configuration config = CACHE.INSTANCE.get(injectionActivity);
 			
 			if(config != null) {
 
-				config.setIckleActivity(injectionActivity);
+				config.setActivity(injectionActivity);
 			}
 			else {
 				
@@ -234,7 +236,7 @@ public interface Injector {
 		
 		/**
 		 * <p>Constructor visibility restricted to prevent instantiation. 
-		 * Please use the factory method {@link #newInstance(IckleActivity)}.</p>
+		 * Please use the factory method {@link #newInstance(activity)}.</p>
 		 * 
 		 * <p>Initializes {@link #injectionTargets} to an empty {@link Map}.</p>
 		 * 
@@ -272,29 +274,29 @@ public interface Injector {
 		}
 
 		/**
-		 * <p>Accessor for {@link #ickleActivity}.</p>
+		 * <p>Accessor for {@link #activity}.</p>
 		 * 
-		 * @return {@link #ickleActivity}
+		 * @return {@link #activity}
 		 * <br><br>
 		 * @since 1.0.0
 		 */
-		public IckleActivity getIckleActivity() {
+		public Activity getActivity() {
 			
-			return ickleActivity;
+			return activity;
 		}
 
 		/**
-		 * <p>Mutator for {@link #ickleActivity}.</p>
+		 * <p>Mutator for {@link #activity}.</p>
 		 * 
-		 * @param ickleActivity
-		 * 			the {@link IckleActivity} to populate 
-		 * 			{@link #ickleActivity} 
+		 * @param activity
+		 * 			the {@link activity} to populate 
+		 * 			{@link #activity} 
 		 * <br><br>
 		 * @since 1.0.0
 		 */
-		private void setIckleActivity(IckleActivity ickleActivity) {
+		private void setActivity(Activity activity) {
 			
-			this.ickleActivity = ickleActivity;
+			this.activity = activity;
 		}
 
 		/**
@@ -311,16 +313,16 @@ public interface Injector {
 
 		/**
 		 * <p>Mutator for {@link #injectionTargets}. Takes a {@link Field} 
-		 * along with its associated {@link InjectionCategory} and puts it 
+		 * along with its associated {@link ListenerCategory} and puts it 
 		 * to the appropriate {@link Set} in {@link #injectionTargets}.</p>
 		 * 
 		 * @param injectionCategory
-		 * 			the {@link InjectionCategory} to which the 
+		 * 			the {@link ListenerCategory} to which the 
 		 * 			{@link Field} belongs to	
 		 * <br><br>
 		 * @param field
 		 * 			the {@link Field} to be categorized into an 
-		 * 			{@link InjectionCategory}
+		 * 			{@link ListenerCategory}
 		 * <br><br>
 		 * @since 1.0.0
 		 */
@@ -338,13 +340,13 @@ public interface Injector {
 		}
 		
 		/**
-		 * <p>Takes an {@link InjectionCategory} and retrieves 
+		 * <p>Takes an {@link ListenerCategory} and retrieves 
 		 * the {@link Set} of {@link Field}s under that category 
 		 * as mapped in {@link #injectionTargets}.</p> 
 		 * 
 		 * @param injectionCategory
 		 * 			the fields are to be retrieved for this 
-		 * 			{@link InjectionCategory}			
+		 * 			{@link ListenerCategory}			
 		 * <br><br>
 		 * @return the {@link Set} of {@link Field}s  under 
 		 * 		   the category, else an empty {@link Set}

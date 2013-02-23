@@ -25,10 +25,10 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.lonepulse.icklebot.IckleActivity;
-import com.lonepulse.icklebot.annotation.BackgroundTask;
-import com.lonepulse.icklebot.annotation.Layout;
-import com.lonepulse.icklebot.annotation.Title;
-import com.lonepulse.icklebot.annotation.UITask;
+import com.lonepulse.icklebot.annotation.config.Layout;
+import com.lonepulse.icklebot.annotation.config.Title;
+import com.lonepulse.icklebot.annotation.task.Async;
+import com.lonepulse.icklebot.annotation.task.UI;
 
 /**
  * <p>An extension of {@link IckleActivity} which is used to test the 
@@ -65,11 +65,11 @@ public class TaskActivity extends IckleActivity {
 
 		super.onCreate(savedInstanceState);
 		
-		runBackgroundTask(BG_GEN_TOKEN);
-		runBackgroundTask(BG_GEN_ALIAS, "Ick");
+		runAsyncTask(BG_GEN_TOKEN);
+		runAsyncTask(BG_GEN_ALIAS, "Ick");
 	}
 	
-	@BackgroundTask(BG_GEN_TOKEN)
+	@Async(BG_GEN_TOKEN)
 	public void generateToken() {
 		
 		token = Math.random();	
@@ -77,13 +77,13 @@ public class TaskActivity extends IckleActivity {
 		runUITask(UI_UPDATE_TOKEN);
 	}
 	
-	@UITask(UI_UPDATE_TOKEN)
+	@UI(UI_UPDATE_TOKEN)
 	public void updateToken() {
 		
 		((TextView)findViewById(R.id.txtToken)).setText(String.valueOf(token));
 	}
 	
-	@BackgroundTask(BG_GEN_ALIAS)
+	@Async(BG_GEN_ALIAS)
 	public void generateAlias(String prefix) {
 		
 		alias = prefix + " le Bot";
@@ -91,7 +91,7 @@ public class TaskActivity extends IckleActivity {
 		runUITask(UI_UPDATE_ALIAS, alias);
 	}
 	
-	@UITask(value = UI_UPDATE_ALIAS, delay = 500)
+	@UI(value = UI_UPDATE_ALIAS, delay = 500)
 	public void updateAlias(String generatedAlias) {
 		
 		((TextView)findViewById(R.id.txtAlias)).setText(generatedAlias);

@@ -20,7 +20,7 @@ package com.lonepulse.icklebot.task;
  * #L%
  */
 
-import com.lonepulse.icklebot.BoilerPlateActivity;
+import android.app.Activity;
 
 /**
  * <p>This contract declares the services offered by a <i>background task 
@@ -37,8 +37,8 @@ public interface TaskService {
 	 * <p>Executes a method designated as a <i>Task</i> identified 
 	 * by a unique <i>ID</i>.</p>
 	 * 
-	 * @param boilerPlateActivity
-	 *			the {@link BoilerPlateActivity} which provides the 
+	 * @param activity
+	 *			the {@link Activity} which provides the 
 	 *			context in which the <i>UI Task</i> is run 
 	 * <br><br>
 	 * @param taskId
@@ -50,5 +50,5 @@ public interface TaskService {
 	 * <br><br>
 	 * @since 1.0.0
 	 */
-	public void execute(final BoilerPlateActivity boilerPlateActivity, int taskId, final Object... args);
+	public void execute(final Activity activity, int taskId, final Object... args);
 }

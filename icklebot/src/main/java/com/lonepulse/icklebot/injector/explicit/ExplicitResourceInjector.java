@@ -24,15 +24,15 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.Set;
 
+import android.app.Activity;
 import android.util.Log;
 
-import com.lonepulse.icklebot.IckleActivity;
-import com.lonepulse.icklebot.annotation.InjectDrawable;
-import com.lonepulse.icklebot.annotation.InjectInteger;
-import com.lonepulse.icklebot.annotation.InjectString;
-import com.lonepulse.icklebot.annotation.InjectView;
+import com.lonepulse.icklebot.annotation.inject.InjectDrawable;
+import com.lonepulse.icklebot.annotation.inject.InjectInteger;
+import com.lonepulse.icklebot.annotation.inject.InjectString;
+import com.lonepulse.icklebot.annotation.inject.InjectView;
 import com.lonepulse.icklebot.injector.Injector;
-import com.lonepulse.icklebot.resolver.InjectionCategory;
+import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
 
 /**
  * <p>An implementation of {@link Injector} which is responsible 
@@ -42,7 +42,7 @@ import com.lonepulse.icklebot.resolver.InjectionCategory;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public class ExplicitResourceInjector implements Injector {
+class ExplicitResourceInjector implements Injector {
 	
 	
 	/**
@@ -64,7 +64,7 @@ public class ExplicitResourceInjector implements Injector {
 	@Override
 	public void inject(Configuration config) {
 		
-		IckleActivity injectionActivity = config.getIckleActivity();
+		Activity injectionActivity = config.getActivity();
 		
 		injectResource(injectionActivity, 
 					   config.getInjectionTargets(InjectionCategory.RESOURCE_VIEW), 
@@ -88,7 +88,7 @@ public class ExplicitResourceInjector implements Injector {
 	 * {@link InjectString} annotation.</p>
 	 * 
 	 * @param injectorActivity
-	 * 			the {@link IckleActivity} which is the subject of 
+	 * 			the {@link Activity} which is the subject of 
 	 * 			dependency injection
 	 * <br><br>			
 	 * @param fields
@@ -96,7 +96,7 @@ public class ExplicitResourceInjector implements Injector {
 	 * <br><br>
 	 * @since 1.0.0
 	 */
-	private void injectResource(IckleActivity injectorActivity, Set<Field> fields, 
+	private void injectResource(Activity injectorActivity, Set<Field> fields, 
 								Class<? extends Annotation> resourceAnnotation) {
 		
 		for (Field field : fields) {

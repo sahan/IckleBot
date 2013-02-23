@@ -20,16 +20,16 @@ package com.lonepulse.icklebot.injector.implicit;
  * #L%
  */
 
+import android.app.Activity;
 import android.app.Application;
 import android.util.Log;
 
-import com.lonepulse.icklebot.IckleActivity;
-import com.lonepulse.icklebot.annotation.InjectAll;
+import com.lonepulse.icklebot.annotation.inject.InjectAll;
 import com.lonepulse.icklebot.injector.Injector;
 
 /**
  * <p>Maintains a set of {@link Injector} <i>singletons</i> which are used 
- * by any {@link IckleActivity} which implements the {@link IckleActivity} 
+ * by any {@link Activity} which implements the {@link Activity} 
  * and has requested <b>Implicit Injection</b> via {@link InjectAll}.</p>
  * 
  * @version 1.0.0
@@ -53,7 +53,7 @@ public enum ImplicitInjectors implements Injector {
 	
 	/**
 	 * <p>This {@link Injector} is responsible for injecting 
-	 * the <i>Resources</i> of an {@link IckleActivity}.</p>
+	 * the <i>Resources</i> of an {@link Activity}.</p>
 	 * 
 	 * @since 1.0.0
 	 */
@@ -61,7 +61,7 @@ public enum ImplicitInjectors implements Injector {
 	
 	/**
 	 * <p>This {@link Injector} is responsible for injecting any 
-	 * <i>System Services</i> in an {@link IckleActivity}.</p>
+	 * <i>System Services</i> in an {@link Activity}.</p>
 	 * 
 	 * @since 1.0.0
 	 */
@@ -69,7 +69,7 @@ public enum ImplicitInjectors implements Injector {
 	
 	/**
 	 * <p>This {@link Injector} is responsible for injecting 
-	 * any <i>POJOs</i> in an {@link IckleActivity}.</p>
+	 * any <i>POJOs</i> in an {@link Activity}.</p>
 	 * 
 	 * @since 1.0.0
 	 */
@@ -118,7 +118,7 @@ public enum ImplicitInjectors implements Injector {
 			stringBuilder.append("Injection using ");
 			stringBuilder.append(implicitInjector.getClass().getName());
 			stringBuilder.append(" failed on activity ");
-			stringBuilder.append(config.getIckleActivity().getClass().getName());
+			stringBuilder.append(config.getActivity().getClass().getName());
 			stringBuilder.append(". ");
 			
 			Log.e(getClass().getName(), stringBuilder.toString(), e);

@@ -21,7 +21,7 @@ package com.lonepulse.icklebot.test.service;
  */
 
 
-import com.lonepulse.icklebot.annotation.Pojo;
+import com.lonepulse.icklebot.annotation.inject.Pojo;
 
 /**
  * <p>A mock service which will be used to test injection of POJOs.

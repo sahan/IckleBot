@@ -20,112 +20,36 @@ package com.lonepulse.icklebot;
  * #L%
  */
 
-import com.lonepulse.icklebot.injector.InjectionMode;
-import com.lonepulse.icklebot.injector.Injector;
-import com.lonepulse.icklebot.injector.explicit.ExplicitInjectors;
-import com.lonepulse.icklebot.injector.implicit.ImplicitInjectors;
+import android.os.Bundle;
+import android.util.Log;
 
 /**
  * <p>All activities that wish to be <i>wired</i> by <b>dependency injection</b> 
  * should extend this activity.</p>
  * 
- * @version 1.0.0
+ * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public abstract class IckleActivity extends InjectionTemplate {
+public abstract class IckleActivity extends ListenerActivity {
 
-	
 	/**
-	 * <p>The {@link Injector.Configuration} for this {@link IckleActivity}.</p>
+	 * <p>This callback is executed when the {@link IckleActivity} is being 
+	 * created. It invokes the dependency injection and event listener linking 
+	 * via the {@link InjectionSupportActivity} and the {@link ListenerSupportActivity}.</p>
 	 * 
-	 * @since 1.0.0
-	 */
-	protected final Injector.Configuration CONFIGURATION;
-	{
-		CONFIGURATION = Injector.Configuration.getInstance(this);
-	}
-	
-	
-	/**
-	 * {@inheritDoc}
+	 * <p>See {@link InjectionSupportActivity#onCreate(Bundle)}.</p> 
+	 * <p>See {@link ListenerSupportActivity#onCreate(Bundle)}.</p>
 	 */
 	@Override
-	protected void injectConfiguration() {
-	
-		ExplicitInjectors.CONFIGURATION.inject(CONFIGURATION);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void injectApplication() {
-	
-		if(CONFIGURATION.getInjectionMode().equals(InjectionMode.IMPLICIT)) {
-			
-			ImplicitInjectors.APPLICATION.inject(CONFIGURATION);
-		}
-		else {
-			
-			ExplicitInjectors.APPLICATION.inject(CONFIGURATION);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void injectLayout() {
+	protected void onCreate(Bundle savedInstanceState) {
 		
-		ExplicitInjectors.LAYOUT.inject(CONFIGURATION);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void injectResources() {
+		long millis = System.currentTimeMillis();
 		
-		if(CONFIGURATION.getInjectionMode().equals(InjectionMode.IMPLICIT)) {
-			
-			ImplicitInjectors.RESOURCES.inject(CONFIGURATION);
-		}
-		else {
-			
-			ExplicitInjectors.RESOURCES.inject(CONFIGURATION);
-		}
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void injectServices() {
-	
-		if(CONFIGURATION.getInjectionMode().equals(InjectionMode.IMPLICIT)) {
-			
-			ImplicitInjectors.SERVICES.inject(CONFIGURATION);
-		}
-		else {
-			
-			ExplicitInjectors.SERVICES.inject(CONFIGURATION);
-		}
-	}
+		super.onCreate(savedInstanceState);
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void injectPojos() {
+		millis = System.currentTimeMillis() - millis;
 		
-		if(CONFIGURATION.getInjectionMode().equals(InjectionMode.IMPLICIT)) {
-			
-			ImplicitInjectors.POJOS.inject(CONFIGURATION);
-		}
-		else {
-			
-			ExplicitInjectors.POJOS.inject(CONFIGURATION);
-		}
+		Log.d("INSTRUMENTATION:IckleActivity", getClass().getSimpleName() + ": " + millis + "ms");
 	}
 }

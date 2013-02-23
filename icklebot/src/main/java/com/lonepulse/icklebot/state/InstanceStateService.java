@@ -24,11 +24,11 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Set;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.lonepulse.icklebot.BoilerPlateActivity;
-import com.lonepulse.icklebot.annotation.Stateful;
+import com.lonepulse.icklebot.annotation.state.Stateful;
 import com.lonepulse.icklebot.util.FieldUtils;
 
 /**
@@ -60,9 +60,9 @@ public class InstanceStateService implements StateService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void save(BoilerPlateActivity boilerPlateActivity, Bundle bundle) {
+	public void save(Activity activity, Bundle bundle) {
 		
-		Set<Field> fieldsToSave = FieldUtils.getAllFields(boilerPlateActivity, Stateful.class);
+		Set<Field> fieldsToSave = FieldUtils.getAllFields(activity, Stateful.class);
 		
 		for (Field field : fieldsToSave) {
 			
@@ -70,7 +70,7 @@ public class InstanceStateService implements StateService {
 				
 				if(!field.isAccessible()) field.setAccessible(true); 
 				
-				Serializable state = (Serializable)field.get(boilerPlateActivity);
+				Serializable state = (Serializable)field.get(activity);
 				
 				bundle.putSerializable(field.getName(), state);
 			}
@@ -81,7 +81,7 @@ public class InstanceStateService implements StateService {
 				stringBuilder.append("Failed to save state of field ");
 				stringBuilder.append(field.getName());
 				stringBuilder.append(" in ");
-				stringBuilder.append(boilerPlateActivity.getClass().getName());
+				stringBuilder.append(activity.getClass().getName());
 				stringBuilder.append(". ");
 				
 				Log.e(getClass().getName(), stringBuilder.toString(), e);
@@ -93,9 +93,9 @@ public class InstanceStateService implements StateService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void restore(BoilerPlateActivity boilerPlateActivity, Bundle bundle) {
+	public void restore(Activity activity, Bundle bundle) {
 		
-		Set<Field> fieldsToRestore = FieldUtils.getAllFields(boilerPlateActivity, Stateful.class);
+		Set<Field> fieldsToRestore = FieldUtils.getAllFields(activity, Stateful.class);
 		
 		for (Field field : fieldsToRestore) {
 			
@@ -105,7 +105,7 @@ public class InstanceStateService implements StateService {
 				
 				Serializable state = bundle.getSerializable(field.getName());
 				
-				field.set(boilerPlateActivity, state);
+				field.set(activity, state);
 			}
 			catch (Exception e) {
 				
@@ -114,7 +114,7 @@ public class InstanceStateService implements StateService {
 				stringBuilder.append("Failed to restore state of field ");
 				stringBuilder.append(field.getName());
 				stringBuilder.append(" in ");
-				stringBuilder.append(boilerPlateActivity.getClass().getName());
+				stringBuilder.append(activity.getClass().getName());
 				stringBuilder.append(". ");
 				
 				Log.e(getClass().getName(), stringBuilder.toString(), e);

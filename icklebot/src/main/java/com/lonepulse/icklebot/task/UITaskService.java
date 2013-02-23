@@ -23,15 +23,15 @@ package com.lonepulse.icklebot.task;
 import java.lang.reflect.Method;
 import java.util.Set;
 
+import android.app.Activity;
 import android.util.Log;
 
-import com.lonepulse.icklebot.BoilerPlateActivity;
-import com.lonepulse.icklebot.annotation.UITask;
+import com.lonepulse.icklebot.annotation.task.UI;
 import com.lonepulse.icklebot.util.MethodUtils;
 
 /**
  * <p>This service is delegated the responsibility of executing code 
- * on the <b>UI Thread</b> of an {@link BoilerPlateActivity}.</p>
+ * on the <b>UI Thread</b> of an {@link Activity}.</p>
  * 
  * @version 1.0.0
  * <br><br>
@@ -57,16 +57,16 @@ public class UITaskService implements TaskService {
 	 * {@inheritDoc}
 	 * 
 	 * <p>Executes a method designated as a <i>UI Task</i> (via 
-	 * the annotation {@link UITask}) on the <b>UI Event Loop</b>.</p>
+	 * the annotation {@link UI}) on the <b>UI Event Loop</b>.</p>
 	 */
 	@Override
-	public void execute(final BoilerPlateActivity boilerPlateActivity, int uiTaskId, final Object... args) {
+	public void execute(final Activity activity, int uiTaskId, final Object... args) {
 		
-		Set<Method> methods = MethodUtils.getAllMethods(boilerPlateActivity, UITask.class);
+		Set<Method> methods = MethodUtils.getAllMethods(activity, UI.class);
 		
 		for (final Method method : methods) {
 			
-			final UITask uiTask = method.getAnnotation(UITask.class);
+			final UI uiTask = method.getAnnotation(UI.class);
 			
 			if(uiTask.value() == uiTaskId) {
 			
@@ -79,7 +79,7 @@ public class UITaskService implements TaskService {
 										
 							if(!method.isAccessible()) method.setAccessible(true);
 										
-							method.invoke(boilerPlateActivity, args);
+							method.invoke(activity, args);
 						} 
 						catch (Exception e) {
 										
@@ -87,7 +87,7 @@ public class UITaskService implements TaskService {
 							.append("Failed to execute UI task ")
 							.append(method.getName())
 							.append(" on ")
-							.append(boilerPlateActivity.getClass().getName())
+							.append(activity.getClass().getName())
 							.append(" with arguments ")
 							.append(args)
 							.append(". ");
@@ -113,14 +113,14 @@ public class UITaskService implements TaskService {
 						.append(" for ")
 						.append(method.getName())
 						.append(" on ")
-						.append(boilerPlateActivity.getClass().getName())
+						.append(activity.getClass().getName())
 						.append(" was interrupted!");
 						
 						Log.e(getClass().getSimpleName(), stringBuilder.toString(), ie);
 					}
 				}
 				
-				boilerPlateActivity.runOnUiThread(runnable);
+				activity.runOnUiThread(runnable);
 								
 				break;
 			}

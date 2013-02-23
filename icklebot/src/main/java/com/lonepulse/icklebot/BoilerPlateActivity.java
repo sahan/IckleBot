@@ -24,7 +24,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.lonepulse.icklebot.state.InstanceStateService;
-import com.lonepulse.icklebot.task.BackgroundTaskService;
+import com.lonepulse.icklebot.task.AsyncTaskService;
 import com.lonepulse.icklebot.task.UITaskService;
 
 /**
@@ -36,7 +36,7 @@ import com.lonepulse.icklebot.task.UITaskService;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public class BoilerPlateActivity extends Activity {
+class BoilerPlateActivity extends Activity {
 
 
 	/**
@@ -66,13 +66,13 @@ public class BoilerPlateActivity extends Activity {
 	}
 	
 	/**
-	 * <p>See {@link BackgroundTaskService#execute(BoilerPlateActivity, int, Object...)}.</p>
+	 * <p>See {@link AsyncTaskService#execute(BoilerPlateActivity, int, Object...)}.</p>
 	 * 
 	 * @since 1.0.0
 	 */
-	protected void runBackgroundTask(int backgroundTaskId, Object... args) {
+	protected void runAsyncTask(int backgroundTaskId, Object... args) {
 		
-		BackgroundTaskService.INSTANCE.execute(BoilerPlateActivity.this, backgroundTaskId, args);
+		AsyncTaskService.INSTANCE.execute(BoilerPlateActivity.this, backgroundTaskId, args);
 	}
 	
 	/**

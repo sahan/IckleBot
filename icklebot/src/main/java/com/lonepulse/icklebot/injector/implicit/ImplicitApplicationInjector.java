@@ -23,12 +23,12 @@ package com.lonepulse.icklebot.injector.implicit;
 import java.lang.reflect.Field;
 import java.util.Set;
 
+import android.app.Activity;
 import android.app.Application;
 import android.util.Log;
 
-import com.lonepulse.icklebot.IckleActivity;
 import com.lonepulse.icklebot.injector.Injector;
-import com.lonepulse.icklebot.resolver.InjectionCategory;
+import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
 
 /**
  * <p>An implementation of {@link Injector} which is responsible 
@@ -38,7 +38,7 @@ import com.lonepulse.icklebot.resolver.InjectionCategory;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public class ImplicitApplicationInjector implements Injector {
+class ImplicitApplicationInjector implements Injector {
 
 	
 	/**
@@ -60,7 +60,7 @@ public class ImplicitApplicationInjector implements Injector {
 	@Override
 	public void inject(Configuration config) {
 	
-		IckleActivity injectionActivity = config.getIckleActivity();
+		Activity injectionActivity = config.getActivity();
 		
 		Set<Field> fields = config.getInjectionTargets(InjectionCategory.APPLICATION);		
 		

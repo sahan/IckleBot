@@ -20,16 +20,16 @@ package com.lonepulse.icklebot.injector.explicit;
  * #L%
  */
 
+import android.app.Activity;
 import android.view.View;
 
-import com.lonepulse.icklebot.IckleActivity;
-import com.lonepulse.icklebot.annotation.Layout;
+import com.lonepulse.icklebot.annotation.config.Layout;
 import com.lonepulse.icklebot.injector.Injector;
 import com.lonepulse.icklebot.util.TypeUtils;
 
 /**
  * <p>An implementation of {@link Injector} which is responsible 
- * for injecting the <i>layout</i> of an {@link IckleActivity} using 
+ * for injecting the <i>layout</i> of an {@link Activity} using 
  * the {@link Layout} metadata.</p> 
  * 
  * <p>The layout <i>resource id</i> or <i>root {@link View}</i> should 
@@ -39,7 +39,7 @@ import com.lonepulse.icklebot.util.TypeUtils;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public class ExplicitLayoutInjector implements Injector {
+class ExplicitLayoutInjector implements Injector {
 	
 	
 	/**
@@ -61,7 +61,7 @@ public class ExplicitLayoutInjector implements Injector {
 	@Override
 	public void inject(Configuration config) {
 		
-		IckleActivity injectionActivity = config.getIckleActivity();
+		Activity injectionActivity = config.getActivity();
 		
 		Layout layout = TypeUtils.getAnnotation(injectionActivity, Layout.class);
 		

@@ -21,7 +21,7 @@ package com.lonepulse.icklebot.test.app;
  */
 
 
-import com.lonepulse.icklebot.annotation.ApplicationContract;
+import com.lonepulse.icklebot.annotation.inject.ApplicationContract;
 
 import android.app.Application;
 
