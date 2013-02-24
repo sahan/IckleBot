@@ -20,30 +20,31 @@ package com.lonepulse.icklebot;
  * #L%
  */
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
 import com.lonepulse.icklebot.injector.InjectionMode;
 import com.lonepulse.icklebot.injector.Injector;
 import com.lonepulse.icklebot.injector.explicit.ExplicitInjectors;
 import com.lonepulse.icklebot.injector.implicit.ImplicitInjectors;
+import com.lonepulse.icklebot.profile.ProfileService;
+import com.lonepulse.icklebot.state.StateService;
 
 /**
- * <p>This contract specifies the different phases in the <i>injection</i> 
- * of resources into an {@link Activity}.</p>
+ * <p>This profiles offers dependency injection and state management features.
  * 
- * @version 1.0.1
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-abstract class InjectionActivity extends BoilerPlateActivity {
+abstract class InjectionActivity extends ThreadingActivity {
 
 	
 	/**
 	 * <p>The {@link Injector.Configuration} for this {@link IckleActivity}.</p>
 	 * 
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	private final Injector.Configuration INJECTOR_CONFIGURATION;
 	{
@@ -58,14 +59,17 @@ abstract class InjectionActivity extends BoilerPlateActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
-		
-		long millis = System.currentTimeMillis();
 
-		inject();
-
-		millis = System.currentTimeMillis() - millis;
+		if(ProfileService.INSTANCE.isActive(this, PROFILE.INJECTION)) {
 		
-		Log.d("INSTRUMENTATION:InjectionSupportActivity#inject()", getClass().getSimpleName() + ": " + millis + "ms");
+			long millis = System.currentTimeMillis();
+	
+			inject();
+	
+			millis = System.currentTimeMillis() - millis;
+			
+			Log.d("INSTRUMENTATION:IckleInjectionActivity#inject()", getClass().getSimpleName() + ": " + millis + "ms");
+		}
 	}
 	
 	/**
@@ -118,5 +122,27 @@ abstract class InjectionActivity extends BoilerPlateActivity {
 		ImplicitInjectors.RESOURCES.inject(INJECTOR_CONFIGURATION);
 		ImplicitInjectors.SERVICES.inject(INJECTOR_CONFIGURATION);
 		ImplicitInjectors.POJOS.inject(INJECTOR_CONFIGURATION);
+	}
+	
+	/**
+	 * <p><b>Saves</b> instance variables annotated with {@code @Stateful}.</p>
+	 */
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+
+		super.onSaveInstanceState(outState);
+		
+		StateService.INSTANCE.save(this, outState);
+	}
+	
+	/**
+	 * <p><b>Restores</b> instance variables annotated with {@code @Stateful}.</p>
+	 */
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		
+		super.onRestoreInstanceState(savedInstanceState);
+		
+		StateService.INSTANCE.restore(this, savedInstanceState);
 	}
 }

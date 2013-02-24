@@ -29,6 +29,7 @@ import com.lonepulse.icklebot.injector.InjectionMode;
 import com.lonepulse.icklebot.injector.Injector;
 import com.lonepulse.icklebot.injector.explicit.ExplicitInjectors;
 import com.lonepulse.icklebot.injector.implicit.ImplicitInjectors;
+import com.lonepulse.icklebot.state.StateService;
 
 /**
  * <p>This activity can be extended to isolate and leverage the dependency 
@@ -39,9 +40,9 @@ import com.lonepulse.icklebot.injector.implicit.ImplicitInjectors;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-abstract class InjectionSupportActivity extends Activity {
+abstract class IckleInjectionActivity extends Activity {
 
-	
+
 	/**
 	 * <p>The {@link Injector.Configuration} for this {@link IckleActivity}.</p>
 	 * 
@@ -60,14 +61,14 @@ abstract class InjectionSupportActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
-		
+
 		long millis = System.currentTimeMillis();
-
+	
 		inject();
-
+	
 		millis = System.currentTimeMillis() - millis;
-		
-		Log.d("INSTRUMENTATION:InjectionSupportActivity#inject()", getClass().getSimpleName() + ": " + millis + "ms");
+			
+		Log.d("INSTRUMENTATION:IckleInjectionActivity#inject()", getClass().getSimpleName() + ": " + millis + "ms");
 	}
 	
 	/**
@@ -120,5 +121,27 @@ abstract class InjectionSupportActivity extends Activity {
 		ImplicitInjectors.RESOURCES.inject(INJECTOR_CONFIGURATION);
 		ImplicitInjectors.SERVICES.inject(INJECTOR_CONFIGURATION);
 		ImplicitInjectors.POJOS.inject(INJECTOR_CONFIGURATION);
+	}
+	
+	/**
+	 * <p><b>Saves</b> instance variables annotated with {@code @Stateful}.</p>
+	 */
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+
+		super.onSaveInstanceState(outState);
+		
+		StateService.INSTANCE.save(this, outState);
+	}
+	
+	/**
+	 * <p><b>Restores</b> instance variables annotated with {@code @Stateful}.</p>
+	 */
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		
+		super.onRestoreInstanceState(savedInstanceState);
+		
+		StateService.INSTANCE.restore(this, savedInstanceState);
 	}
 }

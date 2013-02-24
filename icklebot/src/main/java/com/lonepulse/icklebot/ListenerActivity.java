@@ -21,17 +21,17 @@ package com.lonepulse.icklebot;
  */
 
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
 import com.lonepulse.icklebot.listener.ListenerLinker;
 import com.lonepulse.icklebot.listener.ListenerLinkers;
+import com.lonepulse.icklebot.profile.ProfileService;
 
 /**
- * <p>This contract specifies the different phases in the linking 
- * of event listeners to {@link View}s in {@link Activity}.
+ * <p>This profile offers the linking of event listeners to {@link View}s.
  * 
  * @version 1.1.0
  * <br><br>
@@ -59,13 +59,16 @@ abstract class ListenerActivity extends InjectionActivity {
 		
 		super.onCreate(savedInstanceState);
 		
-		long millis = System.currentTimeMillis();
-
-		link();
-
-		millis = System.currentTimeMillis() - millis;
-		
-		Log.d("INSTRUMENTATION:ListenerSupportActivity#link()", getClass().getSimpleName() + ": " + millis + "ms");
+		if(ProfileService.INSTANCE.isActive(this, PROFILE.LISTENER)) {
+			
+			long millis = System.currentTimeMillis();
+	
+			link();
+	
+			millis = System.currentTimeMillis() - millis;
+			
+			Log.d("INSTRUMENTATION:IckleListenerActivity#link()", getClass().getSimpleName() + ": " + millis + "ms");
+		}
 	}
 
 	/**

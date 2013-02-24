@@ -52,7 +52,7 @@ public final class MethodUtils {
 	 * (represented by supplied {@link Class}).</p>
 	 * 
 	 * @param activity
-	 * 			the {@link BoilerPlateActivity} whose {@link Field}s are 
+	 * 			the {@link ThreadingActivity} whose {@link Field}s are 
 	 * 			to be scanned
 	 * <br><br>
 	 * @param annotation

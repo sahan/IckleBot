@@ -37,7 +37,7 @@ import com.lonepulse.icklebot.listener.ListenerLinkers;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public abstract class ListenerSupportActivity extends Activity {
+public abstract class IckleListenerActivity extends Activity {
 
 
 	/**
@@ -65,7 +65,7 @@ public abstract class ListenerSupportActivity extends Activity {
 
 		millis = System.currentTimeMillis() - millis;
 		
-		Log.d("INSTRUMENTATION:ListenerSupportActivity#link()", getClass().getSimpleName() + ": " + millis + "ms");
+		Log.d("INSTRUMENTATION:IckleListenerActivity#link()", getClass().getSimpleName() + ": " + millis + "ms");
 	}
 
 	/**
