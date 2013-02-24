@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.annotation.task;
+package com.lonepulse.icklebot.annotation.inject;
 
 /*
  * #%L
@@ -25,34 +25,29 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import android.app.Activity;
+import android.app.Fragment;
+
 /**
- * <p>Marks a method which should run on the <i>UI Event Loop</i>.</p>
+ * <p>This annotation marks the <b>layout</b> which is to be used 
+ * by the an {@link Activity} or {@link Fragment} or any of their 
+ * derivatives.</p>
  * 
  * @version 1.0.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface UI {
-	
+public @interface Layout {
+
 	/**
-	 * <p>The {@code integer} which identifies the <b>id</b> 
-	 * of the UI task.</p>
+	 * <p>The {@code integer} which identifies the <b>resource id</b> 
+	 * of the layout to be used.</p>
 	 * 
-	 * @return the id of the UI task
+	 * @return the layout resource id
 	 * <br><br>
 	 * @since 1.0.0
 	 */
 	int value();
-	
-	/**
-	 * <p>A {@code long} value which specifies the <i>delay</i> 
-	 * in executing the UI task. No delay is used by default.
-	 * 
-	 * @return the delay before UI task execution
-	 * <br><br>
-	 * @since 1.0.0
-	 */
-	long delay() default 0l;
 }

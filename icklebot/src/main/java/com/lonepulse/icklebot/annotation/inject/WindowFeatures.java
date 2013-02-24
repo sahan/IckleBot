@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.annotation.config;
+package com.lonepulse.icklebot.annotation.inject;
 
 /*
  * #%L
@@ -25,13 +25,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import android.app.Activity;
-import android.app.Fragment;
+import android.view.Window;
+
+import com.lonepulse.icklebot.IckleActivity;
 
 /**
- * <p>This annotation marks the <b>layout</b> which is to be used 
- * by the an {@link Activity} or {@link Fragment} or any of their 
- * derivatives.</p>
+ * <p>Used to annotate an {@link IckleActivity} with <i>Window 
+ * Feature</i> metadata using the constants declared in {@link Window}.</p>
  * 
  * @version 1.0.0
  * <br><br>
@@ -39,15 +39,19 @@ import android.app.Fragment;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Layout {
+public @interface WindowFeatures {
 
 	/**
-	 * <p>The {@code integer} which identifies the <b>resource id</b> 
-	 * of the layout to be used.</p>
+	 * <p>The array of {@code int}s containing the IDs of the 
+	 * <i>window features</i> to be applied. These constants 
+	 * can be found in {@link Window}.</p>
 	 * 
-	 * @return the layout resource id
+	 * <p>Empty by default.</p>
+	 * 
+	 * @return the constant {@code int} IDs representing the  
+	 * 		   {@link Window} features to be used.
 	 * <br><br>
 	 * @since 1.0.0
 	 */
-	int value();
+	int[] value() default {};
 }

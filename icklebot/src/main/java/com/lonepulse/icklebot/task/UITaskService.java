@@ -26,7 +26,7 @@ import java.util.Set;
 import android.app.Activity;
 import android.util.Log;
 
-import com.lonepulse.icklebot.annotation.task.UI;
+import com.lonepulse.icklebot.annotation.thread.UI;
 import com.lonepulse.icklebot.util.MethodUtils;
 
 /**

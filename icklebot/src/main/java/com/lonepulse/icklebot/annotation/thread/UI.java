@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.annotation.task;
+package com.lonepulse.icklebot.annotation.thread;
 
 /*
  * #%L
@@ -26,7 +26,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * <p>Marks a method which should run in a separate <i>background thread</i>.</p>
+ * <p>Marks a method which should run on the <i>UI Event Loop</i>.</p>
  * 
  * @version 1.0.0
  * <br><br>
@@ -34,15 +34,25 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface Async {
+public @interface UI {
 	
 	/**
 	 * <p>The {@code integer} which identifies the <b>id</b> 
-	 * of the background task.</p>
+	 * of the UI task.</p>
 	 * 
-	 * @return the id of the background task
+	 * @return the id of the UI task
 	 * <br><br>
 	 * @since 1.0.0
 	 */
 	int value();
+	
+	/**
+	 * <p>A {@code long} value which specifies the <i>delay</i> 
+	 * in executing the UI task. No delay is used by default.
+	 * 
+	 * @return the delay before UI task execution
+	 * <br><br>
+	 * @since 1.0.0
+	 */
+	long delay() default 0l;
 }

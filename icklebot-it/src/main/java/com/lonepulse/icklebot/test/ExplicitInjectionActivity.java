@@ -28,8 +28,6 @@ import android.telephony.TelephonyManager;
 import android.widget.Button;
 
 import com.lonepulse.icklebot.IckleActivity;
-import com.lonepulse.icklebot.annotation.config.Layout;
-import com.lonepulse.icklebot.annotation.config.Title;
 import com.lonepulse.icklebot.annotation.inject.InjectApplication;
 import com.lonepulse.icklebot.annotation.inject.InjectDrawable;
 import com.lonepulse.icklebot.annotation.inject.InjectInteger;
@@ -37,6 +35,8 @@ import com.lonepulse.icklebot.annotation.inject.InjectPojo;
 import com.lonepulse.icklebot.annotation.inject.InjectService;
 import com.lonepulse.icklebot.annotation.inject.InjectString;
 import com.lonepulse.icklebot.annotation.inject.InjectView;
+import com.lonepulse.icklebot.annotation.inject.Layout;
+import com.lonepulse.icklebot.annotation.inject.Title;
 import com.lonepulse.icklebot.test.app.ApplicationService;
 import com.lonepulse.icklebot.test.service.AccountsService;
 import com.lonepulse.icklebot.test.service.AccountsServiceImpl;

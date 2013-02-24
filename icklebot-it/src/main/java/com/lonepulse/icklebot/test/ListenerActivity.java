@@ -26,9 +26,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.lonepulse.icklebot.IckleActivity;
-import com.lonepulse.icklebot.annotation.config.Layout;
-import com.lonepulse.icklebot.annotation.config.Title;
 import com.lonepulse.icklebot.annotation.inject.InjectView;
+import com.lonepulse.icklebot.annotation.inject.Layout;
+import com.lonepulse.icklebot.annotation.inject.Title;
 import com.lonepulse.icklebot.annotation.listener.Click;
 
 /**

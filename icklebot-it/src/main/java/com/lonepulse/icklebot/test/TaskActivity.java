@@ -25,10 +25,10 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.lonepulse.icklebot.IckleActivity;
-import com.lonepulse.icklebot.annotation.config.Layout;
-import com.lonepulse.icklebot.annotation.config.Title;
-import com.lonepulse.icklebot.annotation.task.Async;
-import com.lonepulse.icklebot.annotation.task.UI;
+import com.lonepulse.icklebot.annotation.inject.Layout;
+import com.lonepulse.icklebot.annotation.inject.Title;
+import com.lonepulse.icklebot.annotation.thread.Async;
+import com.lonepulse.icklebot.annotation.thread.UI;
 
 /**
  * <p>An extension of {@link IckleActivity} which is used to test the 

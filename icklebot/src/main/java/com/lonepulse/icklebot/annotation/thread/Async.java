@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.annotation.config;
+package com.lonepulse.icklebot.annotation.thread;
 
 /*
  * #%L
@@ -25,16 +25,24 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import android.app.Activity;
-
 /**
- * <p>Allows the {@link Activity} to take the entire screen space by 
- * removing the <b>Status Bar</b>.</p>
+ * <p>Marks a method which should run in a separate <i>background thread</i>.</p>
  * 
  * @version 1.0.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface Fullscreen {}
+@Target(ElementType.METHOD)
+public @interface Async {
+	
+	/**
+	 * <p>The {@code integer} which identifies the <b>id</b> 
+	 * of the background task.</p>
+	 * 
+	 * @return the id of the background task
+	 * <br><br>
+	 * @since 1.0.0
+	 */
+	int value();
+}

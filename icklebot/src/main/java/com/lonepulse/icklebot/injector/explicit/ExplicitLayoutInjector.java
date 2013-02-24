@@ -23,7 +23,7 @@ package com.lonepulse.icklebot.injector.explicit;
 import android.app.Activity;
 import android.view.View;
 
-import com.lonepulse.icklebot.annotation.config.Layout;
+import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.injector.Injector;
 import com.lonepulse.icklebot.util.TypeUtils;
 

@@ -24,9 +24,9 @@ import android.app.Activity;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.lonepulse.icklebot.annotation.config.Fullscreen;
-import com.lonepulse.icklebot.annotation.config.Title;
-import com.lonepulse.icklebot.annotation.config.WindowFeatures;
+import com.lonepulse.icklebot.annotation.inject.Fullscreen;
+import com.lonepulse.icklebot.annotation.inject.Title;
+import com.lonepulse.icklebot.annotation.inject.WindowFeatures;
 import com.lonepulse.icklebot.injector.Injector;
 import com.lonepulse.icklebot.injector.Injector.Configuration;
 import com.lonepulse.icklebot.util.TypeUtils;

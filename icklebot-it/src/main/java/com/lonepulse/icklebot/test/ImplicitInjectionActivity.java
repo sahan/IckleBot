@@ -27,9 +27,9 @@ import android.telephony.TelephonyManager;
 import android.widget.Button;
 
 import com.lonepulse.icklebot.IckleActivity;
-import com.lonepulse.icklebot.annotation.config.Layout;
-import com.lonepulse.icklebot.annotation.config.Title;
 import com.lonepulse.icklebot.annotation.inject.InjectAll;
+import com.lonepulse.icklebot.annotation.inject.Layout;
+import com.lonepulse.icklebot.annotation.inject.Title;
 import com.lonepulse.icklebot.test.app.ApplicationService;
 import com.lonepulse.icklebot.test.service.AccountsService;
 

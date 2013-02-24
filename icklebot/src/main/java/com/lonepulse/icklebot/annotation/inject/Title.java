@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.annotation.config;
+package com.lonepulse.icklebot.annotation.inject;
 
 /*
  * #%L
