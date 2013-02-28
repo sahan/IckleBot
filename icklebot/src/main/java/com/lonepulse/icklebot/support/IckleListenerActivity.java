@@ -79,6 +79,11 @@ public abstract class IckleListenerActivity extends Activity {
 	 */
 	private void link() {
 		
-		ListenerLinkers.CLICK.link(LISTENER_CONFIGURATION);
+		ListenerLinkers[] allLinkers = ListenerLinkers.values();
+		
+		for (ListenerLinkers listenerLinker : allLinkers) {
+			
+			listenerLinker.link(LISTENER_CONFIGURATION);
+		}
 	}
 }

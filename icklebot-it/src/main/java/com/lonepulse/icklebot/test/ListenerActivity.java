@@ -22,14 +22,16 @@ package com.lonepulse.icklebot.test;
 
 
 import android.os.Bundle;
-import android.view.View;
+import android.view.MotionEvent;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.lonepulse.icklebot.IckleActivity;
 import com.lonepulse.icklebot.annotation.inject.InjectView;
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.annotation.inject.Title;
 import com.lonepulse.icklebot.annotation.listener.Click;
+import com.lonepulse.icklebot.annotation.listener.Touch;
 
 /**
  * <p>An extension of {@link IckleActivity} which is used to test the 
@@ -41,15 +43,18 @@ import com.lonepulse.icklebot.annotation.listener.Click;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-@Layout(R.layout.act_explicit_injection)
-@Title(id = R.string.ttl_act_explicit_injection)
+@Layout(R.layout.act_listener)
+@Title(id = R.string.ttl_act_listener)
 public class ListenerActivity extends IckleActivity {
 	
 
 	@InjectView(R.id.btnSubmit)
 	Button btnSubmit;
 	
+	@InjectView(R.id.txtAlias)
+	TextView txtAlias;
 
+	
 	/**
 	 * <p>Exposes {@link #onCreate(Bundle)} and allows unit 
 	 * tests to invoke it from an external context.
@@ -61,8 +66,17 @@ public class ListenerActivity extends IckleActivity {
 	}
 	
 	@Click(R.id.btnSubmit)
-	public void onSubmit(View view) {
+	public void onSubmit(Button button) {
 		
-		((Button)view).setText("Submitted");
+		button.setText("Submitted");
+	}
+	
+	@Touch(R.id.txtAlias)
+	public void onTouch(TextView textView, MotionEvent motionEvent) {
+		
+		if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+			
+			textView.setText("Ick le Bot");
+		}
 	}
 }

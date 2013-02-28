@@ -21,6 +21,7 @@ package com.lonepulse.icklebot.listener.resolver;
  */
 
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 
 /**
  * <p>Identifies the <i>category</i> to which a particular listener linking 
@@ -38,5 +39,13 @@ public enum ListenerCategory {
 	 * 
 	 * @since 1.1.0 
 	 */
-	CLICK;
+	CLICK,
+	
+	/**
+	 * <p>This <i>category</i> is responsible for identifying the 
+	 * linking of {@link OnTouchListener}s.
+	 * 
+	 * @since 1.1.0 
+	 */
+	TOUCH;
 }

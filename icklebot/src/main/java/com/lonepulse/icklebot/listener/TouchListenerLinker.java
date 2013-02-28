@@ -26,33 +26,34 @@ import java.util.Set;
 
 import android.app.Activity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 
-import com.lonepulse.icklebot.annotation.listener.Click;
+import com.lonepulse.icklebot.annotation.listener.Touch;
 import com.lonepulse.icklebot.listener.resolver.ListenerCategory;
 
 /**
  * <p>A concrete implementation of {@link ListenerLinker} which links methods 
- * annotated with {@code @Click} to the specified {@link View}s.
+ * annotated with {@code @Click} to the specified {@link pView}s.
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-class ClickListenerLinker implements ListenerLinker {
+class TouchListenerLinker implements ListenerLinker {
 
 	
 	/**
-	 * <p>An <i>eager initialized</i> instance of {@link ClickListenerLinker}.</p>
+	 * <p>An <i>eager initialized</i> instance of {@link TouchListenerLinker}.</p>
 	 * 
 	 * @since 1.0.0
 	 */
-	public static final ClickListenerLinker INSTANCE; 
+	public static final TouchListenerLinker INSTANCE; 
 
 	static 
 	{
-		INSTANCE = new ClickListenerLinker();
+		INSTANCE = new TouchListenerLinker();
 	}
 	
 	
@@ -64,28 +65,47 @@ class ClickListenerLinker implements ListenerLinker {
 
 		final Activity listenerTemplate = config.getActivity();
 		
-		Set<Method> methods = config.getListenerTargets(ListenerCategory.CLICK);
+		Set<Method> methods = config.getListenerTargets(ListenerCategory.TOUCH);
 		
 		for (final Method method : methods) {
 			
-			OnClickListener onClickListener = new OnClickListener() {
+			OnTouchListener onTouchListener = new OnTouchListener() {
 				
 				@Override
-				public void onClick(View v) {
-
+				public boolean onTouch(View v, MotionEvent event) {
+					
 					try {
 						
 						if(!method.isAccessible()) method.setAccessible(true);
 						
 						Class<?>[] params = method.getParameterTypes();
 						
-						boolean viewArgPresent = false;
-						
-						if(params.length == 1)
-							viewArgPresent = View.class.isAssignableFrom(params[0]);
+						Object[] args = new Object[params.length];
+						boolean argsPopulated = false;
+
+						if(params.length < 3) {
 							
-						if(viewArgPresent)
-							method.invoke(listenerTemplate, v);
+							argsPopulated = true;
+							
+							for(int i = 0; i < params.length; i++) {
+							
+								if(View.class.isAssignableFrom(params[i])) {
+									
+									args[i] = v;
+								}
+								else if(MotionEvent.class.isAssignableFrom(params[i])) {
+									
+									args[i] = event;
+								}
+								else {
+									
+									argsPopulated = false;
+								}
+							}
+						}
+							
+						if(argsPopulated)
+							method.invoke(listenerTemplate, args);
 							
 						else
 							method.invoke(listenerTemplate);
@@ -97,27 +117,29 @@ class ClickListenerLinker implements ListenerLinker {
 						.append(method.getName())
 						.append(" at ")
 						.append(listenerTemplate.getClass().getName())
-						.append(" failed for event OnClick.");
+						.append(" failed for event OnTouch.");
 						
 						Log.e(getClass().getName(), builder.toString(), e);
 					}
+
+					return false;
 				}
 			};
 			
 			try {
 				
-				int[] views = method.getAnnotation(Click.class).value();
+				int[] views = method.getAnnotation(Touch.class).value();
 				
 				for (int id : views) {
 
 					try {
 						
-						listenerTemplate.findViewById(id).setOnClickListener(onClickListener);
+						listenerTemplate.findViewById(id).setOnTouchListener(onTouchListener);
 					}
 					catch (Exception e) {
 						
 						StringBuilder builder = new StringBuilder()
-						.append("Click listener linking failed on method ")
+						.append("Touch listener linking failed on method ")
 						.append(method.getName())
 						.append(" at ")
 						.append(listenerTemplate.getClass().getName())
@@ -132,7 +154,7 @@ class ClickListenerLinker implements ListenerLinker {
 			catch (Exception e) {
 				
 				StringBuilder builder = new StringBuilder()
-				.append("Click listener linking failed on method ")
+				.append("Touch listener linking failed on method ")
 				.append(method.getName())
 				.append(" at ")
 				.append(listenerTemplate.getClass().getName())

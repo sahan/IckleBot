@@ -28,7 +28,7 @@ import android.view.View;
  * <p>Maintains a set of {@link ListenerLinker} <i>singletons</i> which are used 
  * by any {@link Activity} which implements the {@link Activity}.</p>
  * 
- * @version 1.1.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -40,7 +40,15 @@ public enum ListenerLinkers implements ListenerLinker {
 	 * 
 	 * @since 1.1.0
 	 */
-	CLICK(ClickListenerLinker.INSTANCE);
+	CLICK(ClickListenerLinker.INSTANCE),
+	
+	/**
+	 * <p>This {@link ListenerLinker} is responsible for linking 
+	 * the {@link View.OnTouchListener}s of an {@link Activity}.</p>
+	 * 
+	 * @since 1.1.0
+	 */
+	TOUCH(TouchListenerLinker.INSTANCE);
 	
 	
 	/**

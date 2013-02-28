@@ -27,9 +27,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import android.os.SystemClock;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.lonepulse.icklebot.annotation.listener.Click;
+import com.lonepulse.icklebot.annotation.listener.Touch;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 
 /**
@@ -37,7 +40,7 @@ import com.xtremelabs.robolectric.RobolectricTestRunner;
  * 
  * @category test
  * <br><br>
- * @version 1.1.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -66,6 +69,12 @@ public class ListenerActivityTest {
 		activity.onCreate(null);
 		
 		activity.btnSubmit.performClick();
+		
+		MotionEvent press = MotionEvent.obtain(SystemClock.uptimeMillis(), 
+											   SystemClock.uptimeMillis(), 
+											   MotionEvent.ACTION_DOWN, 0.0f, 0.0f, 0);
+		
+		activity.txtAlias.dispatchTouchEvent(press);
 	}
 
 	/**
@@ -80,5 +89,19 @@ public class ListenerActivityTest {
 	public final void testClickEvent() throws Exception {
 	
 		assertTrue(activity.btnSubmit.getText().equals("Submitted"));
+	}
+	
+	/**
+	 * <p>Test for {@link Touch} and {@link View.OnTouchListener}.
+	 * 
+	 * @throws Exception
+	 * 			if test terminated with an error
+	 * 
+	 * @since 1.1.1
+	 */
+	@Test
+	public final void testTouchEvent() throws Exception {
+		
+		assertTrue(activity.txtAlias.getText().equals("Ick le Bot"));
 	}
 }

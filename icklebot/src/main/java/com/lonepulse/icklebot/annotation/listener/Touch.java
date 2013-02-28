@@ -1,11 +1,4 @@
-package com.lonepulse.icklebot.listener.resolver;
-
-import java.lang.reflect.Method;
-import java.util.HashSet;
-import java.util.Set;
-
-import com.lonepulse.icklebot.annotation.listener.Click;
-import com.lonepulse.icklebot.annotation.listener.Touch;
+package com.lonepulse.icklebot.annotation.listener;
 
 /*
  * #%L
@@ -27,32 +20,33 @@ import com.lonepulse.icklebot.annotation.listener.Touch;
  * #L%
  */
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import android.view.View;
 
 /**
- * <p>An implementation of {@link ListenerResolver} which caters to 
- * listener event linking.
+ * <p>Marks a method as a callback which is to be executed for the <b>onTouch</b> 
+ * event for a {@link View}.   
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-class BasicListenerResolver implements ListenerResolver {
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Touch {
 
-	
 	/**
-	 * {@inheritDoc}
+	 * <p>The list of {@link View} IDs that executes this method 
+	 * as its touch event callback.
+	 * 
+	 * @return the IDs of the {@link View}s that are registered 
+	 * 		   for this callback
+	 * <br><br>
+	 * @since 1.1.0
 	 */
-	@Override
-	public Set<ListenerCategory> resolve(Method method) {
-
-		Set<ListenerCategory> categories = new HashSet<ListenerCategory>();
-		
-		if(method.isAnnotationPresent(Click.class))
-			categories.add(ListenerCategory.CLICK);
-		
-		if(method.isAnnotationPresent(Touch.class))
-			categories.add(ListenerCategory.TOUCH);
-		
-		return categories;
-	}
+	int[] value();
 }
