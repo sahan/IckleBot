@@ -31,8 +31,8 @@ import android.os.SystemClock;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.lonepulse.icklebot.annotation.listener.Click;
-import com.lonepulse.icklebot.annotation.listener.Touch;
+import com.lonepulse.icklebot.annotation.event.Click;
+import com.lonepulse.icklebot.annotation.event.Touch;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 
 /**

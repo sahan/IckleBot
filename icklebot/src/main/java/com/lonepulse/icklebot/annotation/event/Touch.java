@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.annotation.listener;
+package com.lonepulse.icklebot.annotation.event;
 
 /*
  * #%L
@@ -28,7 +28,7 @@ import java.lang.annotation.Target;
 import android.view.View;
 
 /**
- * <p>Marks a method as a callback which is to be executed for the <b>onClick</b> 
+ * <p>Marks a method as a callback which is to be executed for the <b>onTouch</b> 
  * event for a {@link View}.   
  * 
  * @version 1.1.0
@@ -37,14 +37,14 @@ import android.view.View;
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Click {
+public @interface Touch {
 
 	/**
 	 * <p>The list of {@link View} IDs that executes this method 
-	 * as its click event callback.
+	 * as its touch event callback.
 	 * 
 	 * @return the IDs of the {@link View}s that are registered 
-	 * 		   for a particular callback
+	 * 		   for this callback
 	 * <br><br>
 	 * @since 1.1.0
 	 */

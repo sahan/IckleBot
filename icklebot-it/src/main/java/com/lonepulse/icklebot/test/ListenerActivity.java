@@ -27,11 +27,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.lonepulse.icklebot.IckleActivity;
+import com.lonepulse.icklebot.annotation.event.Click;
+import com.lonepulse.icklebot.annotation.event.Touch;
 import com.lonepulse.icklebot.annotation.inject.InjectView;
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.annotation.inject.Title;
-import com.lonepulse.icklebot.annotation.listener.Click;
-import com.lonepulse.icklebot.annotation.listener.Touch;
 
 /**
  * <p>An extension of {@link IckleActivity} which is used to test the 

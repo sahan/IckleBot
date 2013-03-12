@@ -29,7 +29,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import com.lonepulse.icklebot.annotation.listener.Click;
+import com.lonepulse.icklebot.annotation.event.Click;
 import com.lonepulse.icklebot.listener.resolver.ListenerCategory;
 
 /**

@@ -4,8 +4,8 @@ import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.lonepulse.icklebot.annotation.listener.Click;
-import com.lonepulse.icklebot.annotation.listener.Touch;
+import com.lonepulse.icklebot.annotation.event.Click;
+import com.lonepulse.icklebot.annotation.event.Touch;
 
 /*
  * #%L

@@ -30,7 +30,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
-import com.lonepulse.icklebot.annotation.listener.Touch;
+import com.lonepulse.icklebot.annotation.event.Touch;
 import com.lonepulse.icklebot.listener.resolver.ListenerCategory;
 
 /**
