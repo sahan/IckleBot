@@ -8,7 +8,7 @@ simplified threading and event model. **2** A runtime dependency injection frame
 ##About
 
 **IckleBot** facilitates quick Android development by generating boilerplate code in 
-`Activity` instances and offers an alternative simplified threading model. It encourages 
+`Activity` instances and offers alternative simplified threading and event models. It encourages 
 loose-coupling and maintainability by providing a runtime [dependency injection](http://en.wikipedia.org/wiki/Dependency_injection) 
 framework.   
    
