@@ -24,6 +24,8 @@ Annotation based Android development with...
 * An alternative threading model which simplifies the execution of worker threads and 
 UI tasks.   
 
+* An alternative event model which simplifies the linking of event listeners.   
+
 * Activity state management and configuration of window features.   
 <br/>
 
