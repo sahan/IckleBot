@@ -1,7 +1,7 @@
 ![IckleBot](https://raw.github.com/sahan/IckleBot/master/logo.png)
 
 > **IckleBot** /'ikəl'bôt/ <em>noun.</em> **1** A boilerplate code generator with a 
-simplified threading model. **2** A runtime dependency injection framework. 
+simplified threading and event model. **2** A runtime dependency injection framework. 
 [![Build Status](https://travis-ci.org/sahan/IckleBot.png?branch=master)](https://travis-ci.org/sahan/IckleBot)
 
 <br/>
