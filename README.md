@@ -70,7 +70,9 @@ Kickoff with the [quickstart](https://github.com/sahan/IckleBot/wiki/Quickstart)
 
 5. [Leverage Implicit Injection](https://github.com/sahan/IckleBot/wiki/Leverage-Implicit-Injection)
 
-6. [Use IckleBot's Threading Model](https://github.com/sahan/IckleBot/wiki/Use-IckleBot's-Threading-Model)   
+6. [Use IckleBot's Threading Model](https://github.com/sahan/IckleBot/wiki/Use-IckleBot's-Threading-Model)
+  
+7. [Use IckleBot's Event Model](https://github.com/sahan/IckleBot/wiki/Use-IckleBot's-Event-Model)   
 <br/>
 
 ##License
