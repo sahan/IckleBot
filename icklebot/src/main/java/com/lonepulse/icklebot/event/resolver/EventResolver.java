@@ -1,11 +1,4 @@
-package com.lonepulse.icklebot.listener.resolver;
-
-import java.lang.reflect.Method;
-import java.util.HashSet;
-import java.util.Set;
-
-import com.lonepulse.icklebot.annotation.event.Click;
-import com.lonepulse.icklebot.annotation.event.Touch;
+package com.lonepulse.icklebot.event.resolver;
 
 /*
  * #%L
@@ -27,32 +20,30 @@ import com.lonepulse.icklebot.annotation.event.Touch;
  * #L%
  */
 
+import java.lang.reflect.Method;
+import java.util.Set;
 
 /**
- * <p>An implementation of {@link ListenerResolver} which caters to 
- * listener event linking.
+ * <p>The contract by which instance methods are resolved to determine 
+ * their {@link EventCategory}s.</p>
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-class BasicListenerResolver implements ListenerResolver {
+public interface EventResolver {
 
-	
 	/**
-	 * {@inheritDoc}
+	 * <p>Takes a {@link Method} and determines all applicable 
+	 * {@link EventCategory}s to which it falls.</p>
+	 * 
+	 * @param method
+	 * 			the {@link Method} whose {@link EventCategory}s 
+	 * 			are to be resolved
+	 * <br><br>
+	 * @return the set if resolved {@link EventCategory}s
+	 * <br><br>
+	 * @since 1.1.0
 	 */
-	@Override
-	public Set<ListenerCategory> resolve(Method method) {
-
-		Set<ListenerCategory> categories = new HashSet<ListenerCategory>();
-		
-		if(method.isAnnotationPresent(Click.class))
-			categories.add(ListenerCategory.CLICK);
-		
-		if(method.isAnnotationPresent(Touch.class))
-			categories.add(ListenerCategory.TOUCH);
-		
-		return categories;
-	}
+	public abstract Set<EventCategory> resolve(Method method);
 }

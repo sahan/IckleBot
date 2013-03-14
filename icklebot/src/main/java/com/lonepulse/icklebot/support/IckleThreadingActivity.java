@@ -24,8 +24,7 @@ package com.lonepulse.icklebot.support;
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.lonepulse.icklebot.task.AsyncTaskService;
-import com.lonepulse.icklebot.task.UITaskService;
+import com.lonepulse.icklebot.task.TaskManagers;
 
 /**
  * <p>This activity can be extended to isolate and leverage the listener 
@@ -46,7 +45,7 @@ public abstract class IckleThreadingActivity extends Activity {
 	 */
 	protected void runAsyncTask(int asyncTaskId, Object... args) {
 		
-		AsyncTaskService.INSTANCE.execute(this, asyncTaskId, args);
+		TaskManagers.ASYNC.execute(this, asyncTaskId, args);
 	}
 	
 	/**
@@ -56,6 +55,6 @@ public abstract class IckleThreadingActivity extends Activity {
 	 */
 	protected void runUITask(int uiTaskId, final Object... args) {
 		
-		UITaskService.INSTANCE.execute(this, uiTaskId, args);
+		TaskManagers.UI.execute(this, uiTaskId, args);
 	}
 }

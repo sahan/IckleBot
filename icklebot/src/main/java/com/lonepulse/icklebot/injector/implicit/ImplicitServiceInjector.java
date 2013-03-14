@@ -42,19 +42,6 @@ class ImplicitServiceInjector implements Injector {
 
 	
 	/**
-	 * <p>An <i>eager initialized</i> instance of {@link ImplicitServiceInjector}.</p>
-	 * 
-	 * @since 1.0.0
-	 */
-	public static final ImplicitServiceInjector INSTANCE; 
-
-	static 
-	{
-		INSTANCE = new ImplicitServiceInjector();
-	}
-	
-	
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override

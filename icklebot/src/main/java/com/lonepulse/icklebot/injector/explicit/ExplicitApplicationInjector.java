@@ -42,19 +42,6 @@ class ExplicitApplicationInjector implements Injector {
 	
 	
 	/**
-	 * <p>An <i>eager initialized</i> instance of {@link ExplicitApplicationInjector}.</p>
-	 * 
-	 * @since 1.0.0
-	 */
-	public static final ExplicitApplicationInjector INSTANCE; 
-
-	static 
-	{
-		INSTANCE = new ExplicitApplicationInjector();
-	}
-
-	
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override

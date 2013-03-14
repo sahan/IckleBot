@@ -41,19 +41,6 @@ import com.lonepulse.icklebot.util.TypeUtils;
  */
 class ExplicitLayoutInjector implements Injector {
 	
-	
-	/**
-	 * <p>An <i>eager initialized</i> instance of {@link ExplicitLayoutInjector}.</p>
-	 * 
-	 * @since 1.0.0
-	 */
-	public static final ExplicitLayoutInjector INSTANCE; 
-
-	static 
-	{
-		INSTANCE = new ExplicitLayoutInjector();
-	}
-
 
 	/**
 	 * {@inheritDoc}

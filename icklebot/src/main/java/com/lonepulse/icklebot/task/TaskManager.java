@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.listener.resolver;
+package com.lonepulse.icklebot.task;
 
 /*
  * #%L
@@ -20,30 +20,35 @@ package com.lonepulse.icklebot.listener.resolver;
  * #L%
  */
 
-import java.lang.reflect.Method;
-import java.util.Set;
+import android.app.Activity;
 
 /**
- * <p>The contract by which instance methods are resolved to determine 
- * their {@link ListenerCategory}s.</p>
+ * <p>This contract declares the services offered by a <i>background task 
+ * executors</i>.</p>  
  * 
- * @version 1.1.0
+ * @version 1.0.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public interface ListenerResolver {
+public interface TaskManager {
 
+	
 	/**
-	 * <p>Takes a {@link Method} and determines all applicable 
-	 * {@link ListenerCategory}s to which it falls.</p>
+	 * <p>Executes a method designated as a <i>Task</i> identified 
+	 * by a unique <i>ID</i>.</p>
 	 * 
-	 * @param method
-	 * 			the {@link Method} whose {@link ListenerCategory}s 
-	 * 			are to be resolved
+	 * @param activity
+	 *			the {@link Activity} which provides the 
+	 *			context in which the <i>UI Task</i> is run 
 	 * <br><br>
-	 * @return the set if resolved {@link ListenerCategory}s
+	 * @param taskId
+	 * 			the {@code int} ID of the <i>Task</i>
 	 * <br><br>
-	 * @since 1.1.0
+	 * @param args
+	 * 			an array of {@link Object}s which supply the 
+	 * 			parameters to the task
+	 * <br><br>
+	 * @since 1.0.0
 	 */
-	public abstract Set<ListenerCategory> resolve(Method method);
+	public void execute(final Activity activity, int taskId, final Object... args);
 }

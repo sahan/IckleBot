@@ -31,10 +31,10 @@ import java.util.WeakHashMap;
 import android.app.Activity;
 
 import com.lonepulse.icklebot.annotation.inject.InjectAll;
+import com.lonepulse.icklebot.event.resolver.EventCategory;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
 import com.lonepulse.icklebot.injector.resolver.InjectionResolver;
 import com.lonepulse.icklebot.injector.resolver.InjectionResolvers;
-import com.lonepulse.icklebot.listener.resolver.ListenerCategory;
 
 /**
  * <p>This is the common contract which all injectors must implement.</p>
@@ -49,7 +49,7 @@ public interface Injector {
 	 * <p>Stores information about the injection process; such as the 
 	 * {@link activity} which has requested injection and the 
 	 * target {@link Field}s in this activity grouped into their categories
-	 * by {@link ListenerCategory}.</p>
+	 * by {@link EventCategory}.</p>
 	 * 
 	 * @version 1.0.0
 	 * <br><br>
@@ -149,7 +149,7 @@ public interface Injector {
 		
 		/**
 		 * <p>The target {@link Field}s in the {@link #activity} 
-		 * activity grouped into their categories by {@link ListenerCategory}.</p>
+		 * activity grouped into their categories by {@link EventCategory}.</p>
 		 * 
 		 * @since 1.0.0
 		 */
@@ -313,16 +313,16 @@ public interface Injector {
 
 		/**
 		 * <p>Mutator for {@link #injectionTargets}. Takes a {@link Field} 
-		 * along with its associated {@link ListenerCategory} and puts it 
+		 * along with its associated {@link EventCategory} and puts it 
 		 * to the appropriate {@link Set} in {@link #injectionTargets}.</p>
 		 * 
 		 * @param injectionCategory
-		 * 			the {@link ListenerCategory} to which the 
+		 * 			the {@link EventCategory} to which the 
 		 * 			{@link Field} belongs to	
 		 * <br><br>
 		 * @param field
 		 * 			the {@link Field} to be categorized into an 
-		 * 			{@link ListenerCategory}
+		 * 			{@link EventCategory}
 		 * <br><br>
 		 * @since 1.0.0
 		 */
@@ -340,13 +340,13 @@ public interface Injector {
 		}
 		
 		/**
-		 * <p>Takes an {@link ListenerCategory} and retrieves 
+		 * <p>Takes an {@link EventCategory} and retrieves 
 		 * the {@link Set} of {@link Field}s under that category 
 		 * as mapped in {@link #injectionTargets}.</p> 
 		 * 
 		 * @param injectionCategory
 		 * 			the fields are to be retrieved for this 
-		 * 			{@link ListenerCategory}			
+		 * 			{@link EventCategory}			
 		 * <br><br>
 		 * @return the {@link Set} of {@link Field}s  under 
 		 * 		   the category, else an empty {@link Set}

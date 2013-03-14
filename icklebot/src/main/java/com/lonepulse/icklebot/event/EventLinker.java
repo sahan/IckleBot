@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.listener;
+package com.lonepulse.icklebot.event;
 
 /*
  * #%L
@@ -30,8 +30,8 @@ import java.util.Set;
 
 import android.app.Activity;
 
-import com.lonepulse.icklebot.listener.resolver.ListenerCategory;
-import com.lonepulse.icklebot.listener.resolver.ListenerResolvers;
+import com.lonepulse.icklebot.event.resolver.EventCategory;
+import com.lonepulse.icklebot.event.resolver.EventResolvers;
 
 /**
  * <p>This is the common contract which all listener linkers must implement.</p>
@@ -40,13 +40,13 @@ import com.lonepulse.icklebot.listener.resolver.ListenerResolvers;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public interface ListenerLinker {
+public interface EventLinker {
 	
 	/**
 	 * <p>Stores information about the event listener linking process; such 
 	 * as the {@link activity} which has linking event listeners and the 
 	 * target {@link Method}s in this activity grouped into their listener 
-	 * categories by {@link ListenerCategory}.</p>
+	 * categories by {@link EventCategory}.</p>
 	 * 
 	 * @version 1.1.0
 	 * <br><br>
@@ -55,7 +55,7 @@ public interface ListenerLinker {
 	public static final class Configuration {
 		
 		/**
-		 * <p>A cache of all {@link ListenerLinker.Configuration}s processed. Configurations 
+		 * <p>A cache of all {@link EventLinker.Configuration}s processed. Configurations 
 		 * are keyed by the {@link Class} of their {@link activity} implementations.</p> 
 		 * 
 		 * @version 1.1.0
@@ -77,7 +77,7 @@ public interface ListenerLinker {
 			 * @since 1.1.0
 			 */
 			private Map<Class<? extends Activity>, Configuration>  cache
-				= new HashMap<Class<? extends Activity>, ListenerLinker.Configuration>();
+				= new HashMap<Class<? extends Activity>, EventLinker.Configuration>();
 			
 			/**
 			 * <p>A delegate for {@link Map#put(Object, Object)} which wraps the 
@@ -136,15 +136,15 @@ public interface ListenerLinker {
 		
 		/**
 		 * <p>The target {@link Method}s in the {@link #activity} 
-		 * activity grouped into their categories by {@link ListenerCategory}.</p>
+		 * activity grouped into their categories by {@link EventCategory}.</p>
 		 * 
 		 * @since 1.1.0
 		 */
-		private Map<ListenerCategory, Set<Method>> listenerTargets;
+		private Map<EventCategory, Set<Method>> listenerTargets;
 
 		
 		/**
-		 * <p>Creates a <b>new</b> instance of {@link ListenerLinker.Configuration} 
+		 * <p>Creates a <b>new</b> instance of {@link EventLinker.Configuration} 
 		 * using the passed {@link activity}.</p>
 		 * 
 		 * <p>This is to be used in an <i>instantiated context</i>.</p>
@@ -153,7 +153,7 @@ public interface ListenerLinker {
 		 * 			the {@link activity} which has requested event 
 		 * 			listener linking
 		 * <br><br>
-		 * @return a new instance of {@link ListenerLinker.Configuration}
+		 * @return a new instance of {@link EventLinker.Configuration}
 		 * <br><br>
 		 * @since 1.1.0
 		 */
@@ -167,9 +167,9 @@ public interface ListenerLinker {
 			
 			for (Method method : methods) {
 			
-				Set<ListenerCategory> listenerCategories = ListenerResolvers.BASIC.resolve(method);
+				Set<EventCategory> listenerCategories = EventResolvers.BASIC.resolve(method);
 				
-				for (ListenerCategory listenerCategory : listenerCategories) {
+				for (EventCategory listenerCategory : listenerCategories) {
 					
 					config.putListenerTarget(listenerCategory, method);
 				}
@@ -179,7 +179,7 @@ public interface ListenerLinker {
 		}
 		
 		/**
-		 * <p>Retrieves the <b>cached</b> instance of {@link ListenerLinker.Configuration} 
+		 * <p>Retrieves the <b>cached</b> instance of {@link EventLinker.Configuration} 
 		 * using the passed {@link activity}. If cached instance is not 
 		 * found, a new instance is created, via {@link #newInstance(activity)}, 
 		 * and cached.</p>
@@ -188,7 +188,7 @@ public interface ListenerLinker {
 		 * 			the {@link activity} which has requested event 
 		 * 			listener linking
 		 * <br><br>
-		 * @return the <b>cached</b> instance of {@link ListenerLinker.Configuration}
+		 * @return the <b>cached</b> instance of {@link EventLinker.Configuration}
 		 * <br><br>
 		 * @since 1.1.0
 		 */
@@ -219,7 +219,7 @@ public interface ListenerLinker {
 		 */
 		private Configuration() {
 			
-			this.listenerTargets = new HashMap<ListenerCategory, Set<Method>>(); 
+			this.listenerTargets = new HashMap<EventCategory, Set<Method>>(); 
 		}
 
 		/**
@@ -255,27 +255,27 @@ public interface ListenerLinker {
 		 * <br><br>
 		 * @since 1.1.0
 		 */
-		public Map<ListenerCategory, Set<Method>> getListenerTargets() {
+		public Map<EventCategory, Set<Method>> getListenerTargets() {
 			
 			return listenerTargets;
 		}
 
 		/**
 		 * <p>Mutator for {@link #listenerTargets}. Takes a {@link Method} 
-		 * along with its associated {@link ListenerCategory} and puts it 
+		 * along with its associated {@link EventCategory} and puts it 
 		 * to the appropriate {@link Set} in {@link #listenerTargets}.</p>
 		 * 
 		 * @param listenerCategory
-		 * 			the {@link ListenerCategory} to which the 
+		 * 			the {@link EventCategory} to which the 
 		 * 			{@link Method} belongs
 		 * <br><br>
 		 * @param method
 		 * 			the {@link Method} to be categorized into an 
-		 * 			{@link ListenerCategory}
+		 * 			{@link EventCategory}
 		 * <br><br>
 		 * @since 1.1.0
 		 */
-		private void putListenerTarget(ListenerCategory listenerCategory, Method method) {
+		private void putListenerTarget(EventCategory listenerCategory, Method method) {
 			
 			Set<Method> methods = listenerTargets.get(listenerCategory);
 			
@@ -289,20 +289,20 @@ public interface ListenerLinker {
 		}
 		
 		/**
-		 * <p>Takes an {@link ListenerCategory} and retrieves 
+		 * <p>Takes an {@link EventCategory} and retrieves 
 		 * the {@link Set} of {@link Field}s under that category 
 		 * as mapped in {@link #listenerTargets}.</p> 
 		 * 
 		 * @param listenerCategory
 		 * 			the fields are to be retrieved for this 
-		 * 			{@link ListenerCategory}			
+		 * 			{@link EventCategory}			
 		 * <br><br>
 		 * @return the {@link Set} of {@link Field}s  under 
 		 * 		   the category, else an empty {@link Set}
 		 * <br><br>
 		 * @since 1.1.0
 		 */
-		public Set<Method> getListenerTargets(ListenerCategory listenerCategory) {
+		public Set<Method> getListenerTargets(EventCategory listenerCategory) {
 			
 			Set<Method> targets = listenerTargets.get(listenerCategory);
 			
@@ -312,13 +312,13 @@ public interface ListenerLinker {
 	 }
 	
 	/**
-	 * <p>Takes an {@link ListenerLinker.Configuration} and links the event listener 
-	 * handled by this implementation of {@link ListenerLinker} to the given views.
+	 * <p>Takes an {@link EventLinker.Configuration} and links the event listener 
+	 * handled by this implementation of {@link EventLinker} to the given views.
 	 * 
 	 * @param config
-	 * 			the {@link ListenerLinker.Configuration} which for this {@link ListenerLinker}
+	 * 			the {@link EventLinker.Configuration} which for this {@link EventLinker}
 	 * <br><br>
 	 * @since 1.1.0
 	 */
-	public abstract void link(final ListenerLinker.Configuration config);
+	public abstract void link(final EventLinker.Configuration config);
 }

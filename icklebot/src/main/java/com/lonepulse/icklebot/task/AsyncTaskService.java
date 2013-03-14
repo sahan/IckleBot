@@ -33,26 +33,26 @@ import com.lonepulse.icklebot.util.MethodUtils;
  * <p>This service is delegated the responsibility of executing background 
  * tasks on a <b>Worker Thread</b> in a {@link Activity}.</p>
  * 
- * @version 1.0.0
+ * @version 1.2.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public class AsyncTaskService implements TaskService {
+class AsyncTaskService implements TaskManager {
 
 	
 	/**
-	 * <p>An <i>eager initialized</i> instance of {@link AsyncTaskService}.</p>
+	 * <p>Creates a new instance of an implementation of 
+	 * {@link TaskManager}.
 	 * 
-	 * @since 1.0.0
+	 * @return a new instance of {@link TaskManager}.
+	 * 
+	 * @since 1.2.0
 	 */
-	public static final AsyncTaskService INSTANCE; 
-
-	static 
-	{
-		INSTANCE = new AsyncTaskService();
+	public static final TaskManager newInstance() {
+		
+		return new AsyncTaskService();
 	}
 	
-
 	/**
 	 * {@inheritDoc}
 	 * 

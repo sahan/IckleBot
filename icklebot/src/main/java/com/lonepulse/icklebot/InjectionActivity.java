@@ -60,7 +60,7 @@ abstract class InjectionActivity extends ThreadingActivity {
 		
 		super.onCreate(savedInstanceState);
 
-		if(ProfileService.INSTANCE.isActive(this, PROFILE.INJECTION)) {
+		if(ProfileService.getInstance().isActive(this, PROFILE.INJECTION)) {
 		
 			long millis = System.currentTimeMillis();
 	
@@ -114,7 +114,7 @@ abstract class InjectionActivity extends ThreadingActivity {
 	
 	/**
 	 * <p>Performs <b>Implicit Injection</b> using the set of 
-	 * {@link Injector}s at {@link ImplicitInjectors}.
+	 * {@link Injector}s at {@link TaskManagers}.
 	 */
 	private void injectImplicitly() {
 		
@@ -132,7 +132,7 @@ abstract class InjectionActivity extends ThreadingActivity {
 
 		super.onSaveInstanceState(outState);
 		
-		StateService.INSTANCE.save(this, outState);
+		StateService.getInstance().save(this, outState);
 	}
 	
 	/**
@@ -143,6 +143,6 @@ abstract class InjectionActivity extends ThreadingActivity {
 		
 		super.onRestoreInstanceState(savedInstanceState);
 		
-		StateService.INSTANCE.restore(this, savedInstanceState);
+		StateService.getInstance().restore(this, savedInstanceState);
 	}
 }

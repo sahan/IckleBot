@@ -46,19 +46,6 @@ class ExplicitResourceInjector implements Injector {
 	
 	
 	/**
-	 * <p>An <i>eager initialized</i> instance of {@link ExplicitResourceInjector}.</p>
-	 * 
-	 * @since 1.0.0
-	 */
-	public static final ExplicitResourceInjector INSTANCE; 
-
-	static 
-	{
-		INSTANCE = new ExplicitResourceInjector();
-	}
-	
-	
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override

@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.listener;
+package com.lonepulse.icklebot.event;
 
 /*
  * #%L
@@ -30,41 +30,28 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.lonepulse.icklebot.annotation.event.Click;
-import com.lonepulse.icklebot.listener.resolver.ListenerCategory;
+import com.lonepulse.icklebot.event.resolver.EventCategory;
 
 /**
- * <p>A concrete implementation of {@link ListenerLinker} which links methods 
+ * <p>A concrete implementation of {@link EventLinker} which links methods 
  * annotated with {@code @Click} to the specified {@link View}s.
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-class ClickListenerLinker implements ListenerLinker {
+class ClickEventLinker implements EventLinker {
 
-	
-	/**
-	 * <p>An <i>eager initialized</i> instance of {@link ClickListenerLinker}.</p>
-	 * 
-	 * @since 1.0.0
-	 */
-	public static final ClickListenerLinker INSTANCE; 
-
-	static 
-	{
-		INSTANCE = new ClickListenerLinker();
-	}
-	
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void link(ListenerLinker.Configuration config) {
+	public void link(EventLinker.Configuration config) {
 
 		final Activity listenerTemplate = config.getActivity();
 		
-		Set<Method> methods = config.getListenerTargets(ListenerCategory.CLICK);
+		Set<Method> methods = config.getListenerTargets(EventCategory.CLICK);
 		
 		for (final Method method : methods) {
 			

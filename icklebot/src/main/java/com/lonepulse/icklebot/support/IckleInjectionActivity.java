@@ -40,7 +40,7 @@ import com.lonepulse.icklebot.state.StateService;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-abstract class IckleInjectionActivity extends Activity {
+public abstract class IckleInjectionActivity extends Activity {
 
 
 	/**
@@ -113,7 +113,7 @@ abstract class IckleInjectionActivity extends Activity {
 	
 	/**
 	 * <p>Performs <b>Implicit Injection</b> using the set of 
-	 * {@link Injector}s at {@link ImplicitInjectors}.
+	 * {@link Injector}s at {@link TaskManagers}.
 	 */
 	private void injectImplicitly() {
 		
@@ -131,7 +131,7 @@ abstract class IckleInjectionActivity extends Activity {
 
 		super.onSaveInstanceState(outState);
 		
-		StateService.INSTANCE.save(this, outState);
+		StateService.getInstance().save(this, outState);
 	}
 	
 	/**
@@ -142,6 +142,6 @@ abstract class IckleInjectionActivity extends Activity {
 		
 		super.onRestoreInstanceState(savedInstanceState);
 		
-		StateService.INSTANCE.restore(this, savedInstanceState);
+		StateService.getInstance().restore(this, savedInstanceState);
 	}
 }

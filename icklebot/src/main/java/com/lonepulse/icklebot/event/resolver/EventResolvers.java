@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.listener.resolver;
+package com.lonepulse.icklebot.event.resolver;
 
 /*
  * #%L
@@ -25,31 +25,31 @@ import java.util.Set;
 
 
 /**
- * <p>A repository of {@link ListenerResolvers} for different <i>modes</i> 
+ * <p>A repository of {@link EventResolvers} for different <i>modes</i> 
  * of injection - such as <i>Implicit</i> and <i>Explicit<i> Injection Modes.</p>
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public enum ListenerResolvers implements ListenerResolver {
+public enum EventResolvers implements EventResolver {
 
 	/**
-	 * <p>The default {@link ListenerResolver} which is responsible for 
+	 * <p>The default {@link EventResolver} which is responsible for 
 	 * resolving listener linkers for a given event method.
 	 *
 	 * @since 1.1.0
 	 */
-	BASIC(new BasicListenerResolver());
+	BASIC(new BasicEventResolver());
 	
 	
 	/**
-	 * <p>The instance of {@link ListenerResolver} used to resolve 
-	 * the categories specified in {@link ListenerCategory}.</p>
+	 * <p>The instance of {@link EventResolver} used to resolve 
+	 * the categories specified in {@link EventCategory}.</p>
 	 * 
 	 * @since 1.1.0
 	 */
-	private ListenerResolver listenerResolver;
+	private EventResolver listenerResolver;
 	
 	/**
 	 * <p>A parameterized constructor which populates {@link #listenerResolver}.</p>
@@ -59,7 +59,7 @@ public enum ListenerResolvers implements ListenerResolver {
 	 * <br><br>
 	 * @since 1.1.0
 	 */
-	private ListenerResolvers(ListenerResolver listenerResolver) {
+	private EventResolvers(EventResolver listenerResolver) {
 		
 		this.listenerResolver = listenerResolver;
 	}
@@ -70,7 +70,7 @@ public enum ListenerResolvers implements ListenerResolver {
 	 * @since 1.1.0
 	 */
 	@Override
-	public Set<ListenerCategory> resolve(Method method) {
+	public Set<EventCategory> resolve(Method method) {
 		
 		return listenerResolver.resolve(method);
 	}

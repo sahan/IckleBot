@@ -71,7 +71,7 @@ public @interface Profiles {
 		 * 
 		 * @since 1.1.0
 		 */
-		LISTENER,
+		EVENT,
 		
 		/**
 		 * <p>Identifies the profile which offers the <b>alternative 

@@ -42,19 +42,6 @@ class ExplicitPojoInjector implements Injector {
 	
 	
 	/**
-	 * <p>An <i>eager initialized</i> instance of {@link ExplicitPojoInjector}.</p>
-	 * 
-	 * @since 1.0.0
-	 */
-	public static final ExplicitPojoInjector INSTANCE; 
-
-	static 
-	{
-		INSTANCE = new ExplicitPojoInjector();
-	}
-
-	
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override

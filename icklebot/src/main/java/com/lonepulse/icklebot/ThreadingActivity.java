@@ -25,8 +25,7 @@ import android.util.Log;
 
 import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
 import com.lonepulse.icklebot.profile.ProfileService;
-import com.lonepulse.icklebot.task.AsyncTaskService;
-import com.lonepulse.icklebot.task.UITaskService;
+import com.lonepulse.icklebot.task.TaskManagers;
 
 /**
  * <p>This profile offers an alternative threading model for running background 
@@ -45,7 +44,7 @@ abstract class ThreadingActivity extends Activity {
 	 */
 	private boolean isProfileActive;
 	{
-		isProfileActive = ProfileService.INSTANCE.isActive(this, PROFILE.THREADING);
+		isProfileActive = ProfileService.getInstance().isActive(this, PROFILE.THREADING);
 	}
 	
 
@@ -68,7 +67,7 @@ abstract class ThreadingActivity extends Activity {
 			return;
 		}
 		
-		AsyncTaskService.INSTANCE.execute(ThreadingActivity.this, asyncTaskId, args);
+		TaskManagers.ASYNC.execute(ThreadingActivity.this, asyncTaskId, args);
 	}
 	
 	/**
@@ -90,6 +89,6 @@ abstract class ThreadingActivity extends Activity {
 			return;
 		}
 		
-		UITaskService.INSTANCE.execute(ThreadingActivity.this, uiTaskId, args);
+		TaskManagers.UI.execute(ThreadingActivity.this, uiTaskId, args);
 	}
 }

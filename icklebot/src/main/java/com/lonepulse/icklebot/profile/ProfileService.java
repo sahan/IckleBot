@@ -31,33 +31,40 @@ import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
  * <p>This is a utility class which is used to determine the activation status 
  * of a {@link PROFILE} for a particular {@link IckleActivity}.
  * 
- * @version 1.1.1
+ * @version 1.1.2
  * <b></b>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 public class ProfileService implements ProfileManager {
 
 
-	/**
-	 * <p>An <i>eager initialized</i> instance of {@link ProfileService}.</p>
-	 * 
-	 * @since 1.1.0
-	 */
-	public static final ProfileManager INSTANCE = new ProfileService();
+	private static ProfileManager instance;
 	
-	
+
 	/**
 	 * <p>Instantiation is restricted. Use the {@link #newInstance()} 
-	 * or {@link #INSTANCE} instead.
+	 * or {@link #getInstance()} instead.
 	 */
 	private ProfileService() {}
 	
+	/**
+	 * <p>Returns a lazy initialized instance of a {@link ProfileManager} 
+	 * implementation.
+	 * 
+	 * @return the single {@link #instance} of {@link ProfileManager}.
+	 * 
+	 * @since 1.1.2
+	 */
+	public static final ProfileManager getInstance() {
+		
+		return (instance == null)? (instance = new ProfileService()) :instance;
+	}
 	
 	/**
 	 * <p>Creates a new instance of an implementation of 
 	 * {@link ProfileManager}.
 	 * 
-	 * @return a new implementation of {@link ProfileManager}.
+	 * @return a new instance of {@link ProfileManager}.
 	 * 
 	 * @since 1.1.1
 	 */

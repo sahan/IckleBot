@@ -37,20 +37,7 @@ import com.lonepulse.icklebot.util.MethodUtils;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public class UITaskService implements TaskService {
-	
-	
-	/**
-	 * <p>An <i>eager initialized</i> instance of {@link UITaskService}.</p>
-	 * 
-	 * @since 1.0.0
-	 */
-	public static final UITaskService INSTANCE; 
-
-	static 
-	{
-		INSTANCE = new UITaskService();
-	}
+class UITaskService implements TaskManager {
 	
 	
 	/**

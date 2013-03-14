@@ -42,7 +42,7 @@ public enum ExplicitInjectors implements Injector {
 	 * 
 	 * @since 1.0.0
 	 */
-	CONFIGURATION(ExplicitConfigurationInjector.INSTANCE),
+	CONFIGURATION(new ExplicitConfigurationInjector()),
 	
 	/**
 	 * <p>This {@link Injector} is responsible for injecting the 
@@ -55,7 +55,7 @@ public enum ExplicitInjectors implements Injector {
 	 * 
 	 * @since 1.0.0
 	 */
-	APPLICATION(ExplicitApplicationInjector.INSTANCE),
+	APPLICATION(new ExplicitApplicationInjector()),
 	
 	/**
 	 * <p>This {@link Injector} is responsible for injecting the 
@@ -63,7 +63,7 @@ public enum ExplicitInjectors implements Injector {
 	 * 
 	 * @since 1.0.0
 	 */
-	LAYOUT(ExplicitLayoutInjector.INSTANCE),
+	LAYOUT(new ExplicitLayoutInjector()),
 	
 	/**
 	 * <p>This {@link Injector} is responsible for injecting the 
@@ -71,7 +71,7 @@ public enum ExplicitInjectors implements Injector {
 	 * 
 	 * @since 1.0.0
 	 */
-	RESOURCES(ExplicitResourceInjector.INSTANCE),
+	RESOURCES(new ExplicitResourceInjector()),
 	
 	/**
 	 * <p>This {@link Injector} is responsible for injecting any 
@@ -79,7 +79,7 @@ public enum ExplicitInjectors implements Injector {
 	 * 
 	 * @since 1.0.0
 	 */
-	SERVICES(ExplicitServiceInjector.INSTANCE),
+	SERVICES(new ExplicitServiceInjector()),
 	
 	/**
 	 * <p>This {@link Injector} is responsible for injecting any 
@@ -87,7 +87,7 @@ public enum ExplicitInjectors implements Injector {
 	 * 
 	 * @since 1.0.0
 	 */
-	POJOS(ExplicitPojoInjector.INSTANCE);
+	POJOS(new ExplicitPojoInjector());
 	
 	
 	/**

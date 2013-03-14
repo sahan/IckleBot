@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.listener;
+package com.lonepulse.icklebot.event;
 
 /*
  * #%L
@@ -31,41 +31,28 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 
 import com.lonepulse.icklebot.annotation.event.Touch;
-import com.lonepulse.icklebot.listener.resolver.ListenerCategory;
+import com.lonepulse.icklebot.event.resolver.EventCategory;
 
 /**
- * <p>A concrete implementation of {@link ListenerLinker} which links methods 
+ * <p>A concrete implementation of {@link EventLinker} which links methods 
  * annotated with {@code @Click} to the specified {@link pView}s.
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-class TouchListenerLinker implements ListenerLinker {
+class TouchEventLinker implements EventLinker {
 
-	
-	/**
-	 * <p>An <i>eager initialized</i> instance of {@link TouchListenerLinker}.</p>
-	 * 
-	 * @since 1.0.0
-	 */
-	public static final TouchListenerLinker INSTANCE; 
-
-	static 
-	{
-		INSTANCE = new TouchListenerLinker();
-	}
-	
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void link(ListenerLinker.Configuration config) {
+	public void link(EventLinker.Configuration config) {
 
 		final Activity listenerTemplate = config.getActivity();
 		
-		Set<Method> methods = config.getListenerTargets(ListenerCategory.TOUCH);
+		Set<Method> methods = config.getListenerTargets(EventCategory.TOUCH);
 		
 		for (final Method method : methods) {
 			

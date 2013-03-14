@@ -49,7 +49,7 @@ public enum ImplicitInjectors implements Injector {
 	 * 
 	 * @since 1.0.0
 	 */
-	APPLICATION(ImplicitApplicationInjector.INSTANCE),
+	APPLICATION(new ImplicitApplicationInjector()),
 	
 	/**
 	 * <p>This {@link Injector} is responsible for injecting 
@@ -57,7 +57,7 @@ public enum ImplicitInjectors implements Injector {
 	 * 
 	 * @since 1.0.0
 	 */
-	RESOURCES(ImplicitResourceInjector.INSTANCE),
+	RESOURCES(new ImplicitResourceInjector()),
 	
 	/**
 	 * <p>This {@link Injector} is responsible for injecting any 
@@ -65,7 +65,7 @@ public enum ImplicitInjectors implements Injector {
 	 * 
 	 * @since 1.0.0
 	 */
-	SERVICES(ImplicitServiceInjector.INSTANCE),
+	SERVICES(new ImplicitServiceInjector()),
 	
 	/**
 	 * <p>This {@link Injector} is responsible for injecting 

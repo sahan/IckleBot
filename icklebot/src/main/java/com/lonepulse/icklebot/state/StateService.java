@@ -43,25 +43,33 @@ import com.lonepulse.icklebot.util.FieldUtils;
 public class StateService implements StateManager {
 
 
-	/**
-	 * <p>An <i>eager initialized</i> instance of {@link StateService}.</p>
-	 * 
-	 * @since 1.1.0
-	 */
-	public static final StateService INSTANCE = new StateService();
+	private static StateManager instance;
 	
 	
 	/**
 	 * <p>Instantiation is restricted. Use the {@link #newInstance()} 
-	 * or {@link #INSTANCE} instead.
+	 * or {@link #getInstance()} instead.
 	 */
 	private StateService() {}
+
+	/**
+	 * <p>Creates a new instance of an implementation of 
+	 * {@link StateManager}.
+	 * 
+	 * @return a new instance of {@link StateManager}.
+	 * 
+	 * @since 1.1.1
+	 */
+	public static final StateManager getInstance() {
+		
+		return (instance == null)? (instance = new StateService()) :instance;
+	}
 	
 	/**
 	 * <p>Creates a new instance of an implementation of 
 	 * {@link StateManager}.
 	 * 
-	 * @return a new implementation of {@link StateManager}.
+	 * @return a new instance of {@link StateManager}.
 	 * 
 	 * @since 1.1.1
 	 */

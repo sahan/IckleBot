@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot;
+package com.lonepulse.icklebot.support;
 
 /*
  * #%L
@@ -21,33 +21,33 @@ package com.lonepulse.icklebot;
  */
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
-import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
-import com.lonepulse.icklebot.listener.ListenerLinker;
-import com.lonepulse.icklebot.listener.ListenerLinkers;
-import com.lonepulse.icklebot.profile.ProfileService;
+import com.lonepulse.icklebot.event.EventLinker;
+import com.lonepulse.icklebot.event.EventLinkers;
 
 /**
- * <p>This profile offers the linking of event listeners to {@link View}s.
+ * <p>This activity can be extended to isolate and leverage the listener 
+ * linking features of IckleBot during the {@link Activity#onCreate(Bundle)} 
+ * life-cycle callback.
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-abstract class ListenerActivity extends InjectionActivity {
+public abstract class IckleEventActivity extends Activity {
 
 
 	/**
-	 * <p>The {@link ListenerLinkers.Configuration} for this {@link IckleActivity}.</p>
+	 * <p>The {@link EventLinkers.Configuration} for this {@link Activity}.</p>
 	 * 
 	 * @since 1.1.0
 	 */
-	private final ListenerLinker.Configuration LISTENER_CONFIGURATION;
+	private final EventLinker.Configuration LISTENER_CONFIGURATION;
 	{
-		LISTENER_CONFIGURATION = ListenerLinker.Configuration.getInstance(this);
+		LISTENER_CONFIGURATION = EventLinker.Configuration.getInstance(this);
 	}
 	
 	
@@ -59,16 +59,13 @@ abstract class ListenerActivity extends InjectionActivity {
 		
 		super.onCreate(savedInstanceState);
 		
-		if(ProfileService.INSTANCE.isActive(this, PROFILE.LISTENER)) {
-			
-			long millis = System.currentTimeMillis();
-	
-			link();
-	
-			millis = System.currentTimeMillis() - millis;
-			
-			Log.d("INSTRUMENTATION:IckleListenerActivity#link()", getClass().getSimpleName() + ": " + millis + "ms");
-		}
+		long millis = System.currentTimeMillis();
+
+		link();
+
+		millis = System.currentTimeMillis() - millis;
+		
+		Log.d("INSTRUMENTATION:IckleEventActivity#link()", getClass().getSimpleName() + ": " + millis + "ms");
 	}
 
 	/**
@@ -82,12 +79,11 @@ abstract class ListenerActivity extends InjectionActivity {
 	 */
 	private void link() {
 		
-		ListenerLinkers[] allLinkers = ListenerLinkers.values();
+		EventLinkers[] allLinkers = EventLinkers.values();
 		
-		for (ListenerLinkers listenerLinker : allLinkers) {
+		for (EventLinkers listenerLinker : allLinkers) {
 			
 			listenerLinker.link(LISTENER_CONFIGURATION);
 		}
 	}
 }
-

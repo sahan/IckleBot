@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.task;
+package com.lonepulse.icklebot.event.resolver;
 
 /*
  * #%L
@@ -20,35 +20,32 @@ package com.lonepulse.icklebot.task;
  * #L%
  */
 
-import android.app.Activity;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 
 /**
- * <p>This contract declares the services offered by a <i>background task 
- * executors</i>.</p>  
+ * <p>Identifies the <i>category</i> to which a particular listener linking 
+ * operation falls.</p>
  * 
- * @version 1.0.0
+ * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public interface TaskService {
+public enum EventCategory {
 
+	/**
+	 * <p>This <i>category</i> is responsible for identifying the 
+	 * linking of {@link OnClickListener}s.
+	 * 
+	 * @since 1.1.0 
+	 */
+	CLICK,
 	
 	/**
-	 * <p>Executes a method designated as a <i>Task</i> identified 
-	 * by a unique <i>ID</i>.</p>
+	 * <p>This <i>category</i> is responsible for identifying the 
+	 * linking of {@link OnTouchListener}s.
 	 * 
-	 * @param activity
-	 *			the {@link Activity} which provides the 
-	 *			context in which the <i>UI Task</i> is run 
-	 * <br><br>
-	 * @param taskId
-	 * 			the {@code int} ID of the <i>Task</i>
-	 * <br><br>
-	 * @param args
-	 * 			an array of {@link Object}s which supply the 
-	 * 			parameters to the task
-	 * <br><br>
-	 * @since 1.0.0
+	 * @since 1.1.0 
 	 */
-	public void execute(final Activity activity, int taskId, final Object... args);
+	TOUCH;
 }

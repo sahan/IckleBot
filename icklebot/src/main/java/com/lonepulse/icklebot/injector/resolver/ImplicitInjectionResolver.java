@@ -33,7 +33,7 @@ import com.lonepulse.icklebot.annotation.inject.InjectAll;
 import com.lonepulse.icklebot.annotation.inject.Pojo;
 
 /**
- * <p>An implementation of {@link ListenerResolver} which caters to 
+ * <p>An implementation of {@link EventResolver} which caters to 
  * <b>Implicit Injections</b> activated via {@link InjectAll}.</p>
  * 
  * @version 1.0.0
@@ -77,13 +77,13 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	
 	/**
 	 * <p>Determines if this {@link Field} injection falls into 
-	 * {@link ListenerCategory#APPLICATION}.</p>
+	 * {@link EventCategory#APPLICATION}.</p>
 	 * 
 	 * @param field
-	 * 			the {@link Field} whose {@link ListenerCategory} is to 
+	 * 			the {@link Field} whose {@link EventCategory} is to 
 	 * 			be resolved
 	 * <br><br>
-	 * @return {@code true} if it's {@link ListenerCategory#APPLICATION}, 
+	 * @return {@code true} if it's {@link EventCategory#APPLICATION}, 
 	 * 			else {@code false}
 	 * <br><br>
 	 * @since 1.0.0
@@ -95,13 +95,13 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	
 	/**
 	 * <p>Determines if this {@link Field} injection falls into 
-	 * {@link ListenerCategory#RESOURCE_VIEW}.</p>
+	 * {@link EventCategory#RESOURCE_VIEW}.</p>
 	 * 
 	 * @param field
-	 * 			the {@link Field} whose {@link ListenerCategory} is to 
+	 * 			the {@link Field} whose {@link EventCategory} is to 
 	 * 			be resolved
 	 * <br><br>
-	 * @return {@code true} if it's {@link ListenerCategory#RESOURCE_VIEW}, 
+	 * @return {@code true} if it's {@link EventCategory#RESOURCE_VIEW}, 
 	 * 			else {@code false}
 	 * <br><br>
 	 * @since 1.0.0
@@ -113,13 +113,13 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	
 	/**
 	 * <p>Determines if this {@link Field} injection falls into 
-	 * {@link ListenerCategory#RESOURCE_INTEGER}.</p>
+	 * {@link EventCategory#RESOURCE_INTEGER}.</p>
 	 * 
 	 * @param field
-	 * 			the {@link Field} whose {@link ListenerCategory} is to 
+	 * 			the {@link Field} whose {@link EventCategory} is to 
 	 * 			be resolved
 	 * <br><br>
-	 * @return {@code true} if it's {@link ListenerCategory#RESOURCE_INTEGER}, 
+	 * @return {@code true} if it's {@link EventCategory#RESOURCE_INTEGER}, 
 	 * 			else {@code false}
 	 * <br><br>
 	 * @since 1.0.0
@@ -132,13 +132,13 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	
 	/**
 	 * <p>Determines if this {@link Field} injection falls into 
-	 * {@link ListenerCategory#RESOURCE_STRING}.</p>
+	 * {@link EventCategory#RESOURCE_STRING}.</p>
 	 * 
 	 * @param field
-	 * 			the {@link Field} whose {@link ListenerCategory} is to 
+	 * 			the {@link Field} whose {@link EventCategory} is to 
 	 * 			be resolved
 	 * <br><br>
-	 * @return {@code true} if it's {@link ListenerCategory#RESOURCE_STRING}, 
+	 * @return {@code true} if it's {@link EventCategory#RESOURCE_STRING}, 
 	 * 			else {@code false}
 	 * <br><br>
 	 * @since 1.0.0
@@ -150,13 +150,13 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	
 	/**
 	 * <p>Determines if this {@link Field} injection falls into 
-	 * {@link ListenerCategory#RESOURCE_DRAWABLE}.</p>
+	 * {@link EventCategory#RESOURCE_DRAWABLE}.</p>
 	 * 
 	 * @param field
-	 * 			the {@link Field} whose {@link ListenerCategory} is to 
+	 * 			the {@link Field} whose {@link EventCategory} is to 
 	 * 			be resolved
 	 * <br><br>
-	 * @return {@code true} if it's {@link ListenerCategory#RESOURCE_DRAWABLE}, 
+	 * @return {@code true} if it's {@link EventCategory#RESOURCE_DRAWABLE}, 
 	 * 			else {@code false}
 	 * <br><br>
 	 * @since 1.0.0
@@ -168,13 +168,13 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	
 	/**
 	 * <p>Determines if this {@link Field} injection falls into 
-	 * {@link ListenerCategory#POJO}.</p>
+	 * {@link EventCategory#POJO}.</p>
 	 * 
 	 * @param field
-	 * 			the {@link Field} whose {@link ListenerCategory} is to 
+	 * 			the {@link Field} whose {@link EventCategory} is to 
 	 * 			be resolved
 	 * <br><br>
-	 * @return {@code true} if it's {@link ListenerCategory#POJO}, 
+	 * @return {@code true} if it's {@link EventCategory#POJO}, 
 	 * 			else {@code false}
 	 * <br><br>
 	 * @since 1.0.0
@@ -186,7 +186,7 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	
 	/**
 	 * <p>Determines if this {@link Field} injection falls into 
-	 * {@link ListenerCategory#SERVICE}.</p>
+	 * {@link EventCategory#SERVICE}.</p>
 	 * 
 	 * <p>The {@link Field}'s <i>declared name</i> must match the 
 	 * respective constant in {@link Context} (case insensitive). 
@@ -198,10 +198,10 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	 * {@code TelephonyManager TELEPHONY_SERVICE;}
 	 * 
 	 * @param field
-	 * 			the {@link Field} whose {@link ListenerCategory} is to 
+	 * 			the {@link Field} whose {@link EventCategory} is to 
 	 * 			be resolved
 	 * <br><br>
-	 * @return {@code true} if it's {@link ListenerCategory#SERVICE}, 
+	 * @return {@code true} if it's {@link EventCategory#SERVICE}, 
 	 * 			else {@code false}
 	 * <br><br>
 	 * @since 1.0.0

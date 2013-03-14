@@ -37,7 +37,7 @@ import com.lonepulse.icklebot.annotation.thread.Async;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public enum TaskExecutor {
+enum TaskExecutor {
 
 	/**
 	 * <p>The single instance of the {@link TaskExecutor} used 
@@ -78,6 +78,7 @@ public enum TaskExecutor {
 	 * @since 1.0.0
 	 */
 	public void execute(final Activity activity, final Method method, final Object... args) {
+		
 		try {
 		
 			executorService.execute(new Runnable() {

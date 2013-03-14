@@ -44,19 +44,6 @@ class ExplicitConfigurationInjector implements Injector {
 
 	
 	/**
-	 * <p>An <i>eager initialized</i> instance of {@link ExplicitConfigurationInjector}.</p>
-	 * 
-	 * @since 1.0.0
-	 */
-	public static final ExplicitConfigurationInjector INSTANCE; 
-
-	static 
-	{
-		INSTANCE = new ExplicitConfigurationInjector();
-	}
-	
-	
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override

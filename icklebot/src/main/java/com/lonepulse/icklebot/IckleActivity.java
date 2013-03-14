@@ -31,15 +31,15 @@ import android.util.Log;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public abstract class IckleActivity extends ListenerActivity {
+public abstract class IckleActivity extends EventActivity {
 
 	/**
 	 * <p>This callback is executed when the {@link IckleActivity} is being 
 	 * created. It invokes the dependency injection and event listener linking 
-	 * via the {@link IckleInjectionActivity} and the {@link IckleListenerActivity}.</p>
+	 * via the {@link IckleInjectionActivity} and the {@link IckleEventActivity}.</p>
 	 * 
 	 * <p>See {@link IckleInjectionActivity#onCreate(Bundle)}.</p> 
-	 * <p>See {@link IckleListenerActivity#onCreate(Bundle)}.</p>
+	 * <p>See {@link IckleEventActivity#onCreate(Bundle)}.</p>
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

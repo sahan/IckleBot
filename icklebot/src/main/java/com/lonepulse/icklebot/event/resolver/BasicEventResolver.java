@@ -1,4 +1,11 @@
-package com.lonepulse.icklebot.listener.resolver;
+package com.lonepulse.icklebot.event.resolver;
+
+import java.lang.reflect.Method;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.lonepulse.icklebot.annotation.event.Click;
+import com.lonepulse.icklebot.annotation.event.Touch;
 
 /*
  * #%L
@@ -20,32 +27,32 @@ package com.lonepulse.icklebot.listener.resolver;
  * #L%
  */
 
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 
 /**
- * <p>Identifies the <i>category</i> to which a particular listener linking 
- * operation falls.</p>
+ * <p>An implementation of {@link EventResolver} which caters to 
+ * listener event linking.
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public enum ListenerCategory {
+class BasicEventResolver implements EventResolver {
 
-	/**
-	 * <p>This <i>category</i> is responsible for identifying the 
-	 * linking of {@link OnClickListener}s.
-	 * 
-	 * @since 1.1.0 
-	 */
-	CLICK,
 	
 	/**
-	 * <p>This <i>category</i> is responsible for identifying the 
-	 * linking of {@link OnTouchListener}s.
-	 * 
-	 * @since 1.1.0 
+	 * {@inheritDoc}
 	 */
-	TOUCH;
+	@Override
+	public Set<EventCategory> resolve(Method method) {
+
+		Set<EventCategory> categories = new HashSet<EventCategory>();
+		
+		if(method.isAnnotationPresent(Click.class))
+			categories.add(EventCategory.CLICK);
+		
+		if(method.isAnnotationPresent(Touch.class))
+			categories.add(EventCategory.TOUCH);
+		
+		return categories;
+	}
 }

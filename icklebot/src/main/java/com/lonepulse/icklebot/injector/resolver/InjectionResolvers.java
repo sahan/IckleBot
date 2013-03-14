@@ -24,7 +24,7 @@ import java.lang.reflect.Field;
 
 
 /**
- * <p>A repository of {@link ListenerResolvers} for different <i>modes</i> 
+ * <p>A repository of {@link EventResolvers} for different <i>modes</i> 
  * of injection - such as <i>Implicit</i> and <i>Explicit<i> Injection Modes.</p>
  * 
  * @version 1.0.0
@@ -34,7 +34,7 @@ import java.lang.reflect.Field;
 public enum InjectionResolvers implements InjectionResolver {
 
 	/**
-	 * <p>The {@link ListenerResolver} responsible for resolving 
+	 * <p>The {@link EventResolver} responsible for resolving 
 	 * <i>Implicit Injection</i>.</p>
 	 *
 	 * @since 1.0.0
@@ -42,7 +42,7 @@ public enum InjectionResolvers implements InjectionResolver {
 	IMPLICIT(new ImplicitInjectionResolver()),
 	
 	/**
-	 * <p>The {@link ListenerResolver} responsible for resolving 
+	 * <p>The {@link EventResolver} responsible for resolving 
 	 * <i>Implicit Injection</i>.</p>
 	 *
 	 * @since 1.0.0
@@ -51,8 +51,8 @@ public enum InjectionResolvers implements InjectionResolver {
 	
 	
 	/**
-	 * <p>The instance of {@link ListenerResolver} used to resolve 
-	 * the categories specified in {@link ListenerCategory}.</p>
+	 * <p>The instance of {@link EventResolver} used to resolve 
+	 * the categories specified in {@link EventCategory}.</p>
 	 * 
 	 * @since 1.0.0
 	 */

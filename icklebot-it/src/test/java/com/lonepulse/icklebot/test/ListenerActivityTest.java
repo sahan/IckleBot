@@ -36,7 +36,7 @@ import com.lonepulse.icklebot.annotation.event.Touch;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 
 /**
- * <p>Unit test for {@link ListenerActivity}.
+ * <p>Unit test for {@link EventActivity}.
  * 
  * @category test
  * <br><br>
@@ -49,7 +49,7 @@ public class ListenerActivityTest {
 	
 	
 	/**
-	 * <p>The instance of {@link ListenerActivity} 
+	 * <p>The instance of {@link EventActivity} 
 	 * whose event listener linking is to be tested.
 	 */
 	private ListenerActivity activity;
