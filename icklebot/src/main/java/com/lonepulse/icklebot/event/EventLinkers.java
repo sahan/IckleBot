@@ -90,7 +90,7 @@ public enum EventLinkers implements EventLinker {
 			
 			StringBuilder stringBuilder = new StringBuilder();
 			
-			stringBuilder.append("Listener linking using ");
+			stringBuilder.append("Event linking using ");
 			stringBuilder.append(listenerLinker.getClass().getName());
 			stringBuilder.append(" failed on activity ");
 			stringBuilder.append(config.getActivity().getClass().getName());

@@ -36,10 +36,10 @@ public abstract class IckleActivity extends EventActivity {
 	/**
 	 * <p>This callback is executed when the {@link IckleActivity} is being 
 	 * created. It invokes the dependency injection and event listener linking 
-	 * via the {@link IckleInjectionActivity} and the {@link IckleEventActivity}.</p>
+	 * via the {@link InjectionActivity} and the {@link EventActivity}.</p>
 	 * 
-	 * <p>See {@link IckleInjectionActivity#onCreate(Bundle)}.</p> 
-	 * <p>See {@link IckleEventActivity#onCreate(Bundle)}.</p>
+	 * <p>See {@link InjectionActivity#onCreate(Bundle)}.</p> 
+	 * <p>See {@link EventActivity#onCreate(Bundle)}.</p>
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

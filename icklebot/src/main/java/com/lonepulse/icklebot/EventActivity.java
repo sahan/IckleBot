@@ -33,21 +33,21 @@ import com.lonepulse.icklebot.profile.ProfileService;
 /**
  * <p>This profile offers the linking of event listeners to {@link View}s.
  * 
- * @version 1.1.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 abstract class EventActivity extends InjectionActivity {
-
-
+	
+		
 	/**
 	 * <p>The {@link EventLinkers.Configuration} for this {@link IckleActivity}.</p>
 	 * 
 	 * @since 1.1.0
 	 */
-	private final EventLinker.Configuration LISTENER_CONFIGURATION;
+	private final EventLinker.Configuration EVENT_CONFIGURATION;
 	{
-		LISTENER_CONFIGURATION = EventLinker.Configuration.getInstance(this);
+		EVENT_CONFIGURATION = EventLinker.Configuration.getInstance(this);
 	}
 	
 	
@@ -61,16 +61,10 @@ abstract class EventActivity extends InjectionActivity {
 		
 		if(ProfileService.getInstance().isActive(this, PROFILE.EVENT)) {
 			
-			long millis = System.currentTimeMillis();
-	
-			link();
-	
-			millis = System.currentTimeMillis() - millis;
-			
-			Log.d("INSTRUMENTATION:IckleEventActivity#link()", getClass().getSimpleName() + ": " + millis + "ms");
+			EventActivity.link(EVENT_CONFIGURATION);
 		}
 	}
-
+	
 	/**
 	 * <p>Drives the event listener linking for all supported listener types which include:</p>
 	 * 
@@ -78,16 +72,24 @@ abstract class EventActivity extends InjectionActivity {
 	 * 	<li>OnClickListeners</li>
 	 * </ol>
 	 * 
-	 * @since 1.1.0
+	 * @param config
+	 * 			the {@link EventLinker.Configuration} to be used 
 	 */
-	private void link() {
+	static void link(EventLinker.Configuration config) {
 		
+		long millis = System.currentTimeMillis();
+
 		EventLinkers[] allLinkers = EventLinkers.values();
 		
-		for (EventLinkers listenerLinker : allLinkers) {
+		for (EventLinkers eventLinker : allLinkers) {
 			
-			listenerLinker.link(LISTENER_CONFIGURATION);
+			eventLinker.link(config);
 		}
+		
+		millis = System.currentTimeMillis() - millis;
+		
+		Log.d("INSTRUMENTATION:IckleEventActivity#link()", 
+			  EventActivity.class.getSimpleName() + ": " + millis + "ms");
 	}
 }
 

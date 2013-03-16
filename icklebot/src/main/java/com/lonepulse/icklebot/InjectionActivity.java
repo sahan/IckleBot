@@ -30,6 +30,7 @@ import com.lonepulse.icklebot.injector.explicit.ExplicitInjectors;
 import com.lonepulse.icklebot.injector.implicit.ImplicitInjectors;
 import com.lonepulse.icklebot.profile.ProfileService;
 import com.lonepulse.icklebot.state.StateService;
+import com.lonepulse.icklebot.task.TaskManagers;
 
 /**
  * <p>This profiles offers dependency injection and state management features.
@@ -61,14 +62,8 @@ abstract class InjectionActivity extends ThreadingActivity {
 		super.onCreate(savedInstanceState);
 
 		if(ProfileService.getInstance().isActive(this, PROFILE.INJECTION)) {
-		
-			long millis = System.currentTimeMillis();
 	
-			inject();
-	
-			millis = System.currentTimeMillis() - millis;
-			
-			Log.d("INSTRUMENTATION:IckleInjectionActivity#inject()", getClass().getSimpleName() + ": " + millis + "ms");
+			InjectionActivity.inject(INJECTOR_CONFIGURATION);
 		}
 	}
 	
@@ -85,43 +80,56 @@ abstract class InjectionActivity extends ThreadingActivity {
 	 * 	<li>POJO Injection</li>
 	 * </ol>
 	 */
-	private void inject() {
+	static void inject(Injector.Configuration config) {
 
-		ExplicitInjectors.CONFIGURATION.inject(INJECTOR_CONFIGURATION);
-		ExplicitInjectors.LAYOUT.inject(INJECTOR_CONFIGURATION);
+		long millis = System.currentTimeMillis();
 		
-		if(INJECTOR_CONFIGURATION.getInjectionMode().equals(InjectionMode.EXPLICIT)) {
+		ExplicitInjectors.CONFIGURATION.inject(config);
+		ExplicitInjectors.LAYOUT.inject(config);
+		
+		if(config.getInjectionMode().equals(InjectionMode.EXPLICIT)) {
 			
-			injectExplicitly();
+			InjectionActivity.injectExplicitly(config);
 		}
 		else {
 			
-			injectImplicitly();
+			InjectionActivity.injectImplicitly(config);
 		}
+		
+		millis = System.currentTimeMillis() - millis;
+		
+		Log.d("INSTRUMENTATION:IckleInjectionProfile#inject()", 
+			  InjectionActivity.class.getClass().getSimpleName() + ": " + millis + "ms");
 	}
 	
 	/**
 	 * <p>Performs <b>Explicit Injection</b> using the set of 
 	 * {@link Injector}s at {@link ExplicitInjectors}.
+	 * 
+	 * @param config
+	 * 			the {@link Injector.Configuration} to be used
 	 */
-	private void injectExplicitly() {
+	static void injectExplicitly(Injector.Configuration config) {
 		
-		ExplicitInjectors.APPLICATION.inject(INJECTOR_CONFIGURATION);
-		ExplicitInjectors.RESOURCES.inject(INJECTOR_CONFIGURATION);
-		ExplicitInjectors.SERVICES.inject(INJECTOR_CONFIGURATION);
-		ExplicitInjectors.POJOS.inject(INJECTOR_CONFIGURATION);
+		ExplicitInjectors.APPLICATION.inject(config);
+		ExplicitInjectors.RESOURCES.inject(config);
+		ExplicitInjectors.SERVICES.inject(config);
+		ExplicitInjectors.POJOS.inject(config);
 	}
 	
 	/**
 	 * <p>Performs <b>Implicit Injection</b> using the set of 
 	 * {@link Injector}s at {@link TaskManagers}.
+	 * 
+	 * @param config
+	 * 			the {@link Injector.Configuration} to be used
 	 */
-	private void injectImplicitly() {
+	static void injectImplicitly(Injector.Configuration config) {
 		
-		ImplicitInjectors.APPLICATION.inject(INJECTOR_CONFIGURATION);		
-		ImplicitInjectors.RESOURCES.inject(INJECTOR_CONFIGURATION);
-		ImplicitInjectors.SERVICES.inject(INJECTOR_CONFIGURATION);
-		ImplicitInjectors.POJOS.inject(INJECTOR_CONFIGURATION);
+		ImplicitInjectors.APPLICATION.inject(config);		
+		ImplicitInjectors.RESOURCES.inject(config);
+		ImplicitInjectors.SERVICES.inject(config);
+		ImplicitInjectors.POJOS.inject(config);
 	}
 	
 	/**

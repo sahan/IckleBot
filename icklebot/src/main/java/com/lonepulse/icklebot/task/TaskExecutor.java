@@ -23,11 +23,13 @@ package com.lonepulse.icklebot.task;
 import java.lang.reflect.Method;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import android.app.Activity;
 import android.util.Log;
 
 import com.lonepulse.icklebot.annotation.thread.Async;
+import com.lonepulse.icklebot.util.LifeCycle;
 
 /**
  * <p>This {@link Enum} contains a <b>Cached Thread Pool</b> which is used 
@@ -37,7 +39,7 @@ import com.lonepulse.icklebot.annotation.thread.Async;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-enum TaskExecutor {
+enum TaskExecutor implements LifeCycle.Destroy {
 
 	/**
 	 * <p>The single instance of the {@link TaskExecutor} used 
@@ -122,6 +124,32 @@ enum TaskExecutor {
 			stringBuilder.append(". ");
 			
 			Log.w(getClass().getName(), stringBuilder.toString(), e);
+		}
+	}
+
+	/**
+	 * <p>Performs a shutdown of the {@link #CACHED_THREAD_POOL};
+	 */
+	@Override
+	public void onDestroy() { //TODO invoke this on app termination
+		
+		executorService.shutdown();
+		
+		try {
+			
+			if(!executorService.awaitTermination(10, TimeUnit.SECONDS)) {
+			
+				executorService.shutdownNow();
+					
+				if(!executorService.awaitTermination(5, TimeUnit.SECONDS))
+					Log.w(getClass().getSimpleName(), "Failed to shutdown task pool.");
+			}
+		}
+		catch (InterruptedException ie) {
+
+			executorService.shutdownNow();
+			
+			Thread.currentThread().interrupt();
 		}
 	}
 }
