@@ -1,8 +1,30 @@
 package com.lonepulse.icklebot;
 
+/*
+ * #%L
+ * IckleBot Library
+ * %%
+ * Copyright (C) 2013 Lonepulse
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
+
 import java.io.Serializable;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import com.lonepulse.icklebot.event.EventLinker;
@@ -100,7 +122,7 @@ public interface IckleSupportManager extends Serializable {
 		 * 
 		 * @since 1.1.0
 		 */
-		public IckleSupportManager.Builder addEventLinkingSupport() {
+		public IckleSupportManager.Builder addEventSupport() {
 			
 			if(built) throw new IllegalStateException(errorContext.toString());
 			
@@ -157,13 +179,19 @@ public interface IckleSupportManager extends Serializable {
 				private static final long serialVersionUID = 5949321867738227878L;
 
 				@Override
-				public boolean isEventLinkingEnabled() {
+				public Context getBaseContext() {
+
+					return activity.getBaseContext();
+				}
+				
+				@Override
+				public boolean isEventSupportEnabled() {
 					
 					return eventLinkingEnabled;
 				}
 				
 				@Override
-				public boolean isInjectionEnabled() {
+				public boolean isInjectionSupportEnabled() {
 					
 					return injectionEnabled;
 				}
@@ -194,7 +222,16 @@ public interface IckleSupportManager extends Serializable {
 			};
 		}
 	}
-
+	
+	/**
+	 * <p>Retrieves the base context of the activity which 
+	 * is supported by this {@link IckleSupportManager}.
+	 * 
+	 * @return the base context of the supported activity
+	 * 
+	 * @version 1.1.0
+	 */
+	Context getBaseContext();
 	
 	/**
 	 * <p>Determines if event linking is enabled.
@@ -203,7 +240,7 @@ public interface IckleSupportManager extends Serializable {
 	 * 
 	 * @since 1.1.0
 	 */
-	boolean isEventLinkingEnabled();
+	boolean isEventSupportEnabled();
 	
 	/**
 	 * <p>Determines if injection is enabled.
@@ -212,7 +249,7 @@ public interface IckleSupportManager extends Serializable {
 	 * 
 	 * @since 1.1.0
 	 */
-	boolean isInjectionEnabled();
+	boolean isInjectionSupportEnabled();
 	
 	/**
 	 * <p>Executes a method annotated with {@code @Async} on a background worker thread.

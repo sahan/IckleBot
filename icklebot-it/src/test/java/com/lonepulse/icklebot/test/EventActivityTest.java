@@ -45,14 +45,14 @@ import com.xtremelabs.robolectric.RobolectricTestRunner;
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 @RunWith(RobolectricTestRunner.class)
-public class ListenerActivityTest {
+public class EventActivityTest {
 	
 	
 	/**
 	 * <p>The instance of {@link EventActivity} 
 	 * whose event listener linking is to be tested.
 	 */
-	private ListenerActivity activity;
+	private EventActivity activity;
 	
 	
 	/**
@@ -65,7 +65,7 @@ public class ListenerActivityTest {
 	@Before
 	public final void setUp() throws Exception {
 		
-		activity = new ListenerActivity();
+		activity = new EventActivity();
 		activity.onCreate(null);
 		
 		activity.btnSubmit.performClick();

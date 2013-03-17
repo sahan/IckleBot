@@ -21,12 +21,13 @@ package com.lonepulse.icklebot.test;
  */
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.lonepulse.icklebot.IckleActivity;
+import com.lonepulse.icklebot.IckleSupportManager;
 import com.lonepulse.icklebot.annotation.event.Click;
 import com.lonepulse.icklebot.annotation.event.Touch;
 import com.lonepulse.icklebot.annotation.inject.InjectView;
@@ -34,8 +35,8 @@ import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.annotation.inject.Title;
 
 /**
- * <p>An extension of {@link IckleActivity} which is used to test the 
- * <b>event listener linking</b> features of IckleBot.
+ * <p>An extension of {@link Activity} which is used to test the 
+ * <b>event linking</b> features of {@link IckleSupportManager}.
  * 
  * @category test
  * <br><br>
@@ -45,7 +46,7 @@ import com.lonepulse.icklebot.annotation.inject.Title;
  */
 @Layout(R.layout.act_listener)
 @Title(id = R.string.ttl_act_listener)
-public class ListenerActivity extends IckleActivity {
+public class EventSupportActivity extends Activity {
 	
 
 	@InjectView(R.id.btnSubmit)
@@ -53,6 +54,16 @@ public class ListenerActivity extends IckleActivity {
 	
 	@InjectView(R.id.txtAlias)
 	TextView txtAlias;
+	
+	
+	@SuppressWarnings("unused")
+	private IckleSupportManager supportManager;
+	{
+		supportManager = new IckleSupportManager.Builder(this)
+		.addInjectionSupport()
+		.addEventSupport()
+		.build();
+	}
 
 	
 	/**
