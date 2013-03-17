@@ -55,11 +55,17 @@ public @interface Profiles {
 	 */
 	public static enum PROFILE {
 		
+		/**
+		 * <p>Identifies the profile which performs <b>state 
+		 * management</b>.
+		 * 
+		 * @since 1.1.0
+		 */
+		STATE,
 		
 		/**
 		 * <p>Identifies the profile which performs <b>dependency 
-		 * injection</b>, <b>activity configuration</b> and<b>state 
-		 * management</b>.
+		 * injection</b> and <b>activity configuration</b>.
 		 * 
 		 * @since 1.1.0
 		 */

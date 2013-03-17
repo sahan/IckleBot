@@ -37,7 +37,7 @@ import com.lonepulse.icklebot.profile.ProfileService;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-abstract class EventActivity extends InjectionActivity {
+abstract class EventActivity extends StateActivity {
 	
 		
 	/**

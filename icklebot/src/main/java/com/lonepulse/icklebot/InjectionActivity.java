@@ -29,11 +29,10 @@ import com.lonepulse.icklebot.injector.Injector;
 import com.lonepulse.icklebot.injector.explicit.ExplicitInjectors;
 import com.lonepulse.icklebot.injector.implicit.ImplicitInjectors;
 import com.lonepulse.icklebot.profile.ProfileService;
-import com.lonepulse.icklebot.state.StateService;
 import com.lonepulse.icklebot.task.TaskManagers;
 
 /**
- * <p>This profiles offers dependency injection and state management features.
+ * <p>This profile offers dependency injection features.
  * 
  * @version 1.1.1
  * <br><br>
@@ -130,27 +129,5 @@ abstract class InjectionActivity extends ThreadingActivity {
 		ImplicitInjectors.RESOURCES.inject(config);
 		ImplicitInjectors.SERVICES.inject(config);
 		ImplicitInjectors.POJOS.inject(config);
-	}
-	
-	/**
-	 * <p><b>Saves</b> instance variables annotated with {@code @Stateful}.</p>
-	 */
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-
-		super.onSaveInstanceState(outState);
-		
-		StateService.getInstance().save(this, outState);
-	}
-	
-	/**
-	 * <p><b>Restores</b> instance variables annotated with {@code @Stateful}.</p>
-	 */
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		
-		super.onRestoreInstanceState(savedInstanceState);
-		
-		StateService.getInstance().restore(this, savedInstanceState);
 	}
 }
