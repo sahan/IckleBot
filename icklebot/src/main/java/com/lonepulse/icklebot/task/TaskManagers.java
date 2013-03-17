@@ -31,7 +31,7 @@ import com.lonepulse.icklebot.injector.Injector;
  * by any {@link Activity} which implements the {@link Activity} 
  * and has requested <b>Implicit Injection</b> via {@link InjectAll}.</p>
  * 
- * @version 1.1.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */

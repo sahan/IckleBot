@@ -35,7 +35,7 @@ import com.lonepulse.icklebot.util.LifeCycle;
  * <p>This {@link Enum} contains a <b>Cached Thread Pool</b> which is used 
  * to execute background tasks identified via {@link Async}.</p> 
  * 
- * @version 1.0.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -51,19 +51,9 @@ enum TaskExecutor implements LifeCycle.Destroy {
 	
 	
 	/**
-	 * <p>The <b>Cached Thead Pool</b> which is used to execute 
-	 * worker threads.</p>
+	 * <p>The <b>Cached Thead Pool</b> which is used to execute worker threads.</p>
 	 */
-	private ExecutorService executorService = null;
-	
-	/**
-	 * <p>Default constructor is overridden to instantiate 
-	 * any instance variables. 
-	 */
-	private TaskExecutor() {
-	
-		this.executorService = Executors.newCachedThreadPool();
-	}
+	private static final ExecutorService EXECUTOR_SERVICE = Executors.newCachedThreadPool();
 	
 	/**
 	 * <p>Takes an {@link Activity} and executes the specified 
@@ -82,8 +72,8 @@ enum TaskExecutor implements LifeCycle.Destroy {
 	public void execute(final Activity activity, final Method method, final Object... args) {
 		
 		try {
-		
-			executorService.execute(new Runnable() {
+
+			EXECUTOR_SERVICE.execute(new Runnable() {
 				
 				@Override
 				public void run() {
@@ -126,30 +116,37 @@ enum TaskExecutor implements LifeCycle.Destroy {
 			Log.w(getClass().getName(), stringBuilder.toString(), e);
 		}
 	}
-
+	
 	/**
 	 * <p>Performs a shutdown of the {@link #CACHED_THREAD_POOL};
+	 * 
+	 * @since 1.1.1
+	 * 
+	 * TODO hook {@link TaskExecutor#onDestroy()} to disable task execution permanently 
 	 */
 	@Override
-	public void onDestroy() { //TODO invoke this on app termination
+	public void onDestroy() {
 		
-		executorService.shutdown();
+		if(!EXECUTOR_SERVICE.isShutdown()) {
+			
+			EXECUTOR_SERVICE.shutdown();
 		
-		try {
-			
-			if(!executorService.awaitTermination(10, TimeUnit.SECONDS)) {
-			
-				executorService.shutdownNow();
-					
-				if(!executorService.awaitTermination(5, TimeUnit.SECONDS))
-					Log.w(getClass().getSimpleName(), "Failed to shutdown task pool.");
+			try {
+				
+				if(!EXECUTOR_SERVICE.awaitTermination(10, TimeUnit.SECONDS)) {
+				
+					EXECUTOR_SERVICE.shutdownNow();
+						
+					if(!EXECUTOR_SERVICE.awaitTermination(5, TimeUnit.SECONDS))
+						Log.w(getClass().getSimpleName(), "Failed to shutdown task pool.");
+				}
 			}
-		}
-		catch (InterruptedException ie) {
-
-			executorService.shutdownNow();
-			
-			Thread.currentThread().interrupt();
+			catch (InterruptedException ie) {
+	
+				EXECUTOR_SERVICE.shutdownNow();
+				
+				Thread.currentThread().interrupt();
+			}
 		}
 	}
 }
