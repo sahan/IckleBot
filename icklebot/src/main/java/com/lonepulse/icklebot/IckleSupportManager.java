@@ -1,5 +1,7 @@
 package com.lonepulse.icklebot;
 
+import java.io.Serializable;
+
 import android.app.Activity;
 import android.os.Bundle;
 
@@ -9,24 +11,47 @@ import com.lonepulse.icklebot.state.StateService;
 import com.lonepulse.icklebot.task.TaskManagers;
 
 /**
- * <p>This contract specifies the services offered by a profile. 
+ * <p>This contract specifies the services offered by a support manager which 
+ * aims to supplement an {@link Activity} with IckleBot's features even though 
+ * it cannot extend {@link IckleActivity}.</p> 
+ * 
+ * <p>Use {@link IckleSupportManager.Builder} to create your support manager 
+ * tailored for a particular {@link Activity}.</p>
+ * 
+ * <p>{@link IckleSupportManager}s can be serialized and as such they can be 
+ * {@link Bundle}d.</p>
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public interface IckleSupportManager {
+public interface IckleSupportManager extends Serializable {
 	
 	/**
 	 * <p>Creates a new instance of {@link IckleSupportManager} by offering a 
 	 * a default set of configurations natively in the {@link IckleSupportManager} 
-	 * contract.
+	 * contract.</p>
+	 *  
+	 * <p>This builder is not reusable after {@link IckleSupportManager.Builder#build()} 
+	 * has already been invoked.</p>
 	 * 
 	 * @version 1.1.0
 	 * <br><br>
 	 * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
 	 */
 	public static final class Builder {
+		
+		/**
+		 * <p>The contextual error message in case of state corruption.
+		 */
+		private static final StringBuilder errorContext;
+		
+		static
+		{
+			errorContext = new StringBuilder()
+			.append(IckleSupportManager.class.getSimpleName())
+			.append("'s builder is not reusable. ");
+		}
 		
 		/**
 		 * <p>The {@link Activity} which is to support {@link IckleActivity}'s features.
@@ -44,7 +69,15 @@ public interface IckleSupportManager {
 		private boolean eventLinkingEnabled = false;
 		
 		/**
-		 * <p>Creates a new instance of {@link IckleSupportManager}.
+		 * <p>This flag determines if an {@link IckleSupportManager} has already 
+		 * been built using this instance of {@link IckleSupportManager.Builder}. 
+		 */
+		private transient volatile boolean built = false;
+		
+		
+		/**
+		 * <p>Creates a new instance of {@link IckleSupportManager} by taking 
+		 * any mandatory parameters.
 		 * 
 		 * @param activity
 		 * 			the activity which is requesting an {@link IckleSupportManager}
@@ -61,9 +94,15 @@ public interface IckleSupportManager {
 		 * 
 		 * @return the {@link Builder} with linking support
 		 * 
+		 * @throws IllegalStateException
+		 * 			if this method is invoked after the {@link IckleSupportManager} 
+		 * 			has already been built using {@link #build()}
+		 * 
 		 * @since 1.1.0
 		 */
 		public IckleSupportManager.Builder addEventLinkingSupport() {
+			
+			if(built) throw new IllegalStateException(errorContext.toString());
 			
 			eventLinkingEnabled = true;
 			return this;
@@ -72,11 +111,17 @@ public interface IckleSupportManager {
 		/**
 		 * <p>Adds injection support to the target activity.
 		 * 
-		 * @return the {@link Builder} with event injection support 
+		 * @return the {@link Builder} with event injection support
+		 * 
+		 * @throws IllegalStateException
+		 * 			if this method is invoked after the {@link IckleSupportManager} 
+		 * 			has already been built using {@link #build()}
 		 * 
 		 * @since 1.1.0
 		 */
 		public IckleSupportManager.Builder addInjectionSupport() {
+			
+			if(built) throw new IllegalStateException(errorContext.toString());
 			
 			injectionEnabled = true;
 			return this;
@@ -87,24 +132,40 @@ public interface IckleSupportManager {
 		 * according to the build parameters which were set.
 		 * 
 		 * @return an {@link IckleSupportManager} tailored for the requesting activity
+		 * 
+		 * @throws IllegalStateException
+		 * 			if the {@link IckleSupportManager} has already been built
+		 * 
+		 * @since 1.1.0
 		 */
 		public IckleSupportManager build() {
+			
+			if(built) {
+				
+				throw new IllegalStateException(errorContext.toString());
+			}
+			else {
+				
+				built = true;
+			}
 			
 			if(injectionEnabled) InjectionActivity.inject(Injector.Configuration.getInstance(activity));
 			if(eventLinkingEnabled) EventActivity.link(EventLinker.Configuration.getInstance(activity));
 			
 			return new IckleSupportManager() {
 				
+				private static final long serialVersionUID = 5949321867738227878L;
+
 				@Override
 				public boolean isEventLinkingEnabled() {
 					
-					return Builder.this.eventLinkingEnabled;
+					return eventLinkingEnabled;
 				}
 				
 				@Override
 				public boolean isInjectionEnabled() {
 					
-					return Builder.this.injectionEnabled;
+					return injectionEnabled;
 				}
 
 				@Override
