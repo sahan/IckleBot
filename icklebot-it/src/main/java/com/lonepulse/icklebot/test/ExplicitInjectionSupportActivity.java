@@ -83,7 +83,7 @@ public class ExplicitInjectionSupportActivity extends Activity {
 	private IckleSupportManager supportManager;
 	{
 		supportManager = new IckleSupportManager.Builder(this)
-		.addInjectionSupport()
+		.enableInjectionSupport()
 		.build();
 	}
 	

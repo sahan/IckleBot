@@ -60,8 +60,8 @@ public class EventSupportActivity extends Activity {
 	private IckleSupportManager supportManager;
 	{
 		supportManager = new IckleSupportManager.Builder(this)
-		.addInjectionSupport()
-		.addEventSupport()
+		.enableInjectionSupport()
+		.enableEventSupport()
 		.build();
 	}
 

@@ -81,14 +81,14 @@ public interface IckleSupportManager extends Serializable {
 		private Activity activity;
 		
 		/**
-		 * <p>A flag to determine if injection is enabled. 
+		 * <p>A flag to determine if injection support is enabled. 
 		 */
-		private boolean injectionEnabled = false;
+		private boolean injectionSupportEnabled = false;
 		
 		/**
-		 * <p>A flag to determine if event linking is enabled.
+		 * <p>A flag to determine if event support is enabled.
 		 */
-		private boolean eventLinkingEnabled = false;
+		private boolean eventSupportEnabled = false;
 		
 		/**
 		 * <p>This flag determines if an {@link IckleSupportManager} has already 
@@ -122,11 +122,11 @@ public interface IckleSupportManager extends Serializable {
 		 * 
 		 * @since 1.1.0
 		 */
-		public IckleSupportManager.Builder addEventSupport() {
+		public IckleSupportManager.Builder enableEventSupport() {
 			
 			if(built) throw new IllegalStateException(errorContext.toString());
 			
-			eventLinkingEnabled = true;
+			eventSupportEnabled = true;
 			return this;
 		}
 		
@@ -141,11 +141,11 @@ public interface IckleSupportManager extends Serializable {
 		 * 
 		 * @since 1.1.0
 		 */
-		public IckleSupportManager.Builder addInjectionSupport() {
+		public IckleSupportManager.Builder enableInjectionSupport() {
 			
 			if(built) throw new IllegalStateException(errorContext.toString());
 			
-			injectionEnabled = true;
+			injectionSupportEnabled = true;
 			return this;
 		}
 		
@@ -171,8 +171,8 @@ public interface IckleSupportManager extends Serializable {
 				built = true;
 			}
 			
-			if(injectionEnabled) InjectionActivity.inject(Injector.Configuration.getInstance(activity));
-			if(eventLinkingEnabled) EventActivity.link(EventLinker.Configuration.getInstance(activity));
+			if(injectionSupportEnabled) InjectionActivity.inject(Injector.Configuration.getInstance(activity));
+			if(eventSupportEnabled) EventActivity.link(EventLinker.Configuration.getInstance(activity));
 			
 			return new IckleSupportManager() {
 				
@@ -187,13 +187,13 @@ public interface IckleSupportManager extends Serializable {
 				@Override
 				public boolean isEventSupportEnabled() {
 					
-					return eventLinkingEnabled;
+					return eventSupportEnabled;
 				}
 				
 				@Override
 				public boolean isInjectionSupportEnabled() {
 					
-					return injectionEnabled;
+					return injectionSupportEnabled;
 				}
 
 				@Override
