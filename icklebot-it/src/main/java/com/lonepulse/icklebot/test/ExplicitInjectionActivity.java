@@ -25,6 +25,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.lonepulse.icklebot.IckleActivity;
@@ -77,6 +78,8 @@ public class ExplicitInjectionActivity extends IckleActivity {
 	@InjectPojo(AccountsServiceImpl.class)
 	AccountsService accountsService;
 	
+	@Layout(R.layout.act_explicit_injection)
+	ViewGroup rootView;
 	
 	/**
 	 * <p>Exposes {@link #onCreate(Bundle)} and allows unit 

@@ -49,22 +49,22 @@ class ExplicitInjectionResolver implements InjectionResolver {
 		if(field.isAnnotationPresent(InjectApplication.class))
 			return InjectionCategory.APPLICATION;
 			
-		if(field.isAnnotationPresent(InjectView.class))
+		else if(field.isAnnotationPresent(InjectView.class))
 			return InjectionCategory.RESOURCE_VIEW;
 		
-		if(field.isAnnotationPresent(InjectInteger.class))
+		else if(field.isAnnotationPresent(InjectInteger.class))
 			return InjectionCategory.RESOURCE_INTEGER;
 		
-		if(field.isAnnotationPresent(InjectString.class))
+		else if(field.isAnnotationPresent(InjectString.class))
 			return InjectionCategory.RESOURCE_STRING;
 		
-		if(field.isAnnotationPresent(InjectDrawable.class))
+		else if(field.isAnnotationPresent(InjectDrawable.class))
 			return InjectionCategory.RESOURCE_DRAWABLE;
 			
-		if(field.isAnnotationPresent(InjectPojo.class))
+		else if(field.isAnnotationPresent(InjectPojo.class))
 			return InjectionCategory.POJO;
 		
-		if(field.isAnnotationPresent(InjectService.class))
+		else if(field.isAnnotationPresent(InjectService.class))
 			return InjectionCategory.SERVICE;
 		
 		return InjectionCategory.NONE;

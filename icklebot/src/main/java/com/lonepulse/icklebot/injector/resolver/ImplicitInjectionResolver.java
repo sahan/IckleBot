@@ -51,25 +51,25 @@ class ImplicitInjectionResolver implements InjectionResolver {
 		if(field.isAnnotationPresent(IgnoreInjection.class))
 			return InjectionCategory.NONE;
 		
-		if(isCategoryApplication(field))
+		else if(isCategoryApplication(field))
 			return InjectionCategory.APPLICATION;
 		
-		if(isCategoryResourceView(field))
+		else if(isCategoryResourceView(field))
 			return InjectionCategory.RESOURCE_VIEW;
 		
-		if(isCategoryResourceInteger(field))
+		else if(isCategoryResourceInteger(field))
 			return InjectionCategory.RESOURCE_INTEGER;
 		
-		if(isCategoryResourceString(field))
+		else if(isCategoryResourceString(field))
 			return InjectionCategory.RESOURCE_STRING;
 		
-		if(isCategoryResourceDrawable(field))
+		else if(isCategoryResourceDrawable(field))
 			return InjectionCategory.RESOURCE_DRAWABLE;
 		
-		if(isCategoryPojo(field))
+		else if(isCategoryPojo(field))
 			return InjectionCategory.POJO;
 		
-		if(isCategoryService(field))
+		else if(isCategoryService(field))
 			return InjectionCategory.SERVICE;
 		
 		return InjectionCategory.NONE;

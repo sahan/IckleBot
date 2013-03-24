@@ -20,11 +20,16 @@ package com.lonepulse.icklebot.injector.explicit;
  * #L%
  */
 
+import java.lang.reflect.Field;
+import java.util.Set;
+
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.util.FieldUtils;
 import com.lonepulse.icklebot.util.TypeUtils;
 
 /**
@@ -55,6 +60,26 @@ class ExplicitLayoutInjector implements Injector {
 		if(layout != null) {
 			
 			injectionActivity.setContentView(layout.value());
+		}
+		
+		
+		Set<Field> fields = FieldUtils.getAllFields(injectionActivity, Layout.class);
+		
+		for (Field field : fields) {
+			
+			if(!field.isAccessible()) field.setAccessible(true);
+			
+			try {
+				
+				int id = field.getAnnotation(Layout.class).value();
+				View layoutView = injectionActivity.getLayoutInflater().inflate(id, null);
+				
+				field.set(injectionActivity, layoutView);
+			} 
+			catch (Exception e) {
+				
+				Log.e(getClass().getName(), "Layout Injection Failed!", e);
+			}
 		}
 	}
 }

@@ -26,18 +26,17 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import android.app.Activity;
-import android.app.Fragment;
 
 /**
  * <p>This annotation marks the <b>layout</b> which is to be used 
- * by the an {@link Activity} or {@link Fragment} or any of their 
- * derivatives.</p>
+ * by the an {@link Activity} or it can be used on a field to inject 
+ * the layout.</p>
  * 
- * @version 1.0.0
+ * @version 1.0.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-@Target(ElementType.TYPE)
+@Target({ElementType.TYPE, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Layout {
 
