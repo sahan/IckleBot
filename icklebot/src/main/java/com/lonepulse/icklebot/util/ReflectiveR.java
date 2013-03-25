@@ -29,7 +29,7 @@ import android.graphics.drawable.Drawable;
  * <p>Gives access to constants in the generated <b>R</b> class 
  * via proxy.</p>
  * 
- * @version 1.0.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -40,11 +40,10 @@ public final class ReflectiveR {
 	 * <p>Constructor visibility is restricted, proxy wrapper 
 	 * instantiation is nonsensical.</p>
 	 */
-	private ReflectiveR() {
-	}
+	private ReflectiveR() {}
 	
 	/**
-	 * <p>Takes the <i>name</i> of an <b>ID</b> resource and 
+	 * <p>Takes the <i>name</i> of an <b>identifier</b> resource and 
 	 * finds its {@code int} id in the generated <b>R</b> class.</p>
 	 * 
 	 * @param context
@@ -53,9 +52,9 @@ public final class ReflectiveR {
 	 * @param resourceName
 	 * 			the name of the resource
 	 * <br><br>
-	 * @return the {@code int} ID of the {@link String} resource
+	 * @return the {@code int} ID of the identifier resource
 	 * <br><br>
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public static int id(Context context, String resourceName) {
 		
@@ -74,7 +73,7 @@ public final class ReflectiveR {
 	 * <br><br>
 	 * @return the {@code int} ID of the {@link String} resource
 	 * <br><br>
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public static int string(Context context, String resourceName) {
 		
@@ -91,9 +90,9 @@ public final class ReflectiveR {
 	 * @param resourceName
 	 * 			the name of the resource
 	 * <br><br>
-	 * @return the {@code int} ID of the {@link String} resource
+	 * @return the {@code int} ID of the {@link Drawable} resource
 	 * <br><br>
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public static int drawable(Context context, String resourceName) {
 		
@@ -110,13 +109,32 @@ public final class ReflectiveR {
 	 * @param resourceName
 	 * 			the name of the resource
 	 * <br><br>
-	 * @return the {@code int} ID of the {@link String} resource
+	 * @return the {@code int} ID of the {@link Integer} resource
 	 * <br><br>
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public static int integer(Context context, String resourceName) {
 		
 		return ReflectiveR.getIdentifier("integer", context, resourceName);
+	}
+	
+	/**
+	 * <p>Takes the <i>name</i> of a <b>dimension</b> resource and 
+	 * finds its {@code int} id in the generated <b>R</b> class.</p>
+	 * 
+	 * @param context
+	 * 			the {@link Context} of the <b>R</b> class
+	 * <br><br>
+	 * @param resourceName
+	 * 			the name of the resource
+	 * <br><br>
+	 * @return the {@code int} ID of the dimension resource
+	 * <br><br>
+	 * @since 1.1.1
+	 */
+	public static int dimen(Context context, String resourceName) {
+		
+		return ReflectiveR.getIdentifier("dimen", context, resourceName);
 	}
 	
 	/**
@@ -136,7 +154,7 @@ public final class ReflectiveR {
 	 * 
 	 * @return the {@code int} identifier as specified in the <b>R</b> class
 	 * 
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	private static int getIdentifier(String resourcetype, Context context, String resourceName) {
 		

@@ -20,13 +20,16 @@ package com.lonepulse.icklebot.injector.explicit;
  * #L%
  */
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import android.app.Activity;
 import android.util.Log;
 
+import com.lonepulse.icklebot.annotation.inject.InjectDimension;
 import com.lonepulse.icklebot.annotation.inject.InjectDrawable;
 import com.lonepulse.icklebot.annotation.inject.InjectInteger;
 import com.lonepulse.icklebot.annotation.inject.InjectString;
@@ -35,14 +38,194 @@ import com.lonepulse.icklebot.injector.Injector;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
 
 /**
- * <p>An implementation of {@link Injector} which is responsible 
- * for injecting {@link InjectView}s.</p>
+ * <p>An implementation of {@link Injector} which is responsible for 
+ * the <b>explicit injection of resources</b>.
  * 
- * @version 1.0.0 
+ * @version 1.1.0 
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 class ExplicitResourceInjector implements Injector {
+	
+
+	/**
+	 * <p>Maintains all the {@link InjectionStrategy}s which are used for <b>explicit injection</b>. 
+	 */
+	private static final Map<InjectionCategory, Injector.InjectionStrategy> EXPLICIT_INJECTION_STRATEGIES;
+	
+	static
+	{
+		EXPLICIT_INJECTION_STRATEGIES = new HashMap<InjectionCategory, Injector.InjectionStrategy>();
+		
+		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_VIEW, new Injector.InjectionStrategy() {
+			
+			@Override
+			public void run(Injector.Configuration config) {
+
+				Activity context = config.getActivity();
+				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_VIEW);
+				
+				for (Field field : fields) {
+				
+					try {
+					
+						if(!field.isAccessible()) field.setAccessible(true);
+						
+						int id = field.getAnnotation(InjectView.class).value();
+						field.set(context, context.findViewById(id));
+					}
+					catch (Exception e) {
+						
+						StringBuilder errorContext = new StringBuilder()
+						.append("Explicit resource injection with ")
+						.append(InjectView.class.getSimpleName())
+						.append(" failed on ")
+						.append(context.getLocalClassName())
+						.append(" for ")
+						.append(field.getName())
+						.append(". ");
+						
+						Log.e(getClass().getName(), errorContext.toString(), e);
+					}
+				}
+			}
+		});
+		
+		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_STRING, new Injector.InjectionStrategy() {
+			
+			@Override
+			public void run(Injector.Configuration config) {
+				
+				Activity context = config.getActivity();
+				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_STRING);
+				
+				for (Field field : fields) {
+					
+					try {
+						
+						if(!field.isAccessible()) field.setAccessible(true);
+						
+						field.set(context, context.getString(field.getAnnotation(InjectString.class).value()));
+					}
+					catch (Exception e) {
+						
+						StringBuilder errorContext = new StringBuilder()
+						.append("Explicit resource injection with ")
+						.append(InjectString.class.getSimpleName())
+						.append(" failed on ")
+						.append(context.getLocalClassName())
+						.append(" for ")
+						.append(field.getName())
+						.append(". ");
+						
+						Log.e(getClass().getName(), errorContext.toString(), e);
+					}
+				}
+			}
+		});
+		
+		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_DRAWABLE, new Injector.InjectionStrategy() {
+			
+			@Override
+			public void run(Injector.Configuration config) {
+				
+				Activity context = config.getActivity();
+				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_DRAWABLE);
+				
+				for (Field field : fields) {
+					
+					try {
+						
+						if(!field.isAccessible()) field.setAccessible(true);
+						
+						int id = field.getAnnotation(InjectDrawable.class).value();
+						field.set(context, context.getResources().getDrawable(id));
+					}
+					catch (Exception e) {
+						
+						StringBuilder errorContext = new StringBuilder()
+						.append("Explicit resource injection with ")
+						.append(InjectDrawable.class.getSimpleName())
+						.append(" failed on ")
+						.append(context.getLocalClassName())
+						.append(" for ")
+						.append(field.getName())
+						.append(". ");
+						
+						Log.e(getClass().getName(), errorContext.toString(), e);
+					}
+				}
+			}
+		});
+		
+		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_INTEGER, new Injector.InjectionStrategy() {
+			
+			@Override
+			public void run(Injector.Configuration config) {
+				
+				Activity context = config.getActivity();
+				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_INTEGER);
+				
+				for (Field field : fields) {
+					
+					try {
+						
+						if(!field.isAccessible()) field.setAccessible(true);
+						
+						int id = field.getAnnotation(InjectInteger.class).value();
+						field.set(context, context.getResources().getInteger(id));
+					}
+					catch (Exception e) {
+						
+						StringBuilder errorContext = new StringBuilder()
+						.append("Explicit resource injection with ")
+						.append(InjectInteger.class.getSimpleName())
+						.append(" failed on ")
+						.append(context.getLocalClassName())
+						.append(" for ")
+						.append(field.getName())
+						.append(". ");
+						
+						Log.e(getClass().getName(), errorContext.toString(), e);
+					}
+				}
+			}
+		});
+		
+		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_DIMENSION, new Injector.InjectionStrategy() {
+			
+			@Override
+			public void run(Injector.Configuration config) {
+				
+				Activity context = config.getActivity();
+				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_DIMENSION);
+				
+				for (Field field : fields) {
+					
+					try {
+						
+						if(!field.isAccessible()) field.setAccessible(true);
+						
+						int id = field.getAnnotation(InjectDimension.class).value();
+						field.set(context, context.getResources().getDimension(id));
+					}
+					catch (Exception e) {
+						
+						StringBuilder errorContext = new StringBuilder()
+						.append("Explicit resource injection with ")
+						.append(InjectDimension.class.getSimpleName())
+						.append(" failed on ")
+						.append(context.getLocalClassName())
+						.append(" for ")
+						.append(field.getName())
+						.append(". ");
+						
+						Log.e(getClass().getName(), errorContext.toString(), e);
+					}
+				}
+			}
+		});
+	}
 	
 	
 	/**
@@ -51,72 +234,11 @@ class ExplicitResourceInjector implements Injector {
 	@Override
 	public void inject(Configuration config) {
 		
-		Activity injectionActivity = config.getActivity();
+		Collection<Injector.InjectionStrategy> strategies = EXPLICIT_INJECTION_STRATEGIES.values();
 		
-		injectResource(injectionActivity, 
-					   config.getInjectionTargets(InjectionCategory.RESOURCE_VIEW), 
-					   InjectView.class);
-	
-		injectResource(injectionActivity, 
-					   config.getInjectionTargets(InjectionCategory.RESOURCE_STRING), 
-					   InjectString.class);
-		
-		injectResource(injectionActivity, 
-					   config.getInjectionTargets(InjectionCategory.RESOURCE_DRAWABLE), 
-					   InjectDrawable.class);
-		
-		injectResource(injectionActivity, 
-					   config.getInjectionTargets(InjectionCategory.RESOURCE_INTEGER), 
-					   InjectInteger.class);
-	}
-	
-	/**
-	 * <p>Injects all {@link String} resources identified by the 
-	 * {@link InjectString} annotation.</p>
-	 * 
-	 * @param injectorActivity
-	 * 			the {@link Activity} which is the subject of 
-	 * 			dependency injection
-	 * <br><br>			
-	 * @param fields
-	 * 			the {@link Field}s which are annotated with {@link Resource}
-	 * <br><br>
-	 * @since 1.0.0
-	 */
-	private void injectResource(Activity injectorActivity, Set<Field> fields, 
-								Class<? extends Annotation> resourceAnnotation) {
-		
-		for (Field field : fields) {
+		for (InjectionStrategy strategy : strategies) {
 			
-			if(!field.isAccessible()) field.setAccessible(true);
-
-			try {
-					
-				if(resourceAnnotation.equals(InjectView.class)) {
-					
-					field.set(injectorActivity, 
-							  injectorActivity.findViewById(field.getAnnotation(InjectView.class).value()));
-				}
-				else if(resourceAnnotation.equals(InjectString.class)) {
-					
-					field.set(injectorActivity, 
-							  injectorActivity.getString(field.getAnnotation(InjectString.class).value()));
-				}
-				else if(resourceAnnotation.equals(InjectDrawable.class)) {
-						
-					field.set(injectorActivity, 
-						      injectorActivity.getResources().getDrawable(field.getAnnotation(InjectDrawable.class).value()));
-				}
-				else if(resourceAnnotation.equals(InjectInteger.class)) {
-					
-					field.set(injectorActivity, 
-							  injectorActivity.getResources().getInteger(field.getAnnotation(InjectInteger.class).value()));
-				}
-			} 
-			catch (Exception e) {
-					
-				Log.e(getClass().getName(), "Injection Failed!", e);
-			}
+			strategy.run(config);
 		}
 	}
 }

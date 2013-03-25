@@ -59,6 +59,8 @@ public class ImplicitInjectionActivity extends IckleActivity {
 	
 	Drawable ic_launcher;
 	
+	float txt_small;
+	
 	TelephonyManager telephony_service;
 	
 	AccountsService accountsService;

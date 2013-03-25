@@ -60,6 +60,8 @@ public class ImplicitInjectionSupportActivity extends Activity {
 	
 	Drawable ic_launcher;
 	
+	float txt_small;
+	
 	TelephonyManager telephony_service;
 	
 	AccountsService accountsService;

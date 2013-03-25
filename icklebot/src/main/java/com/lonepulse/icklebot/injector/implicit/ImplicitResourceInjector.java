@@ -21,12 +21,13 @@ package com.lonepulse.icklebot.injector.implicit;
  */
 
 import java.lang.reflect.Field;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
-import android.view.View;
 
 import com.lonepulse.icklebot.annotation.inject.InjectView;
 import com.lonepulse.icklebot.injector.Injector;
@@ -37,7 +38,7 @@ import com.lonepulse.icklebot.util.ReflectiveR;
  * <p>An implementation of {@link Injector} which is responsible 
  * for injecting {@link InjectView}s.</p>
  * 
- * @version 1.0.0 
+ * @version 1.1.0 
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -45,152 +46,186 @@ class ImplicitResourceInjector implements Injector {
 
 	
 	/**
+	 * <p>Maintains all the {@link InjectionStrategy}s which are used for <b>implicit injection</b>. 
+	 */
+	private static final Map<InjectionCategory, Injector.InjectionStrategy> IMPLICIT_INJECTION_STRATEGIES;
+	
+	static
+	{
+		IMPLICIT_INJECTION_STRATEGIES = new HashMap<InjectionCategory, Injector.InjectionStrategy>();
+		
+		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_VIEW, new Injector.InjectionStrategy() {
+			
+			@Override
+			public void run(Configuration config) {
+			
+				Activity context = config.getActivity();
+				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_VIEW);
+				
+				for (Field field : fields) {
+				
+					try {
+					
+						if(!field.isAccessible()) field.setAccessible(true);
+						
+						int id = ReflectiveR.id(context, field.getName());
+						field.set(context, context.findViewById(id));
+					}
+					catch (Exception e) {
+						
+						StringBuilder errorContext = new StringBuilder()
+						.append("Implicit view resource injection failed on ")
+						.append(context.getLocalClassName())
+						.append(" for ")
+						.append(field.getName())
+						.append(". ");
+						
+						Log.e(getClass().getName(), errorContext.toString(), e);
+					}
+				}
+			}
+		});
+		
+		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_STRING, new Injector.InjectionStrategy() {
+			
+			@Override
+			public void run(Configuration config) {
+				
+				Activity context = config.getActivity();
+				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_STRING);
+				
+				for (Field field : fields) {
+					
+					try {
+						
+						if(!field.isAccessible()) field.setAccessible(true);
+						
+						int id = ReflectiveR.string(context, field.getName());
+						field.set(context, context.getString(id));
+					}
+					catch (Exception e) {
+						
+						StringBuilder errorContext = new StringBuilder()
+						.append("Implicit string resource injection failed on ")
+						.append(context.getLocalClassName())
+						.append(" for ")
+						.append(field.getName())
+						.append(". ");
+						
+						Log.e(getClass().getName(), errorContext.toString(), e);
+					}
+				}
+			}
+		});
+		
+		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_DRAWABLE, new Injector.InjectionStrategy() {
+			
+			@Override
+			public void run(Configuration config) {
+				
+				Activity context = config.getActivity();
+				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_DRAWABLE);
+				
+				for (Field field : fields) {
+					
+					try {
+						
+						if(!field.isAccessible()) field.setAccessible(true);
+						
+						int id = ReflectiveR.drawable(context, field.getName());
+						field.set(context, context.getResources().getDrawable(id));
+					}
+					catch (Exception e) {
+						
+						StringBuilder errorContext = new StringBuilder()
+						.append("Implicit drawable resource injection failed on ")
+						.append(context.getLocalClassName())
+						.append(" for ")
+						.append(field.getName())
+						.append(". ");
+						
+						Log.e(getClass().getName(), errorContext.toString(), e);
+					}
+				}
+			}
+		});
+		
+		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_INTEGER, new Injector.InjectionStrategy() {
+			
+			@Override
+			public void run(Configuration config) {
+				
+				Activity context = config.getActivity();
+				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_INTEGER);
+				
+				for (Field field : fields) {
+					
+					try {
+						
+						if(!field.isAccessible()) field.setAccessible(true);
+						
+						int id = ReflectiveR.integer(context, field.getName());
+						field.set(context, context.getResources().getInteger(id));
+					}
+					catch (Exception e) {
+						
+						StringBuilder errorContext = new StringBuilder()
+						.append("Implicit integer resource injection failed on ")
+						.append(context.getLocalClassName())
+						.append(" for ")
+						.append(field.getName())
+						.append(". ");
+						
+						Log.e(getClass().getName(), errorContext.toString(), e);
+					}
+				}
+			}
+		});
+		
+		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_DIMENSION, new Injector.InjectionStrategy() {
+			
+			@Override
+			public void run(Configuration config) {
+				
+				Activity context = config.getActivity();
+				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_DIMENSION);
+				
+				for (Field field : fields) {
+					
+					try {
+						
+						if(!field.isAccessible()) field.setAccessible(true);
+						
+						int id = ReflectiveR.dimen(context, field.getName());
+						field.set(context, context.getResources().getDimension(id));
+					}
+					catch (Exception e) {
+						
+						StringBuilder errorContext = new StringBuilder()
+						.append("Implicit dimension resource injection failed on ")
+						.append(context.getLocalClassName())
+						.append(" for ")
+						.append(field.getName())
+						.append(". ");
+						
+						Log.e(getClass().getName(), errorContext.toString(), e);
+					}
+				}
+			}
+		});
+	}
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void inject(Configuration config) {
 
-		Activity injectionActivity = config.getActivity();
-
-		injectViewResources(injectionActivity, config.getInjectionTargets(InjectionCategory.RESOURCE_VIEW));
-		injectStringResources(injectionActivity, config.getInjectionTargets(InjectionCategory.RESOURCE_STRING));
-		injectDrawableResources(injectionActivity, config.getInjectionTargets(InjectionCategory.RESOURCE_DRAWABLE));
-		injectIntegerResources(injectionActivity, config.getInjectionTargets(InjectionCategory.RESOURCE_INTEGER));
-	}
-	
-	/**
-	 * <p>Injects a {@link View} resource <b>implicitly</b>.</p>
-	 * 
-	 * @param injectionActivity
-	 * 			the {@link Activity} which is the subject 
-	 * 			of dependency injection
-	 * <br><br>
-	 * @param field
-	 * 			the field subjected to injection
-	 * <br><br>
-	 * @throws Exception
-	 * 			if any error occurs with reflective field access
-	 * <br><br>
-	 * @since 1.0.0
-	 */
-	private void injectViewResources(Activity injectionActivity, Set<Field> fields) {
+		Collection<Injector.InjectionStrategy> strategies = IMPLICIT_INJECTION_STRATEGIES.values();
 		
-		for (Field field : fields) {
-		
-			try {
-				
-				int id = ReflectiveR.id(injectionActivity, field.getName());
-				
-				if(!field.isAccessible()) field.setAccessible(true);
-				
-				field.set(injectionActivity, injectionActivity.findViewById(id));
-			} 
-			catch (Exception e) {
-				
-				Log.e(getClass().getName(), "Injection Failed!", e);
-			}
-		}
-	}
-	
-	/**
-	 * <p>Injects a {@link String} resource <b>implicitly</b>.</p>
-	 * 
-	 * @param injectionActivity
-	 * 			the {@link Activity} which is the subject 
-	 * 			of dependency injection
-	 * <br><br>
-	 * @param field
-	 * 			the field subjected to injection
-	 * <br><br>
-	 * @throws Exception
-	 * 			if any error occurs with reflective field access
-	 * 
-	 * @since 1.0.0
-	 */
-	private void injectStringResources(Activity injectionActivity, Set<Field> fields) {
-		
-		for (Field field : fields) {
-		
-			try {
-				
-				int id = ReflectiveR.string(injectionActivity, field.getName());
-				
-				if(!field.isAccessible()) field.setAccessible(true);
-				
-				field.set(injectionActivity, injectionActivity.getString(id));
-			} 
-			catch (Exception e) {
-				
-				Log.e(getClass().getName(), "Injection Failed!", e);
-			}
-		}
-	}
-	
-	/**
-	 * <p>Injects a {@link Drawable} resource <b>implicitly</b>.</p>
-	 * 
-	 * @param injectionActivity
-	 * 			the {@link Activity} which is the subject 
-	 * 			of dependency injection
-	 * <br><br>
-	 * @param field
-	 * 			the field subjected to injection
-	 * <br><br>
-	 * @throws Exception
-	 * 			if any error occurs with reflective field access
-	 * <br><br>
-	 * @since 1.0.0
-	 */
-	private void injectDrawableResources(Activity injectionActivity, Set<Field> fields) {
-		
-		for (Field field : fields) {
-		
-			try {
-				
-				int id = ReflectiveR.drawable(injectionActivity, field.getName());
-				
-				if(!field.isAccessible()) field.setAccessible(true);
-				
-				field.set(injectionActivity, injectionActivity.getResources().getDrawable(id));
-			} 
-			catch (Exception e) {
-				
-				Log.e(getClass().getName(), "Injection Failed!", e);
-			}
-		}
-	}
-	
-	/**
-	 * <p>Injects an {@link Integer} resource <b>implicitly</b>.</p>
-	 * 
-	 * @param injectionActivity
-	 * 			the {@link Activity} which is the subject 
-	 * 			of dependency injection
-	 * <br><br>
-	 * @param field
-	 * 			the field subjected to injection
-	 * <br><br>
-	 * @throws Exception
-	 * 			if any error occurs with reflective field access
-	 * <br><br>
-	 * @since 1.0.0
-	 */
-	private void injectIntegerResources(Activity injectionActivity, Set<Field> fields) {
-		
-		for (Field field : fields) {
+		for (InjectionStrategy strategy : strategies) {
 			
-			try {
-				
-				int id = ReflectiveR.integer(injectionActivity, field.getName());
-				
-				if(!field.isAccessible()) field.setAccessible(true);
-				
-				field.set(injectionActivity, injectionActivity.getResources().getInteger(id));
-			} 
-			catch (Exception e) {
-				
-				Log.e(getClass().getName(), "Injection Failed!", e);
-			}
+			strategy.run(config);
 		}
 	}
 }

@@ -29,6 +29,7 @@ import java.util.Set;
 import java.util.WeakHashMap;
 
 import android.app.Activity;
+import android.content.Context;
 
 import com.lonepulse.icklebot.annotation.inject.InjectAll;
 import com.lonepulse.icklebot.event.resolver.EventCategory;
@@ -39,11 +40,12 @@ import com.lonepulse.icklebot.injector.resolver.InjectionResolvers;
 /**
  * <p>This is the common contract which all injectors must implement.</p>
  * 
- * @version 1.0.0 
+ * @version 1.1.0 
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 public interface Injector {
+	
 	
 	/**
 	 * <p>Stores information about the injection process; such as the 
@@ -51,7 +53,7 @@ public interface Injector {
 	 * target {@link Field}s in this activity grouped into their categories
 	 * by {@link EventCategory}.</p>
 	 * 
-	 * @version 1.0.0
+	 * @version 1.1.0
 	 * <br><br>
 	 * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
 	 */
@@ -61,14 +63,14 @@ public interface Injector {
 		 * <p>A cache of all {@link Injector.Configuration}s processed. Configurations 
 		 * are keyed by the {@link Class} of their {@link activity} implementations.</p> 
 		 * 
-		 * @version 1.0.0
+		 * @version 1.1.0
 		 */
 		private enum CACHE {
 			
 			/**
 			 * <p>The single instance of this cache.</p>
 			 * 
-			 * @since 1.0.0
+			 * @since 1.1.0
 			 */
 			INSTANCE;
 			
@@ -78,7 +80,7 @@ public interface Injector {
 			 * {@link Class}. This map is <i>weak</i>, i.e. cached {@link Configuration}s may be 
 			 * silently removed if they are rarely reused.</p>
 			 * 
-			 * @since 1.0.0
+			 * @since 1.1.0
 			 */
 			private Map<Class<? extends Activity>, Configuration>  cache
 				= new WeakHashMap<Class<? extends Activity>, Injector.Configuration>();
@@ -97,7 +99,7 @@ public interface Injector {
 			 * @return the previous {@link Configuration} keyed by this 
 			 * 		   {@link activity} {@link Class}, <b>if any</b>
 			 * <br><br>
-			 * @since 1.0.0
+			 * @since 1.1.0
 			 */
 			public Configuration put(Activity key, Configuration value) {
 				
@@ -115,7 +117,7 @@ public interface Injector {
 			 * @return the {@link Configuration} keyed by by this {@link activity} 
 			 * 		   {@link Class}; else {@code null} if not found
 			 * <br><br>
-			 * @since 1.0.0
+			 * @since 1.1.0
 			 */
 			public Configuration get(Activity key) {
 				
@@ -128,12 +130,11 @@ public interface Injector {
 			}
 		}
 		
-		
 		/**
 		 * <p>The <i>mode</i> of injection identified by 
 		 * {@link InjectionMode}.</p>
 		 * 
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 */
 		private InjectionMode injectionMode;
 		
@@ -142,7 +143,7 @@ public interface Injector {
 		 * <p>The {@link activity} which has requested 
 		 * dependency injection.</p>
 		 * 
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 */
 		private Activity activity;
 		
@@ -151,7 +152,7 @@ public interface Injector {
 		 * <p>The target {@link Field}s in the {@link #activity} 
 		 * activity grouped into their categories by {@link EventCategory}.</p>
 		 * 
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 */
 		private Map<InjectionCategory, Set<Field>> injectionTargets;
 
@@ -168,7 +169,7 @@ public interface Injector {
 		 * <br><br>
 		 * @return a new instance of {@link Injector.Configuration}
 		 * <br><br>
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 */
 		public static Configuration newInstance(Activity injectionActivity) {
 			
@@ -215,7 +216,7 @@ public interface Injector {
 		 * <br><br>
 		 * @return the <b>cached</b> instance of {@link Injector.Configuration}
 		 * <br><br>
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 */
 		public static Configuration getInstance(Activity injectionActivity) {
 		
@@ -240,7 +241,7 @@ public interface Injector {
 		 * 
 		 * <p>Initializes {@link #injectionTargets} to an empty {@link Map}.</p>
 		 * 
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 */
 		private Configuration() {
 			
@@ -252,7 +253,7 @@ public interface Injector {
 		 * 
 		 * @return {@link #injectionMode}
 		 * <br><br>
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 */		
 		public InjectionMode getInjectionMode() {
 			
@@ -266,7 +267,7 @@ public interface Injector {
 		 * 			the {@link InjectionMode} to populate 
 		 * 			{@link #injectionMode} 
 		 * <br><br>
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 */
 		private void setInjectionMode(InjectionMode injectionMode) {
 			
@@ -278,7 +279,7 @@ public interface Injector {
 		 * 
 		 * @return {@link #activity}
 		 * <br><br>
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 */
 		public Activity getActivity() {
 			
@@ -292,7 +293,7 @@ public interface Injector {
 		 * 			the {@link activity} to populate 
 		 * 			{@link #activity} 
 		 * <br><br>
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 */
 		private void setActivity(Activity activity) {
 			
@@ -304,7 +305,7 @@ public interface Injector {
 		 * 
 		 * @return {@link #injectionTargets}
 		 * <br><br>
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 */
 		public Map<InjectionCategory, Set<Field>> getInjectionTargets() {
 			
@@ -324,7 +325,7 @@ public interface Injector {
 		 * 			the {@link Field} to be categorized into an 
 		 * 			{@link EventCategory}
 		 * <br><br>
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 */
 		private void putInjectionTarget(InjectionCategory injectionCategory, Field field) {
 			
@@ -351,7 +352,7 @@ public interface Injector {
 		 * @return the {@link Set} of {@link Field}s  under 
 		 * 		   the category, else an empty {@link Set}
 		 * <br><br>
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 */
 		public Set<Field> getInjectionTargets(InjectionCategory injectionCategory) {
 			
@@ -361,6 +362,32 @@ public interface Injector {
 						new HashSet<Field>() :Collections.unmodifiableSet(targets);
 		}
 	 }
+
+	/**
+	 * <p>Specifies the contract for performing injection related to a 
+	 * particular {@link InjectionCategory} over the given set of {@link Field}s.
+	 * 
+	 * @version 1.1.0
+	 * <br><br>
+	 * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
+	 */
+	public static interface InjectionStrategy {
+		
+		/**
+		 * <p>Performs injection over the given set of {@link Field}s in 
+		 * the target {@link Context}.
+		 * 
+		 * @param config
+		 * 			the {@link Injector.Configuration} associated with the 
+		 * 			injection operation
+		 * 
+		 * @return the value which is to be injected
+		 * 
+		 * @since 1.1.0
+		 */
+		public abstract void run(Injector.Configuration config);
+	}
+	
 	
 	/**
 	 * <p>Takes an {@link Injector.Configuration} and injects the <i>resources</i> 
@@ -369,7 +396,7 @@ public interface Injector {
 	 * @param config
 	 * 			the {@link Injector.Configuration} which for this injector
 	 * <br><br>
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public abstract void inject(final Injector.Configuration config);
 }

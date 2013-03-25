@@ -27,7 +27,7 @@ import android.graphics.drawable.Drawable;
  * <p>Identifies the <i>category</i> to which a particular 
  * injection operation falls.</p>
  * 
- * @version 1.0.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -37,7 +37,7 @@ public enum InjectionCategory {
 	 * <p>This <i>category</i> is responsible for identifying an 
 	 * {@link Application} instance to be injected.</p>
 	 * 
-	 * @since 1.0.0 
+	 * @since 1.1.0 
 	 */
 	APPLICATION,
 	
@@ -45,7 +45,7 @@ public enum InjectionCategory {
 	 * <p>This <i>category</i> is responsible for identifying an 
 	 * <b>View Android Resource</b> to be injected.</p>
 	 * 
-	 * @since 1.0.0 
+	 * @since 1.1.0 
 	 */
 	RESOURCE_VIEW,
 	
@@ -53,7 +53,7 @@ public enum InjectionCategory {
 	 * <p>This <i>category</i> is responsible for identifying an 
 	 * <b>Integer Android Resource</b> to be injected.</p>
 	 * 
-	 * @since 1.0.0 
+	 * @since 1.1.0 
 	 */
 	RESOURCE_INTEGER,
 	
@@ -61,7 +61,7 @@ public enum InjectionCategory {
 	 * <p>This <i>category</i> is responsible for identifying a 
 	 * <b>String Android Resource</b> to be injected.</p>
 	 * 
-	 * @since 1.0.0 
+	 * @since 1.1.0 
 	 */
 	RESOURCE_STRING,
 	
@@ -69,15 +69,23 @@ public enum InjectionCategory {
 	 * <p>This <i>category</i> is responsible for identifying a 
 	 * <b>{@link Drawable} Android Resource</b> to be injected.</p>
 	 * 
-	 * @since 1.0.0 
+	 * @since 1.1.0 
 	 */
 	RESOURCE_DRAWABLE,
+	
+	/**
+	 * <p>This <i>category</i> is responsible for identifying an 
+	 * <b>Android Dimension Resource</b> to be injected.</p>
+	 * 
+	 * @since 1.1.1 
+	 */
+	RESOURCE_DIMENSION,
 	
 	/**
 	 * <p>This <i>category</i> is responsible for identifying a 
 	 * <b>System Service</b> to be injected.</p>
 	 * 
-	 * @since 1.0.0 
+	 * @since 1.1.0 
 	 */
 	SERVICE,
 	
@@ -85,7 +93,7 @@ public enum InjectionCategory {
 	 * <p>This <i>category</i> is responsible for identifying a 
 	 * <b>Plain Old Java Object (POJO)</b> to be injected.</p>
 	 * 
-	 * @since 1.0.0 
+	 * @since 1.1.0 
 	 */
 	POJO,
 	
@@ -93,7 +101,7 @@ public enum InjectionCategory {
 	 * <p>Used when the subject does not fall into any of existing 
 	 * categories.</p>
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	NONE;
 }

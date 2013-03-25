@@ -36,7 +36,7 @@ import com.xtremelabs.robolectric.RobolectricTestRunner;
  * 
  * @category test
  * <br><br>
- * @version 1.1.1
+ * @version 1.1.2
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -148,6 +148,20 @@ public class ImplicitInjectionActivityTest {
 	public final void testDrawable() throws Exception {
 		
 		assertNotNull(activity.ic_launcher);
+	}
+	
+	/**
+	 * <p>Test dimension injection.
+	 * 
+	 * @throws Exception
+	 * 			if test terminated with an error
+	 * 
+	 * @since 1.1.2
+	 */
+	@Test
+	public final void testDimension() throws Exception {
+		
+		assertEquals(12.0, activity.txt_small, 0);
 	}
 	
 	/**

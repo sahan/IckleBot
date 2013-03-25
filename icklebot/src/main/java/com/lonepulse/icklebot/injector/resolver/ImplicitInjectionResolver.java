@@ -31,12 +31,14 @@ import com.lonepulse.icklebot.annotation.inject.ApplicationContract;
 import com.lonepulse.icklebot.annotation.inject.IgnoreInjection;
 import com.lonepulse.icklebot.annotation.inject.InjectAll;
 import com.lonepulse.icklebot.annotation.inject.Pojo;
+import com.lonepulse.icklebot.event.resolver.EventCategory;
+import com.lonepulse.icklebot.event.resolver.EventResolver;
 
 /**
  * <p>An implementation of {@link EventResolver} which caters to 
  * <b>Implicit Injections</b> activated via {@link InjectAll}.</p>
  * 
- * @version 1.0.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -66,6 +68,9 @@ class ImplicitInjectionResolver implements InjectionResolver {
 		else if(isCategoryResourceDrawable(field))
 			return InjectionCategory.RESOURCE_DRAWABLE;
 		
+		else if(isCategoryResourceDimension(field))
+			return InjectionCategory.RESOURCE_DIMENSION;
+		
 		else if(isCategoryPojo(field))
 			return InjectionCategory.POJO;
 		
@@ -86,7 +91,7 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	 * @return {@code true} if it's {@link EventCategory#APPLICATION}, 
 	 * 			else {@code false}
 	 * <br><br>
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	private boolean isCategoryApplication(Field field) {
 	
@@ -104,7 +109,7 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	 * @return {@code true} if it's {@link EventCategory#RESOURCE_VIEW}, 
 	 * 			else {@code false}
 	 * <br><br>
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	private boolean isCategoryResourceView(Field field) {
 		
@@ -122,7 +127,7 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	 * @return {@code true} if it's {@link EventCategory#RESOURCE_INTEGER}, 
 	 * 			else {@code false}
 	 * <br><br>
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	private boolean isCategoryResourceInteger(Field field) {
 		
@@ -141,7 +146,7 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	 * @return {@code true} if it's {@link EventCategory#RESOURCE_STRING}, 
 	 * 			else {@code false}
 	 * <br><br>
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	private boolean isCategoryResourceString(Field field) {
 		
@@ -159,11 +164,30 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	 * @return {@code true} if it's {@link EventCategory#RESOURCE_DRAWABLE}, 
 	 * 			else {@code false}
 	 * <br><br>
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	private boolean isCategoryResourceDrawable(Field field) {
 		
 		return (Drawable.class.isAssignableFrom(field.getType()))? true :false;
+	}
+	
+	/**
+	 * <p>Determines if this {@link Field} injection falls into 
+	 * {@link InjectionCategory#RESOURCE_DIMENSION}.</p>
+	 * 
+	 * @param field
+	 * 			the {@link Field} whose {@link InjectionCategory} is to 
+	 * 			be resolved
+	 * <br><br>
+	 * @return {@code true} if it's {@link InjectionCategory#RESOURCE_DRAWABLE}, 
+	 * 			else {@code false}
+	 * <br><br>
+	 * @since 1.1.1
+	 */
+	private boolean isCategoryResourceDimension(Field field) {
+		
+		return (Float.class.isAssignableFrom(field.getType())
+				|| float.class.isAssignableFrom(field.getType()))? true : false;
 	}
 	
 	/**
@@ -177,7 +201,7 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	 * @return {@code true} if it's {@link EventCategory#POJO}, 
 	 * 			else {@code false}
 	 * <br><br>
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	private boolean isCategoryPojo(Field field) {
 		
@@ -204,7 +228,7 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	 * @return {@code true} if it's {@link EventCategory#SERVICE}, 
 	 * 			else {@code false}
 	 * <br><br>
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	private boolean isCategoryService(Field field) {
 		

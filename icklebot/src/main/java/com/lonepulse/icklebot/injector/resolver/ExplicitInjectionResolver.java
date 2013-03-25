@@ -23,6 +23,7 @@ package com.lonepulse.icklebot.injector.resolver;
 import java.lang.reflect.Field;
 
 import com.lonepulse.icklebot.annotation.inject.InjectApplication;
+import com.lonepulse.icklebot.annotation.inject.InjectDimension;
 import com.lonepulse.icklebot.annotation.inject.InjectDrawable;
 import com.lonepulse.icklebot.annotation.inject.InjectInteger;
 import com.lonepulse.icklebot.annotation.inject.InjectPojo;
@@ -60,6 +61,9 @@ class ExplicitInjectionResolver implements InjectionResolver {
 		
 		else if(field.isAnnotationPresent(InjectDrawable.class))
 			return InjectionCategory.RESOURCE_DRAWABLE;
+		
+		else if(field.isAnnotationPresent(InjectDimension.class))
+			return InjectionCategory.RESOURCE_DIMENSION;
 			
 		else if(field.isAnnotationPresent(InjectPojo.class))
 			return InjectionCategory.POJO;

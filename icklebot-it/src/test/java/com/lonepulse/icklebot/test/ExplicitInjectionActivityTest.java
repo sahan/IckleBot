@@ -151,6 +151,20 @@ public class ExplicitInjectionActivityTest {
 	}
 	
 	/**
+	 * <p>Test dimension injection.
+	 * 
+	 * @throws Exception
+	 * 			if test terminated with an error
+	 * 
+	 * @since 1.1.2
+	 */
+	@Test
+	public final void testDimension() throws Exception {
+		
+		assertEquals(12.0, activity.txtSizeSmall, 0);
+	}
+	
+	/**
 	 * <p>Test system service injection.
 	 * 
 	 * @throws Exception

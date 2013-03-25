@@ -30,6 +30,7 @@ import android.widget.Button;
 
 import com.lonepulse.icklebot.IckleActivity;
 import com.lonepulse.icklebot.annotation.inject.InjectApplication;
+import com.lonepulse.icklebot.annotation.inject.InjectDimension;
 import com.lonepulse.icklebot.annotation.inject.InjectDrawable;
 import com.lonepulse.icklebot.annotation.inject.InjectInteger;
 import com.lonepulse.icklebot.annotation.inject.InjectPojo;
@@ -71,6 +72,9 @@ public class ExplicitInjectionActivity extends IckleActivity {
 	
 	@InjectDrawable(R.drawable.ic_launcher)
 	Drawable drwLauncherIcon;
+	
+	@InjectDimension(R.dimen.txt_small)
+	float txtSizeSmall;
 	
 	@InjectService(Context.TELEPHONY_SERVICE)
 	TelephonyManager telephonyManager;
