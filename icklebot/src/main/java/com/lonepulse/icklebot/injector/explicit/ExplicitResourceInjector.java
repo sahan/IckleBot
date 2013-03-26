@@ -29,6 +29,9 @@ import java.util.Set;
 import android.app.Activity;
 import android.util.Log;
 
+import com.lonepulse.icklebot.annotation.inject.InjectArray;
+import com.lonepulse.icklebot.annotation.inject.InjectBoolean;
+import com.lonepulse.icklebot.annotation.inject.InjectColor;
 import com.lonepulse.icklebot.annotation.inject.InjectDimension;
 import com.lonepulse.icklebot.annotation.inject.InjectDrawable;
 import com.lonepulse.icklebot.annotation.inject.InjectInteger;
@@ -157,6 +160,40 @@ class ExplicitResourceInjector implements Injector {
 				}
 			}
 		});
+
+		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_COLOR, new Injector.InjectionStrategy() {
+			
+			@Override
+			public void run(Injector.Configuration config) {
+				
+				Activity context = config.getActivity();
+				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_COLOR);
+				
+				for (Field field : fields) {
+					
+					try {
+						
+						if(!field.isAccessible()) field.setAccessible(true);
+						
+						int id = field.getAnnotation(InjectColor.class).value();
+						field.set(context, context.getResources().getColor(id));
+					}
+					catch (Exception e) {
+						
+						StringBuilder errorContext = new StringBuilder()
+						.append("Explicit resource injection with ")
+						.append(InjectColor.class.getSimpleName())
+						.append(" failed on ")
+						.append(context.getLocalClassName())
+						.append(" for ")
+						.append(field.getName())
+						.append(". ");
+						
+						Log.e(getClass().getName(), errorContext.toString(), e);
+					}
+				}
+			}
+		});
 		
 		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_INTEGER, new Injector.InjectionStrategy() {
 			
@@ -214,6 +251,82 @@ class ExplicitResourceInjector implements Injector {
 						StringBuilder errorContext = new StringBuilder()
 						.append("Explicit resource injection with ")
 						.append(InjectDimension.class.getSimpleName())
+						.append(" failed on ")
+						.append(context.getLocalClassName())
+						.append(" for ")
+						.append(field.getName())
+						.append(". ");
+						
+						Log.e(getClass().getName(), errorContext.toString(), e);
+					}
+				}
+			}
+		});
+		
+		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_BOOLEAN, new Injector.InjectionStrategy() {
+			
+			@Override
+			public void run(Injector.Configuration config) {
+				
+				Activity context = config.getActivity();
+				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_BOOLEAN);
+				
+				for (Field field : fields) {
+					
+					try {
+						
+						if(!field.isAccessible()) field.setAccessible(true);
+						
+						int id = field.getAnnotation(InjectBoolean.class).value();
+						field.set(context, context.getResources().getBoolean(id));
+					}
+					catch (Exception e) {
+						
+						StringBuilder errorContext = new StringBuilder()
+						.append("Explicit resource injection with ")
+						.append(InjectBoolean.class.getSimpleName())
+						.append(" failed on ")
+						.append(context.getLocalClassName())
+						.append(" for ")
+						.append(field.getName())
+						.append(". ");
+						
+						Log.e(getClass().getName(), errorContext.toString(), e);
+					}
+				}
+			}
+		});
+		
+		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_ARRAY, new Injector.InjectionStrategy() {
+			
+			@Override
+			public void run(Injector.Configuration config) {
+				
+				Activity context = config.getActivity();
+				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_ARRAY);
+				
+				for (Field field : fields) {
+					
+					try {
+						
+						if(!field.isAccessible()) field.setAccessible(true);
+						
+						int id = field.getAnnotation(InjectArray.class).value();
+						
+						if(field.getType().equals(String[].class)) {
+							
+							field.set(context, context.getResources().getStringArray(id));
+						}
+						else if(field.getType().equals(int[].class) || field.getType().equals(Integer[].class)) {
+							
+							field.set(context, context.getResources().getIntArray(id));
+						}
+					}
+					catch (Exception e) {
+						
+						StringBuilder errorContext = new StringBuilder()
+						.append("Explicit resource injection with ")
+						.append(InjectArray.class.getSimpleName())
 						.append(" failed on ")
 						.append(context.getLocalClassName())
 						.append(" for ")

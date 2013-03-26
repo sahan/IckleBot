@@ -199,7 +199,7 @@ public interface Injector {
 			}
 			
 			for (Field field : fields) 
-				config.putInjectionTarget(injectionResolver.resolve(field), field);
+				config.putInjectionTarget(injectionResolver.resolve(injectionActivity, field), field);
 			
 			return config;
 		}

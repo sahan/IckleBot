@@ -151,6 +151,21 @@ public class ImplicitInjectionActivityTest {
 	}
 	
 	/**
+	 * <p>Test color injection.
+	 * 
+	 * @throws Exception
+	 * 			if test terminated with an error
+	 * 
+	 * @since 1.1.2
+	 */
+	@Test
+	public final void testColor() throws Exception {
+		
+		assertEquals(activity.getResources().getColor(R.color.bg_generic), 
+					 activity.bg_generic, 0);
+	}
+	
+	/**
 	 * <p>Test dimension injection.
 	 * 
 	 * @throws Exception
@@ -162,6 +177,24 @@ public class ImplicitInjectionActivityTest {
 	public final void testDimension() throws Exception {
 		
 		assertEquals(12.0, activity.txt_small, 0);
+	}
+	
+	/**
+	 * <p>Test boolean injection.</p>
+	 * 
+	 * <p><b>NOTE</b>: Robolectric v1.1 retrieves false 
+	 * for all boolean resources. Hence a null check on 
+	 * a boolean wrapper is performed.</p>
+	 * 
+	 * @throws Exception
+	 * 			if test terminated with an error
+	 * 
+	 * @since 1.1.1
+	 */
+	@Test
+	public final void testBoolean() throws Exception {
+		
+		assertNotNull(activity.theme_generic);
 	}
 	
 	/**

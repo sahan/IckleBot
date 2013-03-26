@@ -82,6 +82,30 @@ public enum InjectionCategory {
 	RESOURCE_DIMENSION,
 	
 	/**
+	 * <p>This <i>category</i> is responsible for identifying an 
+	 * <b>Android Color Resource</b> to be injected.</p>
+	 * 
+	 * @since 1.1.1 
+	 */
+	RESOURCE_COLOR,
+	
+	/**
+	 * <p>This <i>category</i> is responsible for identifying an 
+	 * <b>Android Boolean Resource</b> to be injected.</p>
+	 * 
+	 * @since 1.1.1 
+	 */
+	RESOURCE_BOOLEAN,
+	
+	/**
+	 * <p>This <i>category</i> is responsible for identifying an 
+	 * <b>Android String or Integer Array Resource</b> to be injected.</p>
+	 * 
+	 * @since 1.1.1 
+	 */
+	RESOURCE_ARRAY,
+	
+	/**
 	 * <p>This <i>category</i> is responsible for identifying a 
 	 * <b>System Service</b> to be injected.</p>
 	 * 

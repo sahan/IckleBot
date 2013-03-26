@@ -138,6 +138,63 @@ public final class ReflectiveR {
 	}
 	
 	/**
+	 * <p>Takes the <i>name</i> of a <b>color</b> resource and 
+	 * finds its {@code int} id in the generated <b>R</b> class.</p>
+	 * 
+	 * @param context
+	 * 			the {@link Context} of the <b>R</b> class
+	 * <br><br>
+	 * @param resourceName
+	 * 			the name of the resource
+	 * <br><br>
+	 * @return the {@code int} ID of the dimension resource
+	 * <br><br>
+	 * @since 1.1.1
+	 */
+	public static int color(Context context, String resourceName) {
+		
+		return ReflectiveR.getIdentifier("color", context, resourceName);
+	}
+	
+	/**
+	 * <p>Takes the <i>name</i> of a <b>boolean</b> resource and 
+	 * finds its {@code int} id in the generated <b>R</b> class.</p>
+	 * 
+	 * @param context
+	 * 			the {@link Context} of the <b>R</b> class
+	 * <br><br>
+	 * @param resourceName
+	 * 			the name of the resource
+	 * <br><br>
+	 * @return the {@code int} ID of the boolean resource
+	 * <br><br>
+	 * @since 1.1.1
+	 */
+	public static int bool(Context context, String resourceName) {
+		
+		return ReflectiveR.getIdentifier("bool", context, resourceName);
+	}
+	
+	/**
+	 * <p>Takes the <i>name</i> of an <b>array</b> resource and 
+	 * finds its {@code int} id in the generated <b>R</b> class.</p>
+	 * 
+	 * @param context
+	 * 			the {@link Context} of the <b>R</b> class
+	 * <br><br>
+	 * @param resourceName
+	 * 			the name of the resource
+	 * <br><br>
+	 * @return the {@code int} ID of the array resource
+	 * <br><br>
+	 * @since 1.1.1
+	 */
+	public static int array(Context context, String resourceName) {
+		
+		return ReflectiveR.getIdentifier("array", context, resourceName);
+	}
+	
+	/**
 	 * <p>Looks up the identifier of a resource using 
 	 * {@link Resources#getIdentifier(String, String, String)}.</p>
 	 * 

@@ -31,8 +31,8 @@ import com.lonepulse.icklebot.annotation.inject.ApplicationContract;
 import com.lonepulse.icklebot.annotation.inject.IgnoreInjection;
 import com.lonepulse.icklebot.annotation.inject.InjectAll;
 import com.lonepulse.icklebot.annotation.inject.Pojo;
-import com.lonepulse.icklebot.event.resolver.EventCategory;
 import com.lonepulse.icklebot.event.resolver.EventResolver;
+import com.lonepulse.icklebot.util.ReflectiveR;
 
 /**
  * <p>An implementation of {@link EventResolver} which caters to 
@@ -48,7 +48,7 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public InjectionCategory resolve(Field field) {
+	public InjectionCategory resolve(Context context, Field field) {
 		
 		if(field.isAnnotationPresent(IgnoreInjection.class))
 			return InjectionCategory.NONE;
@@ -59,7 +59,7 @@ class ImplicitInjectionResolver implements InjectionResolver {
 		else if(isCategoryResourceView(field))
 			return InjectionCategory.RESOURCE_VIEW;
 		
-		else if(isCategoryResourceInteger(field))
+		else if(isCategoryResourceInteger(context, field))
 			return InjectionCategory.RESOURCE_INTEGER;
 		
 		else if(isCategoryResourceString(field))
@@ -68,8 +68,17 @@ class ImplicitInjectionResolver implements InjectionResolver {
 		else if(isCategoryResourceDrawable(field))
 			return InjectionCategory.RESOURCE_DRAWABLE;
 		
+		else if(isCategoryResourceColor(context, field)) 
+			return InjectionCategory.RESOURCE_COLOR;
+		
 		else if(isCategoryResourceDimension(field))
 			return InjectionCategory.RESOURCE_DIMENSION;
+		
+		else if(isCategoryResourceBoolean(field))
+			return InjectionCategory.RESOURCE_BOOLEAN;
+		
+		else if(isCategoryResourceArray(field))
+			return InjectionCategory.RESOURCE_ARRAY;
 		
 		else if(isCategoryPojo(field))
 			return InjectionCategory.POJO;
@@ -82,14 +91,13 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	
 	/**
 	 * <p>Determines if this {@link Field} injection falls into 
-	 * {@link EventCategory#APPLICATION}.</p>
+	 * {@link InjectionCategory#APPLICATION}.</p>
 	 * 
 	 * @param field
-	 * 			the {@link Field} whose {@link EventCategory} is to 
+	 * 			the {@link Field} whose {@link InjectionCategory} is to 
 	 * 			be resolved
 	 * <br><br>
-	 * @return {@code true} if it's {@link EventCategory#APPLICATION}, 
-	 * 			else {@code false}
+	 * @return {@code true} if it's {@link InjectionCategory#APPLICATION}, 
 	 * <br><br>
 	 * @since 1.1.0
 	 */
@@ -100,14 +108,13 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	
 	/**
 	 * <p>Determines if this {@link Field} injection falls into 
-	 * {@link EventCategory#RESOURCE_VIEW}.</p>
+	 * {@link InjectionCategory#RESOURCE_VIEW}.</p>
 	 * 
 	 * @param field
-	 * 			the {@link Field} whose {@link EventCategory} is to 
+	 * 			the {@link Field} whose {@link InjectionCategory} is to 
 	 * 			be resolved
 	 * <br><br>
-	 * @return {@code true} if it's {@link EventCategory#RESOURCE_VIEW}, 
-	 * 			else {@code false}
+	 * @return {@code true} if it's {@link InjectionCategory#RESOURCE_VIEW}, 
 	 * <br><br>
 	 * @since 1.1.0
 	 */
@@ -118,33 +125,36 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	
 	/**
 	 * <p>Determines if this {@link Field} injection falls into 
-	 * {@link EventCategory#RESOURCE_INTEGER}.</p>
+	 * {@link InjectionCategory#RESOURCE_INTEGER}.</p>
+	 * 
+	 * @param context
+	 * 			the {@link Context} from which the injection resolution 
+	 * 			is requested
 	 * 
 	 * @param field
-	 * 			the {@link Field} whose {@link EventCategory} is to 
+	 * 			the {@link Field} whose {@link InjectionCategory} is to 
 	 * 			be resolved
 	 * <br><br>
-	 * @return {@code true} if it's {@link EventCategory#RESOURCE_INTEGER}, 
-	 * 			else {@code false}
+	 * @return {@code true} if it's {@link InjectionCategory#RESOURCE_INTEGER}, 
 	 * <br><br>
 	 * @since 1.1.0
 	 */
-	private boolean isCategoryResourceInteger(Field field) {
+	private boolean isCategoryResourceInteger(Context context, Field field) {
 		
-		return (Integer.class.isAssignableFrom(field.getType())
-				|| int.class.isAssignableFrom(field.getType()))? true : false;
+		return ((Integer.class.isAssignableFrom(field.getType())
+				|| int.class.isAssignableFrom(field.getType()))
+				&& ((ReflectiveR.integer(context, field.getName())) != 0))? true : false;
 	}
 	
 	/**
 	 * <p>Determines if this {@link Field} injection falls into 
-	 * {@link EventCategory#RESOURCE_STRING}.</p>
+	 * {@link InjectionCategory#RESOURCE_STRING}.</p>
 	 * 
 	 * @param field
-	 * 			the {@link Field} whose {@link EventCategory} is to 
+	 * 			the {@link Field} whose {@link InjectionCategory} is to 
 	 * 			be resolved
 	 * <br><br>
-	 * @return {@code true} if it's {@link EventCategory#RESOURCE_STRING}, 
-	 * 			else {@code false}
+	 * @return {@code true} if it's {@link InjectionCategory#RESOURCE_STRING}, 
 	 * <br><br>
 	 * @since 1.1.0
 	 */
@@ -155,20 +165,42 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	
 	/**
 	 * <p>Determines if this {@link Field} injection falls into 
-	 * {@link EventCategory#RESOURCE_DRAWABLE}.</p>
+	 * {@link InjectionCategory#RESOURCE_DRAWABLE}.</p>
 	 * 
 	 * @param field
-	 * 			the {@link Field} whose {@link EventCategory} is to 
+	 * 			the {@link Field} whose {@link InjectionCategory} is to 
 	 * 			be resolved
 	 * <br><br>
-	 * @return {@code true} if it's {@link EventCategory#RESOURCE_DRAWABLE}, 
-	 * 			else {@code false}
+	 * @return {@code true} if it's {@link InjectionCategory#RESOURCE_DRAWABLE}, 
 	 * <br><br>
 	 * @since 1.1.0
 	 */
 	private boolean isCategoryResourceDrawable(Field field) {
 		
 		return (Drawable.class.isAssignableFrom(field.getType()))? true :false;
+	}
+	
+	/**
+	 * <p>Determines if this {@link Field} injection falls into 
+	 * {@link InjectionCategory#RESOURCE_COLOR}.</p>
+	 * 
+	 * @param context
+	 * 			the {@link Context} from which the injection resolution 
+	 * 			is requested
+	 * 
+	 * @param field
+	 * 			the {@link Field} whose {@link InjectionCategory} is to 
+	 * 			be resolved
+	 * <br><br>
+	 * @return {@code true} if it's {@link InjectionCategory#RESOURCE_COLOR}, 
+	 * <br><br>
+	 * @since 1.1.0
+	 */
+	private boolean isCategoryResourceColor(Context context, Field field) {
+		
+		return ((Integer.class.isAssignableFrom(field.getType())
+				|| int.class.isAssignableFrom(field.getType()))
+				&& ((ReflectiveR.color(context, field.getName())) != 0))? true : false;
 	}
 	
 	/**
@@ -180,7 +212,6 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	 * 			be resolved
 	 * <br><br>
 	 * @return {@code true} if it's {@link InjectionCategory#RESOURCE_DRAWABLE}, 
-	 * 			else {@code false}
 	 * <br><br>
 	 * @since 1.1.1
 	 */
@@ -192,14 +223,50 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	
 	/**
 	 * <p>Determines if this {@link Field} injection falls into 
-	 * {@link EventCategory#POJO}.</p>
+	 * {@link InjectionCategory#RESOURCE_BOOLEAN}.</p>
 	 * 
 	 * @param field
-	 * 			the {@link Field} whose {@link EventCategory} is to 
+	 * 			the {@link Field} whose {@link InjectionCategory} is to 
 	 * 			be resolved
 	 * <br><br>
-	 * @return {@code true} if it's {@link EventCategory#POJO}, 
-	 * 			else {@code false}
+	 * @return {@code true} if it's {@link InjectionCategory#RESOURCE_BOOLEAN}, 
+	 * <br><br>
+	 * @since 1.1.1
+	 */
+	private boolean isCategoryResourceBoolean(Field field) {
+		
+		return (Boolean.class.isAssignableFrom(field.getType())
+				|| boolean.class.isAssignableFrom(field.getType()))? true : false;
+	}
+	
+	/**
+	 * <p>Determines if this {@link Field} injection falls into 
+	 * {@link InjectionCategory#RESOURCE_ARRAY}.</p>
+	 * 
+	 * @param field
+	 * 			the {@link Field} whose {@link InjectionCategory} is to 
+	 * 			be resolved
+	 * <br><br>
+	 * @return {@code true} if it's {@link InjectionCategory#RESOURCE_ARRAY}, 
+	 * <br><br>
+	 * @since 1.1.1
+	 */
+	private boolean isCategoryResourceArray(Field field) {
+		
+		return (String[].class.isAssignableFrom(field.getType())
+				|| int[].class.isAssignableFrom(field.getType())
+				|| Integer[].class.isAssignableFrom(field.getType()))? true : false;
+	}
+	
+	/**
+	 * <p>Determines if this {@link Field} injection falls into 
+	 * {@link InjectionCategory#POJO}.</p>
+	 * 
+	 * @param field
+	 * 			the {@link Field} whose {@link InjectionCategory} is to 
+	 * 			be resolved
+	 * <br><br>
+	 * @return {@code true} if it's {@link InjectionCategory#POJO}, 
 	 * <br><br>
 	 * @since 1.1.0
 	 */
@@ -210,7 +277,7 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	
 	/**
 	 * <p>Determines if this {@link Field} injection falls into 
-	 * {@link EventCategory#SERVICE}.</p>
+	 * {@link InjectionCategory#SERVICE}.</p>
 	 * 
 	 * <p>The {@link Field}'s <i>declared name</i> must match the 
 	 * respective constant in {@link Context} (case insensitive). 
@@ -222,11 +289,10 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	 * {@code TelephonyManager TELEPHONY_SERVICE;}
 	 * 
 	 * @param field
-	 * 			the {@link Field} whose {@link EventCategory} is to 
+	 * 			the {@link Field} whose {@link InjectionCategory} is to 
 	 * 			be resolved
 	 * <br><br>
-	 * @return {@code true} if it's {@link EventCategory#SERVICE}, 
-	 * 			else {@code false}
+	 * @return {@code true} if it's {@link InjectionCategory#SERVICE}, 
 	 * <br><br>
 	 * @since 1.1.0
 	 */

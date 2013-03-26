@@ -22,11 +22,13 @@ package com.lonepulse.icklebot.injector.resolver;
 
 import java.lang.reflect.Field;
 
+import android.content.Context;
+
 /**
  * <p>The contract by which instance variables are resolved to determine 
  * their {@link InjectionCategory}.</p>
  * 
- * @version 1.0.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -36,13 +38,17 @@ public interface InjectionResolver {
 	 * <p>Takes a {@link Field} and determines the best suited 
 	 * {@link InjectionCategory} to which it falls.</p>
 	 * 
+	 * @param context
+	 * 			the {@link Context} from which the {@link InjectionCategory} 
+	 * 			is to be resolved
+	 * 
 	 * @param field
 	 * 			the {@link Field} whose {@link InjectionCategory} is 
 	 * 			to be resolved
 	 * <br><br>
 	 * @return the resolved {@link InjectionCategory}
 	 * <br><br>
-	 * @since 1.0.0
+	 * @since 1.1.1
 	 */
-	public abstract InjectionCategory resolve(Field field);
+	public abstract InjectionCategory resolve(Context context, Field field);
 }

@@ -22,20 +22,25 @@ package com.lonepulse.icklebot.injector.resolver;
 
 import java.lang.reflect.Field;
 
+import android.content.Context;
+
 import com.lonepulse.icklebot.annotation.inject.InjectApplication;
+import com.lonepulse.icklebot.annotation.inject.InjectBoolean;
+import com.lonepulse.icklebot.annotation.inject.InjectColor;
 import com.lonepulse.icklebot.annotation.inject.InjectDimension;
 import com.lonepulse.icklebot.annotation.inject.InjectDrawable;
 import com.lonepulse.icklebot.annotation.inject.InjectInteger;
 import com.lonepulse.icklebot.annotation.inject.InjectPojo;
 import com.lonepulse.icklebot.annotation.inject.InjectService;
 import com.lonepulse.icklebot.annotation.inject.InjectString;
+import com.lonepulse.icklebot.annotation.inject.InjectArray;
 import com.lonepulse.icklebot.annotation.inject.InjectView;
 
 /**
  * <p>An implementation of {@link InjectionResolver} which caters to 
  * <b>Explicit Injections</b> using any of the <i>@Inject...</i> annotations.</p>
  * 
- * @version 1.0.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -45,7 +50,7 @@ class ExplicitInjectionResolver implements InjectionResolver {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public InjectionCategory resolve(Field field) {
+	public InjectionCategory resolve(Context context, Field field) {
 		
 		if(field.isAnnotationPresent(InjectApplication.class))
 			return InjectionCategory.APPLICATION;
@@ -62,8 +67,17 @@ class ExplicitInjectionResolver implements InjectionResolver {
 		else if(field.isAnnotationPresent(InjectDrawable.class))
 			return InjectionCategory.RESOURCE_DRAWABLE;
 		
+		else if(field.isAnnotationPresent(InjectColor.class))
+			return InjectionCategory.RESOURCE_COLOR;
+		
 		else if(field.isAnnotationPresent(InjectDimension.class))
 			return InjectionCategory.RESOURCE_DIMENSION;
+		
+		else if(field.isAnnotationPresent(InjectBoolean.class))
+			return InjectionCategory.RESOURCE_BOOLEAN;
+		
+		else if(field.isAnnotationPresent(InjectArray.class))
+			return InjectionCategory.RESOURCE_ARRAY;
 			
 		else if(field.isAnnotationPresent(InjectPojo.class))
 			return InjectionCategory.POJO;

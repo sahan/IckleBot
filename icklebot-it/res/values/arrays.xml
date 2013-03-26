@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+	<string-array name="font_sizes">
+	    <item>small</item>
+	    <item>medium</item>
+	    <item>large</item>
+	</string-array>
+	
+	<integer-array name="audio_level">
+	    <item>1</item>
+	    <item>2</item>
+	    <item>3</item>
+	    <item>4</item>
+	    <item>5</item>
+	</integer-array>
+</resources>

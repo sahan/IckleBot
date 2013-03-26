@@ -149,6 +149,38 @@ class ImplicitResourceInjector implements Injector {
 				}
 			}
 		});
+
+		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_COLOR, new Injector.InjectionStrategy() {
+			
+			@Override
+			public void run(Configuration config) {
+				
+				Activity context = config.getActivity();
+				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_COLOR);
+				
+				for (Field field : fields) {
+					
+					try {
+						
+						if(!field.isAccessible()) field.setAccessible(true);
+						
+						int id = ReflectiveR.color(context, field.getName());
+						field.set(context, context.getResources().getColor(id));
+					}
+					catch (Exception e) {
+						
+						StringBuilder errorContext = new StringBuilder()
+						.append("Implicit color resource injection failed on ")
+						.append(context.getLocalClassName())
+						.append(" for ")
+						.append(field.getName())
+						.append(". ");
+						
+						Log.e(getClass().getName(), errorContext.toString(), e);
+					}
+				}
+			}
+		});
 		
 		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_INTEGER, new Injector.InjectionStrategy() {
 			
@@ -203,6 +235,78 @@ class ImplicitResourceInjector implements Injector {
 						
 						StringBuilder errorContext = new StringBuilder()
 						.append("Implicit dimension resource injection failed on ")
+						.append(context.getLocalClassName())
+						.append(" for ")
+						.append(field.getName())
+						.append(". ");
+						
+						Log.e(getClass().getName(), errorContext.toString(), e);
+					}
+				}
+			}
+		});
+		
+		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_BOOLEAN, new Injector.InjectionStrategy() {
+			
+			@Override
+			public void run(Configuration config) {
+				
+				Activity context = config.getActivity();
+				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_BOOLEAN);
+				
+				for (Field field : fields) {
+					
+					try {
+						
+						if(!field.isAccessible()) field.setAccessible(true);
+						
+						int id = ReflectiveR.bool(context, field.getName());
+						field.set(context, context.getResources().getBoolean(id));
+					}
+					catch (Exception e) {
+						
+						StringBuilder errorContext = new StringBuilder()
+						.append("Implicit boolean resource injection failed on ")
+						.append(context.getLocalClassName())
+						.append(" for ")
+						.append(field.getName())
+						.append(". ");
+						
+						Log.e(getClass().getName(), errorContext.toString(), e);
+					}
+				}
+			}
+		});
+		
+		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_ARRAY, new Injector.InjectionStrategy() {
+			
+			@Override
+			public void run(Configuration config) {
+				
+				Activity context = config.getActivity();
+				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_ARRAY);
+				
+				for (Field field : fields) {
+					
+					try {
+						
+						if(!field.isAccessible()) field.setAccessible(true);
+						
+						int id = ReflectiveR.array(context, field.getName());
+						
+						if(field.getType().equals(String[].class)) {
+							
+							field.set(context, context.getResources().getStringArray(id));
+						}
+						else if(field.getType().equals(int[].class) || field.getType().equals(Integer[].class)) {
+							
+							field.set(context, context.getResources().getIntArray(id));
+						}
+					}
+					catch (Exception e) {
+						
+						StringBuilder errorContext = new StringBuilder()
+						.append("Implicit array resource injection failed on ")
 						.append(context.getLocalClassName())
 						.append(" for ")
 						.append(field.getName())

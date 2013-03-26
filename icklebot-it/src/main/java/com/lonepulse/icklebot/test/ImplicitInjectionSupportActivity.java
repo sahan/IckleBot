@@ -60,7 +60,15 @@ public class ImplicitInjectionSupportActivity extends Activity {
 	
 	Drawable ic_launcher;
 	
+	int bg_generic;
+	
 	float txt_small;
+	
+	Boolean theme_generic;
+	
+	String[] font_sizes;
+	
+	int[] audio_level;
 	
 	TelephonyManager telephony_service;
 	
