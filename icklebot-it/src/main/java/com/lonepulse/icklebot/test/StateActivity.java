@@ -39,7 +39,7 @@ import com.lonepulse.icklebot.annotation.inject.Title;
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 @Layout(R.layout.act_explicit_injection)
-@Title(id = R.string.ttl_act_explicit_injection)
+@Title(R.string.ttl_act_explicit_injection)
 public class StateActivity extends IckleActivity {
 	
 

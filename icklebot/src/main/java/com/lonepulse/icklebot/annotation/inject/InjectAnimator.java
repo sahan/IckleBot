@@ -25,39 +25,25 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import android.app.ActionBar;
-
 /**
- * <p>Specifies the <b>title</b> to be used on the {@link ActionBar} 
- * or <b>Title Bar</b> (pre-ICS).</p> 
+ * <p>Identifies an animation resource which is 
+ * to be <i>injected</i>.</p>
  * 
- * @version 1.0.0
+ * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Title {
+@Target(ElementType.FIELD)
+public @interface InjectAnimator {
 
 	/**
-	 * <p>The {@code integer} which identifies the <b>resource id</b> 
-	 * of the title to be used.</p>
+	 * <p>The {@code integer} which identifies the <b>id</b> 
+	 * of the animation resource.</p>
 	 * 
-	 * <p><b>NOTE</b>: the resource id is given precedence over the 
-	 * {@link #text()}</p>.
-	 * 
-	 * @return the string resource id
+	 * @return the animation's resource id
 	 * <br><br>
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
-	int value() default 0;
-	
-	/**
-	 * <p>The <i>text</i> which is to be used for the title.</p> 
-	 * 
-	 * @return the title text 
-	 * <br><br>
-	 * @since 1.0.0
-	 */
-	String text() default "";
+	int value();
 }

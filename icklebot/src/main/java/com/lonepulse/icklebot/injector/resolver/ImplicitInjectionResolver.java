@@ -22,10 +22,12 @@ package com.lonepulse.icklebot.injector.resolver;
 
 import java.lang.reflect.Field;
 
+import android.animation.AnimatorSet;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.telephony.TelephonyManager;
 import android.view.View;
+import android.view.animation.Animation;
 
 import com.lonepulse.icklebot.annotation.inject.ApplicationContract;
 import com.lonepulse.icklebot.annotation.inject.IgnoreInjection;
@@ -79,6 +81,12 @@ class ImplicitInjectionResolver implements InjectionResolver {
 		
 		else if(isCategoryResourceArray(field))
 			return InjectionCategory.RESOURCE_ARRAY;
+		
+		else if(isCategoryResourceAnimation(field))
+			return InjectionCategory.RESOURCE_ANIMATION;
+		
+		else if(isCategoryResourceAnimator(field))
+			return InjectionCategory.RESOURCE_ANIMATOR;
 		
 		else if(isCategoryPojo(field))
 			return InjectionCategory.POJO;
@@ -256,6 +264,40 @@ class ImplicitInjectionResolver implements InjectionResolver {
 		return (String[].class.isAssignableFrom(field.getType())
 				|| int[].class.isAssignableFrom(field.getType())
 				|| Integer[].class.isAssignableFrom(field.getType()))? true : false;
+	}
+	
+	/**
+	 * <p>Determines if this {@link Field} injection falls into 
+	 * {@link InjectionCategory#RESOURCE_ANIMATION}.</p>
+	 * 
+	 * @param field
+	 * 			the {@link Field} whose {@link InjectionCategory} is to 
+	 * 			be resolved
+	 * <br><br>
+	 * @return {@code true} if it's {@link InjectionCategory#RESOURCE_ANIMATION}, 
+	 * <br><br>
+	 * @since 1.1.1
+	 */
+	private boolean isCategoryResourceAnimation(Field field) {
+		
+		return (Animation.class.isAssignableFrom(field.getType()))? true : false;
+	}
+	
+	/**
+	 * <p>Determines if this {@link Field} injection falls into 
+	 * {@link InjectionCategory#RESOURCE_ANIMATOR}.</p>
+	 * 
+	 * @param field
+	 * 			the {@link Field} whose {@link InjectionCategory} is to 
+	 * 			be resolved
+	 * <br><br>
+	 * @return {@code true} if it's {@link InjectionCategory#RESOURCE_ANIMATOR}, 
+	 * <br><br>
+	 * @since 1.1.1
+	 */
+	private boolean isCategoryResourceAnimator(Field field) {
+		
+		return (AnimatorSet.class.isAssignableFrom(field.getType()))? true : false;
 	}
 	
 	/**

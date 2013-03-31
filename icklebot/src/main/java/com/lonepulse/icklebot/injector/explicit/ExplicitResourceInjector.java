@@ -26,9 +26,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import android.animation.AnimatorInflater;
 import android.app.Activity;
 import android.util.Log;
+import android.view.animation.AnimationUtils;
 
+import com.lonepulse.icklebot.annotation.inject.InjectAnimation;
+import com.lonepulse.icklebot.annotation.inject.InjectAnimator;
 import com.lonepulse.icklebot.annotation.inject.InjectArray;
 import com.lonepulse.icklebot.annotation.inject.InjectBoolean;
 import com.lonepulse.icklebot.annotation.inject.InjectColor;
@@ -327,6 +331,74 @@ class ExplicitResourceInjector implements Injector {
 						StringBuilder errorContext = new StringBuilder()
 						.append("Explicit resource injection with ")
 						.append(InjectArray.class.getSimpleName())
+						.append(" failed on ")
+						.append(context.getLocalClassName())
+						.append(" for ")
+						.append(field.getName())
+						.append(". ");
+						
+						Log.e(getClass().getName(), errorContext.toString(), e);
+					}
+				}
+			}
+		});
+		
+		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_ANIMATION, new Injector.InjectionStrategy() {
+			
+			@Override
+			public void run(Injector.Configuration config) {
+				
+				Activity context = config.getActivity();
+				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_ANIMATION);
+				
+				for (Field field : fields) {
+					
+					try {
+						
+						if(!field.isAccessible()) field.setAccessible(true);
+						
+						int id = field.getAnnotation(InjectAnimation.class).value();
+						field.set(context, AnimationUtils.loadAnimation(config.getActivity(), id));
+					}
+					catch (Exception e) {
+						
+						StringBuilder errorContext = new StringBuilder()
+						.append("Explicit resource injection with ")
+						.append(InjectAnimation.class.getSimpleName())
+						.append(" failed on ")
+						.append(context.getLocalClassName())
+						.append(" for ")
+						.append(field.getName())
+						.append(". ");
+						
+						Log.e(getClass().getName(), errorContext.toString(), e);
+					}
+				}
+			}
+		});
+		
+		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_ANIMATOR, new Injector.InjectionStrategy() {
+			
+			@Override
+			public void run(Injector.Configuration config) {
+				
+				Activity context = config.getActivity();
+				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_ANIMATOR);
+				
+				for (Field field : fields) {
+					
+					try {
+						
+						if(!field.isAccessible()) field.setAccessible(true);
+						
+						int id = field.getAnnotation(InjectAnimator.class).value();
+						field.set(context, AnimatorInflater.loadAnimator(config.getActivity(), id)); 
+					}
+					catch (Exception e) {
+						
+						StringBuilder errorContext = new StringBuilder()
+						.append("Explicit resource injection with ")
+						.append(InjectAnimator.class.getSimpleName())
 						.append(" failed on ")
 						.append(context.getLocalClassName())
 						.append(" for ")

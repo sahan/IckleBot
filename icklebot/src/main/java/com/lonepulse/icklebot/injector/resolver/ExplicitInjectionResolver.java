@@ -24,7 +24,10 @@ import java.lang.reflect.Field;
 
 import android.content.Context;
 
+import com.lonepulse.icklebot.annotation.inject.InjectAnimation;
+import com.lonepulse.icklebot.annotation.inject.InjectAnimator;
 import com.lonepulse.icklebot.annotation.inject.InjectApplication;
+import com.lonepulse.icklebot.annotation.inject.InjectArray;
 import com.lonepulse.icklebot.annotation.inject.InjectBoolean;
 import com.lonepulse.icklebot.annotation.inject.InjectColor;
 import com.lonepulse.icklebot.annotation.inject.InjectDimension;
@@ -33,7 +36,6 @@ import com.lonepulse.icklebot.annotation.inject.InjectInteger;
 import com.lonepulse.icklebot.annotation.inject.InjectPojo;
 import com.lonepulse.icklebot.annotation.inject.InjectService;
 import com.lonepulse.icklebot.annotation.inject.InjectString;
-import com.lonepulse.icklebot.annotation.inject.InjectArray;
 import com.lonepulse.icklebot.annotation.inject.InjectView;
 
 /**
@@ -78,6 +80,12 @@ class ExplicitInjectionResolver implements InjectionResolver {
 		
 		else if(field.isAnnotationPresent(InjectArray.class))
 			return InjectionCategory.RESOURCE_ARRAY;
+		
+		else if(field.isAnnotationPresent(InjectAnimation.class))
+			return InjectionCategory.RESOURCE_ANIMATION;
+		
+		else if(field.isAnnotationPresent(InjectAnimator.class))
+			return InjectionCategory.RESOURCE_ANIMATOR;
 			
 		else if(field.isAnnotationPresent(InjectPojo.class))
 			return InjectionCategory.POJO;

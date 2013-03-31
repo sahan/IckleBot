@@ -45,7 +45,7 @@ import com.lonepulse.icklebot.annotation.inject.Title;
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 @Layout(R.layout.act_listener)
-@Title(id = R.string.ttl_act_listener)
+@Title(R.string.ttl_act_listener)
 public class EventSupportActivity extends Activity {
 	
 

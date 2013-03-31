@@ -21,9 +21,11 @@ package com.lonepulse.icklebot.test;
  */
 
 
+import android.animation.AnimatorSet;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.view.animation.Animation;
 import android.widget.Button;
 
 import com.lonepulse.icklebot.IckleActivity;
@@ -45,7 +47,7 @@ import com.lonepulse.icklebot.test.service.AccountsService;
  */
 @InjectAll
 @Layout(R.layout.act_implicit_injection)
-@Title(id = R.string.ttl_act_implicit_injection)
+@Title(R.string.ttl_act_implicit_injection)
 public class ImplicitInjectionActivity extends IckleActivity {
 	
 
@@ -68,6 +70,10 @@ public class ImplicitInjectionActivity extends IckleActivity {
 	String[] font_sizes;
 	
 	int[] audio_level;
+	
+	Animation fade_out;
+	
+	AnimatorSet grow;
 	
 	TelephonyManager telephony_service;
 	

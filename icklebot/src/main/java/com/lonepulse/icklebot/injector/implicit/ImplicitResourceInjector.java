@@ -26,8 +26,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import android.animation.AnimatorInflater;
 import android.app.Activity;
 import android.util.Log;
+import android.view.animation.AnimationUtils;
 
 import com.lonepulse.icklebot.annotation.inject.InjectView;
 import com.lonepulse.icklebot.injector.Injector;
@@ -307,6 +309,70 @@ class ImplicitResourceInjector implements Injector {
 						
 						StringBuilder errorContext = new StringBuilder()
 						.append("Implicit array resource injection failed on ")
+						.append(context.getLocalClassName())
+						.append(" for ")
+						.append(field.getName())
+						.append(". ");
+						
+						Log.e(getClass().getName(), errorContext.toString(), e);
+					}
+				}
+			}
+		});
+		
+		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_ANIMATION, new Injector.InjectionStrategy() {
+			
+			@Override
+			public void run(Configuration config) {
+				
+				Activity context = config.getActivity();
+				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_ANIMATION);
+				
+				for (Field field : fields) {
+					
+					try {
+						
+						if(!field.isAccessible()) field.setAccessible(true);
+						
+						int id = ReflectiveR.anim(context, field.getName());
+						field.set(context, AnimationUtils.loadAnimation(config.getActivity(), id));
+					}
+					catch (Exception e) {
+						
+						StringBuilder errorContext = new StringBuilder()
+						.append("Implicit animation resource injection failed on ")
+						.append(context.getLocalClassName())
+						.append(" for ")
+						.append(field.getName())
+						.append(". ");
+						
+						Log.e(getClass().getName(), errorContext.toString(), e);
+					}
+				}
+			}
+		});
+		
+		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_ANIMATOR, new Injector.InjectionStrategy() {
+			
+			@Override
+			public void run(Configuration config) {
+				
+				Activity context = config.getActivity();
+				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_ANIMATOR);
+				
+				for (Field field : fields) {
+					
+					try {
+						
+						if(!field.isAccessible()) field.setAccessible(true);
+						
+						int id = ReflectiveR.animator(context, field.getName());
+						field.set(context, AnimatorInflater.loadAnimator(config.getActivity(), id));
+					}
+					catch (Exception e) {
+						
+						StringBuilder errorContext = new StringBuilder()
+						.append("Implicit animator resource injection failed on ")
 						.append(context.getLocalClassName())
 						.append(" for ")
 						.append(field.getName())

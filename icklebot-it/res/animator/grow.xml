@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <objectAnimator
+        android:duration="100"
+        android:propertyName="layout_width"
+        android:valueTo="650"
+        android:valueType="intType" />
+    
+    <objectAnimator
+        android:duration="100"
+        android:propertyName="layout_height"
+        android:valueTo="250"
+        android:valueType="intType" />
+
+</set>

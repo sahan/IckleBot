@@ -106,6 +106,22 @@ public enum InjectionCategory {
 	RESOURCE_ARRAY,
 	
 	/**
+	 * <p>This <i>category</i> is responsible for identifying an 
+	 * <b>Android Animation Resource</b> to be injected.</p>
+	 * 
+	 * @since 1.1.1 
+	 */
+	RESOURCE_ANIMATION,
+	
+	/**
+	 * <p>This <i>category</i> is responsible for identifying an 
+	 * <b>Android Animator Resource</b> to be injected.</p>
+	 * 
+	 * @since 1.1.1 
+	 */
+	RESOURCE_ANIMATOR,
+	
+	/**
 	 * <p>This <i>category</i> is responsible for identifying a 
 	 * <b>System Service</b> to be injected.</p>
 	 * 

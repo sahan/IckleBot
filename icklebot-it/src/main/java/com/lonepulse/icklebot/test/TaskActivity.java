@@ -41,7 +41,7 @@ import com.lonepulse.icklebot.annotation.thread.UI;
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 @Layout(R.layout.act_task)
-@Title(id = R.string.ttl_act_task)
+@Title(R.string.ttl_act_task)
 public class TaskActivity extends IckleActivity {
 	
 	

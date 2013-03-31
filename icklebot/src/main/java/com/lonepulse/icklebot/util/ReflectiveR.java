@@ -195,6 +195,44 @@ public final class ReflectiveR {
 	}
 	
 	/**
+	 * <p>Takes the <i>name</i> of an <b>animation</b> resource and 
+	 * finds its {@code int} id in the generated <b>R</b> class.</p>
+	 * 
+	 * @param context
+	 * 			the {@link Context} of the <b>R</b> class
+	 * <br><br>
+	 * @param resourceName
+	 * 			the name of the resource
+	 * <br><br>
+	 * @return the {@code int} ID of the animation resource
+	 * <br><br>
+	 * @since 1.1.1
+	 */
+	public static int anim(Context context, String resourceName) {
+		
+		return ReflectiveR.getIdentifier("anim", context, resourceName);
+	}
+	
+	/**
+	 * <p>Takes the <i>name</i> of an <b>animator</b> resource and 
+	 * finds its {@code int} id in the generated <b>R</b> class.</p>
+	 * 
+	 * @param context
+	 * 			the {@link Context} of the <b>R</b> class
+	 * <br><br>
+	 * @param resourceName
+	 * 			the name of the resource
+	 * <br><br>
+	 * @return the {@code int} ID of the animator resource
+	 * <br><br>
+	 * @since 1.1.1
+	 */
+	public static int animator(Context context, String resourceName) {
+		
+		return ReflectiveR.getIdentifier("animator", context, resourceName);
+	}
+	
+	/**
 	 * <p>Looks up the identifier of a resource using 
 	 * {@link Resources#getIdentifier(String, String, String)}.</p>
 	 * 

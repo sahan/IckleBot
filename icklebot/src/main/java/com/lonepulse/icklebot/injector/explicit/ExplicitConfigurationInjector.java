@@ -28,7 +28,6 @@ import com.lonepulse.icklebot.annotation.inject.Fullscreen;
 import com.lonepulse.icklebot.annotation.inject.Title;
 import com.lonepulse.icklebot.annotation.inject.WindowFeatures;
 import com.lonepulse.icklebot.injector.Injector;
-import com.lonepulse.icklebot.injector.Injector.Configuration;
 import com.lonepulse.icklebot.util.TypeUtils;
 
 /**
@@ -72,8 +71,8 @@ class ExplicitConfigurationInjector implements Injector {
 		
 		if(title != null) {
 			
-			if(title.id() != 0)
-				injectionActivity.setTitle(title.id());
+			if(title.value() != 0)
+				injectionActivity.setTitle(title.value());
 			
 			else if(!title.text().equals(""))
 				injectionActivity.setTitle(title.text());

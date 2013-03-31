@@ -21,14 +21,18 @@ package com.lonepulse.icklebot.test;
  */
 
 
+import android.animation.AnimatorSet;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.view.animation.Animation;
 import android.widget.Button;
 
 import com.lonepulse.icklebot.IckleSupportManager;
+import com.lonepulse.icklebot.annotation.inject.InjectAnimation;
+import com.lonepulse.icklebot.annotation.inject.InjectAnimator;
 import com.lonepulse.icklebot.annotation.inject.InjectApplication;
 import com.lonepulse.icklebot.annotation.inject.InjectArray;
 import com.lonepulse.icklebot.annotation.inject.InjectBoolean;
@@ -57,7 +61,7 @@ import com.lonepulse.icklebot.test.service.AccountsServiceImpl;
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 @Layout(R.layout.act_explicit_injection)
-@Title(id = R.string.ttl_act_explicit_injection)
+@Title(R.string.ttl_act_explicit_injection)
 public class ExplicitInjectionSupportActivity extends Activity {
 	
 
@@ -90,6 +94,12 @@ public class ExplicitInjectionSupportActivity extends Activity {
 	
 	@InjectArray(R.array.audio_level)
 	int[] audioLevel;
+	
+	@InjectAnimation(R.anim.fade_out)
+	Animation fadeOut;
+
+	@InjectAnimator(R.animator.grow)
+	AnimatorSet grow;
 	
 	@InjectService(Context.TELEPHONY_SERVICE)
 	TelephonyManager telephonyManager;

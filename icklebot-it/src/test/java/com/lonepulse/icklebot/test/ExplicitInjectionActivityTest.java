@@ -29,6 +29,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import android.view.animation.Animation;
+
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 
 /**
@@ -195,6 +197,20 @@ public class ExplicitInjectionActivityTest {
 	public final void testBoolean() throws Exception {
 		
 		assertNotNull(activity.themeGeneric);
+	}
+	
+	/**
+	 * <p>Test {@link Animation} injection.</p>
+	 * 
+	 * @throws Exception
+	 * 			if test terminated with an error
+	 * 
+	 * @since 1.1.1
+	 */
+	@Test
+	public final void testAnimation() throws Exception {
+		
+		assertNotNull(activity.fadeOut);
 	}
 	
 	/**
