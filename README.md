@@ -74,7 +74,9 @@ Kickoff with the [quickstart](https://github.com/sahan/IckleBot/wiki/Quickstart)
 
 6. [Use IckleBot's Threading Model](https://github.com/sahan/IckleBot/wiki/Use-IckleBot's-Threading-Model)
   
-7. [Use IckleBot's Event Model](https://github.com/sahan/IckleBot/wiki/Use-IckleBot's-Event-Model)   
+7. [Use IckleBot's Event Model](https://github.com/sahan/IckleBot/wiki/Use-IckleBot's-Event-Model)
+  
+8. [Avoid Coupling with IckleActivity](https://github.com/sahan/IckleBot/wiki/Avoid-Coupling-with-IckleActivity)
 <br/>
 
 ##License
