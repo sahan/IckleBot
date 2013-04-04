@@ -163,7 +163,7 @@ public interface EventLinker {
 			
 			config.setActivity(Activity);
 		
-			Method[] methods = Activity.getClass().getMethods();
+			Method[] methods = Activity.getClass().getDeclaredMethods();
 			
 			for (Method method : methods) {
 			

@@ -27,6 +27,8 @@ import android.app.Activity;
 import android.util.Log;
 
 import com.lonepulse.icklebot.annotation.inject.InjectPojo;
+import com.lonepulse.icklebot.annotation.inject.Pojo;
+import com.lonepulse.icklebot.injector.InjectionException;
 import com.lonepulse.icklebot.injector.Injector;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
 
@@ -57,7 +59,32 @@ class ExplicitPojoInjector implements Injector {
 			
 			try {
 				
-				field.set(injectionActivity, field.getAnnotation(InjectPojo.class).value().newInstance());
+				Class<?> fieldType = field.getType();
+				Class<? extends Object> pojoType = null;
+				
+				if(field.getAnnotation(InjectPojo.class).value().equals(Void.class)) {
+				
+					if(!fieldType.isAnnotationPresent(Pojo.class)) {
+						
+						StringBuilder builder = new StringBuilder()
+						.append("Pojo injection failed on ")
+						.append(field.getName())
+						.append(". Please provide the missing class attribute on @InjectPojo. ")
+						.append(" Or else specify the default implementation using @Pojo on ")
+						.append(fieldType.getName())
+						.append(". ");
+						
+						throw new InjectionException(builder.toString());
+					}
+					
+					pojoType = fieldType.getAnnotation(Pojo.class).value();
+				}
+				else {
+					
+					pojoType = field.getAnnotation(InjectPojo.class).value();
+				}
+				
+				field.set(injectionActivity, pojoType.newInstance());
 			} 
 			catch (Exception e) {
 				

@@ -38,7 +38,7 @@ import java.lang.annotation.Target;
  * <p>Of these 3 rules, the <i>1st</i> is the <b>only essential 
  * rule</b> for dependency injection.</p>
  * 
- * @version 1.0.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -52,7 +52,7 @@ public @interface Pojo {
 	 * 
 	 * @return the {@link Class} of the <i>POJO</i>
 	 * <br><br>
-	 * @since 1.0.0
+	 * @since 1.1.1
 	 */
 	Class<? extends Object> value();
 }

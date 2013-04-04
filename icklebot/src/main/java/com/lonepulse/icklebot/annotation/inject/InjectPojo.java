@@ -38,11 +38,15 @@ public @interface InjectPojo {
 
 	/**
 	 * <p>The {@link Class} of the <b>Plain Old Java 
-	 * Object</b> (<i>POJO</i>) to be injected.</p> 
+	 * Object</b> (<i>POJO</i>) to be injected.</p>
+	 * 
+	 * <p>If {@code @Pojo} is used on the pojo contract, 
+	 * the implementation class need not be provided via 
+	 * {@link #value()}.
 	 * 
 	 * @return the {@link Class} of the <i>POJO</i>
 	 * <br><br>
 	 * @since 1.0.0
 	 */
-	Class<? extends Object> value();
+	Class<? extends Object> value() default Void.class;
 }

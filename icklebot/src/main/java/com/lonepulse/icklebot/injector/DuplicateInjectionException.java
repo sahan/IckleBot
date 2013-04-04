@@ -35,7 +35,7 @@ import com.lonepulse.icklebot.IckleActivity;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public class DuplicateInjectionException extends RuntimeException {
+public class DuplicateInjectionException extends InjectionException {
 
 
 	private static final long serialVersionUID = 8618674483928650559L;
@@ -57,7 +57,7 @@ public class DuplicateInjectionException extends RuntimeException {
 	 * @since 1.0.0
 	 */
 	public DuplicateInjectionException(Class<? extends Activity> injectorActivity,
-									    Class<? extends Annotation> annotation) {
+									   Class<? extends Annotation> annotation) {
 		
 		this("Activity " + injectorActivity.getName() + " contains multiple injections of type " +
 			  annotation.getName() + ". The annotation " + annotation.getSimpleName() + 
@@ -65,27 +65,27 @@ public class DuplicateInjectionException extends RuntimeException {
 	}
 	
 	/**
-	 * See {@link RuntimeException#RuntimeException()} 
+	 * See {@link InjectionException#InjectionException()} 
 	 */
 	public DuplicateInjectionException() {
 	}
 
 	/**
-	 * See {@link RuntimeException#RuntimeException(String)} 
+	 * See {@link InjectionException#InjectionException(String)} 
 	 */
 	public DuplicateInjectionException(String detailMessage) {
 		super(detailMessage);
 	}
 
 	/**
-	 * See {@link RuntimeException#RuntimeException(Throwable)} 
+	 * See {@link InjectionException#InjectionException(Throwable)} 
 	 */
 	public DuplicateInjectionException(Throwable throwable) {
 		super(throwable);
 	}
 
 	/**
-	 * See {@link RuntimeException#RuntimeException(String, Throwable)} 
+	 * See {@link InjectionException#InjectionException(String, Throwable)} 
 	 */
 	public DuplicateInjectionException(String detailMessage, Throwable throwable) {
 		super(detailMessage, throwable);
