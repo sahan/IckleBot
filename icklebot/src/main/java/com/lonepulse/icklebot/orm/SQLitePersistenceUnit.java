@@ -59,7 +59,10 @@ implements PersistenceUnit {
 
 		Set<Class<Serializable>> entitySet = entities();
 		
-		//TODO read metadata and create schema
+		for (Class<Serializable> entityClass : entitySet) {
+			
+			
+		}
 	}
 
 	/**
