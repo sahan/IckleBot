@@ -22,6 +22,8 @@ package com.lonepulse.icklebot.profile;
 
 
 import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
 
 import com.lonepulse.icklebot.IckleActivity;
 import com.lonepulse.icklebot.annotation.profile.Profiles;
@@ -38,39 +40,56 @@ import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
 public class ProfileService implements ProfileManager {
 
 
-	private static ProfileManager instance;
+	private static volatile ProfileManager instance;
 	
 
+	/**
+	 * <p>The base {@link Context} in which this service is 
+	 * being initialized. 
+	 */
+	@SuppressWarnings("unused") //to guard against future contract-break
+	private Context context;
+	
+	
 	/**
 	 * <p>Instantiation is restricted. Use the {@link #newInstance()} 
 	 * or {@link #getInstance()} instead.
 	 */
-	private ProfileService() {}
+	private ProfileService(Context context) {
+		
+		this.context = context; 
+	}
 	
 	/**
-	 * <p>Returns a lazy initialized instance of a {@link ProfileManager} 
-	 * implementation.
+	 * <p>Creates a new instance of an implementation of {@link ProfileManager}.
 	 * 
-	 * @return the single {@link #instance} of {@link ProfileManager}.
+	 * @param application
+	 * 			the {@link Context} of the {@link Application} instance via 
+	 * 			{@link Activity#getApplication()} or {@link Activity#getApplicationContext()}
 	 * 
-	 * @since 1.1.2
+	 * @return a new instance of {@link ProfileManager}.
+	 * 
+	 * @since 1.1.1
 	 */
-	public static final ProfileManager getInstance() {
+	public static final synchronized ProfileManager getInstance(Context applicationContext) {
 		
-		return (instance == null)? (instance = new ProfileService()) :instance;
+		return (instance == null)? (instance = new ProfileService(applicationContext)) :instance;
 	}
 	
 	/**
 	 * <p>Creates a new instance of an implementation of 
 	 * {@link ProfileManager}.
 	 * 
+	 * @param context
+	 * 			the context in which the service is instantiated
+	 * 
 	 * @return a new instance of {@link ProfileManager}.
 	 * 
 	 * @since 1.1.1
 	 */
-	public static final ProfileManager newInstance() {
+	public static final ProfileManager newInstance(Context context) {
 		
-		return new ProfileService();
+		return new ProfileService(context);
 	}
 	
 	/**
@@ -100,7 +119,7 @@ public class ProfileService implements ProfileManager {
 			PROFILE[] activeProfiles = profiles.value();
 			
 			for (PROFILE currentProfile : activeProfiles)
-				if(currentProfile.compareTo(profile) == 0) return true;
+				if(currentProfile.equals(profile)) return true;
 			
 			return false;
 		}

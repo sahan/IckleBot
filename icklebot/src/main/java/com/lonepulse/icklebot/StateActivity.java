@@ -45,11 +45,11 @@ abstract class StateActivity extends InjectionActivity {
 
 		super.onSaveInstanceState(outState);
 		
-		if(ProfileService.getInstance().isActive(this, PROFILE.STATE)) {
+		if(ProfileService.getInstance(getApplicationContext()).isActive(this, PROFILE.STATE)) {
 		
 			long millis = System.currentTimeMillis();
 			
-			StateService.getInstance().save(this, outState);
+			StateService.newInstance(this).save(this, outState);
 			
 			millis = System.currentTimeMillis() - millis;
 			
@@ -66,11 +66,11 @@ abstract class StateActivity extends InjectionActivity {
 		
 		super.onRestoreInstanceState(savedInstanceState);
 		
-		if(ProfileService.getInstance().isActive(this, PROFILE.STATE)) {
+		if(ProfileService.getInstance(getApplicationContext()).isActive(this, PROFILE.STATE)) {
 		
 			long millis = System.currentTimeMillis();
 			
-			StateService.getInstance().restore(this, savedInstanceState);
+			StateService.newInstance(this).restore(this, savedInstanceState);
 			
 			millis = System.currentTimeMillis() - millis;
 			

@@ -4,6 +4,8 @@
     android:versionCode="1"
     android:versionName="1.1.1-SNAPSHOT" >
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- to detect network changes -->
+    
     <uses-sdk
         android:minSdkVersion="15"
         android:targetSdkVersion="15"

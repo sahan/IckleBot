@@ -29,6 +29,7 @@ import android.os.Bundle;
 
 import com.lonepulse.icklebot.event.EventLinker;
 import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.state.StateManager;
 import com.lonepulse.icklebot.state.StateService;
 import com.lonepulse.icklebot.task.TaskManagers;
 
@@ -178,6 +179,8 @@ public interface IckleSupportManager extends Serializable {
 				
 				private static final long serialVersionUID = 5949321867738227878L;
 
+				private StateManager stateService = StateService.newInstance(activity);
+				
 				@Override
 				public Context getBaseContext() {
 
@@ -211,13 +214,13 @@ public interface IckleSupportManager extends Serializable {
 				@Override
 				public void onSaveInstanceState(Bundle outState) {
 					
-					StateService.getInstance().save(activity, outState);
+					stateService.save(activity, outState);
 				}
 
 				@Override
 				public void onRestoreInstanceState(Bundle savedInstanceState) {
 					
-					StateService.getInstance().restore(activity, savedInstanceState);
+					stateService.restore(activity, savedInstanceState);
 				}
 			};
 		}

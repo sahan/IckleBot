@@ -50,7 +50,7 @@ abstract class EventActivity extends StateActivity {
 		EVENT_CONFIGURATION = EventLinker.Configuration.getInstance(this);
 	}
 	
-	
+
 	/**
 	 * <p>Performs <b>event listener linking</b> by invoking {@link #link()}.</p>
 	 */
@@ -58,8 +58,8 @@ abstract class EventActivity extends StateActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
-		
-		if(ProfileService.getInstance().isActive(this, PROFILE.EVENT)) {
+	
+		if(ProfileService.getInstance(getApplicationContext()).isActive(this, PROFILE.EVENT)) {
 			
 			EventActivity.link(EVENT_CONFIGURATION);
 		}

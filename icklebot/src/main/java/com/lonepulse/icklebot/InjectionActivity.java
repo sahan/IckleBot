@@ -60,7 +60,7 @@ abstract class InjectionActivity extends ThreadingActivity {
 		
 		super.onCreate(savedInstanceState);
 
-		if(ProfileService.getInstance().isActive(this, PROFILE.INJECTION)) {
+		if(ProfileService.getInstance(getApplicationContext()).isActive(this, PROFILE.INJECTION)) {
 	
 			InjectionActivity.inject(INJECTOR_CONFIGURATION);
 		}

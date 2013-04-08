@@ -20,7 +20,7 @@ package com.lonepulse.icklebot;
  * #L%
  */
 
-import android.app.Activity;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
@@ -35,7 +35,7 @@ import com.lonepulse.icklebot.task.TaskManagers;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-abstract class ThreadingActivity extends Activity {
+abstract class ThreadingActivity extends DataActivity {
 	
 	
 	/**
@@ -43,10 +43,18 @@ abstract class ThreadingActivity extends Activity {
 	 * on the {@link IckleActivity}. 
 	 */
 	private boolean isProfileActive;
-	{
-		isProfileActive = ProfileService.getInstance().isActive(this, PROFILE.THREADING);
-	}
 	
+	
+	/**
+	 * <p>Checks whether {@link PROFILE#THREADING} is active.
+	 */
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+	
+		super.onCreate(savedInstanceState);
+		
+		isProfileActive = ProfileService.getInstance(getApplicationContext()).isActive(this, PROFILE.THREADING);
+	}
 
 	/**
 	 * <p>See {@link AsyncTaskService#execute(ThreadingActivity, int, Object...)}.</p>

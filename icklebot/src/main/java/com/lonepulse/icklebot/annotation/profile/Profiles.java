@@ -49,7 +49,7 @@ public @interface Profiles {
 	 * <p>Declares all the available profiles which are offered by 
 	 * an {@link IckleActivity}.
 	 * 
-	 * @version 1.1.0
+	 * @version 1.1.1
 	 * <br><br>
 	 * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
 	 */
@@ -86,6 +86,20 @@ public @interface Profiles {
 		 * @since 1.1.0
 		 */
 		THREADING,
+		
+		/**
+		 * <p>Identifies the profile which detects changes in the 
+		 * data connection.</p>
+		 * 
+		 * <p>This profile requires the following permission:
+		 * <ul>
+		 *  <li>READ_PHONE_STATE: to register for data state changes.</li>
+		 * </ul>
+		 * </p>
+		 * 
+		 * @since 1.1.1
+		 */
+		DATA
 	}
 	
 	/**

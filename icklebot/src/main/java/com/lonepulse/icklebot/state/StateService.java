@@ -25,6 +25,8 @@ import java.lang.reflect.Field;
 import java.util.Set;
 
 import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -36,47 +38,65 @@ import com.lonepulse.icklebot.util.FieldUtils;
  * <b>instance state</b> saves and restores beyond the <i>onCreate()/
  * onDestroy()<i> life-cycle.</p>
  * 
- * @version 1.1.1
+ * @version 1.1.2
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 public class StateService implements StateManager {
 
 
-	private static StateManager instance;
+	private static volatile StateManager instance;
+	
+
+	/**
+	 * <p>The base {@link Context} in which this service is 
+	 * being initialized. 
+	 */
+	@SuppressWarnings("unused") //to guard against future contract-break
+	private Context context;
 	
 	
 	/**
 	 * <p>Instantiation is restricted. Use the {@link #newInstance()} 
 	 * or {@link #getInstance()} instead.
 	 */
-	private StateService() {}
-
+	private StateService(Context context) {
+		
+		this.context = context; 
+	}
+	
 	/**
-	 * <p>Creates a new instance of an implementation of 
-	 * {@link StateManager}.
+	 * <p>Creates a new instance of an implementation of {@link StateManager}.
+	 * 
+	 * @param application
+	 * 			the {@link Context} of the {@link Application} instance via 
+	 * 			{@link Activity#getApplication()} or {@link Activity#getApplicationContext()}
 	 * 
 	 * @return a new instance of {@link StateManager}.
 	 * 
 	 * @since 1.1.1
 	 */
-	public static final StateManager getInstance() {
+	public static final synchronized StateManager getInstance(Context applicationContext) {
 		
-		return (instance == null)? (instance = new StateService()) :instance;
+		return (instance == null)? (instance = new StateService(applicationContext)) :instance;
 	}
 	
 	/**
 	 * <p>Creates a new instance of an implementation of 
 	 * {@link StateManager}.
 	 * 
-	 * @return a new instance of {@link StateManager}.
+	 * @param context
+	 * 			the context in which the service is instantiated
+	 * 
+	 * @return a new instance of {@link StateService}.
 	 * 
 	 * @since 1.1.1
 	 */
-	public static final StateManager newInstance() {
+	public static final StateManager newInstance(Context context) {
 		
-		return new StateService();
+		return new StateService(context);
 	}
+	
 	
 	/**
 	 * {@inheritDoc}
