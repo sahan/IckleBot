@@ -23,12 +23,18 @@ package com.lonepulse.icklebot.test;
 
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.lonepulse.icklebot.IckleActivity;
 import com.lonepulse.icklebot.annotation.event.Click;
+import com.lonepulse.icklebot.annotation.event.ItemClick;
 import com.lonepulse.icklebot.annotation.event.Touch;
+import com.lonepulse.icklebot.annotation.inject.InjectArray;
 import com.lonepulse.icklebot.annotation.inject.InjectView;
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.annotation.inject.Title;
@@ -53,6 +59,17 @@ public class EventActivity extends IckleActivity {
 	
 	@InjectView(R.id.txtAlias)
 	TextView txtAlias;
+	
+	@InjectView(android.R.id.list)
+	ListView listView;
+	
+	@InjectArray(R.array.audio_level)
+	String[] items;
+	
+	AdapterView<?> parentView;
+	View selectedView;
+	int selectedPostion;
+	long selectedId;
 
 	
 	/**
@@ -63,6 +80,13 @@ public class EventActivity extends IckleActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
+		
+		String[] items = new String[] { "1", "2", "3", "4", "5"};
+		
+		ArrayAdapter<String> arrayAdapter 
+			= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
+		
+		listView.setAdapter(arrayAdapter);
 	}
 	
 	@Click(R.id.btnSubmit)
@@ -78,5 +102,14 @@ public class EventActivity extends IckleActivity {
 			
 			textView.setText("Ick le Bot");
 		}
+	}
+	
+	@ItemClick(android.R.id.list)
+	public void onSelect(AdapterView<?> parent, View view, int position, long id) {
+		
+		this.parentView = parent;
+		this.selectedView = view;
+		this.selectedPostion = position;
+		this.selectedId = id;
 	}
 }

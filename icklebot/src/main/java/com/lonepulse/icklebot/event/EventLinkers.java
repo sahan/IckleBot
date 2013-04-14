@@ -23,6 +23,7 @@ package com.lonepulse.icklebot.event;
 import android.app.Activity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 
 /**
  * <p>Maintains a set of {@link EventLinker} <i>singletons</i> which are used 
@@ -41,6 +42,14 @@ public enum EventLinkers implements EventLinker {
 	 * @since 1.1.0
 	 */
 	CLICK(new ClickEventLinker()),
+	
+	/**
+	 * <p>This {@link EventLinker} is responsible for linking 
+	 * the {@link AdapterView.OnItemClickListener}s of an {@link Activity}.</p>
+	 * 
+	 * @since 1.1.1
+	 */
+	ITEM_CLICK(new ItemClickEventLinker()),
 	
 	/**
 	 * <p>This {@link EventLinker} is responsible for linking 

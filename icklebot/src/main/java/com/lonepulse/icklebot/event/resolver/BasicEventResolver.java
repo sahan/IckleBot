@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.lonepulse.icklebot.annotation.event.Click;
+import com.lonepulse.icklebot.annotation.event.ItemClick;
 import com.lonepulse.icklebot.annotation.event.Touch;
 
 /*
@@ -49,6 +50,9 @@ class BasicEventResolver implements EventResolver {
 		
 		if(method.isAnnotationPresent(Click.class))
 			categories.add(EventCategory.CLICK);
+		
+		if(method.isAnnotationPresent(ItemClick.class))
+			categories.add(EventCategory.ITEM_CLICK);
 		
 		if(method.isAnnotationPresent(Touch.class))
 			categories.add(EventCategory.TOUCH);

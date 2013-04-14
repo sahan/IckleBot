@@ -22,12 +22,13 @@ package com.lonepulse.icklebot.event.resolver;
 
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.widget.AdapterView.OnItemClickListener;
 
 /**
  * <p>Identifies the <i>category</i> to which a particular listener linking 
  * operation falls.</p>
  * 
- * @version 1.1.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -40,6 +41,14 @@ public enum EventCategory {
 	 * @since 1.1.0 
 	 */
 	CLICK,
+	
+	/**
+	 * <p>This <i>category</i> is responsible for identifying the 
+	 * linking of {@link OnItemClickListener}s.
+	 * 
+	 * @since 1.1.1
+	 */
+	ITEM_CLICK,
 	
 	/**
 	 * <p>This <i>category</i> is responsible for identifying the 

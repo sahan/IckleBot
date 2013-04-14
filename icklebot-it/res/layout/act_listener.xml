@@ -2,26 +2,32 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_height="match_parent" >
 
     <TextView
         android:id="@+id/txtAlias"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
         android:layout_margin="5dp"
         android:gravity="center"
         android:text="@string/alias"
         android:textSize="32sp"
         android:textStyle="bold" />
 
-    <Button 
+    <Button
         android:id="@+id/btnSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_margin="5dp"
-        android:text="@string/btn_submit"
-        android:layout_alignParentBottom="true"/>
+        android:text="@string/btn_submit" />
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btnSubmit"
+        android:layout_below="@id/txtAlias"/>
 
 </RelativeLayout>
