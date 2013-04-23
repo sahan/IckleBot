@@ -66,25 +66,25 @@ abstract class DataActivity extends Activity {
 				
 				case TelephonyManager.DATA_CONNECTED: {
 					
-					onDataConnected();
+					if(network().isConnected()) onDataConnected();
 					break;
 				}
 					
 				case TelephonyManager.DATA_CONNECTING: {
 						
-					onDataConnecting();
+					if(network().isConnecting()) onDataConnecting();
 					break;
 				}
 					
 				case TelephonyManager.DATA_SUSPENDED: {
 						
-					onDataSuspended();
+					if(network().isSuspended()) onDataSuspended();
 					break;
 				}
 					
 				case TelephonyManager.DATA_DISCONNECTED: {
 					
-					onDataDisconnected();
+					if(network().isDisconnected()) onDataDisconnected();
 					break;
 				}
 			}
