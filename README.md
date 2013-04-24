@@ -56,7 +56,7 @@ $ git clone git://github.com/sahan/IckleBot.git
 ```
 
 Since the Eclipse metadata is maintained in the repository, the project should be immediately available as an Android library which you can reference in your own project. Refer the [developer guide](http://developer.android.com/tools/projects/projects-eclipse.html#ReferencingLibraryProject) for information on referencing library projects.   
-<br/><br/>
+<br/>
 
 ##Usage
 
