@@ -53,7 +53,7 @@ abstract class StateActivity extends InjectionActivity {
 			
 			millis = System.currentTimeMillis() - millis;
 			
-			Log.d("INSTRUMENTATION:IckleStateProfile#onSaveInstanceState", 
+			Log.i("INSTRUMENTATION:IckleStateProfile#onSaveInstanceState", 
 				  StateActivity.class.getClass().getSimpleName() + ": " + millis + "ms");
 		}
 	}
@@ -74,7 +74,7 @@ abstract class StateActivity extends InjectionActivity {
 			
 			millis = System.currentTimeMillis() - millis;
 			
-			Log.d("INSTRUMENTATION:IckleStateProfile#onRestoreInstanceState", 
+			Log.i("INSTRUMENTATION:IckleStateProfile#onRestoreInstanceState", 
 					StateActivity.class.getClass().getSimpleName() + ": " + millis + "ms");
 		}
 	}

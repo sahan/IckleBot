@@ -88,7 +88,7 @@ abstract class EventActivity extends StateActivity {
 		
 		millis = System.currentTimeMillis() - millis;
 		
-		Log.d("INSTRUMENTATION:IckleEventActivity#link()", 
+		Log.i("INSTRUMENTATION:IckleEventActivity#link()", 
 			  EventActivity.class.getSimpleName() + ": " + millis + "ms");
 	}
 }

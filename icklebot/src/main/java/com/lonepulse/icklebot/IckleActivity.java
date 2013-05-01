@@ -50,6 +50,6 @@ public abstract class IckleActivity extends EventActivity {
 
 		millis = System.currentTimeMillis() - millis;
 		
-		Log.d("INSTRUMENTATION:IckleActivity", getClass().getSimpleName() + ": " + millis + "ms");
+		Log.i("INSTRUMENTATION:IckleActivity", getClass().getSimpleName() + ": " + millis + "ms");
 	}
 }

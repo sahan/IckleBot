@@ -97,7 +97,7 @@ abstract class InjectionActivity extends ThreadingActivity {
 		
 		millis = System.currentTimeMillis() - millis;
 		
-		Log.d("INSTRUMENTATION:IckleInjectionProfile#inject()", 
+		Log.i("INSTRUMENTATION:IckleInjectionProfile#inject()", 
 			  InjectionActivity.class.getClass().getSimpleName() + ": " + millis + "ms");
 	}
 	

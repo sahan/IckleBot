@@ -60,31 +60,29 @@ abstract class DataActivity extends Activity {
 		@Override
 		public void onDataConnectionStateChanged(int state) {
 			
-			super.onDataConnectionStateChanged(state);
-			
 			switch (state) { 
 				
 				case TelephonyManager.DATA_CONNECTED: {
 					
-					if(network().isConnected()) onDataConnected();
+					onDataConnected();
 					break;
 				}
 					
 				case TelephonyManager.DATA_CONNECTING: {
 						
-					if(network().isConnecting()) onDataConnecting();
+					onDataConnecting();
 					break;
 				}
 					
 				case TelephonyManager.DATA_SUSPENDED: {
 						
-					if(network().isSuspended()) onDataSuspended();
+					onDataSuspended();
 					break;
 				}
 					
 				case TelephonyManager.DATA_DISCONNECTED: {
 					
-					if(network().isDisconnected()) onDataDisconnected();
+					onDataDisconnected();
 					break;
 				}
 			}
@@ -92,8 +90,8 @@ abstract class DataActivity extends Activity {
 	};
 	
 	/**
-	 * <p>Registers a {@link PhoneStateListener} to listen for changes in the data connection 
-	 * state and invoke the appropriate callbacks.
+	 * <p>Registers a {@link PhoneStateListener} to listen for changes in the data 
+	 * connection state and invoke the appropriate callbacks.
 	 * 
 	 * @throws PermissionDeniedException
 	 * 			if {@link Manifest.permission#READ_PHONE_STATE} is denied
@@ -110,6 +108,26 @@ abstract class DataActivity extends Activity {
 			
 			((TelephonyManager)getSystemService(TELEPHONY_SERVICE))
 			.listen(phoneStateListener, PhoneStateListener.LISTEN_DATA_CONNECTION_STATE);
+		}
+	}
+	
+	/**
+	 * <p>Unregisters the {@link PhoneStateListener} which listens for changes in the 
+	 * data connection state.
+	 * 
+	 * @throws PermissionDeniedException
+	 * 			if {@link Manifest.permission#READ_PHONE_STATE} is denied
+	 */
+	@Override
+	protected void onDestroy() {
+		
+		super.onDestroy();
+		
+		if(ProfileService.getInstance(getApplicationContext()).isActive(this, PROFILE.DATA)
+			&& PermissionUtils.isGranted(this, Manifest.permission.READ_PHONE_STATE)) {
+			
+			((TelephonyManager)getSystemService(TELEPHONY_SERVICE))
+			.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
 		}
 	}
 	
