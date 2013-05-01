@@ -49,7 +49,7 @@ For information on building Android projects using Maven here's [Chapter 14](htt
 
 ### 2. For Standard Android Projects
 
-Clone the repository and import it as an **existing project** in Eclipse.
+[Download](https://github.com/sahan/IckleBot/archive/master.zip) the repository or clone it and import it as an **existing project** in Eclipse.
 
 ```bash
 $ git clone git://github.com/sahan/IckleBot.git
@@ -75,8 +75,10 @@ Kickoff with the [quickstart](https://github.com/sahan/IckleBot/wiki/Quickstart)
 6. [Use IckleBot's Threading Model](https://github.com/sahan/IckleBot/wiki/Use-IckleBot's-Threading-Model)
   
 7. [Use IckleBot's Event Model](https://github.com/sahan/IckleBot/wiki/Use-IckleBot's-Event-Model)
+
+8. [Detect Network State](https://github.com/sahan/IckleBot/wiki/Detect-Network-State)
   
-8. [Avoid Coupling with IckleActivity](https://github.com/sahan/IckleBot/wiki/Avoid-Coupling-with-IckleActivity)
+9. [Avoid Coupling with IckleActivity](https://github.com/sahan/IckleBot/wiki/Avoid-Coupling-with-IckleActivity)
 <br/>
 
 ##License
