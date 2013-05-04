@@ -22,8 +22,6 @@ package com.lonepulse.icklebot.injector.resolver;
 
 import java.lang.reflect.Field;
 
-import android.content.Context;
-
 import com.lonepulse.icklebot.event.resolver.EventCategory;
 import com.lonepulse.icklebot.event.resolver.EventResolver;
 import com.lonepulse.icklebot.event.resolver.EventResolvers;
@@ -78,12 +76,12 @@ public enum InjectionResolvers implements InjectionResolver {
 	}
 
 	/**
-	 * <p>Delegate method for {@link #injectionResolver#resolve(Field)}.
+	 * <p>Delegate method for {@link #injectionResolver#resolve(Object, Field)}.
 	 * 
 	 * @since 1.0.0
 	 */
 	@Override
-	public InjectionCategory resolve(Context context, Field field) {
+	public InjectionCategory resolve(Object context, Field field) {
 		
 		return injectionResolver.resolve(context, field);
 	}

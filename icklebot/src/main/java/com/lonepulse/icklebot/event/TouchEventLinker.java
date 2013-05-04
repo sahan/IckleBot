@@ -24,7 +24,6 @@ package com.lonepulse.icklebot.event;
 import java.lang.reflect.Method;
 import java.util.Set;
 
-import android.app.Activity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,6 +31,7 @@ import android.view.View.OnTouchListener;
 
 import com.lonepulse.icklebot.annotation.event.Touch;
 import com.lonepulse.icklebot.event.resolver.EventCategory;
+import com.lonepulse.icklebot.util.ContextUtils;
 
 /**
  * <p>A concrete implementation of {@link EventLinker} which links methods 
@@ -50,7 +50,7 @@ class TouchEventLinker implements EventLinker {
 	@Override
 	public void link(EventLinker.Configuration config) {
 
-		final Activity listenerTemplate = config.getActivity();
+		final Object listenerTemplate = config.getContext();
 		
 		Set<Method> methods = config.getListenerTargets(EventCategory.TOUCH);
 		
@@ -121,7 +121,16 @@ class TouchEventLinker implements EventLinker {
 
 					try {
 						
-						listenerTemplate.findViewById(id).setOnTouchListener(onTouchListener);
+						if(ContextUtils.isActivity(listenerTemplate)) {
+							
+							ContextUtils.asActivity(listenerTemplate)
+								.findViewById(id).setOnTouchListener(onTouchListener);
+						}
+						else if(ContextUtils.isFragment(listenerTemplate)) {
+							
+							ContextUtils.asFragment(listenerTemplate)
+								.getView().findViewById(id).setOnTouchListener(onTouchListener);
+						}
 					}
 					catch (Exception e) {
 						
@@ -131,7 +140,9 @@ class TouchEventLinker implements EventLinker {
 						.append(" at ")
 						.append(listenerTemplate.getClass().getName())
 						.append(" for view with ID ")
-						.append(listenerTemplate.getResources().getResourceName(id))
+						.append(ContextUtils.isActivity(listenerTemplate)? 
+							ContextUtils.asActivity(listenerTemplate).getResources().getResourceName(id)
+							:ContextUtils.asFragment(listenerTemplate).getResources().getResourceName(id))
 						.append(".");
 						
 						Log.e(getClass().getName(), builder.toString(), e);

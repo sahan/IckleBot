@@ -23,12 +23,13 @@ package com.lonepulse.icklebot.injector.explicit;
 import java.lang.reflect.Field;
 import java.util.Set;
 
-import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 
 import com.lonepulse.icklebot.annotation.inject.InjectService;
 import com.lonepulse.icklebot.injector.Injector;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
+import com.lonepulse.icklebot.util.ContextUtils;
 
 /**
  * <p>An implementation of {@link Injector} which is responsible 
@@ -47,7 +48,7 @@ class ExplicitServiceInjector implements Injector {
 	@Override
 	public void inject(Configuration config) {
 
-		Activity injectionActivity = config.getActivity();
+		Context context = ContextUtils.discover(config.getContext());
 		
 		Set<Field> fields = config.getInjectionTargets(InjectionCategory.SERVICE);
 				
@@ -59,7 +60,7 @@ class ExplicitServiceInjector implements Injector {
 				
 				String serviceName = field.getAnnotation(InjectService.class).value();
 				
-				field.set(injectionActivity, injectionActivity.getSystemService(serviceName));
+				field.set(context, context.getSystemService(serviceName));
 			} 
 			catch (Exception e) {
 				

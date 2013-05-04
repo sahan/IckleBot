@@ -27,13 +27,14 @@ import java.util.Map;
 import java.util.Set;
 
 import android.animation.AnimatorInflater;
-import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.view.animation.AnimationUtils;
 
 import com.lonepulse.icklebot.annotation.inject.InjectView;
 import com.lonepulse.icklebot.injector.Injector;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
+import com.lonepulse.icklebot.util.ContextUtils;
 import com.lonepulse.icklebot.util.ReflectiveR;
 
 /**
@@ -61,7 +62,7 @@ class ImplicitResourceInjector implements Injector {
 			@Override
 			public void run(Configuration config) {
 			
-				Activity context = config.getActivity();
+				Object context = config.getContext();
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_VIEW);
 				
 				for (Field field : fields) {
@@ -70,14 +71,19 @@ class ImplicitResourceInjector implements Injector {
 					
 						if(!field.isAccessible()) field.setAccessible(true);
 						
-						int id = ReflectiveR.id(context, field.getName());
-						field.set(context, context.findViewById(id));
+						int id = ReflectiveR.id(ContextUtils.discover(context), field.getName());
+						
+						if(ContextUtils.isFragment(context)) 
+							field.set(context, ContextUtils.asFragment(context).getView().findViewById(id));
+						
+						else if(ContextUtils.isActivity(context))
+							field.set(context, ContextUtils.asActivity(context).findViewById(id));
 					}
 					catch (Exception e) {
 						
 						StringBuilder errorContext = new StringBuilder()
 						.append("Implicit view resource injection failed on ")
-						.append(context.getLocalClassName())
+						.append(context.getClass().getName())
 						.append(" for ")
 						.append(field.getName())
 						.append(". ");
@@ -93,7 +99,7 @@ class ImplicitResourceInjector implements Injector {
 			@Override
 			public void run(Configuration config) {
 				
-				Activity context = config.getActivity();
+				Context context = ContextUtils.discover(config.getContext());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_STRING);
 				
 				for (Field field : fields) {
@@ -109,7 +115,7 @@ class ImplicitResourceInjector implements Injector {
 						
 						StringBuilder errorContext = new StringBuilder()
 						.append("Implicit string resource injection failed on ")
-						.append(context.getLocalClassName())
+						.append(context.getClass().getName())
 						.append(" for ")
 						.append(field.getName())
 						.append(". ");
@@ -125,7 +131,7 @@ class ImplicitResourceInjector implements Injector {
 			@Override
 			public void run(Configuration config) {
 				
-				Activity context = config.getActivity();
+				Context context = ContextUtils.discover(config.getContext());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_DRAWABLE);
 				
 				for (Field field : fields) {
@@ -141,7 +147,7 @@ class ImplicitResourceInjector implements Injector {
 						
 						StringBuilder errorContext = new StringBuilder()
 						.append("Implicit drawable resource injection failed on ")
-						.append(context.getLocalClassName())
+						.append(context.getClass().getName())
 						.append(" for ")
 						.append(field.getName())
 						.append(". ");
@@ -157,7 +163,7 @@ class ImplicitResourceInjector implements Injector {
 			@Override
 			public void run(Configuration config) {
 				
-				Activity context = config.getActivity();
+				Context context = ContextUtils.discover(config.getContext());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_COLOR);
 				
 				for (Field field : fields) {
@@ -173,7 +179,7 @@ class ImplicitResourceInjector implements Injector {
 						
 						StringBuilder errorContext = new StringBuilder()
 						.append("Implicit color resource injection failed on ")
-						.append(context.getLocalClassName())
+						.append(context.getClass().getName())
 						.append(" for ")
 						.append(field.getName())
 						.append(". ");
@@ -189,7 +195,7 @@ class ImplicitResourceInjector implements Injector {
 			@Override
 			public void run(Configuration config) {
 				
-				Activity context = config.getActivity();
+				Context context = ContextUtils.discover(config.getContext());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_INTEGER);
 				
 				for (Field field : fields) {
@@ -205,7 +211,7 @@ class ImplicitResourceInjector implements Injector {
 						
 						StringBuilder errorContext = new StringBuilder()
 						.append("Implicit integer resource injection failed on ")
-						.append(context.getLocalClassName())
+						.append(context.getClass().getName())
 						.append(" for ")
 						.append(field.getName())
 						.append(". ");
@@ -221,7 +227,7 @@ class ImplicitResourceInjector implements Injector {
 			@Override
 			public void run(Configuration config) {
 				
-				Activity context = config.getActivity();
+				Context context = ContextUtils.discover(config.getContext());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_DIMENSION);
 				
 				for (Field field : fields) {
@@ -237,7 +243,7 @@ class ImplicitResourceInjector implements Injector {
 						
 						StringBuilder errorContext = new StringBuilder()
 						.append("Implicit dimension resource injection failed on ")
-						.append(context.getLocalClassName())
+						.append(context.getClass().getName())
 						.append(" for ")
 						.append(field.getName())
 						.append(". ");
@@ -253,7 +259,7 @@ class ImplicitResourceInjector implements Injector {
 			@Override
 			public void run(Configuration config) {
 				
-				Activity context = config.getActivity();
+				Context context = ContextUtils.discover(config.getContext());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_BOOLEAN);
 				
 				for (Field field : fields) {
@@ -269,7 +275,7 @@ class ImplicitResourceInjector implements Injector {
 						
 						StringBuilder errorContext = new StringBuilder()
 						.append("Implicit boolean resource injection failed on ")
-						.append(context.getLocalClassName())
+						.append(context.getClass().getName())
 						.append(" for ")
 						.append(field.getName())
 						.append(". ");
@@ -285,7 +291,7 @@ class ImplicitResourceInjector implements Injector {
 			@Override
 			public void run(Configuration config) {
 				
-				Activity context = config.getActivity();
+				Context context = ContextUtils.discover(config.getContext());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_ARRAY);
 				
 				for (Field field : fields) {
@@ -309,7 +315,7 @@ class ImplicitResourceInjector implements Injector {
 						
 						StringBuilder errorContext = new StringBuilder()
 						.append("Implicit array resource injection failed on ")
-						.append(context.getLocalClassName())
+						.append(context.getClass().getName())
 						.append(" for ")
 						.append(field.getName())
 						.append(". ");
@@ -325,7 +331,7 @@ class ImplicitResourceInjector implements Injector {
 			@Override
 			public void run(Configuration config) {
 				
-				Activity context = config.getActivity();
+				Context context = ContextUtils.discover(config.getContext());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_ANIMATION);
 				
 				for (Field field : fields) {
@@ -335,13 +341,13 @@ class ImplicitResourceInjector implements Injector {
 						if(!field.isAccessible()) field.setAccessible(true);
 						
 						int id = ReflectiveR.anim(context, field.getName());
-						field.set(context, AnimationUtils.loadAnimation(config.getActivity(), id));
+						field.set(context, AnimationUtils.loadAnimation(context, id));
 					}
 					catch (Exception e) {
 						
 						StringBuilder errorContext = new StringBuilder()
 						.append("Implicit animation resource injection failed on ")
-						.append(context.getLocalClassName())
+						.append(context.getClass().getName())
 						.append(" for ")
 						.append(field.getName())
 						.append(". ");
@@ -357,7 +363,7 @@ class ImplicitResourceInjector implements Injector {
 			@Override
 			public void run(Configuration config) {
 				
-				Activity context = config.getActivity();
+				Context context = ContextUtils.discover(config.getContext());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_ANIMATOR);
 				
 				for (Field field : fields) {
@@ -367,13 +373,13 @@ class ImplicitResourceInjector implements Injector {
 						if(!field.isAccessible()) field.setAccessible(true);
 						
 						int id = ReflectiveR.animator(context, field.getName());
-						field.set(context, AnimatorInflater.loadAnimator(config.getActivity(), id));
+						field.set(context, AnimatorInflater.loadAnimator(context, id));
 					}
 					catch (Exception e) {
 						
 						StringBuilder errorContext = new StringBuilder()
 						.append("Implicit animator resource injection failed on ")
-						.append(context.getLocalClassName())
+						.append(context.getClass().getName())
 						.append(" for ")
 						.append(field.getName())
 						.append(". ");

@@ -1,5 +1,6 @@
 package com.lonepulse.icklebot.task;
 
+
 /*
  * #%L
  * IckleBot
@@ -20,7 +21,6 @@ package com.lonepulse.icklebot.task;
  * #L%
  */
 
-import android.app.Activity;
 
 /**
  * <p>This contract declares the services offered by a <i>background task 
@@ -37,9 +37,8 @@ public interface TaskManager {
 	 * <p>Executes a method designated as a <i>Task</i> identified 
 	 * by a unique <i>ID</i>.</p>
 	 * 
-	 * @param activity
-	 *			the {@link Activity} which provides the 
-	 *			context in which the <i>UI Task</i> is run 
+	 * @param context
+	 *			the context in which the <i>UI Task</i> is run 
 	 * <br><br>
 	 * @param taskId
 	 * 			the {@code int} ID of the <i>Task</i>
@@ -50,5 +49,5 @@ public interface TaskManager {
 	 * <br><br>
 	 * @since 1.0.0
 	 */
-	public void execute(final Activity activity, int taskId, final Object... args);
+	public void execute(final Object context, int taskId, final Object... args);
 }

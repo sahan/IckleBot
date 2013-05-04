@@ -47,7 +47,7 @@ public class ProfileService implements ProfileManager {
 	 * <p>The base {@link Context} in which this service is 
 	 * being initialized. 
 	 */
-	@SuppressWarnings("unused") //to guard against future contract-break
+	@SuppressWarnings("unused") //to guard against a future contract-break
 	private Context context;
 	
 	
@@ -96,15 +96,15 @@ public class ProfileService implements ProfileManager {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean isActive(Activity activity, PROFILE profile) {
+	public boolean isActive(Object context, PROFILE profile) {
 		
-		if(activity == null || profile == null) {
+		if(context == null || profile == null) {
 			
 			StringBuilder builder = new StringBuilder()
 			.append("Failed to determine profile active profiles. ");
 			
-			if(activity == null)
-				builder.append("Actvitiy cannot be null. ");
+			if(context == null)
+				builder.append("Context cannot be null. ");
 				
 			if(profile == null)
 				builder.append("PROFILE cannot be null. ");
@@ -112,9 +112,9 @@ public class ProfileService implements ProfileManager {
 			throw new IllegalArgumentException(builder.toString());
 		}
 		
-		if(activity.getClass().isAnnotationPresent(Profiles.class)) {
+		if(context.getClass().isAnnotationPresent(Profiles.class)) {
 			
-			Profiles profiles = activity.getClass().getAnnotation(Profiles.class);
+			Profiles profiles = context.getClass().getAnnotation(Profiles.class);
 			
 			PROFILE[] activeProfiles = profiles.value();
 			

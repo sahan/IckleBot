@@ -28,6 +28,7 @@ import com.lonepulse.icklebot.annotation.inject.Fullscreen;
 import com.lonepulse.icklebot.annotation.inject.Title;
 import com.lonepulse.icklebot.annotation.inject.WindowFeatures;
 import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.util.ContextUtils;
 import com.lonepulse.icklebot.util.TypeUtils;
 
 /**
@@ -48,7 +49,7 @@ class ExplicitConfigurationInjector implements Injector {
 	@Override
 	public void inject(Configuration config) {
 		
-		Activity injectionActivity = config.getActivity();
+		Activity injectionActivity = ContextUtils.asActivity(config.getContext());
 		
 		configureTitle(injectionActivity);
 		configureWindowFeatures(injectionActivity);
@@ -60,8 +61,7 @@ class ExplicitConfigurationInjector implements Injector {
 	 * specified via {@link Title}.</p>
 	 * 
 	 * @param injectionActivity
-	 * 			the {@link Activity} which is the subject 
-	 * 			of dependency injection
+	 * 			the {@link Activity} which is the subject of dependency injection
 	 * <br><br>
 	 * @since 1.0.0			
 	 */
@@ -100,8 +100,8 @@ class ExplicitConfigurationInjector implements Injector {
 	}
 	
 	/**
-	 * <p>Configures the {@link Activity} to use the <i>Window 
-	 * Features</i> specified via {@link WindowFeatures}.</p>
+	 * <p>Configures the {@link Activity} to use the <i>Window Features</i> 
+	 * specified via {@link WindowFeatures}.</p>
 	 * 
 	 * @param injectionActivity
 	 * 			the {@link Activity} which is the subject 

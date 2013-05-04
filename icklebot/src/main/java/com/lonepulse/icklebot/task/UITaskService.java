@@ -27,6 +27,7 @@ import android.app.Activity;
 import android.util.Log;
 
 import com.lonepulse.icklebot.annotation.thread.UI;
+import com.lonepulse.icklebot.util.ContextUtils;
 import com.lonepulse.icklebot.util.MethodUtils;
 
 /**
@@ -47,9 +48,11 @@ class UITaskService implements TaskManager {
 	 * the annotation {@link UI}) on the <b>UI Event Loop</b>.</p>
 	 */
 	@Override
-	public void execute(final Activity activity, int uiTaskId, final Object... args) {
+	public void execute(final Object context, int uiTaskId, final Object... args) {
 		
-		Set<Method> methods = MethodUtils.getAllMethods(activity, UI.class);
+		Activity activity = ContextUtils.asActivity(context);
+		
+		Set<Method> methods = MethodUtils.getAllMethods(context, UI.class);
 		
 		for (final Method method : methods) {
 			
@@ -66,7 +69,7 @@ class UITaskService implements TaskManager {
 										
 							if(!method.isAccessible()) method.setAccessible(true);
 										
-							method.invoke(activity, args);
+							method.invoke(context, args);
 						} 
 						catch (Exception e) {
 										
@@ -74,7 +77,7 @@ class UITaskService implements TaskManager {
 							.append("Failed to execute UI task ")
 							.append(method.getName())
 							.append(" on ")
-							.append(activity.getClass().getName())
+							.append(context.getClass().getName())
 							.append(" with arguments ")
 							.append(args)
 							.append(". ");
@@ -100,7 +103,7 @@ class UITaskService implements TaskManager {
 						.append(" for ")
 						.append(method.getName())
 						.append(" on ")
-						.append(activity.getClass().getName())
+						.append(context.getClass().getName())
 						.append(" was interrupted!");
 						
 						Log.e(getClass().getSimpleName(), stringBuilder.toString(), ie);
@@ -108,7 +111,6 @@ class UITaskService implements TaskManager {
 				}
 				
 				activity.runOnUiThread(runnable);
-								
 				break;
 			}
 		}

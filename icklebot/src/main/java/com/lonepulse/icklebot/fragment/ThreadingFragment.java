@@ -1,8 +1,8 @@
-package com.lonepulse.icklebot;
+package com.lonepulse.icklebot.fragment;
 
 /*
  * #%L
- * IckleBot
+ * IckleBot Library
  * %%
  * Copyright (C) 2013 Lonepulse
  * %%
@@ -20,8 +20,10 @@ package com.lonepulse.icklebot;
  * #L%
  */
 
+
 import android.os.Bundle;
 
+import com.lonepulse.icklebot.IckleActivity;
 import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
 import com.lonepulse.icklebot.profile.ProfileService;
 import com.lonepulse.icklebot.task.TaskUtils;
@@ -30,12 +32,12 @@ import com.lonepulse.icklebot.task.TaskUtils;
  * <p>This profile offers an alternative threading model for running background 
  * worker threads and posting events on the UI thread.
  * 
- * @version 1.1.1
+ * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-abstract class ThreadingActivity extends DataActivity {
-	
+abstract class ThreadingFragment extends DataFragment {
+
 	
 	/**
 	 * <p>This flag determines if {@link PROFILE#THREADING} has been activated 
@@ -44,17 +46,15 @@ abstract class ThreadingActivity extends DataActivity {
 	private boolean isProfileActive;
 	
 	
-	/**
-	 * <p>Checks whether {@link PROFILE#THREADING} is active.
-	 */
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onActivityCreated(Bundle savedInstanceState) {
 	
-		super.onCreate(savedInstanceState);
+		super.onActivityCreated(savedInstanceState);
 		
-		isProfileActive = ProfileService.getInstance(getApplicationContext()).isActive(this, PROFILE.THREADING);
+		isProfileActive = ProfileService.getInstance(
+			getActivity().getApplicationContext()).isActive(this, PROFILE.THREADING);
 	}
-
+	
 	/**
 	 * <p>See {@link AsyncTaskService#execute(ThreadingActivity, int, Object...)}.</p>
 	 * 
@@ -62,7 +62,7 @@ abstract class ThreadingActivity extends DataActivity {
 	 */
 	protected void runAsyncTask(int asyncTaskId, Object... args) {
 		
-		TaskUtils.runAsyncTask(this, isProfileActive, asyncTaskId, args);
+		TaskUtils.runAsyncTask(getActivity(), isProfileActive, asyncTaskId, args);
 	}
 	
 	/**
@@ -72,6 +72,6 @@ abstract class ThreadingActivity extends DataActivity {
 	 */
 	protected void runUITask(int uiTaskId, final Object... args) {
 
-		TaskUtils.runUITask(this, isProfileActive, uiTaskId, args);
+		TaskUtils.runUITask(getActivity(), isProfileActive, uiTaskId, args);
 	}
 }

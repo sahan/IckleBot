@@ -55,9 +55,8 @@ public final class FieldUtils {
 	 * it's instance {@link Field}s are annotated with the given 
 	 * annotation (represented by supplied {@link Class}).</p>
 	 * 
-	 * @param activity	
-	 * 			the {@link Activity} whose {@link Field}s are 
-	 * 			to be scanned
+	 * @param context	
+	 * 			the context whose {@link Field}s are to be scanned
 	 * <br><br>
 	 * @param annotation
 	 * 			the {@link Class} of the {@link Annotation} to look for
@@ -67,12 +66,12 @@ public final class FieldUtils {
 	 * <br><br>
 	 * @since 1.0.0
 	 */
-	public static Set<Field> getAllFields(Activity activity,
+	public static Set<Field> getAllFields(Object context,
 										  Class<? extends Annotation> annotation) {
 		
 		Set<Field> annotatedFields = new HashSet<Field>();
 		
-		Field[] fields = activity.getClass().getDeclaredFields();
+		Field[] fields = context.getClass().getDeclaredFields();
 		
 		for (Field field : fields) {
 			
@@ -89,9 +88,8 @@ public final class FieldUtils {
 	 * <p>Takes the target {@link Activity} and finds the <b>only</b> 
 	 * field which is marked for injection with the given annotation.</p>
 	 * 
-	 * @param activity
-	 * 			the {@link Activity} whose {@link Field}s are 
-	 * 			to be scanned
+	 * @param context
+	 * 			the context whose {@link Field}s are to be scanned
 	 * <br><br>
 	 * @param annotation
 	 * 			the {@link Class} of the {@link Annotation} to look for
@@ -103,10 +101,10 @@ public final class FieldUtils {
 	 * <br><br>
 	 * @since 1.0.0
 	 */
-	public static Field getUniqeField(Activity activity,
-										Class<? extends Annotation> annotation) {
+	public static Field getUniqeField(Object context,
+									  Class<? extends Annotation> annotation) {
 		
-		Set<Field> fields = FieldUtils.getAllFields(activity, annotation);
+		Set<Field> fields = FieldUtils.getAllFields(context, annotation);
 		
 		if(fields.isEmpty()) {
 			
@@ -114,7 +112,7 @@ public final class FieldUtils {
 		}
 		else if(fields.size() > 1) {
 			
-			throw new DuplicateInjectionException(activity.getClass(), annotation);
+			throw new DuplicateInjectionException(context.getClass(), annotation);
 		}
 		
 		return new ArrayList<Field>(fields).get(0);
@@ -125,9 +123,8 @@ public final class FieldUtils {
 	 * given {@link Activity} if it's type is compatible with the 
 	 * expected type referred to by the given {@link Class}.</p>
 	 * 
-	 * @param activity	
-	 * 			the {@link Activity} whose {@link Field}s are 
-	 * 			to be scanned
+	 * @param context	
+	 * 			the context whose {@link Field}s are to be scanned
 	 * <br><br>
 	 * @param expectedType
 	 * 			the {@link Class} of the field type which is <i>legal</i> 
@@ -144,7 +141,7 @@ public final class FieldUtils {
 	 * <br><br>
 	 * @since 1.0.0
 	 */
-	public static <T extends Object> T getFieldValue(Activity activity,
+	public static <T extends Object> T getFieldValue(Object context,
 													 Class<T> expectedType,
 													 Field field) {
 		
@@ -154,7 +151,7 @@ public final class FieldUtils {
 			msg.append("Forcing accessibility for field ");
 			msg.append(field.getName());
 			msg.append(" on ");
-			msg.append(activity.getClass().getName());
+			msg.append(context.getClass().getName());
 			msg.append(". ");
 			
 			Log.w(FieldUtils.class.getName(), msg.toString());
@@ -166,13 +163,13 @@ public final class FieldUtils {
 		
 		try {
 			
-			valueObject = field.get(activity);
+			valueObject = field.get(context);
 		} 
 		catch (IllegalArgumentException iae) {
 			
 			StringBuilder msg = new StringBuilder();
 			msg.append("Activity ");
-			msg.append(activity.getClass().getName());
+			msg.append(context.getClass().getName());
 			msg.append(" is incompatible with the field ");
 			msg.append(field.getName());
 			msg.append(". ");
@@ -185,7 +182,7 @@ public final class FieldUtils {
 			msg.append("Field ");
 			msg.append(field.getName());
 			msg.append(" on ");
-			msg.append(activity.getClass().getName());
+			msg.append(context.getClass().getName());
 			msg.append(" cannot be accessed. ");
 			
 			Log.e(FieldUtils.class.getName(), msg.toString(), iae);

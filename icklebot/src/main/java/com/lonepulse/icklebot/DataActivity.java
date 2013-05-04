@@ -22,6 +22,7 @@ package com.lonepulse.icklebot;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.telephony.PhoneStateListener;
@@ -29,7 +30,7 @@ import android.telephony.TelephonyManager;
 
 import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
 import com.lonepulse.icklebot.network.NetworkManager;
-import com.lonepulse.icklebot.network.NetworkService;
+import com.lonepulse.icklebot.network.NetworkUtils;
 import com.lonepulse.icklebot.profile.ProfileService;
 import com.lonepulse.icklebot.util.PermissionUtils;
 
@@ -44,7 +45,7 @@ import com.lonepulse.icklebot.util.PermissionUtils;
  * </ul>
  * </p>
  *  
- * @version 1.1.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -163,32 +164,10 @@ abstract class DataActivity extends Activity {
 	protected void onDataSuspended() {}
 	
 	/**
-	 * <p>Retrieves an instance of {@link NetworkManager} which can be used to 
-	 * discover additional information about the network.</p>
-	 * 
-	 * <p>This service is restricted by <b>profiles</b>. It can be used even if 
-	 * {@link PROFILE#DATA} is not activated.</p>
-	 * 
-	 * <p>This service requires the following permission:
-	 * <ul>
-	 * 	<li>ACCESS_NETWORK_STATE: to discover network information.</li>
-	 * </ul>
-	 * </p>
-	 * 
-	 * @return an instance of {@link NetworkManager}
-	 * 
-	 * @throws PermissionDeniedException
-	 * 			if {@link Manifest.permission#ACCESS_NETWORK_STATE} is denied
-	 * 
-	 * @since 1.1.0
+	 * See {@link StateUtils#getNetworkManager(Context)}.
 	 */
 	protected final NetworkManager network() {
 		
-		if(!PermissionUtils.isGranted(this, Manifest.permission.ACCESS_NETWORK_STATE))
-			throw new PermissionDeniedException(
-						Manifest.permission.ACCESS_NETWORK_STATE, 
-						IckleActivity.class.getSimpleName() + "#network()");
-		
-		return NetworkService.getInstance(getApplicationContext());
+		return NetworkUtils.getNetworkManager(getApplicationContext());
 	}
 }

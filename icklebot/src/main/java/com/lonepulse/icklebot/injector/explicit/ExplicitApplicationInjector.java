@@ -23,12 +23,13 @@ package com.lonepulse.icklebot.injector.explicit;
 import java.lang.reflect.Field;
 import java.util.Set;
 
-import android.app.Activity;
 import android.app.Application;
 import android.util.Log;
 
+import com.lonepulse.icklebot.injector.InjectionException;
 import com.lonepulse.icklebot.injector.Injector;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
+import com.lonepulse.icklebot.util.ContextUtils;
 
 /**
  * <p>An implementation of {@link Injector} which is responsible 
@@ -45,10 +46,9 @@ class ExplicitApplicationInjector implements Injector {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void inject(Configuration config) {
+	public void inject(Configuration config) throws InjectionException {
 
-		Activity injectionActivity = config.getActivity();
-		
+		Object context = config.getContext();
 		Set<Field> fields = config.getInjectionTargets(InjectionCategory.APPLICATION);
 		
 		for (Field field : fields) {
@@ -57,7 +57,7 @@ class ExplicitApplicationInjector implements Injector {
 				
 				if(!field.isAccessible()) field.setAccessible(true);
 				
-				field.set(injectionActivity, field.getType().cast(injectionActivity.getApplication()));
+				field.set(context, field.getType().cast(ContextUtils.asActivity(context).getApplication()));
 			} 
 			catch (Exception e) {
 				

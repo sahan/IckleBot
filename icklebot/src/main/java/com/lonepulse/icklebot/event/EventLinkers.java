@@ -102,7 +102,7 @@ public enum EventLinkers implements EventLinker {
 			stringBuilder.append("Event linking using ");
 			stringBuilder.append(listenerLinker.getClass().getName());
 			stringBuilder.append(" failed on activity ");
-			stringBuilder.append(config.getActivity().getClass().getName());
+			stringBuilder.append(config.getContext().getClass().getName());
 			stringBuilder.append(". ");
 			
 			Log.e(getClass().getName(), stringBuilder.toString(), e);

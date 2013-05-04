@@ -41,15 +41,13 @@ public interface ProfileManager {
 	 * <p>Determines whether a given profile is active for a given 
 	 * instance of {@link Activity}.
 	 * 
-	 * @param activity
-	 * 			the {@link Activity} whose profile activation needs 
-	 * 			to be discovered
+	 * @param context
+	 * 			the context whose profile activation needs to be discovered
 	 * 
 	 * @param profile
 	 * 			the {@link PROFILE} to be checked 
 	 * 
-	 * @return {@code true} if the given profile is active, else 
-	 * 		   {@code false}
+	 * @return {@code true} if the given profile is active, else {@code false}
 	 */
-	public abstract boolean isActive(Activity activity, PROFILE profile);
+	public abstract boolean isActive(Object context, PROFILE profile);
 }

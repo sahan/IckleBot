@@ -61,11 +61,11 @@ class AsyncTaskService implements TaskManager {
 	 * worker thread.</p>
 	 */
 	@Override
-	public void execute(final Activity activity, int backgroundTaskId, final Object... args) {
+	public void execute(final Object context, int backgroundTaskId, final Object... args) {
 		
 		try {
 		
-			Set<Method> methods = MethodUtils.getAllMethods(activity, Async.class);
+			Set<Method> methods = MethodUtils.getAllMethods(context, Async.class);
 			
 			Async backgroundTask;
 			
@@ -75,7 +75,7 @@ class AsyncTaskService implements TaskManager {
 				
 				if(backgroundTask.value() == backgroundTaskId) {
 					
-					TaskExecutor.CACHED_THREAD_POOL.execute(activity, method, args);
+					TaskExecutor.CACHED_THREAD_POOL.execute(context, method, args);
 					break;
 				}
 			}
@@ -87,7 +87,7 @@ class AsyncTaskService implements TaskManager {
 			stringBuilder.append("Failed to execute background task with id ");
 			stringBuilder.append(backgroundTaskId);
 			stringBuilder.append(" on ");
-			stringBuilder.append(activity.getClass().getName() );
+			stringBuilder.append(context.getClass().getName() );
 			stringBuilder.append(" with arguments ");
 			stringBuilder.append(args);
 			stringBuilder.append(". ");

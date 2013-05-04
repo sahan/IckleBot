@@ -77,16 +77,16 @@ public enum TaskManagers implements TaskManager {
 
 	/**
 	 * <p>Delegate for invoking the {@link #taskManager}'s 
-	 * {@link TaskManager#execute(Activity, int, Object...) service.</p>
+	 * {@link TaskManager#execute(Object, int, Object...) service.</p>
 	 * 
 	 * @since 1.1.0
 	 */
 	@Override
-	public void execute(Activity activity, int taskId, Object... args) {
+	public void execute(Object context, int taskId, Object... args) {
 		
 		try {
 			
-			taskManager.execute(activity, taskId, args);
+			taskManager.execute(context, taskId, args);
 		}
 		catch(Exception e) {
 					
@@ -95,7 +95,7 @@ public enum TaskManagers implements TaskManager {
 			stringBuilder.append("Task execution using ");
 			stringBuilder.append(taskManager.getClass().getName());
 			stringBuilder.append(" failed on activity ");
-			stringBuilder.append(activity.getClass().getName());
+			stringBuilder.append(context.getClass().getName());
 			stringBuilder.append(". ");
 			
 			Log.e(getClass().getName(), stringBuilder.toString(), e);

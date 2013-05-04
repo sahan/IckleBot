@@ -36,7 +36,7 @@ import com.lonepulse.icklebot.IckleBotRuntimeException;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public class IllegalValueTypeException extends RuntimeException {
+public class IllegalValueTypeException extends InjectionException {
 
 
 	private static final long serialVersionUID = 8618674483928650559L;
@@ -105,27 +105,27 @@ public class IllegalValueTypeException extends RuntimeException {
 	}
 	
 	/**
-	 * See {@link RuntimeException#RuntimeException()} 
+	 * See {@link InjectionException#InjectionException()} 
 	 */
 	public IllegalValueTypeException() {
 	}
 
 	/**
-	 * See {@link RuntimeException#RuntimeException(String)} 
+	 * See {@link InjectionException#InjectionException(String)} 
 	 */
 	public IllegalValueTypeException(String detailMessage) {
 		super(detailMessage);
 	}
 
 	/**
-	 * See {@link RuntimeException#RuntimeException(Throwable)} 
+	 * See {@link InjectionException#InjectionException(Throwable)} 
 	 */
 	public IllegalValueTypeException(Throwable throwable) {
 		super(throwable);
 	}
 
 	/**
-	 * See {@link RuntimeException#RuntimeException(String, Throwable)} 
+	 * See {@link InjectionException#InjectionException(String, Throwable)} 
 	 */
 	public IllegalValueTypeException(String detailMessage, Throwable throwable) {
 		super(detailMessage, throwable);

@@ -23,15 +23,22 @@ package com.lonepulse.icklebot;
 
 import java.io.Serializable;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
 import com.lonepulse.icklebot.event.EventLinker;
+import com.lonepulse.icklebot.event.EventUtils;
+import com.lonepulse.icklebot.injector.InjectionUtils;
 import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.network.NetworkManager;
+import com.lonepulse.icklebot.network.NetworkUtils;
 import com.lonepulse.icklebot.state.StateManager;
 import com.lonepulse.icklebot.state.StateService;
 import com.lonepulse.icklebot.task.TaskManagers;
+import com.lonepulse.icklebot.util.ContextUtils;
 
 /**
  * <p>This contract specifies the services offered by a support manager which 
@@ -44,7 +51,7 @@ import com.lonepulse.icklebot.task.TaskManagers;
  * <p>{@link IckleSupportManager}s can be serialized and as such they can be 
  * {@link Bundle}d.</p>
  * 
- * @version 1.1.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -77,9 +84,9 @@ public interface IckleSupportManager extends Serializable {
 		}
 		
 		/**
-		 * <p>The {@link Activity} which is to support {@link IckleActivity}'s features.
+		 * <p>The context which is to support IckleBot's features.
 		 */
-		private Activity activity;
+		private Object context;
 		
 		/**
 		 * <p>A flag to determine if injection support is enabled. 
@@ -95,27 +102,27 @@ public interface IckleSupportManager extends Serializable {
 		 * <p>This flag determines if an {@link IckleSupportManager} has already 
 		 * been built using this instance of {@link IckleSupportManager.Builder}. 
 		 */
-		private transient volatile boolean built = false;
+		private volatile boolean built = false;
 		
 		
 		/**
 		 * <p>Creates a new instance of {@link IckleSupportManager} by taking 
 		 * any mandatory parameters.
 		 * 
-		 * @param activity
-		 * 			the activity which is requesting an {@link IckleSupportManager}
+		 * @param context
+		 * 			the context which is requesting an {@link IckleSupportManager}
 		 * 
 		 * @since 1.1.0
 		 */
-		public Builder(final Activity activity) {
+		public Builder(final Object context) {
 		
-			this.activity = activity;
+			this.context = context;
 		}
 		
 		/**
-		 * <p>Adds event linking support to the target activity.
+		 * <p>Adds event linking support to the target context.
 		 * 
-		 * @return the {@link Builder} with linking support
+		 * @return the {@link Builder} with event linking support
 		 * 
 		 * @throws IllegalStateException
 		 * 			if this method is invoked after the {@link IckleSupportManager} 
@@ -132,9 +139,9 @@ public interface IckleSupportManager extends Serializable {
 		}
 		
 		/**
-		 * <p>Adds injection support to the target activity.
+		 * <p>Adds injection support to the target context.
 		 * 
-		 * @return the {@link Builder} with event injection support
+		 * @return the {@link Builder} with injection support
 		 * 
 		 * @throws IllegalStateException
 		 * 			if this method is invoked after the {@link IckleSupportManager} 
@@ -154,7 +161,7 @@ public interface IckleSupportManager extends Serializable {
 		 * <p>Creates a new instance of {@link IckleSupportManager} configured 
 		 * according to the build parameters which were set.
 		 * 
-		 * @return an {@link IckleSupportManager} tailored for the requesting activity
+		 * @return an {@link IckleSupportManager} tailored for the requesting context
 		 * 
 		 * @throws IllegalStateException
 		 * 			if the {@link IckleSupportManager} has already been built
@@ -172,19 +179,19 @@ public interface IckleSupportManager extends Serializable {
 				built = true;
 			}
 			
-			if(injectionSupportEnabled) InjectionActivity.inject(Injector.Configuration.getInstance(activity));
-			if(eventSupportEnabled) EventActivity.link(EventLinker.Configuration.getInstance(activity));
+			if(injectionSupportEnabled) InjectionUtils.inject(Injector.Configuration.getInstance(context));
+			if(eventSupportEnabled) EventUtils.link(EventLinker.Configuration.getInstance(context));
 			
 			return new IckleSupportManager() {
 				
 				private static final long serialVersionUID = 5949321867738227878L;
 
-				private StateManager stateService = StateService.newInstance(activity);
+				private StateManager stateService = StateService.newInstance(ContextUtils.discover(context));
 				
 				@Override
 				public Context getBaseContext() {
 
-					return activity.getBaseContext();
+					return ContextUtils.discover(context);
 				}
 				
 				@Override
@@ -202,35 +209,41 @@ public interface IckleSupportManager extends Serializable {
 				@Override
 				public void runAsyncTask(int asyncTaskId, Object... args) {
 
-					TaskManagers.ASYNC.execute(activity, asyncTaskId, args);
+					TaskManagers.ASYNC.execute(context, asyncTaskId, args);
 				}
 
 				@Override
 				public void runUITask(int uiTaskId, Object... args) {
 					
-					TaskManagers.UI.execute(activity, uiTaskId, args);
+					TaskManagers.UI.execute(context, uiTaskId, args);
 				}
 
 				@Override
 				public void onSaveInstanceState(Bundle outState) {
 					
-					stateService.save(activity, outState);
+					stateService.save(context, outState);
 				}
 
 				@Override
 				public void onRestoreInstanceState(Bundle savedInstanceState) {
 					
-					stateService.restore(activity, savedInstanceState);
+					stateService.restore(context, savedInstanceState);
+				}
+
+				@Override
+				public NetworkManager network() {
+					
+					return NetworkUtils.getNetworkManager(ContextUtils.asApplication(context));
 				}
 			};
 		}
 	}
 	
 	/**
-	 * <p>Retrieves the base context of the activity which 
+	 * <p>Retrieves the base context of the context which 
 	 * is supported by this {@link IckleSupportManager}.
 	 * 
-	 * @return the base context of the supported activity
+	 * @return the base context of the supported context
 	 * 
 	 * @version 1.1.0
 	 */
@@ -299,4 +312,26 @@ public interface IckleSupportManager extends Serializable {
 	 * @since 1.1.0
 	 */
 	void onRestoreInstanceState(Bundle savedInstanceState);
+	
+	/**
+	 * <p>Retrieves an instance of {@link NetworkManager} which can be used to 
+	 * discover additional information about the network.</p>
+	 * 
+	 * <p>This service is restricted by <b>profiles</b>. It can be used even if 
+	 * {@link PROFILE#DATA} is not activated.</p>
+	 * 
+	 * <p>This service requires the following permission:
+	 * <ul>
+	 * 	<li>ACCESS_NETWORK_STATE: to discover network information.</li>
+	 * </ul>
+	 * </p>
+	 * 
+	 * @return an instance of {@link NetworkManager}
+	 * 
+	 * @throws PermissionDeniedException
+	 * 			if {@link Manifest.permission#ACCESS_NETWORK_STATE} is denied
+	 * 
+	 * @since 1.1.1
+	 */
+	NetworkManager network();
 }

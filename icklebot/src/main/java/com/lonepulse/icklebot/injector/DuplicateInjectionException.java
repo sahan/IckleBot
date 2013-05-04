@@ -22,8 +22,6 @@ package com.lonepulse.icklebot.injector;
 
 import java.lang.annotation.Annotation;
 
-import android.app.Activity;
-
 import com.lonepulse.icklebot.IckleActivity;
 
 /**
@@ -46,7 +44,7 @@ public class DuplicateInjectionException extends InjectionException {
 	 * whose injection failed and the {@link Annotation} which was used 
 	 * multiple times.</p>
 	 * 
-	 * @param injectorActivity
+	 * @param injectorContext
 	 * 			the {@link Class} of the {@link IckleActivity} which 
 	 * 			contains duplicate injections 
 	 * <br><br>
@@ -56,12 +54,12 @@ public class DuplicateInjectionException extends InjectionException {
 	 * <br><br>
 	 * @since 1.0.0
 	 */
-	public DuplicateInjectionException(Class<? extends Activity> injectorActivity,
+	public DuplicateInjectionException(Class<?> injectorContext,
 									   Class<? extends Annotation> annotation) {
 		
-		this("Activity " + injectorActivity.getName() + " contains multiple injections of type " +
+		this("Activity " + injectorContext.getName() + " contains multiple injections of type " +
 			  annotation.getName() + ". The annotation " + annotation.getSimpleName() + 
-			  " may only be used once on a single Activity.");
+			  " may only be used once on a single context.");
 	}
 	
 	/**

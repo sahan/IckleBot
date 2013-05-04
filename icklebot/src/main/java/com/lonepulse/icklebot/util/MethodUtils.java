@@ -51,9 +51,8 @@ public final class MethodUtils {
 	 * {@link Method}s are annotated with the given annotation 
 	 * (represented by supplied {@link Class}).</p>
 	 * 
-	 * @param activity
-	 * 			the {@link ThreadingActivity} whose {@link Field}s are 
-	 * 			to be scanned
+	 * @param context
+	 * 			the context whose {@link Field}s are to be scanned
 	 * <br><br>
 	 * @param annotation
 	 * 			the {@link Class} of the {@link Annotation} to look for
@@ -63,12 +62,12 @@ public final class MethodUtils {
 	 * <br><br>
 	 * @since 1.0.0
 	 */
-	public static Set<Method> getAllMethods(Activity activity,
+	public static Set<Method> getAllMethods(Object context,
 											Class<? extends Annotation> annotation) {
 		
 		Set<Method> annotatedMethods = new HashSet<Method>();
 		
-		Method[] methods = activity.getClass().getDeclaredMethods();
+		Method[] methods = context.getClass().getDeclaredMethods();
 		
 		for (Method method : methods) {
 			

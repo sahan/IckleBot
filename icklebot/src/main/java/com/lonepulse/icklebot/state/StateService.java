@@ -102,9 +102,9 @@ public class StateService implements StateManager {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void save(Activity activity, Bundle bundle) {
+	public void save(Object context, Bundle bundle) {
 		
-		Set<Field> fieldsToSave = FieldUtils.getAllFields(activity, Stateful.class);
+		Set<Field> fieldsToSave = FieldUtils.getAllFields(context, Stateful.class);
 		
 		for (Field field : fieldsToSave) {
 			
@@ -112,7 +112,7 @@ public class StateService implements StateManager {
 				
 				if(!field.isAccessible()) field.setAccessible(true); 
 				
-				Serializable state = (Serializable)field.get(activity);
+				Serializable state = (Serializable)field.get(context);
 				
 				bundle.putSerializable(field.getName(), state);
 			}
@@ -123,7 +123,7 @@ public class StateService implements StateManager {
 				stringBuilder.append("Failed to save state of field ");
 				stringBuilder.append(field.getName());
 				stringBuilder.append(" in ");
-				stringBuilder.append(activity.getClass().getName());
+				stringBuilder.append(context.getClass().getName());
 				stringBuilder.append(". ");
 				
 				Log.e(getClass().getName(), stringBuilder.toString(), e);
@@ -135,9 +135,9 @@ public class StateService implements StateManager {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void restore(Activity activity, Bundle bundle) {
+	public void restore(Object context, Bundle bundle) {
 		
-		Set<Field> fieldsToRestore = FieldUtils.getAllFields(activity, Stateful.class);
+		Set<Field> fieldsToRestore = FieldUtils.getAllFields(context, Stateful.class);
 		
 		for (Field field : fieldsToRestore) {
 			
@@ -147,7 +147,7 @@ public class StateService implements StateManager {
 				
 				Serializable state = bundle.getSerializable(field.getName());
 				
-				field.set(activity, state);
+				field.set(context, state);
 			}
 			catch (Exception e) {
 				
@@ -156,7 +156,7 @@ public class StateService implements StateManager {
 				stringBuilder.append("Failed to restore state of field ");
 				stringBuilder.append(field.getName());
 				stringBuilder.append(" in ");
-				stringBuilder.append(activity.getClass().getName());
+				stringBuilder.append(context.getClass().getName());
 				stringBuilder.append(". ");
 				
 				Log.e(getClass().getName(), stringBuilder.toString(), e);

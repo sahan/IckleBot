@@ -40,33 +40,32 @@ public interface StateManager {
 
 	/**
 	 * <p><b>Saves</b> the <b>instance state</b> of the given 
-	 * {@link Activity} by persisting all {@link Field}s 
-	 * annotated with {@link Stateful} into the passed {@link Bundle}.</p>
+	 * context by persisting all {@link Field}s annotated with 
+	 * {@link Stateful} into the passed {@link Bundle}.</p>
 	 * 
-	 * @param activity
-	 * 			the {@link Activity} whose state is to be saved
+	 * @param context
+	 * 			the context whose state is to be saved
 	 * <br><br>
 	 * @param bundle
 	 * 			the {@link Bundle} used for persisting the state
 	 * <br><br>
 	 * @since 1.0.0
 	 */
-	public abstract void save(Activity activity, Bundle bundle);
+	public abstract void save(Object context, Bundle bundle);
 	
 	/**
 	 * <p><b>Restores</b> the <b>instance state</b> of the given 
-	 * {@link Activity} by retrieving all persisted 
-	 * {@link Field}s annotated with {@link Stateful} and injecting 
-	 * their values into the passed {@link Bundle}.</p>
+	 * context by retrieving all persisted {@link Field}s annotated 
+	 * with {@link Stateful} and injecting their values into the 
+	 * passed {@link Bundle}.</p>
 	 * 
-	 * @param activity
-	 * 			the {@link Activity} whose state is to 
-	 * 			be saved
+	 * @param context
+	 * 			the context whose state is to be saved
 	 * <br><br>
 	 * @param bundle
 	 * 			the {@link Bundle} used for persisting the state
 	 * <br><br>
 	 * @since 1.0.0
 	 */
-	public abstract void restore(Activity activity, Bundle bundle);
+	public abstract void restore(Object context, Bundle bundle);
 }

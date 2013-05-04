@@ -34,6 +34,7 @@ import com.lonepulse.icklebot.annotation.inject.IgnoreInjection;
 import com.lonepulse.icklebot.annotation.inject.InjectAll;
 import com.lonepulse.icklebot.annotation.inject.Pojo;
 import com.lonepulse.icklebot.event.resolver.EventResolver;
+import com.lonepulse.icklebot.util.ContextUtils;
 import com.lonepulse.icklebot.util.ReflectiveR;
 
 /**
@@ -50,7 +51,7 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public InjectionCategory resolve(Context context, Field field) {
+	public InjectionCategory resolve(Object context, Field field) {
 		
 		if(field.isAnnotationPresent(IgnoreInjection.class))
 			return InjectionCategory.NONE;
@@ -136,8 +137,7 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	 * {@link InjectionCategory#RESOURCE_INTEGER}.</p>
 	 * 
 	 * @param context
-	 * 			the {@link Context} from which the injection resolution 
-	 * 			is requested
+	 * 			the context from which the injection resolution is requested
 	 * 
 	 * @param field
 	 * 			the {@link Field} whose {@link InjectionCategory} is to 
@@ -147,11 +147,13 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	 * <br><br>
 	 * @since 1.1.0
 	 */
-	private boolean isCategoryResourceInteger(Context context, Field field) {
+	private boolean isCategoryResourceInteger(Object context, Field field) {
+		
+		Context injectionContext = ContextUtils.discover(context);
 		
 		return ((Integer.class.isAssignableFrom(field.getType())
 				|| int.class.isAssignableFrom(field.getType()))
-				&& ((ReflectiveR.integer(context, field.getName())) != 0))? true : false;
+				&& ((ReflectiveR.integer(injectionContext, field.getName())) != 0))? true : false;
 	}
 	
 	/**
@@ -193,8 +195,7 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	 * {@link InjectionCategory#RESOURCE_COLOR}.</p>
 	 * 
 	 * @param context
-	 * 			the {@link Context} from which the injection resolution 
-	 * 			is requested
+	 * 			the context from which the injection resolution is requested
 	 * 
 	 * @param field
 	 * 			the {@link Field} whose {@link InjectionCategory} is to 
@@ -204,11 +205,13 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	 * <br><br>
 	 * @since 1.1.0
 	 */
-	private boolean isCategoryResourceColor(Context context, Field field) {
+	private boolean isCategoryResourceColor(Object context, Field field) {
+		
+		Context injectionContext = ContextUtils.discover(context);
 		
 		return ((Integer.class.isAssignableFrom(field.getType())
 				|| int.class.isAssignableFrom(field.getType()))
-				&& ((ReflectiveR.color(context, field.getName())) != 0))? true : false;
+				&& ((ReflectiveR.color(injectionContext, field.getName())) != 0))? true : false;
 	}
 	
 	/**

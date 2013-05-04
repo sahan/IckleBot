@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.Set;
 
 import android.animation.AnimatorInflater;
-import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.view.animation.AnimationUtils;
 
@@ -43,6 +43,7 @@ import com.lonepulse.icklebot.annotation.inject.InjectString;
 import com.lonepulse.icklebot.annotation.inject.InjectView;
 import com.lonepulse.icklebot.injector.Injector;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
+import com.lonepulse.icklebot.util.ContextUtils;
 
 /**
  * <p>An implementation of {@link Injector} which is responsible for 
@@ -69,7 +70,7 @@ class ExplicitResourceInjector implements Injector {
 			@Override
 			public void run(Injector.Configuration config) {
 
-				Activity context = config.getActivity();
+				Object context = config.getContext();
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_VIEW);
 				
 				for (Field field : fields) {
@@ -79,7 +80,12 @@ class ExplicitResourceInjector implements Injector {
 						if(!field.isAccessible()) field.setAccessible(true);
 						
 						int id = field.getAnnotation(InjectView.class).value();
-						field.set(context, context.findViewById(id));
+						
+						if(ContextUtils.isFragment(context)) 
+							field.set(context, ContextUtils.asFragment(context).getView().findViewById(id));
+						
+						else if(ContextUtils.isActivity(context))
+							field.set(context, ContextUtils.asActivity(context).findViewById(id));
 					}
 					catch (Exception e) {
 						
@@ -87,7 +93,7 @@ class ExplicitResourceInjector implements Injector {
 						.append("Explicit resource injection with ")
 						.append(InjectView.class.getSimpleName())
 						.append(" failed on ")
-						.append(context.getLocalClassName())
+						.append(context.getClass().getName())
 						.append(" for ")
 						.append(field.getName())
 						.append(". ");
@@ -103,7 +109,7 @@ class ExplicitResourceInjector implements Injector {
 			@Override
 			public void run(Injector.Configuration config) {
 				
-				Activity context = config.getActivity();
+				Context context = ContextUtils.discover(config.getContext());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_STRING);
 				
 				for (Field field : fields) {
@@ -120,7 +126,7 @@ class ExplicitResourceInjector implements Injector {
 						.append("Explicit resource injection with ")
 						.append(InjectString.class.getSimpleName())
 						.append(" failed on ")
-						.append(context.getLocalClassName())
+						.append(context.getClass().getName())
 						.append(" for ")
 						.append(field.getName())
 						.append(". ");
@@ -136,7 +142,7 @@ class ExplicitResourceInjector implements Injector {
 			@Override
 			public void run(Injector.Configuration config) {
 				
-				Activity context = config.getActivity();
+				Context context = ContextUtils.discover(config.getContext());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_DRAWABLE);
 				
 				for (Field field : fields) {
@@ -154,7 +160,7 @@ class ExplicitResourceInjector implements Injector {
 						.append("Explicit resource injection with ")
 						.append(InjectDrawable.class.getSimpleName())
 						.append(" failed on ")
-						.append(context.getLocalClassName())
+						.append(context.getClass().getName())
 						.append(" for ")
 						.append(field.getName())
 						.append(". ");
@@ -170,7 +176,7 @@ class ExplicitResourceInjector implements Injector {
 			@Override
 			public void run(Injector.Configuration config) {
 				
-				Activity context = config.getActivity();
+				Context context = ContextUtils.discover(config.getContext());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_COLOR);
 				
 				for (Field field : fields) {
@@ -188,7 +194,7 @@ class ExplicitResourceInjector implements Injector {
 						.append("Explicit resource injection with ")
 						.append(InjectColor.class.getSimpleName())
 						.append(" failed on ")
-						.append(context.getLocalClassName())
+						.append(context.getClass().getName())
 						.append(" for ")
 						.append(field.getName())
 						.append(". ");
@@ -204,7 +210,7 @@ class ExplicitResourceInjector implements Injector {
 			@Override
 			public void run(Injector.Configuration config) {
 				
-				Activity context = config.getActivity();
+				Context context = ContextUtils.discover(config.getContext());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_INTEGER);
 				
 				for (Field field : fields) {
@@ -222,7 +228,7 @@ class ExplicitResourceInjector implements Injector {
 						.append("Explicit resource injection with ")
 						.append(InjectInteger.class.getSimpleName())
 						.append(" failed on ")
-						.append(context.getLocalClassName())
+						.append(context.getClass().getName())
 						.append(" for ")
 						.append(field.getName())
 						.append(". ");
@@ -238,7 +244,7 @@ class ExplicitResourceInjector implements Injector {
 			@Override
 			public void run(Injector.Configuration config) {
 				
-				Activity context = config.getActivity();
+				Context context = ContextUtils.discover(config.getContext());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_DIMENSION);
 				
 				for (Field field : fields) {
@@ -256,7 +262,7 @@ class ExplicitResourceInjector implements Injector {
 						.append("Explicit resource injection with ")
 						.append(InjectDimension.class.getSimpleName())
 						.append(" failed on ")
-						.append(context.getLocalClassName())
+						.append(context.getClass().getName())
 						.append(" for ")
 						.append(field.getName())
 						.append(". ");
@@ -272,7 +278,7 @@ class ExplicitResourceInjector implements Injector {
 			@Override
 			public void run(Injector.Configuration config) {
 				
-				Activity context = config.getActivity();
+				Context context = ContextUtils.discover(config.getContext());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_BOOLEAN);
 				
 				for (Field field : fields) {
@@ -290,7 +296,7 @@ class ExplicitResourceInjector implements Injector {
 						.append("Explicit resource injection with ")
 						.append(InjectBoolean.class.getSimpleName())
 						.append(" failed on ")
-						.append(context.getLocalClassName())
+						.append(context.getClass().getName())
 						.append(" for ")
 						.append(field.getName())
 						.append(". ");
@@ -306,7 +312,7 @@ class ExplicitResourceInjector implements Injector {
 			@Override
 			public void run(Injector.Configuration config) {
 				
-				Activity context = config.getActivity();
+				Context context = ContextUtils.discover(config.getContext());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_ARRAY);
 				
 				for (Field field : fields) {
@@ -332,7 +338,7 @@ class ExplicitResourceInjector implements Injector {
 						.append("Explicit resource injection with ")
 						.append(InjectArray.class.getSimpleName())
 						.append(" failed on ")
-						.append(context.getLocalClassName())
+						.append(context.getClass().getName())
 						.append(" for ")
 						.append(field.getName())
 						.append(". ");
@@ -348,7 +354,7 @@ class ExplicitResourceInjector implements Injector {
 			@Override
 			public void run(Injector.Configuration config) {
 				
-				Activity context = config.getActivity();
+				Context context = ContextUtils.discover(config.getContext());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_ANIMATION);
 				
 				for (Field field : fields) {
@@ -358,7 +364,7 @@ class ExplicitResourceInjector implements Injector {
 						if(!field.isAccessible()) field.setAccessible(true);
 						
 						int id = field.getAnnotation(InjectAnimation.class).value();
-						field.set(context, AnimationUtils.loadAnimation(config.getActivity(), id));
+						field.set(context, AnimationUtils.loadAnimation(context, id));
 					}
 					catch (Exception e) {
 						
@@ -366,7 +372,7 @@ class ExplicitResourceInjector implements Injector {
 						.append("Explicit resource injection with ")
 						.append(InjectAnimation.class.getSimpleName())
 						.append(" failed on ")
-						.append(context.getLocalClassName())
+						.append(context.getClass().getName())
 						.append(" for ")
 						.append(field.getName())
 						.append(". ");
@@ -382,7 +388,7 @@ class ExplicitResourceInjector implements Injector {
 			@Override
 			public void run(Injector.Configuration config) {
 				
-				Activity context = config.getActivity();
+				Context context = ContextUtils.discover(config.getContext());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_ANIMATOR);
 				
 				for (Field field : fields) {
@@ -392,7 +398,7 @@ class ExplicitResourceInjector implements Injector {
 						if(!field.isAccessible()) field.setAccessible(true);
 						
 						int id = field.getAnnotation(InjectAnimator.class).value();
-						field.set(context, AnimatorInflater.loadAnimator(config.getActivity(), id)); 
+						field.set(context, AnimatorInflater.loadAnimator(context, id)); 
 					}
 					catch (Exception e) {
 						
@@ -400,7 +406,7 @@ class ExplicitResourceInjector implements Injector {
 						.append("Explicit resource injection with ")
 						.append(InjectAnimator.class.getSimpleName())
 						.append(" failed on ")
-						.append(context.getLocalClassName())
+						.append(context.getClass().getName())
 						.append(" for ")
 						.append(field.getName())
 						.append(". ");

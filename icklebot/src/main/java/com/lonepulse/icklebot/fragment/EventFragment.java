@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot;
+package com.lonepulse.icklebot.fragment;
 
 /*
  * #%L
@@ -22,8 +22,8 @@ package com.lonepulse.icklebot;
 
 
 import android.os.Bundle;
-import android.view.View;
 
+import com.lonepulse.icklebot.IckleActivity;
 import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
 import com.lonepulse.icklebot.event.EventLinker;
 import com.lonepulse.icklebot.event.EventLinkers;
@@ -31,15 +31,15 @@ import com.lonepulse.icklebot.event.EventUtils;
 import com.lonepulse.icklebot.profile.ProfileService;
 
 /**
- * <p>This profile offers the linking of event listeners to {@link View}s.
+ * <p>This profile offers event linking features.
  * 
  * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-abstract class EventActivity extends StateActivity {
+abstract class EventFragment extends StateFragment {
 	
-		
+	
 	/**
 	 * <p>The {@link EventLinkers.Configuration} for this {@link IckleActivity}.</p>
 	 * 
@@ -49,20 +49,19 @@ abstract class EventActivity extends StateActivity {
 	{
 		EVENT_CONFIGURATION = EventLinker.Configuration.getInstance(this);
 	}
-	
 
 	/**
 	 * <p>Performs <b>event listener linking</b> by invoking {@link #link()}.</p>
 	 */
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onActivityCreated(Bundle savedInstanceState) {
 		
-		super.onCreate(savedInstanceState);
-	
-		if(ProfileService.getInstance(getApplicationContext()).isActive(this, PROFILE.EVENT)) {
+		super.onActivityCreated(savedInstanceState);
+		
+		if(ProfileService.getInstance(
+			getActivity().getApplicationContext()).isActive(this, PROFILE.EVENT)) {
 			
 			EventUtils.link(EVENT_CONFIGURATION);
 		}
 	}
 }
-

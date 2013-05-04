@@ -25,6 +25,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.lonepulse.icklebot.annotation.inject.InjectAll;
+import com.lonepulse.icklebot.injector.InjectionException;
 import com.lonepulse.icklebot.injector.Injector;
 
 /**
@@ -105,7 +106,7 @@ public enum ImplicitInjectors implements Injector {
 	 * @since 1.0.0
 	 */
 	@Override
-	public void inject(Configuration config) {
+	public void inject(Configuration config) throws InjectionException {
 	
 		try {
 					
@@ -118,7 +119,7 @@ public enum ImplicitInjectors implements Injector {
 			stringBuilder.append("Injection using ");
 			stringBuilder.append(implicitInjector.getClass().getName());
 			stringBuilder.append(" failed on activity ");
-			stringBuilder.append(config.getActivity().getClass().getName());
+			stringBuilder.append(config.getContext().getClass().getName());
 			stringBuilder.append(". ");
 			
 			Log.e(getClass().getName(), stringBuilder.toString(), e);

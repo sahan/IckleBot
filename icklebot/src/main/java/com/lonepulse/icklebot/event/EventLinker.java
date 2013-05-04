@@ -28,8 +28,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import android.app.Activity;
-
 import com.lonepulse.icklebot.event.resolver.EventCategory;
 import com.lonepulse.icklebot.event.resolver.EventResolvers;
 
@@ -71,54 +69,52 @@ public interface EventLinker {
 			
 			
 			/**
-			 * <p>Stores processed {@link Configuration}s, keyed by their {@link activity} 
-			 * {@link Class}.
+			 * <p>Stores processed {@link Configuration}s, keyed by their context {@link Class}.
 			 * 
 			 * @since 1.1.0
 			 */
-			private Map<Class<? extends Activity>, Configuration>  cache
-				= new HashMap<Class<? extends Activity>, EventLinker.Configuration>();
+			private Map<Class<?>, Configuration>  cache
+				= new HashMap<Class<?>, EventLinker.Configuration>();
 			
 			/**
 			 * <p>A delegate for {@link Map#put(Object, Object)} which wraps the 
 			 * {@link #cache}.</p>
 			 * 
 			 * @param key
-			 * 			the requesting instance of {@link activity}
+			 * 			the requesting instance of context
 			 * <br><br>
 			 * @param value
-			 * 			the {@link Configuration} for the {@link activity} 
-			 * 			extension
+			 * 			the {@link Configuration} for the context extension
 			 * <br><br>
 			 * @return the previous {@link Configuration} keyed by this 
 			 * 		   {@link activity} {@link Class}, <b>if any</b>
 			 * <br><br>
 			 * @since 1.1.0
 			 */
-			public Configuration put(Activity key, Configuration value) {
+			public Configuration put(Object key, Configuration value) {
 				
 				return cache.put(key.getClass(), value);
 			}
 			
 			/**
 			 * <p>A delegate for {@link Map#get(Object)} which wraps the {@link #cache}. 
-			 * It takes the new instance of {@link activity} and updates the 
-			 * {@link Configuration#activity} property as well.</p>
+			 * It takes the new instance of the context and updates the {@link Configuration#context} 
+			 * property as well.</p>
 			 * 
 			 * @param key
-			 * 			the requesting instance of {@link activity}
+			 * 			the requesting instance of context
 			 * <br><br>
-			 * @return the {@link Configuration} keyed by by this {@link activity} 
+			 * @return the {@link Configuration} keyed by by this context
 			 * 		   {@link Class}; else {@code null} if not found
 			 * <br><br>
 			 * @since 1.1.0
 			 */
-			public Configuration get(Activity key) {
+			public Configuration get(Object key) {
 				
 				Configuration configuration = cache.get(key.getClass());
 				
 				if(configuration != null)
-					configuration.setActivity(key);
+					configuration.setContext(key);
 				
 				return configuration;
 			}
@@ -126,16 +122,15 @@ public interface EventLinker {
 		
 
 		/**
-		 * <p>The {@link activity} which has requested 
-		 * listener linking.</p>
+		 * <p>The context which has requested listener linking.</p>
 		 * 
 		 * @since 1.1.0
 		 */
-		private Activity activity;
+		private Object context;
 		
 		
 		/**
-		 * <p>The target {@link Method}s in the {@link #activity} 
+		 * <p>The target {@link Method}s in the {@link #context} 
 		 * activity grouped into their categories by {@link EventCategory}.</p>
 		 * 
 		 * @since 1.1.0
@@ -145,25 +140,24 @@ public interface EventLinker {
 		
 		/**
 		 * <p>Creates a <b>new</b> instance of {@link EventLinker.Configuration} 
-		 * using the passed {@link activity}.</p>
+		 * using the passed context.</p>
 		 * 
 		 * <p>This is to be used in an <i>instantiated context</i>.</p>
 		 * 
-		 * @param activity
-		 * 			the {@link activity} which has requested event 
-		 * 			listener linking
+		 * @param context
+		 * 			the context which has requested event listener linking
 		 * <br><br>
 		 * @return a new instance of {@link EventLinker.Configuration}
 		 * <br><br>
 		 * @since 1.1.0
 		 */
-		public static Configuration newInstance(Activity Activity) {
+		public static Configuration newInstance(Object context) {
 			
 			Configuration config = new Configuration();
 			
-			config.setActivity(Activity);
+			config.setContext(context);
 		
-			Method[] methods = Activity.getClass().getDeclaredMethods();
+			Method[] methods = context.getClass().getDeclaredMethods();
 			
 			for (Method method : methods) {
 			
@@ -180,9 +174,8 @@ public interface EventLinker {
 		
 		/**
 		 * <p>Retrieves the <b>cached</b> instance of {@link EventLinker.Configuration} 
-		 * using the passed {@link activity}. If cached instance is not 
-		 * found, a new instance is created, via {@link #newInstance(activity)}, 
-		 * and cached.</p>
+		 * using the passed context. If cached instance is not found, a new instance is 
+		 * created, via {@link #newInstance(Object)}, and cached.</p>
 		 * 
 		 * @param activity
 		 * 			the {@link activity} which has requested event 
@@ -192,18 +185,18 @@ public interface EventLinker {
 		 * <br><br>
 		 * @since 1.1.0
 		 */
-		public static Configuration getInstance(Activity Activity) {
+		public static Configuration getInstance(Object context) {
 		
-			Configuration config = CACHE.INSTANCE.get(Activity);
+			Configuration config = CACHE.INSTANCE.get(context);
 			
 			if(config != null) {
 
-				config.setActivity(Activity);
+				config.setContext(context);
 			}
 			else {
 				
-				config = newInstance(Activity);
-				CACHE.INSTANCE.put(Activity, config);
+				config = newInstance(context);
+				CACHE.INSTANCE.put(context, config);
 			}
 			
 			return config;
@@ -211,7 +204,7 @@ public interface EventLinker {
 		
 		/**
 		 * <p>Constructor visibility restricted to prevent instantiation. 
-		 * Please use the factory method {@link #newInstance(activity)}.</p>
+		 * Please use the factory method {@link #newInstance(Object)}.</p>
 		 * 
 		 * <p>Initializes {@link #listenerTargets} to an empty {@link Map}.</p>
 		 * 
@@ -223,29 +216,28 @@ public interface EventLinker {
 		}
 
 		/**
-		 * <p>Accessor for {@link #activity}.</p>
+		 * <p>Accessor for {@link #context}.</p>
 		 * 
-		 * @return {@link #activity}
+		 * @return {@link #context}
 		 * <br><br>
 		 * @since 1.1.0
 		 */
-		public Activity getActivity() {
+		public Object getContext() {
 			
-			return activity;
+			return context;
 		}
 
 		/**
-		 * <p>Mutator for {@link #activity}.</p>
+		 * <p>Mutator for {@link #context}.</p>
 		 * 
-		 * @param activity
-		 * 			the {@link activity} to populate 
-		 * 			{@link #activity} 
+		 * @param context
+		 * 			the {@link Object} to populate {@link #context} 
 		 * <br><br>
 		 * @since 1.1.0
 		 */
-		private void setActivity(Activity activity) {
+		private void setContext(Object context) {
 			
-			this.activity = activity;
+			this.context = context;
 		}
 
 		/**
@@ -266,12 +258,10 @@ public interface EventLinker {
 		 * to the appropriate {@link Set} in {@link #listenerTargets}.</p>
 		 * 
 		 * @param listenerCategory
-		 * 			the {@link EventCategory} to which the 
-		 * 			{@link Method} belongs
+		 * 			the {@link EventCategory} to which the {@link Method} belongs
 		 * <br><br>
 		 * @param method
-		 * 			the {@link Method} to be categorized into an 
-		 * 			{@link EventCategory}
+		 * 			the {@link Method} to be categorized into an {@link EventCategory}
 		 * <br><br>
 		 * @since 1.1.0
 		 */
@@ -289,16 +279,13 @@ public interface EventLinker {
 		}
 		
 		/**
-		 * <p>Takes an {@link EventCategory} and retrieves 
-		 * the {@link Set} of {@link Field}s under that category 
-		 * as mapped in {@link #listenerTargets}.</p> 
+		 * <p>Takes an {@link EventCategory} and retrieves the {@link Set} of 
+		 * {@link Field}s under that category as mapped in {@link #listenerTargets}. 
 		 * 
 		 * @param listenerCategory
-		 * 			the fields are to be retrieved for this 
-		 * 			{@link EventCategory}			
+		 * 			the fields are to be retrieved for this {@link EventCategory}			
 		 * <br><br>
-		 * @return the {@link Set} of {@link Field}s  under 
-		 * 		   the category, else an empty {@link Set}
+		 * @return the {@link Set} of {@link Field}s  under the category, else an empty {@link Set}
 		 * <br><br>
 		 * @since 1.1.0
 		 */
@@ -307,7 +294,7 @@ public interface EventLinker {
 			Set<Method> targets = listenerTargets.get(listenerCategory);
 			
 			return (targets == null)? 
-						new HashSet<Method>() :Collections.unmodifiableSet(targets);
+					new HashSet<Method>() :Collections.unmodifiableSet(targets);
 		}
 	 }
 	

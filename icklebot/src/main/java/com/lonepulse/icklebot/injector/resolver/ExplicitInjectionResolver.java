@@ -22,8 +22,6 @@ package com.lonepulse.icklebot.injector.resolver;
 
 import java.lang.reflect.Field;
 
-import android.content.Context;
-
 import com.lonepulse.icklebot.annotation.inject.InjectAnimation;
 import com.lonepulse.icklebot.annotation.inject.InjectAnimator;
 import com.lonepulse.icklebot.annotation.inject.InjectApplication;
@@ -52,7 +50,7 @@ class ExplicitInjectionResolver implements InjectionResolver {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public InjectionCategory resolve(Context context, Field field) {
+	public InjectionCategory resolve(Object context, Field field) {
 		
 		if(field.isAnnotationPresent(InjectApplication.class))
 			return InjectionCategory.APPLICATION;

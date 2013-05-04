@@ -1,8 +1,8 @@
-package com.lonepulse.icklebot;
+package com.lonepulse.icklebot.fragment;
 
 /*
  * #%L
- * IckleBot
+ * IckleBot Library
  * %%
  * Copyright (C) 2013 Lonepulse
  * %%
@@ -20,6 +20,7 @@ package com.lonepulse.icklebot;
  * #L%
  */
 
+
 import android.os.Bundle;
 
 import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
@@ -29,38 +30,42 @@ import com.lonepulse.icklebot.state.StateUtils;
 /**
  * <p>This profile offers state management features.
  * 
- * @version 1.1.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-abstract class StateActivity extends InjectionActivity {
-
-
-	/**
-	 * <p><b>Saves</b> instance variables annotated with {@code @Stateful}.</p>
-	 */
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-
-		super.onSaveInstanceState(outState);
-		
-		if(ProfileService.getInstance(getApplicationContext()).isActive(this, PROFILE.STATE)) {
-		
-			StateUtils.onSaveInstanceState(this, outState);
-		}
-	}
+abstract class StateFragment extends InjectionFragment {
+	
 	
 	/**
 	 * <p><b>Restores</b> instance variables annotated with {@code @Stateful}.</p>
 	 */
 	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+	public void onActivityCreated(Bundle savedInstanceState) {
 		
-		super.onRestoreInstanceState(savedInstanceState);
+		super.onActivityCreated(savedInstanceState);
 		
-		if(ProfileService.getInstance(getApplicationContext()).isActive(this, PROFILE.STATE)) {
+		if(ProfileService.getInstance(
+			getActivity().getApplicationContext()).isActive(this, PROFILE.STATE)) {
 		
+			if(!getRetainInstance()) setRetainInstance(true);
+			
 			StateUtils.onRestoreInstanceState(this, savedInstanceState);
+		}
+	}	
+	
+	/**
+	 * <p><b>Saves</b> instance variables annotated with {@code @Stateful}.</p>
+	 */
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		
+		super.onSaveInstanceState(outState);
+		
+		if(ProfileService.getInstance(
+			getActivity().getApplicationContext()).isActive(this, PROFILE.STATE)) {
+			
+			StateUtils.onSaveInstanceState(this, outState);
 		}
 	}
 }

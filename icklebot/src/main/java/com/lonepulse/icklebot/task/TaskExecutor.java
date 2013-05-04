@@ -59,9 +59,8 @@ enum TaskExecutor implements LifeCycle.Destroy {
 	 * <p>Takes an {@link Activity} and executes the specified 
 	 * {@link Method} on it via a worker thread.</p>
 	 * 
-	 * @param activity
-	 * 			the {@link Activity} on which a background task 
-	 * 			is to be run
+	 * @param context
+	 * 			the context on which a background task is to be run
 	 * <br><br>
 	 * @param method
 	 * 			the {@link Method} which needs to be invoked on a worker 
@@ -69,7 +68,7 @@ enum TaskExecutor implements LifeCycle.Destroy {
 	 * <br><br>
 	 * @since 1.0.0
 	 */
-	public void execute(final Activity activity, final Method method, final Object... args) {
+	public void execute(final Object context, final Method method, final Object... args) {
 		
 		try {
 
@@ -82,7 +81,7 @@ enum TaskExecutor implements LifeCycle.Destroy {
 						
 						if(!method.isAccessible()) method.setAccessible(true);
 							
-						method.invoke(activity, args);
+						method.invoke(context, args);
 					} 
 					catch (Exception e) {
 						
@@ -91,7 +90,7 @@ enum TaskExecutor implements LifeCycle.Destroy {
 						stringBuilder.append("Failed to invoke ");
 						stringBuilder.append(method.getName());
 						stringBuilder.append(" on ");
-						stringBuilder.append(activity.getClass().getName());
+						stringBuilder.append(context.getClass().getName());
 						stringBuilder.append(" with arguments ");
 						stringBuilder.append(args);
 						stringBuilder.append(". ");
@@ -108,7 +107,7 @@ enum TaskExecutor implements LifeCycle.Destroy {
 			stringBuilder.append("Background task ");
 			stringBuilder.append(method.getName());
 			stringBuilder.append(" failed to execute on ");
-			stringBuilder.append(activity.getClass().getName());
+			stringBuilder.append(context.getClass().getName());
 			stringBuilder.append(" with arguments ");
 			stringBuilder.append(args);
 			stringBuilder.append(". ");

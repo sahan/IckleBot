@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,6 +34,7 @@ import android.widget.ListView;
 
 import com.lonepulse.icklebot.annotation.event.ItemClick;
 import com.lonepulse.icklebot.event.resolver.EventCategory;
+import com.lonepulse.icklebot.util.ContextUtils;
 
 /**
  * <p>A concrete implementation of {@link EventLinker} which links methods 
@@ -53,7 +53,7 @@ class ItemClickEventLinker implements EventLinker {
 	@Override
 	public void link(EventLinker.Configuration config) {
 
-		final Activity listenerTemplate = config.getActivity();
+		final Object listenerTemplate = config.getContext();
 		
 		Set<Method> methods = config.getListenerTargets(EventCategory.ITEM_CLICK);
 		
@@ -104,8 +104,16 @@ class ItemClickEventLinker implements EventLinker {
 
 					try {
 						
-						((AdapterView<?>)listenerTemplate.findViewById(id))
-						.setOnItemClickListener(onItemClickListener);
+						if(ContextUtils.isActivity(listenerTemplate)) {
+							
+							((AdapterView<?>)ContextUtils.asActivity(listenerTemplate)
+								.findViewById(id)).setOnItemClickListener(onItemClickListener);
+						}
+						else if(ContextUtils.isFragment(listenerTemplate)) {
+							
+							((AdapterView<?>)ContextUtils.asFragment(listenerTemplate)
+								.getView().findViewById(id)).setOnItemClickListener(onItemClickListener);
+						}
 					}
 					catch (Exception e) {
 						
@@ -115,7 +123,9 @@ class ItemClickEventLinker implements EventLinker {
 						.append(" at ")
 						.append(listenerTemplate.getClass().getName())
 						.append(" for view with ID ")
-						.append(listenerTemplate.getResources().getResourceName(id))
+						.append(ContextUtils.isActivity(listenerTemplate)? 
+							ContextUtils.asActivity(listenerTemplate).getResources().getResourceName(id)
+							:ContextUtils.asFragment(listenerTemplate).getResources().getResourceName(id))
 						.append(".");
 						
 						Log.e(getClass().getName(), builder.toString(), e);
