@@ -21,28 +21,20 @@ package com.lonepulse.icklebot.fragment;
  */
 
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.lonepulse.icklebot.IckleActivity;
 
 /**
- * <p>This profile detects changes in the data connection and provides 
- * callbacks to handle them. In addition it can be used to discover 
- * additional network information via {@link IckleFragment#network()}.</p>
+ * <p>All fragments that wish to leverage IckleBot's features should 
+ * extend this fragment.</p>
  * 
- * <p>This profile requires the following permission:
- * <ul>
- *  <li>READ_PHONE_STATE: to register for data state changes.</li>
- * </ul>
- * </p>
- *  
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-abstract class IckleFragment extends Fragment {
+public class IckleFragment extends EventFragment {
 
 
 	/**
