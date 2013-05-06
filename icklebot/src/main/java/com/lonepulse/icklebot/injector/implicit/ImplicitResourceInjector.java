@@ -73,11 +73,14 @@ class ImplicitResourceInjector implements Injector {
 						
 						int id = ReflectiveR.id(ContextUtils.discover(context), field.getName());
 						
-						if(ContextUtils.isFragment(context)) 
+						if(ContextUtils.isActivity(context))
+							field.set(context, ContextUtils.asActivity(context).findViewById(id));
+						
+						else if(ContextUtils.isFragment(context)) 
 							field.set(context, ContextUtils.asFragment(context).getView().findViewById(id));
 						
-						else if(ContextUtils.isActivity(context))
-							field.set(context, ContextUtils.asActivity(context).findViewById(id));
+						else if(ContextUtils.isSupportFragment(context))
+							field.set(context, ContextUtils.asSupportFragment(context).getView().findViewById(id));
 					}
 					catch (Exception e) {
 						

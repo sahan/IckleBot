@@ -28,13 +28,19 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import android.app.Activity;
+import android.app.Fragment;
+
 import com.lonepulse.icklebot.event.resolver.EventCategory;
 import com.lonepulse.icklebot.event.resolver.EventResolvers;
+import com.lonepulse.icklebot.injector.IllegalContextException;
+import com.lonepulse.icklebot.injector.InjectionException;
+import com.lonepulse.icklebot.util.ContextUtils;
 
 /**
  * <p>This is the common contract which all listener linkers must implement.</p>
  * 
- * @version 1.1.0 
+ * @version 1.2.1 
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -97,9 +103,7 @@ public interface EventLinker {
 			}
 			
 			/**
-			 * <p>A delegate for {@link Map#get(Object)} which wraps the {@link #cache}. 
-			 * It takes the new instance of the context and updates the {@link Configuration#context} 
-			 * property as well.</p>
+			 * <p>A delegate for {@link Map#get(Object)} which wraps the {@link #cache}.
 			 * 
 			 * @param key
 			 * 			the requesting instance of context
@@ -111,12 +115,7 @@ public interface EventLinker {
 			 */
 			public Configuration get(Object key) {
 				
-				Configuration configuration = cache.get(key.getClass());
-				
-				if(configuration != null)
-					configuration.setContext(key);
-				
-				return configuration;
+				return cache.get(key.getClass());
 			}
 		}
 		
@@ -135,7 +134,7 @@ public interface EventLinker {
 		 * 
 		 * @since 1.1.0
 		 */
-		private Map<EventCategory, Set<Method>> listenerTargets;
+		private final Map<EventCategory, Set<Method>> listenerTargets;
 
 		
 		/**
@@ -153,23 +152,22 @@ public interface EventLinker {
 		 */
 		public static Configuration newInstance(Object context) {
 			
-			Configuration config = new Configuration();
+			if(context == null)
+				throw new InjectionException(new IllegalArgumentException("A context must be supplied."));
 			
-			config.setContext(context);
-		
-			Method[] methods = context.getClass().getDeclaredMethods();
-			
-			for (Method method : methods) {
-			
-				Set<EventCategory> listenerCategories = EventResolvers.BASIC.resolve(method);
-				
-				for (EventCategory listenerCategory : listenerCategories) {
+			if(!ContextUtils.isActivity(context)
+				&& !ContextUtils.isFragment(context)
+				&& !ContextUtils.isSupportFragment(context)) { 
 					
-					config.putListenerTarget(listenerCategory, method);
-				}
+				Set<Class<?>> applicableContexts = new HashSet<Class<?>>();
+				applicableContexts.add(Activity.class);
+				applicableContexts.add(Fragment.class);
+				applicableContexts.add(android.support.v4.app.Fragment.class);
+					
+				throw new IllegalContextException(context, applicableContexts);
 			}
 			
-			return config;
+			return new Configuration(context);
 		}
 		
 		/**
@@ -187,11 +185,14 @@ public interface EventLinker {
 		 */
 		public static Configuration getInstance(Object context) {
 		
+			if(context == null)
+				throw new InjectionException(new IllegalArgumentException("A context must be supplied."));
+			
 			Configuration config = CACHE.INSTANCE.get(context);
 			
 			if(config != null) {
 
-				config.setContext(context);
+				config.updateContext(context);
 			}
 			else {
 				
@@ -210,9 +211,23 @@ public interface EventLinker {
 		 * 
 		 * @since 1.1.0
 		 */
-		private Configuration() {
+		private Configuration(Object context) {
 			
-			this.listenerTargets = new HashMap<EventCategory, Set<Method>>(); 
+			this.context = context;
+			this.listenerTargets = new HashMap<EventCategory, Set<Method>>();
+			
+			for (EventCategory eventCategory : EventCategory.values()) 
+				this.listenerTargets.put(eventCategory, new HashSet<Method>());
+			
+			Method[] methods = context.getClass().getDeclaredMethods();
+			
+			for (Method method : methods) {
+			
+				Set<EventCategory> listenerCategories = EventResolvers.BASIC.resolve(method);
+				
+				for (EventCategory listenerCategory : listenerCategories)
+					this.listenerTargets.get(listenerCategory).add(method);
+			}
 		}
 
 		/**
@@ -226,16 +241,16 @@ public interface EventLinker {
 			
 			return context;
 		}
-
+		
 		/**
-		 * <p>Mutator for {@link #context}.</p>
-		 * 
+		 * <p>Updates the context for this {@link EventLinker.Configuration}.
+		 *
 		 * @param context
-		 * 			the {@link Object} to populate {@link #context} 
-		 * <br><br>
-		 * @since 1.1.0
+		 * 			the context to update
+		 * 
+		 * @since 1.2.1
 		 */
-		private void setContext(Object context) {
+		private void updateContext(Object context) {
 			
 			this.context = context;
 		}
@@ -249,33 +264,7 @@ public interface EventLinker {
 		 */
 		public Map<EventCategory, Set<Method>> getListenerTargets() {
 			
-			return listenerTargets;
-		}
-
-		/**
-		 * <p>Mutator for {@link #listenerTargets}. Takes a {@link Method} 
-		 * along with its associated {@link EventCategory} and puts it 
-		 * to the appropriate {@link Set} in {@link #listenerTargets}.</p>
-		 * 
-		 * @param listenerCategory
-		 * 			the {@link EventCategory} to which the {@link Method} belongs
-		 * <br><br>
-		 * @param method
-		 * 			the {@link Method} to be categorized into an {@link EventCategory}
-		 * <br><br>
-		 * @since 1.1.0
-		 */
-		private void putListenerTarget(EventCategory listenerCategory, Method method) {
-			
-			Set<Method> methods = listenerTargets.get(listenerCategory);
-			
-			if(methods == null) {
-				
-				methods = new HashSet<Method>();
-				listenerTargets.put(listenerCategory, methods);
-			}
-			
-			methods.add(method);
+			return Collections.unmodifiableMap(listenerTargets);
 		}
 		
 		/**
@@ -291,10 +280,7 @@ public interface EventLinker {
 		 */
 		public Set<Method> getListenerTargets(EventCategory listenerCategory) {
 			
-			Set<Method> targets = listenerTargets.get(listenerCategory);
-			
-			return (targets == null)? 
-					new HashSet<Method>() :Collections.unmodifiableSet(targets);
+			return Collections.unmodifiableSet(listenerTargets.get(listenerCategory));
 		}
 	 }
 	

@@ -58,19 +58,14 @@ class ExplicitLayoutInjector implements Injector {
 		
 		if(ContextUtils.isActivity(config.getContext())) {
 			
-			Activity injectionActivity = ContextUtils.asActivity(config.getContext());
-		
-			Layout layout = TypeUtils.getAnnotation(injectionActivity, Layout.class);
+			Layout layout = TypeUtils.getAnnotation(config.getContext(), Layout.class);
 			
-			if(layout != null) {
-				
-				injectionActivity.setContentView(layout.value());
-			}
+			if(layout != null) 
+				ContextUtils.asActivity(config.getContext()).setContentView(layout.value());
 		}
 		
+		Set<Field> fields = FieldUtils.getAllFields(config.getContext(), Layout.class);
 		Context context = ContextUtils.discover(config.getContext());
-		
-		Set<Field> fields = FieldUtils.getAllFields(context, Layout.class);
 		
 		for (Field field : fields) {
 			
@@ -81,7 +76,7 @@ class ExplicitLayoutInjector implements Injector {
 				int id = field.getAnnotation(Layout.class).value();
 				View layoutView = LayoutInflater.from(context).inflate(id, null);
 				
-				field.set(context, layoutView);
+				field.set(config.getContext(), layoutView);
 			} 
 			catch (Exception e) {
 				

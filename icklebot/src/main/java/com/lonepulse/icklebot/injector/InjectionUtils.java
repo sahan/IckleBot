@@ -48,8 +48,8 @@ public final class InjectionUtils {
 	 * 
 	 * <ol>
 	 * 	<li>Configuration Injection</li>
-	 * 	<li>Application Injection</li>
 	 * 	<li>Layout Injection</li>
+	 * 	<li>Application Injection</li>
 	 * 	<li>Resource Injection</li>
 	 * 	<li>Service Injection</li>
 	 * 	<li>POJO Injection</li>

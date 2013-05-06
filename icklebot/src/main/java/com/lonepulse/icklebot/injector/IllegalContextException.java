@@ -60,7 +60,7 @@ public class IllegalContextException extends InjectionException {
 			for (Class<?> contextClass : applicableContexts) {
 				
 				stringBuilder.append(", ");
-				stringBuilder.append(contextClass.getSimpleName());
+				stringBuilder.append(contextClass.getName());
 			}
 		}
 		

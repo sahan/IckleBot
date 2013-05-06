@@ -30,6 +30,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.app.Fragment;
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
 
 /**
  * <p>A utility class which performs some common operations involved 
@@ -73,7 +74,7 @@ public final class ContextUtils {
 	{
 		contexts = new HashMap<Class<?>, ContextResolver>();
 		
-		contexts.put(Activity.class, new ContextResolver() {
+		contexts.put(Activity.class, new ContextResolver() { //identical for 'FragmentActivity'
 			
 			@Override
 			public Context resolve(Object context) {
@@ -87,7 +88,16 @@ public final class ContextUtils {
 			@Override
 			public Context resolve(Object context) {
 				
-				return ((Fragment)context).getActivity(); //retrieves the "Activity" context
+				return ((Fragment)context).getActivity();
+			}
+		});
+		
+		contexts.put(android.support.v4.app.Fragment.class, new ContextResolver() {
+			
+			@Override
+			public Context resolve(Object context) {
+				
+				return ((android.support.v4.app.Fragment)context).getActivity();
 			}
 		});
 		
@@ -161,7 +171,8 @@ public final class ContextUtils {
 	 */
 	public static boolean isActivity(Object context) {
 		
-		return Activity.class.isAssignableFrom(context.getClass());
+		return (Activity.class.isAssignableFrom(context.getClass())
+				|| FragmentActivity.class.isAssignableFrom(context.getClass()));
 	}
 	
 	/**
@@ -177,6 +188,21 @@ public final class ContextUtils {
 	public static boolean isFragment(Object context) {
 		
 		return Fragment.class.isAssignableFrom(context.getClass());
+	}
+	
+	/**
+	 * <p>Returns {@code true} if the given context is a {@link android.support.v4.app.Fragment}.
+	 * 
+	 * @param context
+	 * 			the {@link Object} whose context type is to be clarified
+	 * <br><br>
+	 * @return {@code true} if the context is of type {@link android.support.v4.app.Fragment}
+	 * <br><br>
+	 * @since 1.0.0
+	 */
+	public static boolean isSupportFragment(Object context) {
+		
+		return android.support.v4.app.Fragment.class.isAssignableFrom(context.getClass());
 	}
 	
 	/**
@@ -203,7 +229,9 @@ public final class ContextUtils {
 	 * 			the {@link Object} whose {@link Context} instance is 
 	 * 			to be discovered
 	 * <br><br>
-	 * @return the {@link Activity} instance of the given {@link Object}
+	 * @return the {@link Activity} instance of the given {@link Object}, 
+	 * 		   of a {@link FragmentActivity} if the supplied context is that 
+	 * 		   of a {@link android.support.v4.app.Fragment}
 	 * <br><br>
 	 * @throws ContextNotFoundException
 	 * 			if the {@link Context} does not conform to an {@link Activity}
@@ -217,6 +245,9 @@ public final class ContextUtils {
 		
 		if(ContextUtils.isFragment(context)) 
 			return Activity.class.cast(contexts.get(Fragment.class).resolve(context));
+		
+		if(ContextUtils.isSupportFragment(context)) 
+			return Activity.class.cast(contexts.get(android.support.v4.app.Fragment.class).resolve(context));
 		
 		throw new ContextNotFoundException(context.getClass(), Activity.class);
 	}
@@ -242,6 +273,31 @@ public final class ContextUtils {
 		if(ContextUtils.isFragment(context)) return Fragment.class.cast(context);
 		
 		throw new ContextNotFoundException(context.getClass(), Fragment.class);
+	}
+	
+	/**
+	 * <p>Takes the generic {@link Object} of a context and returns the actual 
+	 * {@link Context} instance as a {@link android.support.v4.app.Fragmentnt} 
+	 * if it conforms.
+	 * 
+	 * @param context
+	 * 			the {@link Object} whose {@link Context} instance is 
+	 * 			to be discovered
+	 * <br><br>
+	 * @return the {@link android.support.v4.app.Fragment} instance of the context
+	 * <br><br>
+	 * @throws ContextNotFoundException
+	 * 			if the {@link Context} does not conform to a {@link Fragment}
+	 * <br><br>
+	 * @since 1.0.0
+	 */
+	public static android.support.v4.app.Fragment asSupportFragment(Object context) {
+		
+		if(ContextUtils.isFragment(context)) 
+			return android.support.v4.app.Fragment.class.cast(context);
+		
+		throw new ContextNotFoundException(
+			context.getClass(), android.support.v4.app.Fragment.class);
 	}
 	
 	/**

@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.fragment;
+package com.lonepulse.icklebot.fragment.support;
 
 /*
  * #%L
@@ -21,8 +21,8 @@ package com.lonepulse.icklebot.fragment;
  */
 
 
-import android.app.Fragment;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 
 import com.lonepulse.icklebot.network.NetworkManager;
 import com.lonepulse.icklebot.network.NetworkUtils;

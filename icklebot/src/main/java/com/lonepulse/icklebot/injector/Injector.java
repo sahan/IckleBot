@@ -26,22 +26,23 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.WeakHashMap;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 
 import com.lonepulse.icklebot.annotation.inject.InjectAll;
+import com.lonepulse.icklebot.event.EventLinker;
 import com.lonepulse.icklebot.event.resolver.EventCategory;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
 import com.lonepulse.icklebot.injector.resolver.InjectionResolver;
 import com.lonepulse.icklebot.injector.resolver.InjectionResolvers;
+import com.lonepulse.icklebot.util.ContextUtils;
 
 /**
  * <p>This is the common contract which all injectors must implement.</p>
  * 
- * @version 1.2.0 - update {@link Injector.Configuration} to support {@link Fragment}s.  
+ * @version 1.2.1  
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -83,7 +84,7 @@ public interface Injector {
 			 * @since 1.2.0
 			 */
 			private Map<Class<?>, Configuration>  cache
-				= new WeakHashMap<Class<?>, Injector.Configuration>();
+				= new HashMap<Class<?>, Injector.Configuration>();
 			
 			/**
 			 * <p>A delegate for {@link Map#put(Object, Object)} which wraps the 
@@ -106,9 +107,7 @@ public interface Injector {
 			}
 			
 			/**
-			 * <p>A delegate for {@link Map#get(Object)} which wraps the {@link #cache}. 
-			 * It takes the new instance of {@link Context} and updates the 
-			 * {@link Configuration#context} property as well.</p>
+			 * <p>A delegate for {@link Map#get(Object)} which wraps the {@link #cache}.
 			 * 
 			 * @param key
 			 * 			the requesting instance of context
@@ -120,12 +119,7 @@ public interface Injector {
 			 */
 			public Configuration get(Object context) {
 				
-				Configuration configuration = cache.get(context.getClass());
-				
-				if(configuration != null)
-					configuration.setContext(context);
-				
-				return configuration;
+				return cache.get(context.getClass());
 			}
 		}
 		
@@ -135,7 +129,7 @@ public interface Injector {
 		 * 
 		 * @since 1.1.0
 		 */
-		private InjectionMode injectionMode;
+		private final InjectionMode injectionMode;
 		
 		
 		/**
@@ -152,7 +146,7 @@ public interface Injector {
 		 * 
 		 * @since 1.1.0
 		 */
-		private Map<InjectionCategory, Set<Field>> injectionTargets;
+		private final Map<InjectionCategory, Set<Field>> injectionTargets;
 
 		
 		/**
@@ -161,7 +155,7 @@ public interface Injector {
 		 * 
 		 * <p>This is to be used in an <i>instantiated context</i>.</p>
 		 * 
-		 * @param injectionContext
+		 * @param context
 		 * 			the {@link Context} which has requested dependency injection
 		 * <br><br>
 		 * @return a new instance of {@link Injector.Configuration}
@@ -174,51 +168,24 @@ public interface Injector {
 		 * <br><br>
 		 * @since 1.1.0
 		 */
-		public static Configuration newInstance(Object injectionContext) {
+		public static Configuration newInstance(Object context) {
 			
-			if(injectionContext == null)
-				throw new InjectionException(new IllegalArgumentException("An injection context must be supplied."));
+			if(context == null)
+				throw new InjectionException(new IllegalArgumentException("A context must be supplied."));
 
-			if(!Activity.class.isAssignableFrom(injectionContext.getClass())
-				&& Fragment.class.isAssignableFrom(injectionContext.getClass())) { 
+			if(!ContextUtils.isActivity(context)
+				&& !ContextUtils.isFragment(context)
+				&& !ContextUtils.isSupportFragment(context)) { 
 				
 				Set<Class<?>> applicableContexts = new HashSet<Class<?>>();
 				applicableContexts.add(Activity.class);
 				applicableContexts.add(Fragment.class);
+				applicableContexts.add(android.support.v4.app.Fragment.class);
 				
-				throw new IllegalContextException(injectionContext, applicableContexts);
+				throw new IllegalContextException(context, applicableContexts);
 			}
 			
-			
-			Configuration config = new Configuration();
-			
-			config.setContext(injectionContext);
-		
-			if(injectionContext.getClass().isAnnotationPresent(InjectAll.class))
-				config.setInjectionMode(InjectionMode.IMPLICIT);
-			
-			else 
-				config.setInjectionMode(InjectionMode.EXPLICIT);
-				
-		
-			Field[] fields = injectionContext.getClass().getDeclaredFields();
-
-			InjectionResolver injectionResolver = null;
-			
-			switch (config.getInjectionMode()) {
-			
-				case EXPLICIT:
-					injectionResolver = InjectionResolvers.EXPLICIT;
-					break;
-					
-				case IMPLICIT: default:  
-					injectionResolver = InjectionResolvers.IMPLICIT;
-			}
-			
-			for (Field field : fields) 
-				config.putInjectionTarget(injectionResolver.resolve(injectionContext, field), field);
-			
-			return config;
+			return new Configuration(context);
 		}
 		
 		/**
@@ -226,25 +193,28 @@ public interface Injector {
 		 * using the passed context. If cached instance is not found, a new instance 
 		 * is created, via {@link #newInstance(Object)}, and cached.</p>
 		 * 
-		 * @param injectionContext
+		 * @param context
 		 * 			the context which has requested dependency injection
 		 * <br><br>
 		 * @return the <b>cached</b> instance of {@link Injector.Configuration}
 		 * <br><br>
 		 * @since 1.1.0
 		 */
-		public static Configuration getInstance(Object injectionContext) {
+		public static Configuration getInstance(Object context) {
 		
-			Configuration config = CACHE.INSTANCE.get(injectionContext);
+			if(context == null)
+				throw new InjectionException(new IllegalArgumentException("A context must be supplied."));
+			
+			Configuration config = CACHE.INSTANCE.get(context);
 			
 			if(config != null) {
 
-				config.setContext(injectionContext);
+				config.updateContext(context);
 			}
 			else {
 				
-				config = newInstance(injectionContext);
-				CACHE.INSTANCE.put(injectionContext, config);
+				config = newInstance(context);
+				CACHE.INSTANCE.put(context, config);
 			}
 			
 			return config;
@@ -258,9 +228,31 @@ public interface Injector {
 		 * 
 		 * @since 1.1.0
 		 */
-		private Configuration() {
+		private Configuration(Object context) {
 			
-			this.injectionTargets = new HashMap<InjectionCategory, Set<Field>>(); 
+			this.context = context;
+			this.injectionTargets = new HashMap<InjectionCategory, Set<Field>>();
+			
+			for (InjectionCategory injectionCategory : InjectionCategory.values()) 
+				this.injectionTargets.put(injectionCategory, new HashSet<Field>());
+			
+			if(context.getClass().isAnnotationPresent(InjectAll.class))
+				this.injectionMode = InjectionMode.IMPLICIT;
+			
+			else 
+				this.injectionMode = InjectionMode.EXPLICIT;
+			
+			Field[] fields = context.getClass().getDeclaredFields();
+
+			InjectionResolver injectionResolver 
+				= (this.injectionMode == InjectionMode.EXPLICIT)? 
+					InjectionResolvers.EXPLICIT :InjectionResolvers.IMPLICIT;
+			
+			for (Field field : fields) {
+				
+				InjectionCategory injectionCategory = injectionResolver.resolve(context, field);
+				injectionTargets.get(injectionCategory).add(field);
+			}
 		}
 		
 		/**
@@ -274,20 +266,6 @@ public interface Injector {
 			
 			return injectionMode;
 		}
-		
-		/**
-		 * <p>Mutator for {@link #injectionMode}.</p>
-		 * 
-		 * @param injectionMode
-		 * 			the {@link InjectionMode} to populate 
-		 * 			{@link #injectionMode} 
-		 * <br><br>
-		 * @since 1.1.0
-		 */
-		private void setInjectionMode(InjectionMode injectionMode) {
-			
-			this.injectionMode = injectionMode;
-		}
 
 		/**
 		 * <p>Accessor for {@link #context}.</p>
@@ -300,16 +278,16 @@ public interface Injector {
 			
 			return context;
 		}
-
+		
 		/**
-		 * <p>Mutator for {@link #context}.</p>
-		 * 
-		 * @param activity
-		 * 			the context to populate {@link #context} 
+		 * <p>Refreshes the context for this {@link EventLinker.Configuration}.
+		 *
+		 * @param context
+		 * 			the context to update
 		 * <br><br>
-		 * @since 1.1.0
+		 * @since 1.2.1
 		 */
-		private void setContext(Object context) {
+		private void updateContext(Object context) {
 			
 			this.context = context;
 		}
@@ -323,35 +301,7 @@ public interface Injector {
 		 */
 		public Map<InjectionCategory, Set<Field>> getInjectionTargets() {
 			
-			return injectionTargets;
-		}
-
-		/**
-		 * <p>Mutator for {@link #injectionTargets}. Takes a {@link Field} 
-		 * along with its associated {@link EventCategory} and puts it 
-		 * to the appropriate {@link Set} in {@link #injectionTargets}.</p>
-		 * 
-		 * @param injectionCategory
-		 * 			the {@link EventCategory} to which the 
-		 * 			{@link Field} belongs to	
-		 * <br><br>
-		 * @param field
-		 * 			the {@link Field} to be categorized into an 
-		 * 			{@link EventCategory}
-		 * <br><br>
-		 * @since 1.1.0
-		 */
-		private void putInjectionTarget(InjectionCategory injectionCategory, Field field) {
-			
-			Set<Field> fields = injectionTargets.get(injectionCategory);
-			
-			if(fields == null) {
-				
-				fields = new HashSet<Field>();
-				injectionTargets.put(injectionCategory, fields);
-			}
-			
-			fields.add(field);
+			return Collections.unmodifiableMap(injectionTargets);
 		}
 		
 		/**
@@ -370,10 +320,7 @@ public interface Injector {
 		 */
 		public Set<Field> getInjectionTargets(InjectionCategory injectionCategory) {
 			
-			Set<Field> targets = injectionTargets.get(injectionCategory);
-			
-			return (targets == null)? 
-						new HashSet<Field>() :Collections.unmodifiableSet(targets);
+			return Collections.unmodifiableSet(injectionTargets.get(injectionCategory));
 		}
 	 }
 

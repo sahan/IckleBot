@@ -107,7 +107,12 @@ class ClickEventLinker implements EventLinker {
 						else if(ContextUtils.isFragment(listenerTemplate)) {
 							
 							ContextUtils.asFragment(listenerTemplate)
-											.getView().findViewById(id).setOnClickListener(onClickListener);
+								.getView().findViewById(id).setOnClickListener(onClickListener);
+						}
+						else if(ContextUtils.isSupportFragment(listenerTemplate)) {
+							
+							ContextUtils.asSupportFragment(listenerTemplate)
+								.getView().findViewById(id).setOnClickListener(onClickListener);
 						}
 					}
 					catch (Exception e) {

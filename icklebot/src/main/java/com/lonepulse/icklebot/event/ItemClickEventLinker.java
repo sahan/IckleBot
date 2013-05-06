@@ -114,6 +114,11 @@ class ItemClickEventLinker implements EventLinker {
 							((AdapterView<?>)ContextUtils.asFragment(listenerTemplate)
 								.getView().findViewById(id)).setOnItemClickListener(onItemClickListener);
 						}
+						else if(ContextUtils.isSupportFragment(listenerTemplate)) {
+							
+							((AdapterView<?>)ContextUtils.asSupportFragment(listenerTemplate)
+								.getView().findViewById(id)).setOnItemClickListener(onItemClickListener);
+						}
 					}
 					catch (Exception e) {
 						

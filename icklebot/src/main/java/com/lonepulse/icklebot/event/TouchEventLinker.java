@@ -131,6 +131,11 @@ class TouchEventLinker implements EventLinker {
 							ContextUtils.asFragment(listenerTemplate)
 								.getView().findViewById(id).setOnTouchListener(onTouchListener);
 						}
+						else if(ContextUtils.isSupportFragment(listenerTemplate)) {
+							
+							ContextUtils.asSupportFragment(listenerTemplate)
+								.getView().findViewById(id).setOnTouchListener(onTouchListener);
+						}
 					}
 					catch (Exception e) {
 						
