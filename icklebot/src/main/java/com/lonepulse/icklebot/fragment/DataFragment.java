@@ -26,7 +26,6 @@ import android.content.Context;
 
 import com.lonepulse.icklebot.network.NetworkManager;
 import com.lonepulse.icklebot.network.NetworkUtils;
-import com.lonepulse.icklebot.state.StateUtils;
 
 /**
  * <p>This profile detects changes in the data connection and provides 
@@ -45,8 +44,9 @@ import com.lonepulse.icklebot.state.StateUtils;
  */
 abstract class DataFragment extends Fragment {
 
+	
 	/**
-	 * See {@link StateUtils#getNetworkManager(Context)}.
+	 * See {@link NetworkUtils#getNetworkManager(Context)}.
 	 */
 	protected final NetworkManager network() {
 		

@@ -44,7 +44,7 @@ abstract class InjectionActivity extends ThreadingActivity {
 	 */
 	private final Injector.Configuration INJECTOR_CONFIGURATION;
 	{
-		INJECTOR_CONFIGURATION = Injector.Configuration.getInstance(this);
+		INJECTOR_CONFIGURATION = Injector.Configuration.newInstance(this);
 	}
 	
 	

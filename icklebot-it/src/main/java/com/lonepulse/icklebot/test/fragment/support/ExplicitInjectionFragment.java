@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.test;
+package com.lonepulse.icklebot.test.fragment.support;
 
 /*
  * #%L
@@ -30,7 +30,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.Button;
 
-import com.lonepulse.icklebot.IckleActivity;
 import com.lonepulse.icklebot.annotation.inject.InjectAnimation;
 import com.lonepulse.icklebot.annotation.inject.InjectAnimator;
 import com.lonepulse.icklebot.annotation.inject.InjectApplication;
@@ -45,14 +44,17 @@ import com.lonepulse.icklebot.annotation.inject.InjectService;
 import com.lonepulse.icklebot.annotation.inject.InjectString;
 import com.lonepulse.icklebot.annotation.inject.InjectView;
 import com.lonepulse.icklebot.annotation.inject.Layout;
-import com.lonepulse.icklebot.annotation.inject.Title;
+import com.lonepulse.icklebot.annotation.profile.Profiles;
+import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
+import com.lonepulse.icklebot.fragment.support.IckleFragment;
+import com.lonepulse.icklebot.test.R;
 import com.lonepulse.icklebot.test.app.ApplicationService;
 import com.lonepulse.icklebot.test.service.AccountsService;
 import com.lonepulse.icklebot.test.service.AccountsServiceImpl;
 
 /**
- * <p>An extension of {@link IckleActivity} which is used to test the 
- * <b>explicit runtime injection</b> features of IckleBot.
+ * <p>An extension of {@link IckleFragment} which is used to test the 
+ * <b>explicit runtime injection</b> features of IckleBot on fragments.
  * 
  * @category test
  * <br><br>
@@ -61,10 +63,10 @@ import com.lonepulse.icklebot.test.service.AccountsServiceImpl;
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 @Layout(R.layout.act_explicit_injection)
-@Title(R.string.ttl_act_explicit_injection)
-public class ExplicitInjectionActivity extends IckleActivity {
-	
+@Profiles({PROFILE.EVENT, PROFILE.INJECTION, PROFILE.STATE, PROFILE.THREADING})
+public class ExplicitInjectionFragment extends IckleFragment {
 
+	
 	@InjectApplication
 	ApplicationService application;
 	
@@ -110,13 +112,14 @@ public class ExplicitInjectionActivity extends IckleActivity {
 	@Layout(R.layout.act_explicit_injection)
 	ViewGroup rootView;
 	
+	
 	/**
-	 * <p>Exposes {@link #onCreate(Bundle)} and allows unit 
-	 * tests to invoke injection from an external context.
+	 * <p>Exposes {@link #onCreate(Bundle)} and allows unit tests to 
+	 * invoke it from an external context.
 	 */
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-
+	public void onCreate(Bundle savedInstanceState) {
+		
 		super.onCreate(savedInstanceState);
 	}
 }

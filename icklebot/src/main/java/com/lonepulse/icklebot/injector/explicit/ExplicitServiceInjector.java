@@ -48,7 +48,7 @@ class ExplicitServiceInjector implements Injector {
 	@Override
 	public void inject(Configuration config) {
 
-		Context context = ContextUtils.discover(config.getContext());
+		Context baseContext = ContextUtils.discover(config.getContext());
 		
 		Set<Field> fields = config.getInjectionTargets(InjectionCategory.SERVICE);
 				
@@ -60,7 +60,7 @@ class ExplicitServiceInjector implements Injector {
 				
 				String serviceName = field.getAnnotation(InjectService.class).value();
 				
-				field.set(context, context.getSystemService(serviceName));
+				field.set(config.getContext(), baseContext.getSystemService(serviceName));
 			} 
 			catch (Exception e) {
 				

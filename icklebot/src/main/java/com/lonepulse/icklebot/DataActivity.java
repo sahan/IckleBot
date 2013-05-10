@@ -164,7 +164,7 @@ abstract class DataActivity extends Activity {
 	protected void onDataSuspended() {}
 	
 	/**
-	 * See {@link StateUtils#getNetworkManager(Context)}.
+	 * See {@link NetworkUtils#getNetworkManager(Context)}.
 	 */
 	protected final NetworkManager network() {
 		

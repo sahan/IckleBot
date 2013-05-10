@@ -48,7 +48,7 @@ class ImplicitApplicationInjector implements Injector {
 	@Override
 	public void inject(Configuration config) {
 	
-		Context context = ContextUtils.discover(config.getContext());
+		Context baseContext = ContextUtils.discover(config.getContext());
 		
 		Set<Field> fields = config.getInjectionTargets(InjectionCategory.APPLICATION);		
 		
@@ -58,7 +58,7 @@ class ImplicitApplicationInjector implements Injector {
 				
 				if(!field.isAccessible()) field.setAccessible(true);
 				
-				field.set(context, context.getApplicationContext());
+				field.set(config.getContext(), baseContext.getApplicationContext());
 			} 
 			catch (Exception e) {
 				

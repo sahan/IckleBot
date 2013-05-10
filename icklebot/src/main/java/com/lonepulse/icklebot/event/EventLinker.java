@@ -40,7 +40,7 @@ import com.lonepulse.icklebot.util.ContextUtils;
 /**
  * <p>This is the common contract which all listener linkers must implement.</p>
  * 
- * @version 1.2.1 
+ * @version 1.3.0 
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -58,74 +58,13 @@ public interface EventLinker {
 	 */
 	public static final class Configuration {
 		
-		/**
-		 * <p>A cache of all {@link EventLinker.Configuration}s processed. Configurations 
-		 * are keyed by the {@link Class} of their {@link activity} implementations.</p> 
-		 * 
-		 * @version 1.1.0
-		 */
-		private enum CACHE {
-			
-			/**
-			 * <p>The single instance of this cache.</p>
-			 * 
-			 * @since 1.1.0
-			 */
-			INSTANCE;
-			
-			
-			/**
-			 * <p>Stores processed {@link Configuration}s, keyed by their context {@link Class}.
-			 * 
-			 * @since 1.1.0
-			 */
-			private Map<Class<?>, Configuration>  cache
-				= new HashMap<Class<?>, EventLinker.Configuration>();
-			
-			/**
-			 * <p>A delegate for {@link Map#put(Object, Object)} which wraps the 
-			 * {@link #cache}.</p>
-			 * 
-			 * @param key
-			 * 			the requesting instance of context
-			 * <br><br>
-			 * @param value
-			 * 			the {@link Configuration} for the context extension
-			 * <br><br>
-			 * @return the previous {@link Configuration} keyed by this 
-			 * 		   {@link activity} {@link Class}, <b>if any</b>
-			 * <br><br>
-			 * @since 1.1.0
-			 */
-			public Configuration put(Object key, Configuration value) {
-				
-				return cache.put(key.getClass(), value);
-			}
-			
-			/**
-			 * <p>A delegate for {@link Map#get(Object)} which wraps the {@link #cache}.
-			 * 
-			 * @param key
-			 * 			the requesting instance of context
-			 * <br><br>
-			 * @return the {@link Configuration} keyed by by this context
-			 * 		   {@link Class}; else {@code null} if not found
-			 * <br><br>
-			 * @since 1.1.0
-			 */
-			public Configuration get(Object key) {
-				
-				return cache.get(key.getClass());
-			}
-		}
-		
 
 		/**
 		 * <p>The context which has requested listener linking.</p>
 		 * 
 		 * @since 1.1.0
 		 */
-		private Object context;
+		private final Object context;
 		
 		
 		/**
@@ -171,39 +110,6 @@ public interface EventLinker {
 		}
 		
 		/**
-		 * <p>Retrieves the <b>cached</b> instance of {@link EventLinker.Configuration} 
-		 * using the passed context. If cached instance is not found, a new instance is 
-		 * created, via {@link #newInstance(Object)}, and cached.</p>
-		 * 
-		 * @param activity
-		 * 			the {@link activity} which has requested event 
-		 * 			listener linking
-		 * <br><br>
-		 * @return the <b>cached</b> instance of {@link EventLinker.Configuration}
-		 * <br><br>
-		 * @since 1.1.0
-		 */
-		public static Configuration getInstance(Object context) {
-		
-			if(context == null)
-				throw new InjectionException(new IllegalArgumentException("A context must be supplied."));
-			
-			Configuration config = CACHE.INSTANCE.get(context);
-			
-			if(config != null) {
-
-				config.updateContext(context);
-			}
-			else {
-				
-				config = newInstance(context);
-				CACHE.INSTANCE.put(context, config);
-			}
-			
-			return config;
-		}
-		
-		/**
 		 * <p>Constructor visibility restricted to prevent instantiation. 
 		 * Please use the factory method {@link #newInstance(Object)}.</p>
 		 * 
@@ -240,19 +146,6 @@ public interface EventLinker {
 		public Object getContext() {
 			
 			return context;
-		}
-		
-		/**
-		 * <p>Updates the context for this {@link EventLinker.Configuration}.
-		 *
-		 * @param context
-		 * 			the context to update
-		 * 
-		 * @since 1.2.1
-		 */
-		private void updateContext(Object context) {
-			
-			this.context = context;
 		}
 
 		/**

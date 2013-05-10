@@ -32,7 +32,6 @@ import android.app.Fragment;
 import android.content.Context;
 
 import com.lonepulse.icklebot.annotation.inject.InjectAll;
-import com.lonepulse.icklebot.event.EventLinker;
 import com.lonepulse.icklebot.event.resolver.EventCategory;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
 import com.lonepulse.icklebot.injector.resolver.InjectionResolver;
@@ -42,12 +41,11 @@ import com.lonepulse.icklebot.util.ContextUtils;
 /**
  * <p>This is the common contract which all injectors must implement.</p>
  * 
- * @version 1.2.1  
+ * @version 1.3.0  
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 public interface Injector {
-	
 	
 	/**
 	 * <p>Stores information about the injection process; such as the 
@@ -60,69 +58,7 @@ public interface Injector {
 	 */
 	public static final class Configuration {
 		
-		/**
-		 * <p>A cache of all {@link Injector.Configuration}s processed. Configurations 
-		 * are keyed by the {@link Class} of their context implementations.</p> 
-		 * 
-		 * @version 1.1.0
-		 */
-		private enum CACHE {
-			
-			/**
-			 * <p>The single instance of this cache.</p>
-			 * 
-			 * @since 1.1.0
-			 */
-			INSTANCE;
-			
-			
-			/**
-			 * <p>Stores processed {@link Configuration}s, keyed by their context 
-			 * {@link Class}. This map is <i>weak</i>, i.e. cached {@link Configuration}s 
-			 * may be silently removed if they are rarely reused.</p>
-			 * 
-			 * @since 1.2.0
-			 */
-			private Map<Class<?>, Configuration>  cache
-				= new HashMap<Class<?>, Injector.Configuration>();
-			
-			/**
-			 * <p>A delegate for {@link Map#put(Object, Object)} which wraps the 
-			 * {@link #cache}.</p>
-			 * 
-			 * @param key
-			 * 			the requesting instance of context
-			 * <br><br>
-			 * @param value
-			 * 			the {@link Configuration} for the context extension
-			 * <br><br>
-			 * @return the previous {@link Configuration} keyed by this context's 
-			 * 		   {@link Class}, <b>if any</b>
-			 * <br><br>
-			 * @since 1.2.0
-			 */
-			public Configuration put(Object context, Configuration value) {
-				
-				return cache.put(context.getClass(), value);
-			}
-			
-			/**
-			 * <p>A delegate for {@link Map#get(Object)} which wraps the {@link #cache}.
-			 * 
-			 * @param key
-			 * 			the requesting instance of context
-			 * <br><br>
-			 * @return the {@link Configuration} keyed by by this context's 
-			 * 		   {@link Class}; else {@code null} if not found
-			 * <br><br>
-			 * @since 1.2.0
-			 */
-			public Configuration get(Object context) {
-				
-				return cache.get(context.getClass());
-			}
-		}
-		
+
 		/**
 		 * <p>The <i>mode</i> of injection identified by 
 		 * {@link InjectionMode}.</p>
@@ -137,7 +73,7 @@ public interface Injector {
 		 * 
 		 * @since 1.2.0
 		 */
-		private Object context;
+		private final Object context;
 		
 		
 		/**
@@ -186,38 +122,6 @@ public interface Injector {
 			}
 			
 			return new Configuration(context);
-		}
-		
-		/**
-		 * <p>Retrieves the <b>cached</b> instance of {@link Injector.Configuration} 
-		 * using the passed context. If cached instance is not found, a new instance 
-		 * is created, via {@link #newInstance(Object)}, and cached.</p>
-		 * 
-		 * @param context
-		 * 			the context which has requested dependency injection
-		 * <br><br>
-		 * @return the <b>cached</b> instance of {@link Injector.Configuration}
-		 * <br><br>
-		 * @since 1.1.0
-		 */
-		public static Configuration getInstance(Object context) {
-		
-			if(context == null)
-				throw new InjectionException(new IllegalArgumentException("A context must be supplied."));
-			
-			Configuration config = CACHE.INSTANCE.get(context);
-			
-			if(config != null) {
-
-				config.updateContext(context);
-			}
-			else {
-				
-				config = newInstance(context);
-				CACHE.INSTANCE.put(context, config);
-			}
-			
-			return config;
 		}
 		
 		/**
@@ -277,19 +181,6 @@ public interface Injector {
 		public Object getContext() {
 			
 			return context;
-		}
-		
-		/**
-		 * <p>Refreshes the context for this {@link EventLinker.Configuration}.
-		 *
-		 * @param context
-		 * 			the context to update
-		 * <br><br>
-		 * @since 1.2.1
-		 */
-		private void updateContext(Object context) {
-			
-			this.context = context;
 		}
 
 		/**

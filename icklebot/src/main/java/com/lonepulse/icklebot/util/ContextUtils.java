@@ -41,7 +41,6 @@ import android.support.v4.app.FragmentActivity;
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 public final class ContextUtils {
-
 	
 	/**
 	 * <p>The common contract which takes an {@link Object} and 
@@ -270,7 +269,8 @@ public final class ContextUtils {
 	 */
 	public static Fragment asFragment(Object context) {
 		
-		if(ContextUtils.isFragment(context)) return Fragment.class.cast(context);
+		if(ContextUtils.isFragment(context)) 
+			return Fragment.class.cast(context);
 		
 		throw new ContextNotFoundException(context.getClass(), Fragment.class);
 	}
@@ -293,7 +293,7 @@ public final class ContextUtils {
 	 */
 	public static android.support.v4.app.Fragment asSupportFragment(Object context) {
 		
-		if(ContextUtils.isFragment(context)) 
+		if(ContextUtils.isSupportFragment(context)) 
 			return android.support.v4.app.Fragment.class.cast(context);
 		
 		throw new ContextNotFoundException(

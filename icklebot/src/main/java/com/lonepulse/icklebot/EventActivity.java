@@ -1,3 +1,4 @@
+
 package com.lonepulse.icklebot;
 
 /*
@@ -47,7 +48,7 @@ abstract class EventActivity extends StateActivity {
 	 */
 	private final EventLinker.Configuration EVENT_CONFIGURATION;
 	{
-		EVENT_CONFIGURATION = EventLinker.Configuration.getInstance(this);
+		EVENT_CONFIGURATION = EventLinker.Configuration.newInstance(this);
 	}
 	
 

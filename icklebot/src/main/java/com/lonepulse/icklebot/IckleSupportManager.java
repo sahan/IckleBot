@@ -179,8 +179,8 @@ public interface IckleSupportManager extends Serializable {
 				built = true;
 			}
 			
-			if(injectionSupportEnabled) InjectionUtils.inject(Injector.Configuration.getInstance(context));
-			if(eventSupportEnabled) EventUtils.link(EventLinker.Configuration.getInstance(context));
+			if(injectionSupportEnabled) InjectionUtils.inject(Injector.Configuration.newInstance(context));
+			if(eventSupportEnabled) EventUtils.link(EventLinker.Configuration.newInstance(context));
 			
 			return new IckleSupportManager() {
 				

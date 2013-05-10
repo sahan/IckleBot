@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.test;
+package com.lonepulse.icklebot.test.activity;
 
 /*
  * #%L
@@ -32,6 +32,9 @@ import com.lonepulse.icklebot.IckleActivity;
 import com.lonepulse.icklebot.annotation.inject.InjectAll;
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.annotation.inject.Title;
+import com.lonepulse.icklebot.annotation.profile.Profiles;
+import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
+import com.lonepulse.icklebot.test.R;
 import com.lonepulse.icklebot.test.app.ApplicationService;
 import com.lonepulse.icklebot.test.service.AccountsService;
 
@@ -48,6 +51,7 @@ import com.lonepulse.icklebot.test.service.AccountsService;
 @InjectAll
 @Layout(R.layout.act_implicit_injection)
 @Title(R.string.ttl_act_implicit_injection)
+@Profiles({PROFILE.EVENT, PROFILE.INJECTION, PROFILE.STATE, PROFILE.THREADING})
 public class ImplicitInjectionActivity extends IckleActivity {
 	
 

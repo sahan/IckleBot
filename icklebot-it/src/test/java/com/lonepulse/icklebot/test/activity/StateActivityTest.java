@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.test;
+package com.lonepulse.icklebot.test.activity;
 
 /*
  * #%L
@@ -31,7 +31,7 @@ import android.os.Bundle;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 
 /**
- * <p>Unit test for {@link StateSupportActivity}.
+ * <p>Unit test for {@link StateActivity}.
  * 
  * @category test
  * <br><br>
@@ -40,14 +40,14 @@ import com.xtremelabs.robolectric.RobolectricTestRunner;
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 @RunWith(RobolectricTestRunner.class)
-public class StateSupportActivityTest {
+public class StateActivityTest {
 	
 
 	/**
-	 * <p>The instance of {@link StateSupportActivity} whose 
+	 * <p>The instance of {@link StateActivity} whose 
 	 * state management features are to be tested.
 	 */
-	private StateSupportActivity activity;
+	private StateActivity activity;
 
 	/**
 	 * <p>The {@link Bundle} which is used to save and 
@@ -66,7 +66,7 @@ public class StateSupportActivityTest {
 	@Before
 	public final void setUp() throws Exception {
 		
-		activity = new StateSupportActivity();
+		activity = new StateActivity();
 		activity.onCreate(bundle = new Bundle());
 	}
 

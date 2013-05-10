@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.test;
+package com.lonepulse.icklebot.test.activity;
 
 /*
  * #%L
@@ -23,17 +23,18 @@ package com.lonepulse.icklebot.test;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import com.lonepulse.icklebot.IckleSupportManager;
 import com.lonepulse.icklebot.annotation.inject.Layout;
+import com.lonepulse.icklebot.annotation.inject.Stateful;
 import com.lonepulse.icklebot.annotation.inject.Title;
-import com.lonepulse.icklebot.annotation.thread.Async;
-import com.lonepulse.icklebot.annotation.thread.UI;
+import com.lonepulse.icklebot.annotation.profile.Profiles;
+import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
+import com.lonepulse.icklebot.test.R;
 
 /**
  * <p>An extension of {@link Activity} which is used to test the 
- * alternate threading model supported by {@link IckleSupportManager}.
+ * <b>state management support</b> features of IckleBot.
  * 
  * @category test
  * <br><br>
@@ -41,20 +42,14 @@ import com.lonepulse.icklebot.annotation.thread.UI;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-@Layout(R.layout.act_task)
-@Title(R.string.ttl_act_task)
-public class TaskSupportActivity extends Activity {
+@Layout(R.layout.act_explicit_injection)
+@Title(R.string.ttl_act_explicit_injection)
+@Profiles({PROFILE.EVENT, PROFILE.INJECTION, PROFILE.STATE, PROFILE.THREADING})
+public class StateSupportActivity extends Activity {
 	
-	
-	private static final int BG_GEN_TOKEN = 1;
-	private static final int BG_GEN_ALIAS = 2;
-	
-	private static final int UI_UPDATE_TOKEN = 1;
-	private static final int UI_UPDATE_ALIAS = 2;
-	
-	
-	public double token = -1;
-	public String alias = "Lonepulse";
+
+	@Stateful
+	int intMajorVersion = 1;
 	
 	
 	private IckleSupportManager supportManager;
@@ -63,46 +58,39 @@ public class TaskSupportActivity extends Activity {
 		.enableInjectionSupport()
 		.build();
 	}
-
+	
 	
 	/**
 	 * <p>Exposes {@link #onCreate(Bundle)} and allows unit 
-	 * tests to invoke injection from an external context.
+	 * tests to it from an external context.
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		
-		supportManager.runAsyncTask(BG_GEN_TOKEN);
-		supportManager.runAsyncTask(BG_GEN_ALIAS, "Ick");
 	}
 	
-	@Async(BG_GEN_TOKEN)
-	public void generateToken() {
+	/**
+	 * <p>Exposes {@link #onSaveInstanceState(Bundle)} and allows unit 
+	 * tests to it from an external context.
+	 */
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+	
+		super.onSaveInstanceState(outState);
 		
-		token = Math.random();	
-		
-		supportManager.runUITask(UI_UPDATE_TOKEN);
+		supportManager.onSaveInstanceState(outState);
 	}
 	
-	@UI(UI_UPDATE_TOKEN)
-	public void updateToken() {
+	/**
+	 * <p>Exposes {@link #onRestoreInstanceState(Bundle)} and allows unit 
+	 * tests to it from an external context.
+	 */
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+
+		super.onRestoreInstanceState(savedInstanceState);
 		
-		((TextView)findViewById(R.id.txtToken)).setText(String.valueOf(token));
-	}
-	
-	@Async(BG_GEN_ALIAS)
-	public void generateAlias(String prefix) {
-		
-		alias = prefix + " le Bot";
-		
-		supportManager.runUITask(UI_UPDATE_ALIAS, alias);
-	}
-	
-	@UI(value = UI_UPDATE_ALIAS, delay = 500)
-	public void updateAlias(String generatedAlias) {
-		
-		((TextView)findViewById(R.id.txtAlias)).setText(generatedAlias);
+		supportManager.onRestoreInstanceState(savedInstanceState);
 	}
 }

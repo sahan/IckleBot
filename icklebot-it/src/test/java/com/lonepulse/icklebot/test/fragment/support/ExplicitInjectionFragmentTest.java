@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.test;
+package com.lonepulse.icklebot.test.fragment.support;
 
 /*
  * #%L
@@ -20,21 +20,23 @@ package com.lonepulse.icklebot.test;
  * #L%
  */
 
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import android.support.v4.app.Fragment;
 import android.view.animation.Animation;
 
+import com.lonepulse.icklebot.test.R;
+import com.lonepulse.icklebot.test.fragment.support.ExplicitInjectionFragment;
+import com.lonepulse.icklebot.test.fragment.support.FragmentActivityTemplate;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 
 /**
- * <p>Unit test for {@link ImplicitInjectionSupportActivity}.
+ * <p>Unit test for {@link ExplicitInjectionFragment}.
  * 
  * @category test
  * <br><br>
@@ -43,32 +45,34 @@ import com.xtremelabs.robolectric.RobolectricTestRunner;
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 @RunWith(RobolectricTestRunner.class)
-public class ImplicitInjectionSupportActivityTest {
+public class ExplicitInjectionFragmentTest {
 	
 	
 	/**
-	 * <p>The instance of {@link ImplicitInjectionSupportActivity} 
-	 * whose implicit injection is to be tested.
+	 * <p>The instance of {@link FragmentActivityTemplate} with the 
+	 * {@link Fragment} whose explicit injection is to be tested.
 	 */
-	private ImplicitInjectionSupportActivity activity;
+	private FragmentActivityTemplate<ExplicitInjectionFragment> activity;
 	
 	
 	/**
-	 * <p>Sets up the test by instantiating {@link #activity}.
+	 * <p>Sets up the test by instantiating {@link #fragment}.
 	 * 
 	 * @throws Exception
-	 * 			if {@link #activity} instantiation terminated 
+	 * 			if {@link #fragment} instantiation terminated 
 	 * 			with an error
 	 */
 	@Before
 	public final void setUp() throws Exception {
 		
-		activity = new ImplicitInjectionSupportActivity();
+		activity = new FragmentActivityTemplate<ExplicitInjectionFragment>();
+		activity.fragment = new ExplicitInjectionFragment();
+		
 		activity.onCreate(null);
 	}
 
 	/**
-	 * <p>Test for layout, title and window-features injection.
+	 * <p>Test for the fragment view.
 	 * 
 	 * @throws Exception
 	 * 			if test terminated with an error
@@ -76,10 +80,9 @@ public class ImplicitInjectionSupportActivityTest {
 	 * @since 1.1.0
 	 */
 	@Test
-	public final void testConfiguration() throws Exception {
+	public final void testFragmentView() throws Exception {
 	
-		assertNotNull(activity.findViewById(R.id.root));
-		assertTrue(activity.getTitle().toString().equalsIgnoreCase("Implicit Injection"));
+		assertNotNull(activity.fragment.getView().findViewById(R.id.root));
 	}
 	
 	/**
@@ -93,7 +96,7 @@ public class ImplicitInjectionSupportActivityTest {
 	@Test
 	public final void testApplication() throws Exception {
 		
-		assertNotNull(activity.application);
+		assertNotNull(activity.fragment.application);
 	}
 	
 	/**
@@ -107,7 +110,7 @@ public class ImplicitInjectionSupportActivityTest {
 	@Test
 	public final void testString() throws Exception {
 		
-		assertNotNull(activity.btnSubmit);
+		assertNotNull(activity.fragment.strAppName);
 	}
 	
 	/**
@@ -121,7 +124,7 @@ public class ImplicitInjectionSupportActivityTest {
 	@Test
 	public final void testInteger() throws Exception {
 		
-		assertEquals(activity.major_version, 1);
+		assertEquals(activity.fragment.intMajorVersion, 1);
 	}
 	
 	/**
@@ -135,7 +138,7 @@ public class ImplicitInjectionSupportActivityTest {
 	@Test
 	public final void testView() throws Exception {
 		
-		assertNotNull(activity.btnSubmit);
+		assertNotNull(activity.fragment.btnSubmit);
 	}
 	
 	/**
@@ -149,7 +152,7 @@ public class ImplicitInjectionSupportActivityTest {
 	@Test
 	public final void testDrawable() throws Exception {
 		
-		assertNotNull(activity.ic_launcher);
+		assertNotNull(activity.fragment.drwLauncherIcon);
 	}
 	
 	/**
@@ -158,13 +161,13 @@ public class ImplicitInjectionSupportActivityTest {
 	 * @throws Exception
 	 * 			if test terminated with an error
 	 * 
-	 * @since 1.1.2
+	 * @since 1.1.0
 	 */
 	@Test
 	public final void testColor() throws Exception {
 		
-		assertEquals(activity.getResources().getColor(R.color.bg_generic), 
-					 activity.bg_generic, 0);
+		assertEquals(activity.fragment.getResources().getColor(R.color.bg_generic), 
+					 activity.fragment.colorGeneric, 0);
 	}
 	
 	/**
@@ -173,12 +176,12 @@ public class ImplicitInjectionSupportActivityTest {
 	 * @throws Exception
 	 * 			if test terminated with an error
 	 * 
-	 * @since 1.1.2
+	 * @since 1.1.0
 	 */
 	@Test
 	public final void testDimension() throws Exception {
 		
-		assertEquals(12.0, activity.txt_small, 0);
+		assertEquals(12.0, activity.fragment.txtSizeSmall, 0);
 	}
 	
 	/**
@@ -191,12 +194,12 @@ public class ImplicitInjectionSupportActivityTest {
 	 * @throws Exception
 	 * 			if test terminated with an error
 	 * 
-	 * @since 1.1.1
+	 * @since 1.1.0
 	 */
 	@Test
 	public final void testBoolean() throws Exception {
 		
-		assertNotNull(activity.theme_generic);
+		assertNotNull(activity.fragment.themeGeneric);
 	}
 	
 	/**
@@ -205,12 +208,12 @@ public class ImplicitInjectionSupportActivityTest {
 	 * @throws Exception
 	 * 			if test terminated with an error
 	 * 
-	 * @since 1.1.1
+	 * @since 1.1.0
 	 */
 	@Test
 	public final void testAnimation() throws Exception {
 		
-		assertNotNull(activity.fade_out);
+		assertNotNull(activity.fragment.fadeOut);
 	}
 	
 	/**
@@ -224,7 +227,7 @@ public class ImplicitInjectionSupportActivityTest {
 	@Test
 	public final void testSystemService() throws Exception {
 		
-		assertNotNull(activity.telephony_service);
+		assertNotNull(activity.fragment.telephonyManager);
 	}
 	
 	/**
@@ -238,6 +241,20 @@ public class ImplicitInjectionSupportActivityTest {
 	@Test
 	public final void testPOJO() throws Exception {
 		
-		assertNotNull(activity.accountsService);
+		assertNotNull(activity.fragment.accountsService);
+	}
+	
+	/**
+	 * <p>Test layout injection.
+	 * 
+	 * @throws Exception
+	 * 			if test terminated with an error
+	 * 
+	 * @since 1.1.0
+	 */
+	@Test
+	public final void testLayout() throws Exception {
+		
+		assertNotNull(activity.fragment.rootView);
 	}
 }

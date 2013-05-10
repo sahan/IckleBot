@@ -23,12 +23,10 @@ package com.lonepulse.icklebot.fragment.support;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.lonepulse.icklebot.IckleActivity;
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.util.TypeUtils;
 
@@ -45,7 +43,7 @@ public class IckleFragment extends EventFragment {
 	
 	/**
 	 * <p>Uses the {@code @Layout} metadata to identify the view resource associated 
-	 * with this {@link Fragment} and inflate it.</p>
+	 * with this {@link Fragment} and inflates it.</p>
 	 * 
 	 * <p>See {@link Fragment#onCreateView(LayoutInflater, ViewGroup, Bundle)}.</p>
 	 */
@@ -62,25 +60,5 @@ public class IckleFragment extends EventFragment {
 			
 			return super.onCreateView(inflater, container, savedInstanceState);
 		}
-	}
-
-	/**
-	 * <p>This callback is executed when the {@link IckleActivity} is being 
-	 * created. It invokes the dependency injection and event listener linking 
-	 * via the {@link InjectionActivity} and the {@link EventActivity}.</p>
-	 * 
-	 * <p>See {@link InjectionActivity#onCreate(Bundle)}.</p> 
-	 * <p>See {@link EventActivity#onCreate(Bundle)}.</p>
-	 */
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-
-		long millis = System.currentTimeMillis();
-		
-		super.onActivityCreated(savedInstanceState);
-		
-		millis = System.currentTimeMillis() - millis;
-		
-		Log.i("INSTRUMENTATION:IckleSupportFragment", getClass().getSimpleName() + ": " + millis + "ms");
 	}
 }

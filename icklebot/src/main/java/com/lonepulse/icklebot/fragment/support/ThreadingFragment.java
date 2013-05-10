@@ -46,10 +46,13 @@ abstract class ThreadingFragment extends DataFragment {
 	private boolean isProfileActive;
 	
 	
+	/**
+	 * Determines if {@link PROFILE#THREADING} has been activated.
+	 */
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-	
-		super.onActivityCreated(savedInstanceState);
+	public void onCreate(Bundle savedInstanceState) {
+		
+		super.onCreate(savedInstanceState);
 		
 		isProfileActive = ProfileService.getInstance(
 			getActivity().getApplicationContext()).isActive(this, PROFILE.THREADING);

@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.test;
+package com.lonepulse.icklebot.test.activity;
 
 /*
  * #%L
@@ -21,6 +21,8 @@ package com.lonepulse.icklebot.test;
  */
 
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -30,29 +32,31 @@ import org.junit.runner.RunWith;
 import android.os.SystemClock;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 
 import com.lonepulse.icklebot.annotation.event.Click;
+import com.lonepulse.icklebot.annotation.event.ItemClick;
 import com.lonepulse.icklebot.annotation.event.Touch;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 
 /**
- * <p>Unit test for {@link EventSupportActivity}.
+ * <p>Unit test for {@link EventActivity}.
  * 
  * @category test
  * <br><br>
- * @version 1.1.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 @RunWith(RobolectricTestRunner.class)
-public class EventSupportActivityTest {
+public class EventActivityTest {
 	
 	
 	/**
-	 * <p>The instance of {@link EventSupportActivity} 
+	 * <p>The instance of {@link EventActivity} 
 	 * whose event listener linking is to be tested.
 	 */
-	private EventSupportActivity activity;
+	private EventActivity activity;
 	
 	
 	/**
@@ -65,7 +69,7 @@ public class EventSupportActivityTest {
 	@Before
 	public final void setUp() throws Exception {
 		
-		activity = new EventSupportActivity();
+		activity = new EventActivity();
 		activity.onCreate(null);
 		
 		activity.btnSubmit.performClick();
@@ -75,6 +79,10 @@ public class EventSupportActivityTest {
 											   MotionEvent.ACTION_DOWN, 0.0f, 0.0f, 0);
 		
 		activity.txtAlias.dispatchTouchEvent(press);
+		press.recycle();
+		
+		View root = activity.getLayoutInflater().inflate(android.R.layout.simple_list_item_1, null);
+		activity.listView.performItemClick(root.findViewById(android.R.id.text1), 3, 3);
 	}
 
 	/**
@@ -97,11 +105,28 @@ public class EventSupportActivityTest {
 	 * @throws Exception
 	 * 			if test terminated with an error
 	 * 
-	 * @since 1.1.0
+	 * @since 1.1.1
 	 */
 	@Test
 	public final void testTouchEvent() throws Exception {
 		
 		assertTrue(activity.txtAlias.getText().equals("Ick le Bot"));
+	}
+	
+	/**
+	 * <p>Test for {@link ItemClick} and {@link AdapterView.OnItemClickListener}.
+	 * 
+	 * @throws Exception
+	 * 			if test terminated with an error
+	 * 
+	 * @since 1.1.1
+	 */
+	@Test
+	public final void testItemClickEvent() throws Exception {
+		
+		assertNotNull(activity.parentView);
+		assertNotNull(activity.selectedView);
+		assertNotSame(activity.selectedPostion, 0);
+		assertNotSame(activity.selectedId, 0l);
 	}
 }

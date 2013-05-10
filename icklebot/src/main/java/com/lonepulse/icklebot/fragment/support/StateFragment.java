@@ -52,7 +52,7 @@ abstract class StateFragment extends InjectionFragment {
 			
 			StateUtils.onRestoreInstanceState(this, savedInstanceState);
 		}
-	}	
+	}
 	
 	/**
 	 * <p><b>Saves</b> instance variables annotated with {@code @Stateful}.</p>

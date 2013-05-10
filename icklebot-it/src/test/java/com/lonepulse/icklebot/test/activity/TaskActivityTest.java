@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.test;
+package com.lonepulse.icklebot.test.activity;
 
 /*
  * #%L
@@ -29,10 +29,11 @@ import org.junit.runner.RunWith;
 
 import android.widget.TextView;
 
+import com.lonepulse.icklebot.test.R;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 
 /**
- * <p>Unit test for {@link TaskSupportActivity}.
+ * <p>Unit test for {@link TaskActivity}.
  * 
  * @category test
  * <br><br>
@@ -41,14 +42,14 @@ import com.xtremelabs.robolectric.RobolectricTestRunner;
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 @RunWith(RobolectricTestRunner.class)
-public class TaskSupportActivityTest {
+public class TaskActivityTest {
 	
 	
 	/**
-	 * <p>The instance of {@link TaskSupportActivity} background 
+	 * <p>The instance of {@link TaskActivity} background 
 	 * and UI task execution is to be tested.
 	 */
-	private TaskSupportActivity activity;
+	private TaskActivity activity;
 	
 	
 	/**
@@ -61,7 +62,7 @@ public class TaskSupportActivityTest {
 	@Before
 	public final void setUp() throws Exception {
 		
-		activity = new TaskSupportActivity();
+		activity = new TaskActivity();
 		activity.onCreate(null);
 		
 		try { //allow completion of asynchronous tasks

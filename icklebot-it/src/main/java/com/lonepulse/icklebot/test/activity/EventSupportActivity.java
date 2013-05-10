@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.test;
+package com.lonepulse.icklebot.test.activity;
 
 /*
  * #%L
@@ -21,24 +21,25 @@ package com.lonepulse.icklebot.test;
  */
 
 
-import android.animation.AnimatorSet;
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
-import android.view.animation.Animation;
+import android.view.MotionEvent;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.lonepulse.icklebot.IckleSupportManager;
-import com.lonepulse.icklebot.annotation.inject.InjectAll;
+import com.lonepulse.icklebot.annotation.event.Click;
+import com.lonepulse.icklebot.annotation.event.Touch;
+import com.lonepulse.icklebot.annotation.inject.InjectView;
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.annotation.inject.Title;
-import com.lonepulse.icklebot.test.app.ApplicationService;
-import com.lonepulse.icklebot.test.service.AccountsService;
+import com.lonepulse.icklebot.annotation.profile.Profiles;
+import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
+import com.lonepulse.icklebot.test.R;
 
 /**
- * <p>An extension of {@link Activity} which is used to test 
- * the {@link IckleSupportManager}'s implicit injection features.
+ * <p>An extension of {@link Activity} which is used to test the 
+ * <b>event linking</b> features of {@link IckleSupportManager}.
  * 
  * @category test
  * <br><br>
@@ -46,39 +47,17 @@ import com.lonepulse.icklebot.test.service.AccountsService;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-@InjectAll
-@Layout(R.layout.act_implicit_injection)
-@Title(R.string.ttl_act_implicit_injection)
-public class ImplicitInjectionSupportActivity extends Activity {
+@Layout(R.layout.act_listener)
+@Title(R.string.ttl_act_listener)
+@Profiles({PROFILE.EVENT, PROFILE.INJECTION, PROFILE.STATE, PROFILE.THREADING})
+public class EventSupportActivity extends Activity {
 	
 
-	ApplicationService application;
-
-	String app_name;
-	
-	int major_version;
-	
+	@InjectView(R.id.btnSubmit)
 	Button btnSubmit;
 	
-	Drawable ic_launcher;
-	
-	int bg_generic;
-	
-	float txt_small;
-	
-	Boolean theme_generic;
-	
-	String[] font_sizes;
-	
-	int[] audio_level;
-	
-	Animation fade_out;
-	
-	AnimatorSet grow;
-	
-	TelephonyManager telephony_service;
-	
-	AccountsService accountsService;
+	@InjectView(R.id.txtAlias)
+	TextView txtAlias;
 	
 	
 	@SuppressWarnings("unused")
@@ -86,17 +65,33 @@ public class ImplicitInjectionSupportActivity extends Activity {
 	{
 		supportManager = new IckleSupportManager.Builder(this)
 		.enableInjectionSupport()
+		.enableEventSupport()
 		.build();
 	}
-	
+
 	
 	/**
 	 * <p>Exposes {@link #onCreate(Bundle)} and allows unit 
-	 * tests to invoke injection from an external context.
+	 * tests to invoke it from an external context.
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
+	}
+	
+	@Click(R.id.btnSubmit)
+	public void onSubmit(Button button) {
+		
+		button.setText("Submitted");
+	}
+	
+	@Touch(R.id.txtAlias)
+	public void onTouch(TextView textView, MotionEvent motionEvent) {
+		
+		if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+			
+			textView.setText("Ick le Bot");
+		}
 	}
 }

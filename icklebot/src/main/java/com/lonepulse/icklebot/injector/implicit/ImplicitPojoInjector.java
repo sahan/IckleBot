@@ -23,13 +23,11 @@ package com.lonepulse.icklebot.injector.implicit;
 import java.lang.reflect.Field;
 import java.util.Set;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.lonepulse.icklebot.annotation.inject.Pojo;
 import com.lonepulse.icklebot.injector.Injector;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
-import com.lonepulse.icklebot.util.ContextUtils;
 
 /**
  * <p>An implementation of {@link Injector} which is responsible 
@@ -48,8 +46,6 @@ class ImplicitPojoInjector implements Injector {
 	@Override
 	public void inject(Configuration config) {
 		
-		Context context = ContextUtils.discover(config.getContext());
-		
 		Set<Field> fields = config.getInjectionTargets(InjectionCategory.POJO);	
 		
 		for (Field field : fields) {
@@ -60,7 +56,7 @@ class ImplicitPojoInjector implements Injector {
 			
 				if(!field.isAccessible()) field.setAccessible(true);
 				
-				field.set(context, pojo.value().newInstance());
+				field.set(config.getContext(), pojo.value().newInstance());
 			} 
 			catch (Exception e) {
 				

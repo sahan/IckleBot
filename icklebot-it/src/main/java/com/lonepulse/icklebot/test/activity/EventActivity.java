@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.test;
+package com.lonepulse.icklebot.test.activity;
 
 /*
  * #%L
@@ -38,6 +38,9 @@ import com.lonepulse.icklebot.annotation.inject.InjectArray;
 import com.lonepulse.icklebot.annotation.inject.InjectView;
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.annotation.inject.Title;
+import com.lonepulse.icklebot.annotation.profile.Profiles;
+import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
+import com.lonepulse.icklebot.test.R;
 
 /**
  * <p>An extension of {@link IckleActivity} which is used to test the 
@@ -51,6 +54,7 @@ import com.lonepulse.icklebot.annotation.inject.Title;
  */
 @Layout(R.layout.act_listener)
 @Title(R.string.ttl_act_listener)
+@Profiles({PROFILE.EVENT, PROFILE.INJECTION, PROFILE.STATE, PROFILE.THREADING})
 public class EventActivity extends IckleActivity {
 	
 

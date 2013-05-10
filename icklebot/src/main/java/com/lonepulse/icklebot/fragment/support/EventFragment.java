@@ -47,16 +47,17 @@ abstract class EventFragment extends StateFragment {
 	 */
 	private final EventLinker.Configuration EVENT_CONFIGURATION;
 	{
-		EVENT_CONFIGURATION = EventLinker.Configuration.getInstance(this);
+		EVENT_CONFIGURATION = EventLinker.Configuration.newInstance(this);
 	}
-
+	
+	
 	/**
 	 * <p>Performs <b>event listener linking</b> by invoking {@link #link()}.</p>
 	 */
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		
-		super.onActivityCreated(savedInstanceState);
+		super.onCreate(savedInstanceState);
 		
 		if(ProfileService.getInstance(
 			getActivity().getApplicationContext()).isActive(this, PROFILE.EVENT)) {

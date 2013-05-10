@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.test;
+package com.lonepulse.icklebot.test.activity;
 
 /*
  * #%L
@@ -22,15 +22,15 @@ package com.lonepulse.icklebot.test;
 
 
 import android.animation.AnimatorSet;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.Button;
 
-import com.lonepulse.icklebot.IckleSupportManager;
+import com.lonepulse.icklebot.IckleActivity;
 import com.lonepulse.icklebot.annotation.inject.InjectAnimation;
 import com.lonepulse.icklebot.annotation.inject.InjectAnimator;
 import com.lonepulse.icklebot.annotation.inject.InjectApplication;
@@ -46,13 +46,16 @@ import com.lonepulse.icklebot.annotation.inject.InjectString;
 import com.lonepulse.icklebot.annotation.inject.InjectView;
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.annotation.inject.Title;
+import com.lonepulse.icklebot.annotation.profile.Profiles;
+import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
+import com.lonepulse.icklebot.test.R;
 import com.lonepulse.icklebot.test.app.ApplicationService;
 import com.lonepulse.icklebot.test.service.AccountsService;
 import com.lonepulse.icklebot.test.service.AccountsServiceImpl;
 
 /**
- * <p>An extension of {@link Activity} which is used to test 
- * the {@link IckleSupportManager}'s explicit injection features.
+ * <p>An extension of {@link IckleActivity} which is used to test the 
+ * <b>explicit runtime injection</b> features of IckleBot.
  * 
  * @category test
  * <br><br>
@@ -62,7 +65,8 @@ import com.lonepulse.icklebot.test.service.AccountsServiceImpl;
  */
 @Layout(R.layout.act_explicit_injection)
 @Title(R.string.ttl_act_explicit_injection)
-public class ExplicitInjectionSupportActivity extends Activity {
+@Profiles({PROFILE.EVENT, PROFILE.INJECTION, PROFILE.STATE, PROFILE.THREADING}) 
+public class ExplicitInjectionActivity extends IckleActivity {
 	
 
 	@InjectApplication
@@ -97,7 +101,7 @@ public class ExplicitInjectionSupportActivity extends Activity {
 	
 	@InjectAnimation(R.anim.fade_out)
 	Animation fadeOut;
-
+	
 	@InjectAnimator(R.animator.grow)
 	AnimatorSet grow;
 	
@@ -106,16 +110,9 @@ public class ExplicitInjectionSupportActivity extends Activity {
 	
 	@InjectPojo(AccountsServiceImpl.class)
 	AccountsService accountsService;
-
 	
-	@SuppressWarnings("unused")
-	private IckleSupportManager supportManager;
-	{
-		supportManager = new IckleSupportManager.Builder(this)
-		.enableInjectionSupport()
-		.build();
-	}
-	
+	@Layout(R.layout.act_explicit_injection)
+	ViewGroup rootView;
 	
 	/**
 	 * <p>Exposes {@link #onCreate(Bundle)} and allows unit 
