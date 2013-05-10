@@ -82,6 +82,18 @@
 		<url>https://github.com/sahan/IckleBot/issues</url>
 	</issueManagement>
 
+	<mailingLists>
+		<mailingList>
+			<name>IckleBot-ost.io</name>
+			<post>http://ost.io/@sahan/IckleBot</post>
+		</mailingList>
+	</mailingLists>
+
+	<ciManagement>
+		<system>IckleBot</system>
+		<url>https://travis-ci.org/sahan/IckleBot</url>
+	</ciManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>com.google.android</groupId>
