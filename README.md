@@ -14,19 +14,22 @@ framework.
    
 Annotation based Android development with...
    
-* Dependency Injection   
+* Dependency Injection for...
+   
 	1. Layouts
 	2. Resources
 	3. System Services
-	4. Application Instances
+	4. Applications
 	5. POJOs   
-<br/>
+	
 * An alternative threading model which simplifies the execution of worker threads and 
 UI tasks.   
 
 * An alternative event model which simplifies the linking of event listeners.   
 
 * Activity state management and configuration of window features.   
+   
+* Utilities to discover and manage network state changes.   
 <br/>
 
 ##Setup
