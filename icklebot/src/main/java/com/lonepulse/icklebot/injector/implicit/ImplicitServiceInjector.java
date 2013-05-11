@@ -64,7 +64,7 @@ class ImplicitServiceInjector implements Injector {
 						
 						if(!field.isAccessible()) field.setAccessible(true);
 						
-						field.set(context, context.getSystemService(identifier));
+						field.set(config.getContext(), context.getSystemService(identifier));
 					}
 				}
 			} 

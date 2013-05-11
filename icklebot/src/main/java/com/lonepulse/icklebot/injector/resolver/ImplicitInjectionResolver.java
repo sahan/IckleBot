@@ -53,6 +53,8 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	@Override
 	public InjectionCategory resolve(Object context, Field field) {
 		
+		Context baseContext = ContextUtils.discover(context);
+		
 		if(field.isAnnotationPresent(IgnoreInjection.class))
 			return InjectionCategory.NONE;
 		
@@ -62,7 +64,7 @@ class ImplicitInjectionResolver implements InjectionResolver {
 		else if(isCategoryResourceView(field))
 			return InjectionCategory.RESOURCE_VIEW;
 		
-		else if(isCategoryResourceInteger(context, field))
+		else if(isCategoryResourceInteger(baseContext, field))
 			return InjectionCategory.RESOURCE_INTEGER;
 		
 		else if(isCategoryResourceString(field))
@@ -71,7 +73,7 @@ class ImplicitInjectionResolver implements InjectionResolver {
 		else if(isCategoryResourceDrawable(field))
 			return InjectionCategory.RESOURCE_DRAWABLE;
 		
-		else if(isCategoryResourceColor(context, field)) 
+		else if(isCategoryResourceColor(baseContext, field)) 
 			return InjectionCategory.RESOURCE_COLOR;
 		
 		else if(isCategoryResourceDimension(field))
@@ -147,13 +149,11 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	 * <br><br>
 	 * @since 1.1.0
 	 */
-	private boolean isCategoryResourceInteger(Object context, Field field) {
-		
-		Context injectionContext = ContextUtils.discover(context);
+	private boolean isCategoryResourceInteger(Context context, Field field) {
 		
 		return ((Integer.class.isAssignableFrom(field.getType())
 				|| int.class.isAssignableFrom(field.getType()))
-				&& ((ReflectiveR.integer(injectionContext, field.getName())) != 0))? true : false;
+				&& ((ReflectiveR.integer(context, field.getName())) != 0))? true : false;
 	}
 	
 	/**
@@ -205,13 +205,11 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	 * <br><br>
 	 * @since 1.1.0
 	 */
-	private boolean isCategoryResourceColor(Object context, Field field) {
-		
-		Context injectionContext = ContextUtils.discover(context);
+	private boolean isCategoryResourceColor(Context context, Field field) {
 		
 		return ((Integer.class.isAssignableFrom(field.getType())
 				|| int.class.isAssignableFrom(field.getType()))
-				&& ((ReflectiveR.color(injectionContext, field.getName())) != 0))? true : false;
+				&& ((ReflectiveR.color(context, field.getName())) != 0))? true : false;
 	}
 	
 	/**

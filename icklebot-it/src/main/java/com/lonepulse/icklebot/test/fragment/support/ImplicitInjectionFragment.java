@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.test.activity;
+package com.lonepulse.icklebot.test.fragment.support;
 
 /*
  * #%L
@@ -28,17 +28,16 @@ import android.telephony.TelephonyManager;
 import android.view.animation.Animation;
 import android.widget.Button;
 
-import com.lonepulse.icklebot.IckleActivity;
 import com.lonepulse.icklebot.annotation.inject.InjectAll;
 import com.lonepulse.icklebot.annotation.inject.Layout;
-import com.lonepulse.icklebot.annotation.inject.Title;
+import com.lonepulse.icklebot.fragment.support.IckleFragment;
 import com.lonepulse.icklebot.test.R;
 import com.lonepulse.icklebot.test.app.ApplicationService;
 import com.lonepulse.icklebot.test.service.AccountsService;
 
 /**
- * <p>An extension of {@link IckleActivity} which is used to test the 
- * <b>implicit runtime injection</b> features of IckleBot.
+ * <p>An extension of {@link IckleFragment} which is used to test the 
+ * <b>implicit runtime injection</b> features of IckleBot on fragments.
  * 
  * @category test
  * <br><br>
@@ -48,10 +47,9 @@ import com.lonepulse.icklebot.test.service.AccountsService;
  */
 @InjectAll
 @Layout(R.layout.act_implicit_injection)
-@Title(R.string.ttl_act_implicit_injection)
-public class ImplicitInjectionActivity extends IckleActivity {
-	
+public class ImplicitInjectionFragment extends IckleFragment {
 
+	
 	ApplicationService application;
 
 	String app_name;
@@ -82,12 +80,12 @@ public class ImplicitInjectionActivity extends IckleActivity {
 	
 	
 	/**
-	 * <p>Exposes {@link #onCreate(Bundle)} and allows unit 
-	 * tests to invoke injection from an external context.
+	 * <p>Exposes {@link #onCreate(Bundle)} and allows unit tests to 
+	 * invoke it from an external context.
 	 */
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-
+	public void onCreate(Bundle savedInstanceState) {
+		
 		super.onCreate(savedInstanceState);
 	}
 }

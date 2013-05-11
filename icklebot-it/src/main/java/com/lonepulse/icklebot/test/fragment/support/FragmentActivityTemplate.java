@@ -31,7 +31,7 @@ import android.support.v4.app.FragmentActivity;
  * 
  * @category test
  * <br><br>
- * @version 1.1.0
+ * @version 1.2.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -43,15 +43,48 @@ public class FragmentActivityTemplate<T extends Fragment> extends FragmentActivi
 	 */
 	public T fragment; 
 	
+	/**
+	 * <p>The {@link Class} of the fragment to tested.
+	 */
+	private Class<T> fragmentClass;
+	
+	
+	/**
+	 * <p>Instantiates this {@link FragmentActivity} by taking 
+	 * the {@link Class} of the fragment to be tested.
+	 * 
+	 * @param fragmentClass
+	 * 			the {@link Class} of the fragment to tested
+	 *
+	 * @since 1.2.0
+	 */
+	public FragmentActivityTemplate(Class<T> fragmentClass) {
+		
+		this.fragmentClass = fragmentClass;
+	}
 			
 	/**
-	 * <p>Exposes {@link #onCreate(Bundle)} and allows unit 
-	 * tests to invoke it from an external context.
+	 * <p>Exposes {@link #onCreate(Bundle)} and allows unit tests to 
+	 * invoke it from an external context. Creates an instance of the 
+	 * fragment to be tested commits it via the support fragment manager. 
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
+		
+		try {
+			
+			fragment = fragmentClass.newInstance();
+		}
+		catch (InstantiationException ie) {
+			
+			ie.printStackTrace();
+		}
+		catch (IllegalAccessException iae) {
+
+			iae.printStackTrace();
+		}
 		
 		getSupportFragmentManager()
 			.beginTransaction().add(fragment, "fragment").commit();

@@ -34,7 +34,7 @@ import com.lonepulse.icklebot.test.R;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 
 /**
- * <p>Unit test for {@link ExplicitInjectionFragment}.
+ * <p>Unit test for {@link ImplicitInjectionFragment}.
  * 
  * @category test
  * <br><br>
@@ -43,14 +43,14 @@ import com.xtremelabs.robolectric.RobolectricTestRunner;
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 @RunWith(RobolectricTestRunner.class)
-public class ExplicitInjectionFragmentTest {
+public class ImplicitInjectionFragmentTest {
 	
 	
 	/**
 	 * <p>The instance of {@link FragmentActivityTemplate} with the 
 	 * {@link Fragment} whose explicit injection is to be tested.
 	 */
-	private FragmentActivityTemplate<ExplicitInjectionFragment> activity;
+	private FragmentActivityTemplate<ImplicitInjectionFragment> activity;
 	
 	
 	/**
@@ -63,7 +63,7 @@ public class ExplicitInjectionFragmentTest {
 	@Before
 	public final void setUp() throws Exception {
 		
-		activity = new FragmentActivityTemplate<ExplicitInjectionFragment>(ExplicitInjectionFragment.class);
+		activity = new FragmentActivityTemplate<ImplicitInjectionFragment>(ImplicitInjectionFragment.class);
 		activity.onCreate(null);
 	}
 
@@ -106,7 +106,7 @@ public class ExplicitInjectionFragmentTest {
 	@Test
 	public final void testString() throws Exception {
 		
-		assertNotNull(activity.fragment.strAppName);
+		assertNotNull(activity.fragment.btnSubmit);
 	}
 	
 	/**
@@ -120,7 +120,7 @@ public class ExplicitInjectionFragmentTest {
 	@Test
 	public final void testInteger() throws Exception {
 		
-		assertEquals(activity.fragment.intMajorVersion, 1);
+		assertEquals(activity.fragment.major_version, 1);
 	}
 	
 	/**
@@ -148,7 +148,7 @@ public class ExplicitInjectionFragmentTest {
 	@Test
 	public final void testDrawable() throws Exception {
 		
-		assertNotNull(activity.fragment.drwLauncherIcon);
+		assertNotNull(activity.fragment.ic_launcher);
 	}
 	
 	/**
@@ -162,8 +162,8 @@ public class ExplicitInjectionFragmentTest {
 	@Test
 	public final void testColor() throws Exception {
 		
-		assertEquals(activity.fragment.getResources().getColor(R.color.bg_generic), 
-					 activity.fragment.colorGeneric, 0);
+		assertEquals(activity.getResources().getColor(R.color.bg_generic), 
+					 activity.fragment.bg_generic, 0);
 	}
 	
 	/**
@@ -177,7 +177,7 @@ public class ExplicitInjectionFragmentTest {
 	@Test
 	public final void testDimension() throws Exception {
 		
-		assertEquals(12.0, activity.fragment.txtSizeSmall, 0);
+		assertEquals(12.0, activity.fragment.txt_small, 0);
 	}
 	
 	/**
@@ -195,7 +195,7 @@ public class ExplicitInjectionFragmentTest {
 	@Test
 	public final void testBoolean() throws Exception {
 		
-		assertNotNull(activity.fragment.themeGeneric);
+		assertNotNull(activity.fragment.theme_generic);
 	}
 	
 	/**
@@ -209,7 +209,7 @@ public class ExplicitInjectionFragmentTest {
 	@Test
 	public final void testAnimation() throws Exception {
 		
-		assertNotNull(activity.fragment.fadeOut);
+		assertNotNull(activity.fragment.fade_out);
 	}
 	
 	/**
@@ -223,7 +223,7 @@ public class ExplicitInjectionFragmentTest {
 	@Test
 	public final void testSystemService() throws Exception {
 		
-		assertNotNull(activity.fragment.telephonyManager);
+		assertNotNull(activity.fragment.telephony_service);
 	}
 	
 	/**
@@ -238,19 +238,5 @@ public class ExplicitInjectionFragmentTest {
 	public final void testPOJO() throws Exception {
 		
 		assertNotNull(activity.fragment.accountsService);
-	}
-	
-	/**
-	 * <p>Test layout injection.
-	 * 
-	 * @throws Exception
-	 * 			if test terminated with an error
-	 * 
-	 * @since 1.1.0
-	 */
-	@Test
-	public final void testLayout() throws Exception {
-		
-		assertNotNull(activity.fragment.rootView);
 	}
 }

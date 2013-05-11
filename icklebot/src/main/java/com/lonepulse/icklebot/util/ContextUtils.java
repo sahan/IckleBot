@@ -318,7 +318,7 @@ public final class ContextUtils {
 	 */
 	public static Application asApplication(Object context) {
 		
-		if(ContextUtils.isApplication(context)) 
+		if(ContextUtils.isApplication(context))
 			return Application.class.cast(context);
 		
 		else 

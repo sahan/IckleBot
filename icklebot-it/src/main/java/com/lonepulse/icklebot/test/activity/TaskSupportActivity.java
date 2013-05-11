@@ -28,8 +28,6 @@ import android.widget.TextView;
 import com.lonepulse.icklebot.IckleSupportManager;
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.annotation.inject.Title;
-import com.lonepulse.icklebot.annotation.profile.Profiles;
-import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
 import com.lonepulse.icklebot.annotation.thread.Async;
 import com.lonepulse.icklebot.annotation.thread.UI;
 import com.lonepulse.icklebot.test.R;
@@ -46,7 +44,6 @@ import com.lonepulse.icklebot.test.R;
  */
 @Layout(R.layout.act_task)
 @Title(R.string.ttl_act_task)
-@Profiles({PROFILE.EVENT, PROFILE.INJECTION, PROFILE.STATE, PROFILE.THREADING})
 public class TaskSupportActivity extends Activity {
 	
 	
