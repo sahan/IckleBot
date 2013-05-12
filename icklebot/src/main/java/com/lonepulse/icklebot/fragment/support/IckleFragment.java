@@ -27,8 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.lonepulse.icklebot.annotation.inject.Layout;
-import com.lonepulse.icklebot.util.TypeUtils;
+import com.lonepulse.icklebot.fragment.FragmentUtils;
 
 /**
  * <p>All fragments that wish to leverage IckleBot's features should 
@@ -50,15 +49,7 @@ public abstract class IckleFragment extends EventFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
-		Layout layout = TypeUtils.getAnnotation(this, Layout.class);
-		
-		if(layout != null) {
-			
-			return inflater.inflate(layout.value(), null);
-		}
-		else {
-			
-			return super.onCreateView(inflater, container, savedInstanceState);
-		}
+		View view = FragmentUtils.onCreateView(this, inflater, container, savedInstanceState); 
+		return (view != null)? view :super.onCreateView(inflater, container, savedInstanceState);
 	}
 }

@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.test.fragment.support;
+package com.lonepulse.icklebot.test.activity;
 
 /*
  * #%L
@@ -22,21 +22,24 @@ package com.lonepulse.icklebot.test.fragment.support;
 
 
 import android.animation.AnimatorSet;
+import android.app.Activity;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.view.animation.Animation;
 import android.widget.Button;
 
+import com.lonepulse.icklebot.IckleSupportManager;
 import com.lonepulse.icklebot.annotation.inject.InjectAll;
 import com.lonepulse.icklebot.annotation.inject.Layout;
-import com.lonepulse.icklebot.fragment.support.IckleFragment;
+import com.lonepulse.icklebot.annotation.inject.Title;
 import com.lonepulse.icklebot.test.R;
 import com.lonepulse.icklebot.test.app.ApplicationService;
 import com.lonepulse.icklebot.test.service.AccountsService;
 
 /**
- * <p>An extension of {@link IckleFragment} which is used to test the 
- * <b>implicit runtime injection</b> features of IckleBot on fragments.
+ * <p>An extension of {@link Activity} which is used to test 
+ * the {@link IckleSupportManager}'s implicit injection features.
  * 
  * @category test
  * <br><br>
@@ -46,9 +49,10 @@ import com.lonepulse.icklebot.test.service.AccountsService;
  */
 @InjectAll
 @Layout(R.layout.act_implicit_injection)
-public class ImplicitInjectionFragment extends IckleFragment {
-
+@Title(R.string.ttl_act_implicit_injection)
+public class SupportedImplicitInjectionActivity extends Activity {
 	
+
 	ApplicationService application;
 
 	String app_name;
@@ -76,4 +80,24 @@ public class ImplicitInjectionFragment extends IckleFragment {
 	TelephonyManager telephony_service;
 	
 	AccountsService accountsService;
+	
+	
+	@SuppressWarnings("unused")
+	private IckleSupportManager supportManager;
+	{
+		supportManager = new IckleSupportManager.Builder(this)
+		.enableInjectionSupport()
+		.build();
+	}
+	
+	
+	/**
+	 * <p>Exposes {@link #onCreate(Bundle)} and allows unit 
+	 * tests to invoke injection from an external context.
+	 */
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+
+		super.onCreate(savedInstanceState);
+	}
 }

@@ -25,12 +25,17 @@ import java.io.Serializable;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
 import com.lonepulse.icklebot.event.EventLinker;
 import com.lonepulse.icklebot.event.EventUtils;
+import com.lonepulse.icklebot.fragment.FragmentUtils;
 import com.lonepulse.icklebot.injector.InjectionUtils;
 import com.lonepulse.icklebot.injector.Injector;
 import com.lonepulse.icklebot.network.NetworkManager;
@@ -51,7 +56,7 @@ import com.lonepulse.icklebot.util.ContextUtils;
  * <p>{@link IckleSupportManager}s can be serialized and as such they can be 
  * {@link Bundle}d.</p>
  * 
- * @version 1.1.1
+ * @version 1.1.2
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -70,6 +75,11 @@ public interface IckleSupportManager extends Serializable {
 	 * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
 	 */
 	public static final class Builder {
+		
+		/**
+		 * <p>The instance of {@link FragmentSupport} tailored for this builder.
+		 */
+		private FragmentSupport fragmentSupport;
 		
 		/**
 		 * <p>The contextual error message in case of state corruption.
@@ -117,6 +127,18 @@ public interface IckleSupportManager extends Serializable {
 		public Builder(final Object context) {
 		
 			this.context = context;
+		
+			if(ContextUtils.isFragment(context) || ContextUtils.isSupportFragment(context)) {
+				
+				this.fragmentSupport = new FragmentSupport() {
+					
+					@Override
+					public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+						
+						return FragmentUtils.onCreateView(context, inflater, container, savedInstanceState);
+					}
+				};
+			}
 		}
 		
 		/**
@@ -158,6 +180,21 @@ public interface IckleSupportManager extends Serializable {
 		}
 		
 		/**
+		 * <p>Retrieves the instance of {@link FragmentSupport} tailored for context. 
+		 * If the context is not a {@link Fragment} or a Support {@link android.support.v4.app.Fragment} 
+		 * {@code null} is returned. 
+		 *
+		 * @return the {@link FragmentSupport} instance, else {@code null} if the context 
+		 * 		   is not a fragment
+		 * 
+		 * @since 1.1.0
+		 */
+		public FragmentSupport fragment() {
+			
+			return this.fragmentSupport;
+		}
+		
+		/**
 		 * <p>Creates a new instance of {@link IckleSupportManager} configured 
 		 * according to the build parameters which were set.
 		 * 
@@ -187,11 +224,12 @@ public interface IckleSupportManager extends Serializable {
 				private static final long serialVersionUID = 5949321867738227878L;
 
 				private StateManager stateService = StateService.newInstance(ContextUtils.discover(context));
+				private Context baseContext = ContextUtils.discover(context);
 				
 				@Override
 				public Context getBaseContext() {
 
-					return ContextUtils.discover(context);
+					return baseContext;
 				}
 				
 				@Override

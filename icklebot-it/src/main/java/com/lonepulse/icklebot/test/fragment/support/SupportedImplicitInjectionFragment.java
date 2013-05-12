@@ -23,10 +23,16 @@ package com.lonepulse.icklebot.test.fragment.support;
 
 import android.animation.AnimatorSet;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.telephony.TelephonyManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.Button;
 
+import com.lonepulse.icklebot.IckleSupportManager;
 import com.lonepulse.icklebot.annotation.inject.InjectAll;
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.fragment.support.IckleFragment;
@@ -46,7 +52,7 @@ import com.lonepulse.icklebot.test.service.AccountsService;
  */
 @InjectAll
 @Layout(R.layout.act_implicit_injection)
-public class ImplicitInjectionFragment extends IckleFragment {
+public class SupportedImplicitInjectionFragment extends Fragment {
 
 	
 	ApplicationService application;
@@ -76,4 +82,26 @@ public class ImplicitInjectionFragment extends IckleFragment {
 	TelephonyManager telephony_service;
 	
 	AccountsService accountsService;
+	
+	
+	private IckleSupportManager.Builder supportManagerBuilder;
+	{
+		supportManagerBuilder = new IckleSupportManager.Builder(this)
+		.enableInjectionSupport();
+	}
+	
+	
+	@Override
+	public void onStart() {
+	
+		super.onStart();
+		supportManagerBuilder.build();
+	}
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+		//TODO eliminate redundancy - supportManagerBuilder.fragment().onCreateView...
+		return supportManagerBuilder.fragment().onCreateView(inflater, container, savedInstanceState);
+	}
 }

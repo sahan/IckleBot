@@ -24,11 +24,16 @@ package com.lonepulse.icklebot.test.fragment.support;
 import android.animation.AnimatorSet;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.telephony.TelephonyManager;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.Button;
 
+import com.lonepulse.icklebot.IckleSupportManager;
 import com.lonepulse.icklebot.annotation.inject.InjectAnimation;
 import com.lonepulse.icklebot.annotation.inject.InjectAnimator;
 import com.lonepulse.icklebot.annotation.inject.InjectApplication;
@@ -51,7 +56,8 @@ import com.lonepulse.icklebot.test.service.AccountsServiceImpl;
 
 /**
  * <p>An extension of {@link IckleFragment} which is used to test the 
- * <b>explicit runtime injection</b> features of IckleBot on fragments.
+ * <b>explicit runtime injection</b> features of IckleBot on fragments 
+ * using the {@link IckleSupportManager}.
  * 
  * @category test
  * <br><br>
@@ -60,7 +66,7 @@ import com.lonepulse.icklebot.test.service.AccountsServiceImpl;
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 @Layout(R.layout.act_explicit_injection)
-public class ExplicitInjectionFragment extends IckleFragment {
+public class SupportedExplicitInjectionFragment extends Fragment {
 
 	
 	@InjectApplication
@@ -107,4 +113,26 @@ public class ExplicitInjectionFragment extends IckleFragment {
 	
 	@Layout(R.layout.act_explicit_injection)
 	ViewGroup rootView;
+	
+	
+	private IckleSupportManager.Builder supportManagerBuilder;
+	{
+		supportManagerBuilder = new IckleSupportManager.Builder(this)
+		.enableInjectionSupport();
+	}
+	
+	
+	@Override
+	public void onStart() {
+	
+		super.onStart();
+		supportManagerBuilder.build();
+	}
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		
+		//TODO eliminate redundancy - supportManagerBuilder.fragment().onCreateView...
+		return supportManagerBuilder.fragment().onCreateView(inflater, container, savedInstanceState);
+	}
 }

@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.test.fragment.support;
+package com.lonepulse.icklebot.test.activity;
 
 /*
  * #%L
@@ -22,13 +22,15 @@ package com.lonepulse.icklebot.test.fragment.support;
 
 
 import android.animation.AnimatorSet;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.telephony.TelephonyManager;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.Button;
 
+import com.lonepulse.icklebot.IckleSupportManager;
 import com.lonepulse.icklebot.annotation.inject.InjectAnimation;
 import com.lonepulse.icklebot.annotation.inject.InjectAnimator;
 import com.lonepulse.icklebot.annotation.inject.InjectApplication;
@@ -43,15 +45,15 @@ import com.lonepulse.icklebot.annotation.inject.InjectService;
 import com.lonepulse.icklebot.annotation.inject.InjectString;
 import com.lonepulse.icklebot.annotation.inject.InjectView;
 import com.lonepulse.icklebot.annotation.inject.Layout;
-import com.lonepulse.icklebot.fragment.support.IckleFragment;
+import com.lonepulse.icklebot.annotation.inject.Title;
 import com.lonepulse.icklebot.test.R;
 import com.lonepulse.icklebot.test.app.ApplicationService;
 import com.lonepulse.icklebot.test.service.AccountsService;
 import com.lonepulse.icklebot.test.service.AccountsServiceImpl;
 
 /**
- * <p>An extension of {@link IckleFragment} which is used to test the 
- * <b>explicit runtime injection</b> features of IckleBot on fragments.
+ * <p>An extension of {@link Activity} which is used to test 
+ * the {@link IckleSupportManager}'s explicit injection features.
  * 
  * @category test
  * <br><br>
@@ -60,9 +62,10 @@ import com.lonepulse.icklebot.test.service.AccountsServiceImpl;
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 @Layout(R.layout.act_explicit_injection)
-public class ExplicitInjectionFragment extends IckleFragment {
-
+@Title(R.string.ttl_act_explicit_injection)
+public class SupportedExplicitInjectionActivity extends Activity {
 	
+
 	@InjectApplication
 	ApplicationService application;
 	
@@ -95,7 +98,7 @@ public class ExplicitInjectionFragment extends IckleFragment {
 	
 	@InjectAnimation(R.anim.fade_out)
 	Animation fadeOut;
-	
+
 	@InjectAnimator(R.animator.grow)
 	AnimatorSet grow;
 	
@@ -104,7 +107,24 @@ public class ExplicitInjectionFragment extends IckleFragment {
 	
 	@InjectPojo(AccountsServiceImpl.class)
 	AccountsService accountsService;
+
 	
-	@Layout(R.layout.act_explicit_injection)
-	ViewGroup rootView;
+	@SuppressWarnings("unused")
+	private IckleSupportManager supportManager;
+	{
+		supportManager = new IckleSupportManager.Builder(this)
+		.enableInjectionSupport()
+		.build();
+	}
+	
+	
+	/**
+	 * <p>Exposes {@link #onCreate(Bundle)} and allows unit 
+	 * tests to invoke injection from an external context.
+	 */
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+
+		super.onCreate(savedInstanceState);
+	}
 }
