@@ -173,7 +173,7 @@ public class IckleSupportFragment implements Fragment {
 			.append(". ")
 			.toString();
 			
-			Log.e(FragmentUtils.class.getSimpleName(), errorContext, e);
+			Log.e(IckleSupportFragment.class.getSimpleName(), errorContext, e);
 		}
 		
 		return null;
