@@ -39,7 +39,7 @@ import com.xtremelabs.robolectric.RobolectricTestRunner;
  * 
  * @category test
  * <br><br>
- * @version 1.1.2
+ * @version 1.1.3
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -240,5 +240,19 @@ public class ImplicitInjectionActivityTest {
 	public final void testPOJO() throws Exception {
 		
 		assertNotNull(activity.accountsService);
+	}
+	
+	/**
+	 * <p>Test layout injection.
+	 * 
+	 * @throws Exception
+	 * 			if test terminated with an error
+	 * 
+	 * @since 1.1.3
+	 */
+	@Test
+	public final void testLayout() throws Exception {
+		
+		assertNotNull(activity.rootView);
 	}
 }

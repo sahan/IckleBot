@@ -239,4 +239,18 @@ public class ImplicitInjectionFragmentTest {
 		
 		assertNotNull(activity.fragment.accountsService);
 	}
+	
+	/**
+	 * <p>Test layout injection.
+	 * 
+	 * @throws Exception
+	 * 			if test terminated with an error
+	 * 
+	 * @since 1.1.0
+	 */
+	@Test
+	public final void testLayout() throws Exception {
+		
+		assertNotNull(activity.fragment.rootView);
+	}
 }

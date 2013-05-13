@@ -35,6 +35,7 @@ import android.widget.Button;
 import com.lonepulse.icklebot.IckleSupportManager;
 import com.lonepulse.icklebot.annotation.inject.InjectAll;
 import com.lonepulse.icklebot.annotation.inject.Layout;
+import com.lonepulse.icklebot.fragment.IckleSupportFragment;
 import com.lonepulse.icklebot.fragment.support.IckleFragment;
 import com.lonepulse.icklebot.test.R;
 import com.lonepulse.icklebot.test.app.ApplicationService;
@@ -83,25 +84,26 @@ public class SupportedImplicitInjectionFragment extends Fragment {
 	
 	AccountsService accountsService;
 	
+	@Layout(R.layout.act_explicit_injection)
+	ViewGroup rootView;
 	
-	private IckleSupportManager.Builder supportManagerBuilder;
+	
+	private com.lonepulse.icklebot.app.Fragment shadow;
 	{
-		supportManagerBuilder = new IckleSupportManager.Builder(this)
-		.enableInjectionSupport();
+		shadow = IckleSupportFragment.shadow(this, new IckleSupportManager.Builder(this)
+		.enableInjectionSupport());
 	}
-	
 	
 	@Override
 	public void onStart() {
 	
 		super.onStart();
-		supportManagerBuilder.build();
+		shadow.onStart();
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-		//TODO eliminate redundancy - supportManagerBuilder.fragment().onCreateView...
-		return supportManagerBuilder.fragment().onCreateView(inflater, container, savedInstanceState);
+		
+		return shadow.onCreateView(inflater, container, savedInstanceState); //super !invoked, user aware of @Layout
 	}
 }

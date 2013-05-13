@@ -48,6 +48,7 @@ import com.lonepulse.icklebot.annotation.inject.InjectService;
 import com.lonepulse.icklebot.annotation.inject.InjectString;
 import com.lonepulse.icklebot.annotation.inject.InjectView;
 import com.lonepulse.icklebot.annotation.inject.Layout;
+import com.lonepulse.icklebot.fragment.IckleSupportFragment;
 import com.lonepulse.icklebot.fragment.support.IckleFragment;
 import com.lonepulse.icklebot.test.R;
 import com.lonepulse.icklebot.test.app.ApplicationService;
@@ -115,24 +116,23 @@ public class SupportedExplicitInjectionFragment extends Fragment {
 	ViewGroup rootView;
 	
 	
-	private IckleSupportManager.Builder supportManagerBuilder;
+	private com.lonepulse.icklebot.app.Fragment shadow;
 	{
-		supportManagerBuilder = new IckleSupportManager.Builder(this)
-		.enableInjectionSupport();
+		shadow = IckleSupportFragment.shadow(this, new IckleSupportManager.Builder(this)
+		.enableInjectionSupport());
 	}
 	
 	
 	@Override
 	public void onStart() {
-	
+
 		super.onStart();
-		supportManagerBuilder.build();
+		shadow.onStart();
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		
-		//TODO eliminate redundancy - supportManagerBuilder.fragment().onCreateView...
-		return supportManagerBuilder.fragment().onCreateView(inflater, container, savedInstanceState);
+	
+		return shadow.onCreateView(inflater, container, savedInstanceState); //super !invoked, user aware of @Layout
 	}
 }

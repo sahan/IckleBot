@@ -26,6 +26,7 @@ import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.Button;
 
@@ -80,6 +81,9 @@ public class SupportedImplicitInjectionActivity extends Activity {
 	TelephonyManager telephony_service;
 	
 	AccountsService accountsService;
+	
+	@Layout(R.layout.act_explicit_injection)
+	ViewGroup rootView;
 	
 	
 	@SuppressWarnings("unused")

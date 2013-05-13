@@ -24,6 +24,7 @@ package com.lonepulse.icklebot.test.fragment.support;
 import android.animation.AnimatorSet;
 import android.graphics.drawable.Drawable;
 import android.telephony.TelephonyManager;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.Button;
 
@@ -76,4 +77,7 @@ public class ImplicitInjectionFragment extends IckleFragment {
 	TelephonyManager telephony_service;
 	
 	AccountsService accountsService;
+	
+	@Layout(R.layout.act_explicit_injection)
+	ViewGroup rootView;
 }

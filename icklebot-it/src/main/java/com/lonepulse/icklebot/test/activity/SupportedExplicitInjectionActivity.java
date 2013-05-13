@@ -27,6 +27,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.Button;
 
@@ -107,6 +108,9 @@ public class SupportedExplicitInjectionActivity extends Activity {
 	
 	@InjectPojo(AccountsServiceImpl.class)
 	AccountsService accountsService;
+	
+	@Layout(R.layout.act_explicit_injection)
+	ViewGroup rootView;
 
 	
 	@SuppressWarnings("unused")

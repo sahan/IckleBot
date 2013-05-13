@@ -25,6 +25,7 @@ import android.animation.AnimatorSet;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.Button;
 
@@ -79,6 +80,9 @@ public class ImplicitInjectionActivity extends IckleActivity {
 	TelephonyManager telephony_service;
 	
 	AccountsService accountsService;
+	
+	@Layout(R.layout.act_implicit_injection)
+	ViewGroup rootView;
 	
 	
 	/**

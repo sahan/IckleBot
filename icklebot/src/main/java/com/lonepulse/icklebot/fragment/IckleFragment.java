@@ -46,8 +46,8 @@ public abstract class IckleFragment extends EventFragment {
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		
-		View view = FragmentUtils.onCreateView(this, inflater, container, savedInstanceState); 
+
+		View view = IckleSupportFragment.shadow(this).onCreateView(inflater, container, savedInstanceState);
 		return (view != null)? view :super.onCreateView(inflater, container, savedInstanceState);
 	}
 }

@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.fragment.support;
+package com.lonepulse.icklebot.app;
 
 /*
  * #%L
@@ -22,34 +22,32 @@ package com.lonepulse.icklebot.fragment.support;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.lonepulse.icklebot.fragment.IckleSupportFragment;
 
 /**
- * <p>All fragments that wish to leverage IckleBot's features should 
- * extend this fragment.</p>
+ * <p>This contract defines additional support operations offered specifically 
+ * on {@link android.app.Fragment}s and support {@link android.support.v4.app.Fragment}s.
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public abstract class IckleFragment extends EventFragment {
-
+public interface Fragment {
 	
 	/**
-	 * <p>Uses the {@code @Layout} metadata to identify the view resource associated 
-	 * with this {@link Fragment} and inflates it.</p>
+	 * <p>See {@link android.app.Fragment#onStart()}.
 	 * 
-	 * <p>See {@link Fragment#onCreateView(LayoutInflater, ViewGroup, Bundle)}.</p>
+	 * @since 1.1.0
 	 */
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		
-		View view = IckleSupportFragment.shadow(this).onCreateView(inflater, container, savedInstanceState);
-		return (view != null)? view :super.onCreateView(inflater, container, savedInstanceState);
-	}
+	void onStart();
+	
+	/**
+	 * <p>See {@link android.app.Fragment#onCreateView(LayoutInflater, ViewGroup, Bundle)}.
+	 * 
+	 * @since 1.1.0
+	 */
+	View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 }

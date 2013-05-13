@@ -56,28 +56,29 @@ class ExplicitLayoutInjector implements Injector {
 	@Override
 	public void inject(Configuration config) {
 		
-		if(ContextUtils.isActivity(config.getContext())) {
+		Object context = config.getContext();
+		
+		if(ContextUtils.isActivity(context)) {
 			
-			Layout layout = TypeUtils.getAnnotation(config.getContext(), Layout.class);
+			Layout layout = TypeUtils.getAnnotation(context, Layout.class);
 			
 			if(layout != null) 
-				ContextUtils.asActivity(config.getContext()).setContentView(layout.value());
+				ContextUtils.asActivity(context).setContentView(layout.value());
 		}
 		
-		Set<Field> fields = FieldUtils.getAllFields(config.getContext(), Layout.class);
-		Context context = ContextUtils.discover(config.getContext());
+		Set<Field> fields = FieldUtils.getAllFields(context, Layout.class);
+		Context baseContext = ContextUtils.discover(context);
 		
 		for (Field field : fields) {
-			
-			if(!field.isAccessible()) field.setAccessible(true);
 			
 			try {
 				
 				int id = field.getAnnotation(Layout.class).value();
-				View layoutView = LayoutInflater.from(context).inflate(id, null);
+				View layoutView = LayoutInflater.from(baseContext).inflate(id, null);
 				
-				field.set(config.getContext(), layoutView);
-			} 
+				if(!field.isAccessible()) field.setAccessible(true);
+				field.set(context, layoutView);
+			}
 			catch (Exception e) {
 				
 				Log.e(getClass().getName(), "Layout Injection Failed!", e);

@@ -53,7 +53,8 @@ public final class FragmentUtils {
 
 	/**
 	 * <p>Determines the {@link View} to be returned depending on the layout configuration 
-	 * on the given fragment.</p>
+	 * on the given fragment. If not layout configuration is specified, the super-type's method 
+	 * is invoked.</p>
 	 *
 	 * @param fragment
 	 * 			the fragment whose view is to be resolved
@@ -67,14 +68,24 @@ public final class FragmentUtils {
 	public static View onCreateView(Object fragment, LayoutInflater inflater, 
 									ViewGroup container, Bundle savedInstanceState) {
 		
-		try {
 		
-			if(ContextUtils.isFragment(fragment) || ContextUtils.isSupportFragment(fragment)) {
+		try {
+			
+			boolean isFragment = ContextUtils.isFragment(fragment);
+			boolean isSupportFragment = ContextUtils.isSupportFragment(fragment);
+		
+			if(isFragment || isSupportFragment) {
 	
 				Layout layout = TypeUtils.getAnnotation(fragment, Layout.class);
 				
-				if(layout != null)
+				if(layout != null) {
+					
 					return inflater.inflate(layout.value(), null);
+				}
+				else {
+					
+					//TODO here!!
+				}
 			}
 			else {
 			

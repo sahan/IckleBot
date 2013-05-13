@@ -32,6 +32,7 @@ import android.view.animation.Animation;
 import com.lonepulse.icklebot.annotation.inject.ApplicationContract;
 import com.lonepulse.icklebot.annotation.inject.IgnoreInjection;
 import com.lonepulse.icklebot.annotation.inject.InjectAll;
+import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.annotation.inject.Pojo;
 import com.lonepulse.icklebot.event.resolver.EventResolver;
 import com.lonepulse.icklebot.util.ContextUtils;
@@ -131,7 +132,8 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	 */
 	private boolean isCategoryResourceView(Field field) {
 		
-		return (View.class.isAssignableFrom(field.getType()))? true :false; 
+		return (View.class.isAssignableFrom(field.getType())
+				&& !field.isAnnotationPresent(Layout.class))? true :false; 
 	}
 	
 	/**
