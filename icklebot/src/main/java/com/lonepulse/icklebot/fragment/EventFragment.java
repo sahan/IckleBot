@@ -21,14 +21,14 @@ package com.lonepulse.icklebot.fragment;
  */
 
 
+import android.app.Fragment;
 import android.os.Bundle;
+import android.view.View;
 
 import com.lonepulse.icklebot.IckleActivity;
-import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
 import com.lonepulse.icklebot.event.EventLinker;
 import com.lonepulse.icklebot.event.EventLinkers;
 import com.lonepulse.icklebot.event.EventUtils;
-import com.lonepulse.icklebot.profile.ProfileService;
 
 /**
  * <p>This profile offers event linking features.
@@ -45,23 +45,27 @@ abstract class EventFragment extends StateFragment {
 	 * 
 	 * @since 1.1.0
 	 */
-	private final EventLinker.Configuration EVENT_CONFIGURATION;
-	{
-		EVENT_CONFIGURATION = EventLinker.Configuration.newInstance(this);
-	}
+	private EventLinker.Configuration EVENT_CONFIGURATION;
+
 
 	/**
-	 * <p>Performs <b>event listener linking</b> by invoking {@link EventUtils#link()}.</p>
+	 * <p>Initializes the {@link EventLinker.Configuration} for this {@link Fragment}.
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
 		
-		if(ProfileService.getInstance(
-			getActivity().getApplicationContext()).isActive(this, PROFILE.EVENT)) {
-			
-			EventUtils.link(EVENT_CONFIGURATION);
-		}
+		EVENT_CONFIGURATION = EventLinker.Configuration.newInstance(this);
+	}
+	
+	/**
+	 * <p>Performs <b>event listener linking</b> by invoking {@link EventUtils#link()}.</p>
+	 */
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+	
+		super.onViewCreated(view, savedInstanceState);
+		EventUtils.link(EVENT_CONFIGURATION);
 	}
 }

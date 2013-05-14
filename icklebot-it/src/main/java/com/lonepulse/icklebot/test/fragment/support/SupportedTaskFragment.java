@@ -21,28 +21,23 @@ package com.lonepulse.icklebot.test.fragment.support;
  */
 
 
-import android.animation.AnimatorSet;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.widget.Button;
+import android.widget.TextView;
 
 import com.lonepulse.icklebot.IckleSupportManager;
-import com.lonepulse.icklebot.annotation.inject.InjectAll;
 import com.lonepulse.icklebot.annotation.inject.Layout;
+import com.lonepulse.icklebot.annotation.thread.Async;
+import com.lonepulse.icklebot.annotation.thread.UI;
 import com.lonepulse.icklebot.fragment.IckleSupportFragment;
 import com.lonepulse.icklebot.test.R;
-import com.lonepulse.icklebot.test.app.ApplicationService;
-import com.lonepulse.icklebot.test.service.AccountsService;
 
 /**
  * <p>An extension of {@link Fragment} which is used to test the 
- * <b>implicit runtime injection</b> features of IckleBot on fragments.
+ * <b>threading</b> features of IckleBot on fragments.
  * 
  * @category test
  * <br><br>
@@ -50,44 +45,21 @@ import com.lonepulse.icklebot.test.service.AccountsService;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-@InjectAll
-@Layout(R.layout.act_implicit_injection)
-public class SupportedImplicitInjectionFragment extends Fragment {
-
-	
-	ApplicationService application;
-
-	String app_name;
-	
-	int major_version;
-	
-	Button btnSubmit;
-	
-	Drawable ic_launcher;
-	
-	int bg_generic;
-	
-	float txt_small;
-	
-	Boolean theme_generic;
-	
-	String[] font_sizes;
-	
-	int[] audio_level;
-	
-	Animation fade_out;
-	
-	AnimatorSet grow;
-	
-	TelephonyManager telephony_service;
-	
-	AccountsService accountsService;
-	
-	@Layout(R.layout.act_explicit_injection)
-	ViewGroup rootView;
+@Layout(R.layout.act_task)
+public class SupportedTaskFragment extends Fragment {
 	
 	
-	private com.lonepulse.icklebot.app.Fragment shadow;
+	private static final int BG_GEN_TOKEN = 1;
+	private static final int BG_GEN_ALIAS = 2;
+	
+	private static final int UI_UPDATE_TOKEN = 1;
+	private static final int UI_UPDATE_ALIAS = 2;
+	
+	public double token = -1;
+	public String alias = "Lonepulse";
+	
+	
+	private com.lonepulse.icklebot.app.SupportFragment shadow;
 	{
 		shadow = IckleSupportFragment.shadow(this, new IckleSupportManager.Builder(this)
 		.enableInjectionSupport());
@@ -105,5 +77,42 @@ public class SupportedImplicitInjectionFragment extends Fragment {
 		
 		super.onViewCreated(view, savedInstanceState);
 		shadow.onViewCreated(view, savedInstanceState);
+	}
+	
+	@Override
+	public void onStart() {
+		
+		super.onStart();
+		
+		shadow.getSupportManager().runAsyncTask(BG_GEN_TOKEN);
+		shadow.getSupportManager().runAsyncTask(BG_GEN_ALIAS, "Ick");
+	}
+	
+	@Async(BG_GEN_TOKEN)
+	public void generateToken() {
+		
+		token = Math.random();	
+		
+		shadow.getSupportManager().runUITask(UI_UPDATE_TOKEN);
+	}
+	
+	@UI(UI_UPDATE_TOKEN)
+	public void updateToken() {
+		
+		((TextView)getView().findViewById(R.id.txtToken)).setText(String.valueOf(token));
+	}
+	
+	@Async(BG_GEN_ALIAS)
+	public void generateAlias(String prefix) {
+		
+		alias = prefix + " le Bot";
+		
+		shadow.getSupportManager().runUITask(UI_UPDATE_ALIAS, alias);
+	}
+	
+	@UI(value = UI_UPDATE_ALIAS, delay = 500)
+	public void updateAlias(String generatedAlias) {
+		
+		((TextView)getView().findViewById(R.id.txtAlias)).setText(generatedAlias);
 	}
 }

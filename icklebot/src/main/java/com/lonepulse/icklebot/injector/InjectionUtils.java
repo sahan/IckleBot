@@ -23,8 +23,10 @@ package com.lonepulse.icklebot.injector;
 
 import android.util.Log;
 
+import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
 import com.lonepulse.icklebot.injector.explicit.ExplicitInjectors;
 import com.lonepulse.icklebot.injector.implicit.ImplicitInjectors;
+import com.lonepulse.icklebot.profile.ProfileService;
 import com.lonepulse.icklebot.task.TaskManagers;
 
 /**
@@ -58,17 +60,20 @@ public final class InjectionUtils {
 	public static void inject(Injector.Configuration config) {
 
 		long millis = System.currentTimeMillis();
+
+		if(ProfileService.getInstance(config.getContext()).isActive(config.getContext(), PROFILE.INJECTION)) {
 		
-		ExplicitInjectors.CONFIGURATION.inject(config);
-		ExplicitInjectors.LAYOUT.inject(config);
-		
-		if(config.getInjectionMode().equals(InjectionMode.EXPLICIT)) {
+			ExplicitInjectors.CONFIGURATION.inject(config);
+			ExplicitInjectors.LAYOUT.inject(config);
 			
-			InjectionUtils.injectExplicitly(config);
-		}
-		else {
-			
-			InjectionUtils.injectImplicitly(config);
+			if(config.getInjectionMode().equals(InjectionMode.EXPLICIT)) {
+				
+				InjectionUtils.injectExplicitly(config);
+			}
+			else {
+				
+				InjectionUtils.injectImplicitly(config);
+			}
 		}
 		
 		millis = System.currentTimeMillis() - millis;

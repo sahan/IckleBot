@@ -22,10 +22,8 @@ package com.lonepulse.icklebot;
 
 import android.os.Bundle;
 
-import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
 import com.lonepulse.icklebot.injector.InjectionUtils;
 import com.lonepulse.icklebot.injector.Injector;
-import com.lonepulse.icklebot.profile.ProfileService;
 
 /**
  * <p>This profile offers dependency injection features.
@@ -55,10 +53,6 @@ abstract class InjectionActivity extends ThreadingActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
-
-		if(ProfileService.getInstance(getApplicationContext()).isActive(this, PROFILE.INJECTION)) {
-	
-			InjectionUtils.inject(INJECTOR_CONFIGURATION);
-		}
+		InjectionUtils.inject(INJECTOR_CONFIGURATION);
 	}
 }

@@ -60,11 +60,11 @@ public final class PermissionUtils {
 	 * 
 	 * @since 1.1.0
 	 */
-	public static boolean areAllGranted(Context context, Set<String> permissions) {
+	public static boolean areAllGranted(Object context, Set<String> permissions) {
 		
 		for (String permission : permissions) {
 			
-			if(context.checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_DENIED) {
+			if(ContextUtils.discover(context).checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_DENIED) {
 				
 				return false;
 			}
@@ -88,11 +88,12 @@ public final class PermissionUtils {
 	 * 
 	 * @since 1.1.0
 	 */
-	public static boolean areAnyGranted(Context context, Set<String> permissions) {
+	public static boolean areAnyGranted(Object context, Set<String> permissions) {
 		
 		for (String permission : permissions) {
 			
-			if(context.checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_GRANTED) {
+			if(ContextUtils.discover(context)
+				.checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_GRANTED) {
 				
 				return true;
 			}
@@ -116,9 +117,10 @@ public final class PermissionUtils {
 	 * 
 	 * @since 1.1.0
 	 */
-	public static boolean isGranted(Context context, String permission) {
+	public static boolean isGranted(Object context, String permission) {
 		
-		if(context.checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_GRANTED) {
+		if(ContextUtils.discover(context)
+			.checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_GRANTED) {
 				
 			return true;
 		}

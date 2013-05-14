@@ -23,6 +23,9 @@ package com.lonepulse.icklebot.event;
 
 import android.util.Log;
 
+import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
+import com.lonepulse.icklebot.profile.ProfileService;
+
 /**
  * <p>This class offers a set of utility operations for event linking.
  * 
@@ -52,11 +55,14 @@ public final class EventUtils {
 		
 		long millis = System.currentTimeMillis();
 
-		EventLinkers[] allLinkers = EventLinkers.values();
+		if(ProfileService.getInstance(config.getContext()).isActive(config.getContext(), PROFILE.EVENT)) {
 		
-		for (EventLinkers eventLinker : allLinkers) {
+			EventLinkers[] allLinkers = EventLinkers.values();
 			
-			eventLinker.link(config);
+			for (EventLinkers eventLinker : allLinkers) {
+				
+				eventLinker.link(config);
+			}
 		}
 		
 		millis = System.currentTimeMillis() - millis;

@@ -24,13 +24,12 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Set;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.lonepulse.icklebot.annotation.inject.Stateful;
+import com.lonepulse.icklebot.util.ContextUtils;
 import com.lonepulse.icklebot.util.FieldUtils;
 
 /**
@@ -68,17 +67,17 @@ public class StateService implements StateManager {
 	/**
 	 * <p>Creates a new instance of an implementation of {@link StateManager}.
 	 * 
-	 * @param application
-	 * 			the {@link Context} of the {@link Application} instance via 
-	 * 			{@link Activity#getApplication()} or {@link Activity#getApplicationContext()}
+	 * @param context
+	 * 			the invocation context
 	 * 
 	 * @return a new instance of {@link StateManager}.
 	 * 
 	 * @since 1.1.1
 	 */
-	public static final synchronized StateManager getInstance(Context applicationContext) {
+	public static final synchronized StateManager getInstance(Object context) {
 		
-		return (instance == null)? (instance = new StateService(applicationContext)) :instance;
+		return (instance == null)? 
+				(instance = new StateService(ContextUtils.asApplication(context))) :instance;
 	}
 	
 	/**

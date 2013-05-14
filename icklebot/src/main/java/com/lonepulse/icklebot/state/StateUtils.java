@@ -24,6 +24,8 @@ package com.lonepulse.icklebot.state;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
+import com.lonepulse.icklebot.profile.ProfileService;
 import com.lonepulse.icklebot.util.ContextUtils;
 
 /**
@@ -46,14 +48,23 @@ public final class StateUtils {
 	 */
 	public static void onSaveInstanceState(Object context, Bundle outState) {
 
-		long millis = System.currentTimeMillis();
+		if(ProfileService.getInstance(context).isActive(context, PROFILE.STATE) && outState != null) {
+			
+			long millis = System.currentTimeMillis();
 		
-		StateService.newInstance(ContextUtils.discover(context)).save(context, outState);
+			if(ContextUtils.isFragment(context))
+				ContextUtils.asFragment(context).setRetainInstance(true);
 			
-		millis = System.currentTimeMillis() - millis;
+			else if(ContextUtils.isSupportFragment(context)) 
+				ContextUtils.asSupportFragment(context).setRetainInstance(true);
 			
-		Log.i("INSTRUMENTATION:IckleStateProfile#onSaveInstanceState", 
-			  StateUtils.class.getClass().getSimpleName() + ": " + millis + "ms");
+			StateService.newInstance(ContextUtils.discover(context)).save(context, outState);
+			
+			millis = System.currentTimeMillis() - millis;
+				
+			Log.i("INSTRUMENTATION:IckleStateProfile#onSaveInstanceState", 
+				  StateUtils.class.getClass().getSimpleName() + ": " + millis + "ms");
+		}
 	}
 	
 	/**
@@ -61,13 +72,16 @@ public final class StateUtils {
 	 */
 	public static void onRestoreInstanceState(Object context, Bundle savedInstanceState) {
 		
-		long millis = System.currentTimeMillis();
+		if(ProfileService.getInstance(context).isActive(context, PROFILE.STATE) && savedInstanceState != null) {
 			
-		StateService.newInstance(ContextUtils.discover(context)).restore(context, savedInstanceState);
+			long millis = System.currentTimeMillis();
+		
+			StateService.newInstance(ContextUtils.discover(context)).restore(context, savedInstanceState);
 			
-		millis = System.currentTimeMillis() - millis;
-			
-		Log.i("INSTRUMENTATION:IckleStateProfile#onRestoreInstanceState", 
-			  StateUtils.class.getClass().getSimpleName() + ": " + millis + "ms");
+			millis = System.currentTimeMillis() - millis;
+				
+			Log.i("INSTRUMENTATION:IckleStateProfile#onRestoreInstanceState", 
+				  StateUtils.class.getClass().getSimpleName() + ": " + millis + "ms");
+		}
 	}
 }

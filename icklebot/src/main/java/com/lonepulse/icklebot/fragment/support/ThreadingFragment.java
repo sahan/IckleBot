@@ -21,11 +21,6 @@ package com.lonepulse.icklebot.fragment.support;
  */
 
 
-import android.os.Bundle;
-
-import com.lonepulse.icklebot.IckleActivity;
-import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
-import com.lonepulse.icklebot.profile.ProfileService;
 import com.lonepulse.icklebot.task.TaskUtils;
 
 /**
@@ -37,26 +32,7 @@ import com.lonepulse.icklebot.task.TaskUtils;
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 abstract class ThreadingFragment extends DataFragment {
-
 	
-	/**
-	 * <p>This flag determines if {@link PROFILE#THREADING} has been activated 
-	 * on the {@link IckleActivity}. 
-	 */
-	private boolean isProfileActive;
-	
-	
-	/**
-	 * Determines if {@link PROFILE#THREADING} has been activated.
-	 */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		
-		super.onCreate(savedInstanceState);
-		
-		isProfileActive = ProfileService.getInstance(
-			getActivity().getApplicationContext()).isActive(this, PROFILE.THREADING);
-	}
 	
 	/**
 	 * <p>See {@link AsyncTaskService#execute(ThreadingActivity, int, Object...)}.</p>
@@ -65,7 +41,7 @@ abstract class ThreadingFragment extends DataFragment {
 	 */
 	protected void runAsyncTask(int asyncTaskId, Object... args) {
 		
-		TaskUtils.runAsyncTask(getActivity(), isProfileActive, asyncTaskId, args);
+		TaskUtils.runAsyncTask(this, asyncTaskId, args);
 	}
 	
 	/**
@@ -75,6 +51,6 @@ abstract class ThreadingFragment extends DataFragment {
 	 */
 	protected void runUITask(int uiTaskId, final Object... args) {
 
-		TaskUtils.runUITask(getActivity(), isProfileActive, uiTaskId, args);
+		TaskUtils.runUITask(this, uiTaskId, args);
 	}
 }

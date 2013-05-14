@@ -23,6 +23,9 @@ package com.lonepulse.icklebot.task;
 
 import android.util.Log;
 
+import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
+import com.lonepulse.icklebot.profile.ProfileService;
+
 /**
  * <p>This class offers a set of utility operations for task execution.
  * 
@@ -43,10 +46,10 @@ public final class TaskUtils {
 	 * 
 	 * @since 1.1.0
 	 */
-	public static void runAsyncTask(Object context, boolean isProfileActive, int asyncTaskId, Object... args) {
+	public static void runAsyncTask(Object context, int asyncTaskId, Object... args) {
 		
-		if(!isProfileActive) {
-			
+		if(!ProfileService.getInstance(context).isActive(context, PROFILE.THREADING)) {
+
 			StringBuilder builder = new StringBuilder()
 			.append("Async task with ID ")
 			.append(asyncTaskId)
@@ -65,9 +68,9 @@ public final class TaskUtils {
 	 * 
 	 * @since 1.1.0
 	 */
-	public static void runUITask(Object context, boolean isProfileActive, int uiTaskId, final Object... args) {
+	public static void runUITask(Object context, int uiTaskId, final Object... args) {
 
-		if(!isProfileActive) {
+		if(!ProfileService.getInstance(context).isActive(context, PROFILE.THREADING)) {
 		
 			StringBuilder builder = new StringBuilder()
 			.append("UI task with ID ")

@@ -35,9 +35,8 @@ import com.lonepulse.icklebot.injector.InjectionUtils;
 import com.lonepulse.icklebot.injector.Injector;
 import com.lonepulse.icklebot.network.NetworkManager;
 import com.lonepulse.icklebot.network.NetworkUtils;
-import com.lonepulse.icklebot.state.StateManager;
-import com.lonepulse.icklebot.state.StateService;
-import com.lonepulse.icklebot.task.TaskManagers;
+import com.lonepulse.icklebot.state.StateUtils;
+import com.lonepulse.icklebot.task.TaskUtils;
 import com.lonepulse.icklebot.util.ContextUtils;
 
 /**
@@ -198,7 +197,6 @@ public interface IckleSupportManager extends Serializable {
 				
 				private static final long serialVersionUID = 5949321867738227878L;
 
-				private StateManager stateService = StateService.newInstance(ContextUtils.discover(context));
 				private Context baseContext = ContextUtils.discover(context);
 				
 				@Override
@@ -222,25 +220,25 @@ public interface IckleSupportManager extends Serializable {
 				@Override
 				public void runAsyncTask(int asyncTaskId, Object... args) {
 
-					TaskManagers.ASYNC.execute(context, asyncTaskId, args);
+					TaskUtils.runAsyncTask(context, asyncTaskId, args);
 				}
 
 				@Override
 				public void runUITask(int uiTaskId, Object... args) {
 					
-					TaskManagers.UI.execute(context, uiTaskId, args);
+					TaskUtils.runUITask(context, uiTaskId, args);
 				}
 
 				@Override
 				public void onSaveInstanceState(Bundle outState) {
 					
-					stateService.save(context, outState);
+					StateUtils.onSaveInstanceState(context, outState);
 				}
 
 				@Override
 				public void onRestoreInstanceState(Bundle savedInstanceState) {
 					
-					stateService.restore(context, savedInstanceState);
+					StateUtils.onRestoreInstanceState(context, savedInstanceState);
 				}
 
 				@Override

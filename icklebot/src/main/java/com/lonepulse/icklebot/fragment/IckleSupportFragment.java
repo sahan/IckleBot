@@ -34,6 +34,7 @@ import com.lonepulse.icklebot.IckleBotRuntimeException;
 import com.lonepulse.icklebot.IckleSupportManager;
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.app.Fragment;
+import com.lonepulse.icklebot.app.SupportFragment;
 import com.lonepulse.icklebot.injector.IllegalContextException;
 import com.lonepulse.icklebot.util.ContextUtils;
 import com.lonepulse.icklebot.util.TypeUtils;
@@ -43,11 +44,11 @@ import com.lonepulse.icklebot.util.TypeUtils;
  * additional utilities for supporting IckleBot's features in Fragments 
  * and Support {@link android.support.v4.app.Fragment}s.
  * 
- * @version 1.1.0
+ * @version 1.1.2
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public class IckleSupportFragment implements Fragment {
+public class IckleSupportFragment implements SupportFragment {
 
 	
 	/**
@@ -59,6 +60,11 @@ public class IckleSupportFragment implements Fragment {
 	 * <p>The {@link IckleSupportManager.Builder} which is configured for this fragment.
 	 */
 	private IckleSupportManager.Builder supportManagerBuilder;
+	
+	/**
+	 * <p>The {@link IckleSupportManager} which was built using {@link #supportManagerBuilder}.
+	 */
+	private IckleSupportManager supportManager;
 	
 	
 	/**
@@ -79,9 +85,10 @@ public class IckleSupportFragment implements Fragment {
 	}
 	
 	/**
-	 * <p>Creates a new IckleBot {@link Fragment} which shadows an existing 
+	 * <p>Creates a new IckleBot {@link SupportFragment} which shadows an existing 
 	 * {@link android.app.Fragment} or Support {@link android.support.v4.app.Fragment} 
-	 * and incorporates 
+	 * and incorporates the given {@link IckleSupportManager.Builder} into its configuration 
+	 * (accessible via {@link #getSupportManager()}). 
 	 *
 	 * @param fragment
 	 * 			the fragment or support-fragment which this {@link IckleSupportFragment} 
@@ -95,8 +102,9 @@ public class IckleSupportFragment implements Fragment {
 	 * 
 	 * @since 1.1.0
 	 */
-	public static final Fragment shadow(Object fragment, IckleSupportManager.Builder supportManagerBuilder) {
+	public static final SupportFragment shadow(Object fragment, IckleSupportManager.Builder supportManagerBuilder) {
 		
+		boolean hasIllegalArguments = false;
 		StringBuilder errorContext = new StringBuilder();
 		
 		if(fragment == null) {
@@ -108,8 +116,21 @@ public class IckleSupportFragment implements Fragment {
 			.append(android.support.v4.app.Fragment.class.getName())
 			.append(" must be supplied. ");
 			
-			throw new IckleBotRuntimeException(new IllegalArgumentException(errorContext.toString()));
+			hasIllegalArguments = true;
 		}
+		
+		if(supportManagerBuilder == null) {
+			
+			errorContext
+			.append("An instance of ")
+			.append(IckleSupportManager.Builder.class.getName())
+			.append(" must be supplied. ");
+			
+			hasIllegalArguments = true;
+		}
+		
+		if(hasIllegalArguments)
+			throw new IckleBotRuntimeException(new IllegalArgumentException(errorContext.toString()));
 		
 		if(supportManagerBuilder != null && supportManagerBuilder.isBuilt()) {
 			
@@ -125,22 +146,27 @@ public class IckleSupportFragment implements Fragment {
 	}
 	
 	/**
-	 * <p>Creates a new IckleBot {@link Fragment} which shadows an existing 
-	 * {@link android.app.Fragment} or Support {@link android.support.v4.app.Fragment}
+	 * <p>Creates a new IckleBot {@link SupportFragment} which shadows an existing 
+	 * {@link android.app.Fragment} or Support {@link android.support.v4.app.Fragment} 
+	 * and incorporates a default {@link IckleSupportManager.Builder} (no features enabled) 
+	 * into its configuration (accessible via {@link #getSupportManager()}). 
 	 *
 	 * @param fragment
 	 * 			the fragment or support-fragment which this {@link IckleSupportFragment} 
 	 * 			should shadow
 	 * 
-	 * @return a new instance of {@link Fragment}
+	 * @return a new instance of {@link SupportFragment}
 	 * 
 	 * @since 1.1.0
 	 */
-	public static final Fragment shadow(Object fragment) {
+	public static final SupportFragment shadow(Object fragment) {
 		
-		return IckleSupportFragment.shadow(fragment, null);
+		return IckleSupportFragment.shadow(fragment, new IckleSupportManager.Builder(fragment));
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
@@ -179,10 +205,54 @@ public class IckleSupportFragment implements Fragment {
 		return null;
 	}
 
+	/**
+	 * <p>See {@link android.app.Fragment#onViewCreated(View, Bundle)}.
+	 * 
+	 * @since 1.1.2
+	 */
 	@Override
-	public void onStart() {
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		
+		supportManager = supportManagerBuilder.build();
+	}
+	
+	/**
+	 * <p>See {@link android.app.Fragment#onActivityCreated(Bundle)}.
+	 * 
+	 * @since 1.1.2
+	 */
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		
+		supportManager.onRestoreInstanceState(savedInstanceState);
+	}
 
-		if(supportManagerBuilder != null)
-			supportManagerBuilder.build();
+	/**
+	 * <p>Retrives the {@link IckleSupportManager} being used by this support 
+	 * fragment. The {@link IckleSupportManager} is built during the {@link #onStart()} 
+	 * lifecycle-callback. Invoking {@link #getSupportManager()} before this phase 
+	 * will result in a {@code null} result.
+	 * 
+	 * @return the {@link IckleSupportManager} associated with this support fragment, 
+	 * 		   else {@code null} if the fragment lifecycle has not yet progressed 
+	 * 		   beyond the {@link #onStart()} phase
+	 * 
+	 * @since 1.1.1
+	 */
+	@Override
+	public IckleSupportManager getSupportManager() {
+		
+		return supportManager;
+	}
+
+	/**
+	 * <p>See {@link android.app.Fragment#onSaveInstanceState(Bundle)}.
+	 * 
+	 * @since 1.1.2
+	 */
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		
+		supportManager.onSaveInstanceState(outState);
 	}
 }

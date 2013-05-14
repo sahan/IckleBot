@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.test.activity;
+package com.lonepulse.icklebot.test.fragment.support;
 
 /*
  * #%L
@@ -21,12 +21,10 @@ package com.lonepulse.icklebot.test.activity;
  */
 
 
-import android.os.Bundle;
-
 import com.lonepulse.icklebot.IckleActivity;
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.annotation.inject.Stateful;
-import com.lonepulse.icklebot.annotation.inject.Title;
+import com.lonepulse.icklebot.fragment.support.IckleFragment;
 import com.lonepulse.icklebot.test.R;
 
 /**
@@ -40,31 +38,9 @@ import com.lonepulse.icklebot.test.R;
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 @Layout(R.layout.act_explicit_injection)
-@Title(R.string.ttl_act_explicit_injection)
-public class StateActivity extends IckleActivity {
+public class StateFragment extends IckleFragment {
 	
 
 	@Stateful
 	int intMajorVersion = 1;
-	
-	
-	/**
-	 * <p>Exposes {@link #onCreate(Bundle)} and allows unit 
-	 * tests to it from an external context.
-	 */
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-
-		super.onCreate(savedInstanceState);
-	}
-	
-	/**
-	 * <p>Exposes {@link #onSaveInstanceState(Bundle)} and allows unit 
-	 * tests to it from an external context.
-	 */
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-	
-		super.onSaveInstanceState(outState);
-	}
 }

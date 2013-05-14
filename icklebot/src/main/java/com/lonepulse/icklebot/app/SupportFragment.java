@@ -1,4 +1,6 @@
-package com.lonepulse.icklebot.fragment;
+package com.lonepulse.icklebot.app;
+
+import com.lonepulse.icklebot.IckleSupportManager;
 
 /*
  * #%L
@@ -21,36 +23,24 @@ package com.lonepulse.icklebot.fragment;
  */
 
 
-import com.lonepulse.icklebot.task.TaskUtils;
-
 /**
- * <p>This profile offers an alternative threading model for running background 
- * worker threads and posting events on the UI thread.
+ * <p>This contract is followed by Fragments which offer services 
+ * supported by the {@link IckleSupportManager}.
+ * 
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-abstract class ThreadingFragment extends DataFragment {
-	
-	
-	/**
-	 * <p>See {@link AsyncTaskService#execute(ThreadingActivity, int, Object...)}.</p>
-	 * 
-	 * @since 1.1.0
-	 */
-	protected void runAsyncTask(int asyncTaskId, Object... args) {
-		
-		TaskUtils.runAsyncTask(this, asyncTaskId, args);
-	}
-	
-	/**
-	 * <p>See {@link UITaskService#execute(ThreadingActivity, int, Object...)}.</p>
-	 * 
-	 * @since 1.1.0
-	 */
-	protected void runUITask(int uiTaskId, final Object... args) {
+public interface SupportFragment extends Fragment {
 
-		TaskUtils.runUITask(this, uiTaskId, args);
-	}
+	/**
+	 * <p>Retrieves the instance of the {@link IckleSupportManager} 
+	 * associated with this {@link SupportFragment}. 
+	 *
+	 * @return the associated {@link IckleSupportManager}
+	 * 
+	 * @since 1.1.0
+	 */
+	IckleSupportManager getSupportManager();
 }

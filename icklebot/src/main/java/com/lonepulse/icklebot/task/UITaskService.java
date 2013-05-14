@@ -72,7 +72,7 @@ class UITaskService implements TaskManager {
 							method.invoke(context, args);
 						} 
 						catch (Exception e) {
-										
+							
 							StringBuilder stringBuilder = new StringBuilder()
 							.append("Failed to execute UI task ")
 							.append(method.getName())
@@ -94,8 +94,6 @@ class UITaskService implements TaskManager {
 						Thread.sleep(uiTask.delay());
 					}
 					catch (InterruptedException ie) {
-						
-						Thread.currentThread().interrupt();
 						
 						StringBuilder stringBuilder = new StringBuilder()
 						.append("UI task delay of ")

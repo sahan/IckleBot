@@ -22,12 +22,11 @@ package com.lonepulse.icklebot.network;
 
 
 import android.Manifest;
-import android.app.Application;
-import android.content.Context;
 
 import com.lonepulse.icklebot.IckleActivity;
 import com.lonepulse.icklebot.PermissionDeniedException;
 import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
+import com.lonepulse.icklebot.util.ContextUtils;
 import com.lonepulse.icklebot.util.PermissionUtils;
 
 /**
@@ -58,6 +57,9 @@ public final class NetworkUtils {
 	 * </ul>
 	 * </p>
 	 * 
+	 * @param context
+	 * 			the invocation context
+	 * 
 	 * @return an instance of {@link NetworkManager}
 	 * 
 	 * @throws PermissionDeniedException
@@ -65,17 +67,17 @@ public final class NetworkUtils {
 	 * 
 	 * @since 1.1.0
 	 */
-	public static NetworkManager getNetworkManager(Context context) {
+	public static NetworkManager getNetworkManager(Object context) {
 		
 		if(!PermissionUtils.isGranted(context, Manifest.permission.ACCESS_NETWORK_STATE))
 			throw new PermissionDeniedException(
 					Manifest.permission.ACCESS_NETWORK_STATE, 
 					IckleActivity.class.getSimpleName() + "#network()");
 		
-		if(context instanceof Application)
+		if(ContextUtils.isApplication(context))
 			return NetworkService.getInstance(context);
 		
 		else
-			return NetworkService.newInstance(context);
+			return NetworkService.newInstance(ContextUtils.discover(context));
 	}
 }

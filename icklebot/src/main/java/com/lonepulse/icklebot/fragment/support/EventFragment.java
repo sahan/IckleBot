@@ -22,13 +22,12 @@ package com.lonepulse.icklebot.fragment.support;
 
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.lonepulse.icklebot.IckleActivity;
-import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
 import com.lonepulse.icklebot.event.EventLinker;
 import com.lonepulse.icklebot.event.EventLinkers;
 import com.lonepulse.icklebot.event.EventUtils;
-import com.lonepulse.icklebot.profile.ProfileService;
 
 /**
  * <p>This profile offers event linking features.
@@ -52,17 +51,12 @@ abstract class EventFragment extends StateFragment {
 	
 	
 	/**
-	 * <p>Performs <b>event listener linking</b> by invoking {@link #link()}.</p>
+	 * <p>Performs <b>event listener linking</b> by invoking {@link EventUtils#link()}.</p>
 	 */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		
-		super.onCreate(savedInstanceState);
-		
-		if(ProfileService.getInstance(
-			getActivity().getApplicationContext()).isActive(this, PROFILE.EVENT)) {
-			
-			EventUtils.link(EVENT_CONFIGURATION);
-		}
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+	
+		super.onViewCreated(view, savedInstanceState);
+		EventUtils.link(EVENT_CONFIGURATION);
 	}
 }

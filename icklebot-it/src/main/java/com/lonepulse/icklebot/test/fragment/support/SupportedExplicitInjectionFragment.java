@@ -49,14 +49,13 @@ import com.lonepulse.icklebot.annotation.inject.InjectString;
 import com.lonepulse.icklebot.annotation.inject.InjectView;
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.fragment.IckleSupportFragment;
-import com.lonepulse.icklebot.fragment.support.IckleFragment;
 import com.lonepulse.icklebot.test.R;
 import com.lonepulse.icklebot.test.app.ApplicationService;
 import com.lonepulse.icklebot.test.service.AccountsService;
 import com.lonepulse.icklebot.test.service.AccountsServiceImpl;
 
 /**
- * <p>An extension of {@link IckleFragment} which is used to test the 
+ * <p>An extension of {@link Fragment} which is used to test the 
  * <b>explicit runtime injection</b> features of IckleBot on fragments 
  * using the {@link IckleSupportManager}.
  * 
@@ -124,15 +123,15 @@ public class SupportedExplicitInjectionFragment extends Fragment {
 	
 	
 	@Override
-	public void onStart() {
-
-		super.onStart();
-		shadow.onStart();
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	
+		return shadow.onCreateView(inflater, container, savedInstanceState);
 	}
 	
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-	
-		return shadow.onCreateView(inflater, container, savedInstanceState); //super !invoked, user aware of @Layout
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		
+		super.onViewCreated(view, savedInstanceState);
+		shadow.onViewCreated(view, savedInstanceState);
 	}
 }

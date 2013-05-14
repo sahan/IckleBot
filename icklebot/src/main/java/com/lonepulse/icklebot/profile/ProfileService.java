@@ -21,13 +21,12 @@ package com.lonepulse.icklebot.profile;
  */
 
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 
 import com.lonepulse.icklebot.IckleActivity;
 import com.lonepulse.icklebot.annotation.profile.Profiles;
 import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
+import com.lonepulse.icklebot.util.ContextUtils;
 
 /**
  * <p>This is a utility class which is used to determine the activation status 
@@ -63,17 +62,17 @@ public class ProfileService implements ProfileManager {
 	/**
 	 * <p>Creates a new instance of an implementation of {@link ProfileManager}.
 	 * 
-	 * @param application
-	 * 			the {@link Context} of the {@link Application} instance via 
-	 * 			{@link Activity#getApplication()} or {@link Activity#getApplicationContext()}
+	 * @param context
+	 * 			the invocation context
 	 * 
 	 * @return a new instance of {@link ProfileManager}.
 	 * 
 	 * @since 1.1.1
 	 */
-	public static final synchronized ProfileManager getInstance(Context applicationContext) {
+	public static final synchronized ProfileManager getInstance(Object context) {
 		
-		return (instance == null)? (instance = new ProfileService(applicationContext)) :instance;
+		return (instance == null)? 
+				(instance = new ProfileService(ContextUtils.asApplication(context))) :instance;
 	}
 	
 	/**

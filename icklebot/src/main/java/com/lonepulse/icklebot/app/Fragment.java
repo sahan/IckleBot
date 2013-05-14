@@ -26,23 +26,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.lonepulse.icklebot.IckleSupportManager;
+
 
 /**
  * <p>This contract defines additional support operations offered specifically 
- * on {@link android.app.Fragment}s and support {@link android.support.v4.app.Fragment}s.
+ * on {@link android.app.Fragment}s and support {@link android.support.v4.app.Fragment}s 
+ * by making use of the {@link IckleSupportManager}.
  * 
- * @version 1.1.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 public interface Fragment {
 	
 	/**
-	 * <p>See {@link android.app.Fragment#onStart()}.
+	 * <p>See {@link android.app.Fragment#onViewCreated(View, Bundle)}.
 	 * 
-	 * @since 1.1.0
+	 * @since 1.1.1
 	 */
-	void onStart();
+	void onViewCreated(View view, Bundle savedInstanceState);
+	
+	/**
+	 * <p>See {@link android.app.Fragment#onActivityCreated(Bundle)}. 
+	 *
+	 * @since 1.1.1
+	 */
+	void onActivityCreated (Bundle savedInstanceState);
 	
 	/**
 	 * <p>See {@link android.app.Fragment#onCreateView(LayoutInflater, ViewGroup, Bundle)}.
@@ -50,4 +60,11 @@ public interface Fragment {
 	 * @since 1.1.0
 	 */
 	View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
+	
+	/**
+	 * <p>See {@link android.app.Fragment#onSaveInstanceState(Bundle)}.
+	 * 
+	 * @since 1.1.1
+	 */
+	void onSaveInstanceState(Bundle outState);
 }

@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.test.activity;
+package com.lonepulse.icklebot.test.fragment.support;
 
 /*
  * #%L
@@ -31,7 +31,7 @@ import android.os.Bundle;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 
 /**
- * <p>Unit test for {@link StateActivity}.
+ * <p>Unit test for {@link StateFragment}.
  * 
  * @category test
  * <br><br>
@@ -40,14 +40,14 @@ import com.xtremelabs.robolectric.RobolectricTestRunner;
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 @RunWith(RobolectricTestRunner.class)
-public class StateActivityTest {
+public class StateFragmentTest {
 	
 
 	/**
-	 * <p>The instance of {@link StateActivity} whose 
-	 * state management features are to be tested.
+	 * <p>The instance of {@link FragmentActivityTemplate} which 
+	 * takes an {@link StateFragment} for testing event linking.
 	 */
-	private StateActivity activity;
+	private FragmentActivityTemplate<StateFragment> activity;
 
 	/**
 	 * <p>The {@link Bundle} which is used to save and 
@@ -66,7 +66,7 @@ public class StateActivityTest {
 	@Before
 	public final void setUp() throws Exception {
 		
-		activity = new StateActivity();
+		activity = new FragmentActivityTemplate<StateFragment>(StateFragment.class);
 		activity.onCreate(bundle = new Bundle());
 	}
 
@@ -81,11 +81,11 @@ public class StateActivityTest {
 	@Test
 	public final void testState() throws Exception {
 	
-		activity.intMajorVersion = 8;
+		activity.fragment.intMajorVersion = 8;
 		
 		assertTrue(bundle.getInt("intMajorVersion", 0) == 0);
 		
-		activity.onSaveInstanceState(bundle);
+		activity.fragment.onSaveInstanceState(bundle);
 
 		assertTrue(bundle.getInt("intMajorVersion", 0) != 0);
 	}

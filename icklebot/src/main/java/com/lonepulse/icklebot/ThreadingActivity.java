@@ -20,10 +20,6 @@ package com.lonepulse.icklebot;
  * #L%
  */
 
-import android.os.Bundle;
-
-import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
-import com.lonepulse.icklebot.profile.ProfileService;
 import com.lonepulse.icklebot.task.TaskUtils;
 
 /**
@@ -38,31 +34,13 @@ abstract class ThreadingActivity extends DataActivity {
 	
 	
 	/**
-	 * <p>This flag determines if {@link PROFILE#THREADING} has been activated 
-	 * on the {@link IckleActivity}. 
-	 */
-	private boolean isProfileActive;
-	
-	
-	/**
-	 * <p>Checks whether {@link PROFILE#THREADING} is active.
-	 */
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-	
-		super.onCreate(savedInstanceState);
-		
-		isProfileActive = ProfileService.getInstance(getApplicationContext()).isActive(this, PROFILE.THREADING);
-	}
-
-	/**
 	 * <p>See {@link AsyncTaskService#execute(ThreadingActivity, int, Object...)}.</p>
 	 * 
 	 * @since 1.1.0
 	 */
 	protected void runAsyncTask(int asyncTaskId, Object... args) {
 		
-		TaskUtils.runAsyncTask(this, isProfileActive, asyncTaskId, args);
+		TaskUtils.runAsyncTask(this, asyncTaskId, args);
 	}
 	
 	/**
@@ -72,6 +50,6 @@ abstract class ThreadingActivity extends DataActivity {
 	 */
 	protected void runUITask(int uiTaskId, final Object... args) {
 
-		TaskUtils.runUITask(this, isProfileActive, uiTaskId, args);
+		TaskUtils.runUITask(this, uiTaskId, args);
 	}
 }

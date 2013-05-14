@@ -35,7 +35,7 @@ import android.view.ViewGroup;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public abstract class IckleFragment extends EventFragment {
+public abstract class IckleFragment extends EventFragment implements com.lonepulse.icklebot.app.Fragment {
 
 	
 	/**

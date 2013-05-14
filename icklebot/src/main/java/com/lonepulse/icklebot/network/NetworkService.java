@@ -28,6 +28,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
 
+import com.lonepulse.icklebot.util.ContextUtils;
+
 /**
  * <p>A concrete implementation of {@link NetworkManager} which offers 
  * services for querying network information.
@@ -61,7 +63,7 @@ public class NetworkService implements NetworkManager {
 	/**
 	 * <p>Creates a new instance of an implementation of {@link NetworkManager}.
 	 * 
-	 * @param application
+	 * @param context
 	 * 			the {@link Context} of the {@link Application} instance via 
 	 * 			{@link Activity#getApplication()} or {@link Activity#getApplicationContext()}
 	 * 
@@ -69,9 +71,10 @@ public class NetworkService implements NetworkManager {
 	 * 
 	 * @since 1.1.1
 	 */
-	public static final synchronized NetworkManager getInstance(Context applicationContext) {
+	public static final synchronized NetworkManager getInstance(Object context) {
 		
-		return (instance == null)? (instance = new NetworkService(applicationContext)) :instance;
+		return (instance == null)? 
+				(instance = new NetworkService(ContextUtils.asApplication(context))) :instance;
 	}
 	
 	/**

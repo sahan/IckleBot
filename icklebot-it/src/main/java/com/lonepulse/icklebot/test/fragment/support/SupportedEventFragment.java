@@ -21,28 +21,26 @@ package com.lonepulse.icklebot.test.fragment.support;
  */
 
 
-import android.animation.AnimatorSet;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.lonepulse.icklebot.IckleSupportManager;
-import com.lonepulse.icklebot.annotation.inject.InjectAll;
+import com.lonepulse.icklebot.annotation.event.Click;
+import com.lonepulse.icklebot.annotation.event.Touch;
+import com.lonepulse.icklebot.annotation.inject.InjectView;
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.fragment.IckleSupportFragment;
 import com.lonepulse.icklebot.test.R;
-import com.lonepulse.icklebot.test.app.ApplicationService;
-import com.lonepulse.icklebot.test.service.AccountsService;
 
 /**
  * <p>An extension of {@link Fragment} which is used to test the 
- * <b>implicit runtime injection</b> features of IckleBot on fragments.
+ * <b>event linking</b> features of IckleBot on fragments.
  * 
  * @category test
  * <br><br>
@@ -50,47 +48,22 @@ import com.lonepulse.icklebot.test.service.AccountsService;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-@InjectAll
-@Layout(R.layout.act_implicit_injection)
-public class SupportedImplicitInjectionFragment extends Fragment {
+@Layout(R.layout.act_listener)
+public class SupportedEventFragment extends Fragment {
+	
 
-	
-	ApplicationService application;
-
-	String app_name;
-	
-	int major_version;
-	
+	@InjectView(R.id.btnSubmit)
 	Button btnSubmit;
 	
-	Drawable ic_launcher;
-	
-	int bg_generic;
-	
-	float txt_small;
-	
-	Boolean theme_generic;
-	
-	String[] font_sizes;
-	
-	int[] audio_level;
-	
-	Animation fade_out;
-	
-	AnimatorSet grow;
-	
-	TelephonyManager telephony_service;
-	
-	AccountsService accountsService;
-	
-	@Layout(R.layout.act_explicit_injection)
-	ViewGroup rootView;
+	@InjectView(R.id.txtAlias)
+	TextView txtAlias;
 	
 	
 	private com.lonepulse.icklebot.app.Fragment shadow;
 	{
 		shadow = IckleSupportFragment.shadow(this, new IckleSupportManager.Builder(this)
-		.enableInjectionSupport());
+		.enableInjectionSupport()
+		.enableEventSupport());
 	}
 	
 	
@@ -105,5 +78,20 @@ public class SupportedImplicitInjectionFragment extends Fragment {
 		
 		super.onViewCreated(view, savedInstanceState);
 		shadow.onViewCreated(view, savedInstanceState);
+	}
+	
+	@Click(R.id.btnSubmit)
+	public void onSubmit(Button button) {
+		
+		button.setText("Submitted");
+	}
+	
+	@Touch(R.id.txtAlias)
+	public void onTouch(TextView textView, MotionEvent motionEvent) {
+		
+		if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+			
+			textView.setText("Ick le Bot");
+		}
 	}
 }

@@ -23,8 +23,6 @@ package com.lonepulse.icklebot.fragment.support;
 
 import android.os.Bundle;
 
-import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
-import com.lonepulse.icklebot.profile.ProfileService;
 import com.lonepulse.icklebot.state.StateUtils;
 
 /**
@@ -44,14 +42,7 @@ abstract class StateFragment extends InjectionFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		
 		super.onActivityCreated(savedInstanceState);
-		
-		if(ProfileService.getInstance(
-			getActivity().getApplicationContext()).isActive(this, PROFILE.STATE)) {
-		
-			if(!getRetainInstance()) setRetainInstance(true);
-			
-			StateUtils.onRestoreInstanceState(this, savedInstanceState);
-		}
+		StateUtils.onRestoreInstanceState(this, savedInstanceState);
 	}
 	
 	/**
@@ -61,11 +52,6 @@ abstract class StateFragment extends InjectionFragment {
 	public void onSaveInstanceState(Bundle outState) {
 		
 		super.onSaveInstanceState(outState);
-		
-		if(ProfileService.getInstance(
-			getActivity().getApplicationContext()).isActive(this, PROFILE.STATE)) {
-			
-			StateUtils.onSaveInstanceState(this, outState);
-		}
+		StateUtils.onSaveInstanceState(this, outState);
 	}
 }

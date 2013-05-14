@@ -22,8 +22,6 @@ package com.lonepulse.icklebot;
 
 import android.os.Bundle;
 
-import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
-import com.lonepulse.icklebot.profile.ProfileService;
 import com.lonepulse.icklebot.state.StateUtils;
 
 /**
@@ -43,11 +41,7 @@ abstract class StateActivity extends InjectionActivity {
 	protected void onSaveInstanceState(Bundle outState) {
 
 		super.onSaveInstanceState(outState);
-		
-		if(ProfileService.getInstance(getApplicationContext()).isActive(this, PROFILE.STATE)) {
-		
-			StateUtils.onSaveInstanceState(this, outState);
-		}
+		StateUtils.onSaveInstanceState(this, outState);
 	}
 	
 	/**
@@ -57,10 +51,6 @@ abstract class StateActivity extends InjectionActivity {
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		
 		super.onRestoreInstanceState(savedInstanceState);
-		
-		if(ProfileService.getInstance(getApplicationContext()).isActive(this, PROFILE.STATE)) {
-		
-			StateUtils.onRestoreInstanceState(this, savedInstanceState);
-		}
+		StateUtils.onRestoreInstanceState(this, savedInstanceState);
 	}
 }

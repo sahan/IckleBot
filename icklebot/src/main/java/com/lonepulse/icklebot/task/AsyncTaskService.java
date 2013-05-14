@@ -38,20 +38,7 @@ import com.lonepulse.icklebot.util.MethodUtils;
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 class AsyncTaskService implements TaskManager {
-
 	
-	/**
-	 * <p>Creates a new instance of an implementation of 
-	 * {@link TaskManager}.
-	 * 
-	 * @return a new instance of {@link TaskManager}.
-	 * 
-	 * @since 1.2.0
-	 */
-	public static final TaskManager newInstance() {
-		
-		return new AsyncTaskService();
-	}
 	
 	/**
 	 * {@inheritDoc}

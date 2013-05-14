@@ -23,12 +23,11 @@ package com.lonepulse.icklebot.fragment.support;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.View;
 
 import com.lonepulse.icklebot.IckleActivity;
-import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
 import com.lonepulse.icklebot.injector.InjectionUtils;
 import com.lonepulse.icklebot.injector.Injector;
-import com.lonepulse.icklebot.profile.ProfileService;
 
 /**
  * <p>This profile offers dependency injection features.
@@ -63,14 +62,9 @@ abstract class InjectionFragment extends ThreadingFragment {
 	 * <p>Performs <b>dependency injection</b> by invoking {@link InjectionUtils#inject()}.</p>
 	 */
 	@Override
-	public void onStart() {
-	
-		super.onStart();
+	public void onViewCreated(View view, Bundle savedInstanceState) {
 		
-		if(ProfileService.getInstance(
-			getActivity().getApplicationContext()).isActive(this, PROFILE.INJECTION)) {
-			
-			InjectionUtils.inject(INJECTOR_CONFIGURATION);
-		}
+		super.onViewCreated(view, savedInstanceState);
+		InjectionUtils.inject(INJECTOR_CONFIGURATION);
 	}
 }

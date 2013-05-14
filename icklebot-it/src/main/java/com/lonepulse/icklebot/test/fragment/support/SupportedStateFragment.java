@@ -21,28 +21,21 @@ package com.lonepulse.icklebot.test.fragment.support;
  */
 
 
-import android.animation.AnimatorSet;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.widget.Button;
 
 import com.lonepulse.icklebot.IckleSupportManager;
-import com.lonepulse.icklebot.annotation.inject.InjectAll;
 import com.lonepulse.icklebot.annotation.inject.Layout;
+import com.lonepulse.icklebot.annotation.inject.Stateful;
 import com.lonepulse.icklebot.fragment.IckleSupportFragment;
 import com.lonepulse.icklebot.test.R;
-import com.lonepulse.icklebot.test.app.ApplicationService;
-import com.lonepulse.icklebot.test.service.AccountsService;
 
 /**
  * <p>An extension of {@link Fragment} which is used to test the 
- * <b>implicit runtime injection</b> features of IckleBot on fragments.
+ * <b>state management support</b> features of IckleBot.
  * 
  * @category test
  * <br><br>
@@ -50,41 +43,12 @@ import com.lonepulse.icklebot.test.service.AccountsService;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-@InjectAll
-@Layout(R.layout.act_implicit_injection)
-public class SupportedImplicitInjectionFragment extends Fragment {
+@Layout(R.layout.act_explicit_injection)
+public class SupportedStateFragment extends Fragment {
+	
 
-	
-	ApplicationService application;
-
-	String app_name;
-	
-	int major_version;
-	
-	Button btnSubmit;
-	
-	Drawable ic_launcher;
-	
-	int bg_generic;
-	
-	float txt_small;
-	
-	Boolean theme_generic;
-	
-	String[] font_sizes;
-	
-	int[] audio_level;
-	
-	Animation fade_out;
-	
-	AnimatorSet grow;
-	
-	TelephonyManager telephony_service;
-	
-	AccountsService accountsService;
-	
-	@Layout(R.layout.act_explicit_injection)
-	ViewGroup rootView;
+	@Stateful
+	int intMajorVersion = 1;
 	
 	
 	private com.lonepulse.icklebot.app.Fragment shadow;
@@ -92,7 +56,7 @@ public class SupportedImplicitInjectionFragment extends Fragment {
 		shadow = IckleSupportFragment.shadow(this, new IckleSupportManager.Builder(this)
 		.enableInjectionSupport());
 	}
-	
+
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -105,5 +69,19 @@ public class SupportedImplicitInjectionFragment extends Fragment {
 		
 		super.onViewCreated(view, savedInstanceState);
 		shadow.onViewCreated(view, savedInstanceState);
+	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		
+		super.onActivityCreated(savedInstanceState);
+		shadow.onActivityCreated(savedInstanceState);
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+
+		super.onSaveInstanceState(outState);
+		shadow.onSaveInstanceState(outState);
 	}
 }

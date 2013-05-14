@@ -25,11 +25,9 @@ package com.lonepulse.icklebot;
 import android.os.Bundle;
 import android.view.View;
 
-import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
 import com.lonepulse.icklebot.event.EventLinker;
 import com.lonepulse.icklebot.event.EventLinkers;
 import com.lonepulse.icklebot.event.EventUtils;
-import com.lonepulse.icklebot.profile.ProfileService;
 
 /**
  * <p>This profile offers the linking of event listeners to {@link View}s.
@@ -59,11 +57,7 @@ abstract class EventActivity extends StateActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
-	
-		if(ProfileService.getInstance(getApplicationContext()).isActive(this, PROFILE.EVENT)) {
-			
-			EventUtils.link(EVENT_CONFIGURATION);
-		}
+		EventUtils.link(EVENT_CONFIGURATION);
 	}
 }
 

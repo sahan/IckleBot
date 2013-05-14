@@ -49,7 +49,7 @@ class ClickEventLinker implements EventLinker {
 	@Override
 	public void link(EventLinker.Configuration config) {
 
-		final Object listenerTemplate = config.getContext();
+		final Object context = config.getContext();
 		
 		Set<Method> methods = config.getListenerTargets(EventCategory.CLICK);
 		
@@ -63,19 +63,17 @@ class ClickEventLinker implements EventLinker {
 					try {
 						
 						if(!method.isAccessible()) method.setAccessible(true);
-						
 						Class<?>[] params = method.getParameterTypes();
-						
 						boolean viewArgPresent = false;
 						
 						if(params.length == 1)
 							viewArgPresent = View.class.isAssignableFrom(params[0]);
 							
 						if(viewArgPresent)
-							method.invoke(listenerTemplate, v);
+							method.invoke(context, v);
 							
 						else
-							method.invoke(listenerTemplate);
+							method.invoke(context);
 					}
 					catch (Exception e) {
 						
@@ -83,7 +81,7 @@ class ClickEventLinker implements EventLinker {
 						.append("Invocation of ")
 						.append(method.getName())
 						.append(" at ")
-						.append(listenerTemplate.getClass().getName())
+						.append(context.getClass().getName())
 						.append(" failed for event OnClick.");
 						
 						Log.e(getClass().getName(), builder.toString(), e);
@@ -99,19 +97,19 @@ class ClickEventLinker implements EventLinker {
 
 					try {
 						
-						if(ContextUtils.isActivity(listenerTemplate)) {
+						if(ContextUtils.isActivity(context)) {
 							
-							ContextUtils.asActivity(listenerTemplate)
-											.findViewById(id).setOnClickListener(onClickListener);
+							ContextUtils.asActivity(context)
+								.findViewById(id).setOnClickListener(onClickListener);
 						}
-						else if(ContextUtils.isFragment(listenerTemplate)) {
+						else if(ContextUtils.isFragment(context)) {
 							
-							ContextUtils.asFragment(listenerTemplate)
+							ContextUtils.asFragment(context)
 								.getView().findViewById(id).setOnClickListener(onClickListener);
 						}
-						else if(ContextUtils.isSupportFragment(listenerTemplate)) {
+						else if(ContextUtils.isSupportFragment(context)) {
 							
-							ContextUtils.asSupportFragment(listenerTemplate)
+							ContextUtils.asSupportFragment(context)
 								.getView().findViewById(id).setOnClickListener(onClickListener);
 						}
 					}
@@ -121,11 +119,11 @@ class ClickEventLinker implements EventLinker {
 						.append("Click listener linking failed on method ")
 						.append(method.getName())
 						.append(" at ")
-						.append(listenerTemplate.getClass().getName())
+						.append(context.getClass().getName())
 						.append(" for view with ID ")
-						.append(ContextUtils.isActivity(listenerTemplate)? 
-							ContextUtils.asActivity(listenerTemplate).getResources().getResourceName(id)
-							:ContextUtils.asFragment(listenerTemplate).getResources().getResourceName(id))
+						.append(ContextUtils.isActivity(context)? 
+							ContextUtils.asActivity(context).getResources().getResourceName(id)
+							:ContextUtils.asFragment(context).getResources().getResourceName(id))
 						.append(".");
 						
 						Log.e(getClass().getName(), builder.toString(), e);
@@ -138,7 +136,7 @@ class ClickEventLinker implements EventLinker {
 				.append("Click listener linking failed on method ")
 				.append(method.getName())
 				.append(" at ")
-				.append(listenerTemplate.getClass().getName())
+				.append(context.getClass().getName())
 				.append(".");
 				
 				Log.e(getClass().getName(), builder.toString(), e);
