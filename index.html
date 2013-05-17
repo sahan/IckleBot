@@ -1,0 +1,251 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>IckleBot by sahan</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>IckleBot</h1>
+        <p>IckleBot /'ikəl'bôt/ noun. 1 A boilerplate code generator with a simplified threading and event model. 2 A runtime dependency injection framework.</p>
+
+        <p class="view"><a href="https://github.com/sahan/IckleBot">View the Project on GitHub <small>sahan/IckleBot</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/sahan/IckleBot/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/sahan/IckleBot/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/sahan/IckleBot">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h3>"For quick and maintainable Android development"</h3>
+
+<p>Injecting components, binding event listeners or running tasks is a breeze.   </p>
+
+<p><br></p>
+
+<h3>Introduction</h3>
+
+<hr><p>Leverage features by extending <code>IckleActivity</code>.</p>
+
+<div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TokensActivity</span> <span class="kd">extends</span> <span class="n">IckleActivity</span> <span class="o">{</span>
+<span class="o">}</span>
+</pre></div>
+
+<p><br>
+Manage activity configuration.</p>
+
+<div class="highlight"><pre><span class="nd">@Fullscreen</span>
+<span class="nd">@Layout</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">act_tokens</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TokensActivity</span> <span class="kd">extends</span> <span class="n">IckleActivity</span> <span class="o">{</span>
+<span class="o">}</span>
+</pre></div>
+
+<p><br>
+Inject views and resources.</p>
+
+<div class="highlight"><pre><span class="nd">@Fullscreen</span>
+<span class="nd">@Layout</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">act_tokens</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TokensActivity</span> <span class="kd">extends</span> <span class="n">IckleActivity</span> <span class="o">{</span>
+
+    <span class="nd">@InjectView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">token</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">TextView</span> <span class="n">token</span><span class="o">;</span>
+
+    <span class="nd">@InjectInteger</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">integer</span><span class="o">.</span><span class="na">public_token</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">publicToken</span><span class="o">;</span>
+
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onResume</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="kd">super</span><span class="o">.</span><span class="na">onResume</span><span class="o">();</span>
+        <span class="n">token</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">publicToken</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+<p><br>
+...or let IckleBot figure it out.</p>
+
+<div class="highlight"><pre><span class="nd">@InjectAll</span>
+<span class="nd">@Fullscreen</span>
+<span class="nd">@Layout</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">act_tokens</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TokensActivity</span> <span class="kd">extends</span> <span class="n">IckleActivity</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">TextView</span> <span class="n">token</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">public_token</span><span class="o">;</span>
+
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onResume</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="kd">super</span><span class="o">.</span><span class="na">onResume</span><span class="o">();</span>
+        <span class="n">token</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">public_token</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+<blockquote>
+<p>Notice that the variable names now assume the id.</p>
+</blockquote>
+
+<p><br>
+Preserve instance state.</p>
+
+<div class="highlight"><pre><span class="nd">@InjectAll</span>
+<span class="nd">@Fullscreen</span>
+<span class="nd">@Layout</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">act_tokens</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TokensActivity</span> <span class="kd">extends</span> <span class="n">IckleActivity</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">TextView</span> <span class="n">token</span><span class="o">;</span>
+
+    <span class="nd">@Stateful</span>
+    <span class="kd">private</span> <span class="n">Double</span> <span class="n">randomId</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">random</span><span class="o">();</span>
+
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onResume</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="kd">super</span><span class="o">.</span><span class="na">onResume</span><span class="o">();</span>
+        <span class="n">token</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">randomId</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+<p><br>
+Bind an event listener.</p>
+
+<div class="highlight"><pre><span class="nd">@Layout</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">act_messenger</span><span class="o">)</span>
+<span class="nd">@Title</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">string</span><span class="o">.</span><span class="na">ttl_act_messenger</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MessengerActivity</span> <span class="kd">extends</span> <span class="n">IckleActivity</span> <span class="o">{</span>
+
+    <span class="nd">@InjectView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">btn_send</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">Button</span> <span class="n">btnSend</span><span class="o">;</span>
+
+    <span class="o">...</span>   
+
+    <span class="nd">@Click</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">btn_send</span><span class="o">)</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">submit</span><span class="o">(</span><span class="n">Button</span> <span class="n">button</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="n">button</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">"Sending..."</span><span class="o">);</span>
+        <span class="o">...</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+<p><br>
+Run a background task.</p>
+
+<div class="highlight"><pre><span class="nd">@Layout</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">act_news</span><span class="o">)</span>
+<span class="nd">@Title</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">string</span><span class="o">.</span><span class="na">ttl_act_news</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">NewsActivity</span> <span class="kd">extends</span> <span class="n">IckleActivity</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">ASYNC_SYNC_NEWS</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="o">...</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onResume</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="kd">super</span><span class="o">.</span><span class="na">onResume</span><span class="o">();</span>
+        <span class="n">runAsyncTask</span><span class="o">(</span><span class="n">ASYNC_SYNC_NEWS</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Async</span><span class="o">(</span><span class="n">ASYNC_SYNC_NEWS</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">refreshNews</span><span class="o">()</span> <span class="o">{</span> 
+        <span class="o">....</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+<p><br>
+Check for a data connection.</p>
+
+<div class="highlight"><pre><span class="nd">@Layout</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">act_mail</span><span class="o">)</span>
+<span class="nd">@Title</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">string</span><span class="o">.</span><span class="na">ttl_act_mail</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MailActivity</span> <span class="kd">extends</span> <span class="n">IckleActivity</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">sync</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="k">if</span><span class="o">(</span><span class="n">network</span><span class="o">().</span><span class="na">isConnected</span><span class="o">())</span> <span class="o">{</span>
+
+            <span class="n">inbox</span><span class="o">.</span><span class="na">refresh</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">else</span> <span class="o">{</span>
+
+            <span class="o">...</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+<p><br></p>
+
+<h3>Setup</h3>
+
+<hr><p>For Maven Based Android Projects dd the following dependency in your project's <code>pom.xml</code>.</p>
+
+<div class="highlight"><pre><span class="nt">&lt;dependency&gt;</span>
+   <span class="nt">&lt;groupId&gt;</span>com.lonepulse<span class="nt">&lt;/groupId&gt;</span>
+   <span class="nt">&lt;artifactId&gt;</span>icklebot<span class="nt">&lt;/artifactId&gt;</span>
+   <span class="nt">&lt;version&gt;</span>1.1.4<span class="nt">&lt;/version&gt;</span>
+   <span class="nt">&lt;type&gt;</span>apklib<span class="nt">&lt;/type&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+
+<p><br>
+For Standard Android Projects download the repository (<a href="https://github.com/sahan/IckleBot/archive/master.tar.gz">tarball</a>, <a href="https://github.com/sahan/IckleBot/archive/master.zip">zipfile</a>) or clone it and import it as an existing project in Eclipse.</p>
+
+<div class="highlight"><pre><span class="nv">$ </span>git clone git://github.com/sahan/IckleBot.git
+</pre></div>
+
+<p><br></p>
+
+<h3>Wiki</h3>
+
+<hr><p>Read the wiki for more information on dependency injection or the simplified event model.</p>
+
+<ol>
+<li><p><a href="https://github.com/sahan/IckleBot/wiki/Quickstart">Quickstart</a></p></li>
+<li><p><a href="https://github.com/sahan/IckleBot/wiki/Manage-Activity-Configuration">Manage Activity Configuration</a></p></li>
+<li><p><a href="https://github.com/sahan/IckleBot/wiki/Inject-Views-and-Resources">Inject Views and Resources</a></p></li>
+<li><p><a href="https://github.com/sahan/IckleBot/wiki/Inject-System-Services,-Application-Instances-and-POJOs">Inject System Services, Application Instances and POJOs</a></p></li>
+<li><p><a href="https://github.com/sahan/IckleBot/wiki/Leverage-Implicit-Injection">Leverage Implicit Injection</a></p></li>
+<li><p><a href="https://github.com/sahan/IckleBot/wiki/Use-IckleBot's-Threading-Model">Use IckleBot's Threading Model</a></p></li>
+<li><p><a href="https://github.com/sahan/IckleBot/wiki/Use-IckleBot's-Event-Model">Use IckleBot's Event Model</a></p></li>
+<li><p><a href="https://github.com/sahan/IckleBot/wiki/Detect-Network-State">Detect Network State</a></p></li>
+<li><p><a href="https://github.com/sahan/IckleBot/wiki/Avoid-Coupling-with-IckleActivity">Avoid Coupling with IckleActivity</a>   </p></li>
+</ol><p><br></p>
+
+<h3>License</h3>
+
+<hr><p>This library is licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License, Version 2.0</a>.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/sahan">sahan</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-40937518-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
