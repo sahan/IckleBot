@@ -81,8 +81,8 @@ Kickoff with the [quickstart](https://github.com/sahan/IckleBot/wiki/Quickstart)
 
 8. [Detect Network State](https://github.com/sahan/IckleBot/wiki/Detect-Network-State)
   
-9. [Avoid Coupling with IckleActivity](https://github.com/sahan/IckleBot/wiki/Avoid-Coupling-with-IckleActivity)
-<br/>
+9. [Avoid Coupling with IckleActivity](https://github.com/sahan/IckleBot/wiki/Avoid-Coupling-with-IckleActivity)   
 
+<br/>
 ##License
 This library is licensed under [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
