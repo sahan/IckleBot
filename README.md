@@ -43,7 +43,7 @@ Add the following dependency in your project's pom.xml.
    <groupId>com.lonepulse</groupId>
    <artifactId>icklebot</artifactId>
    <version>1.1.4</version>
-   <type>apklib</type>
+   <type>jar</type>
 </dependency>
 ```
 
@@ -52,13 +52,8 @@ For information on building Android projects using Maven here's [Chapter 14](htt
 
 ### 2. For Standard Android Projects
 
-[Download](https://github.com/sahan/IckleBot/archive/master.zip) the repository or clone it and import it as an **existing project** in Eclipse.
-
-```bash
-$ git clone git://github.com/sahan/IckleBot.git
-```
-
-Since the Eclipse metadata is maintained in the repository, the project should be immediately available as an Android library which you can reference in your own project. Refer the [developer guide](http://developer.android.com/tools/projects/projects-eclipse.html#ReferencingLibraryProject) for information on referencing library projects.   
+Download the [IckleBot](http://repo1.maven.org/maven2/com/lonepulse/icklebot/1.1.4/icklebot-1.1.4.jar) + [Android-Support](http://repo1.maven.org/maven2/com/google/android/support-v4/r7/support-v4-r7.jar) 
+jars and add them to your **libs** folder.
 <br/>
 
 ##Usage
