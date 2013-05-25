@@ -54,7 +54,7 @@ For information on building Android projects using Maven here's [Chapter 14](htt
 
 Download the [IckleBot](http://repo1.maven.org/maven2/com/lonepulse/icklebot/1.1.4/icklebot-1.1.4.jar) + [Android-Support](http://repo1.maven.org/maven2/com/google/android/support-v4/r7/support-v4-r7.jar) 
 jars and add them to your **libs** folder.
-<br/>
+<br/><br/>
 
 ##Usage
 
