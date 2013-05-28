@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.orm.annotation;
+package com.lonepulse.icklebot.annotation.profile;
 
 /*
  * #%L
@@ -25,14 +25,32 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import android.view.View;
+
+import com.lonepulse.icklebot.IckleActivity;
+
 /**
- * <p>Determines whether the integer primary key is to be 
- * <b>auto-incremented</b>.
+ * <p>Allows the declaration of {@link Profile}s which selectively <b>deactivates</b> 
+ * the features offered by {@link IckleActivity}.</p> <b>Note</b> that {@code @IncludeProfiles} 
+ * takes precedence over {@code @ExcludeProfiles}.</p>
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-public @interface AutoIncrement {}
+public @interface ExcludeProfiles {
+	
+	
+	/**
+	 * <p>The list of {@link View} IDs that executes this method 
+	 * as its click event callback.
+	 * 
+	 * @return the IDs of the {@link View}s that are registered 
+	 * 		   for a particular callback
+	 * <br><br>
+	 * @since 1.1.0
+	 */
+	Profile[] value();
+}

@@ -23,7 +23,7 @@ package com.lonepulse.icklebot.injector;
 
 import android.util.Log;
 
-import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
+import com.lonepulse.icklebot.annotation.profile.Profile;
 import com.lonepulse.icklebot.injector.explicit.ExplicitInjectors;
 import com.lonepulse.icklebot.injector.implicit.ImplicitInjectors;
 import com.lonepulse.icklebot.profile.ProfileService;
@@ -61,7 +61,7 @@ public final class InjectionUtils {
 
 		long millis = System.currentTimeMillis();
 
-		if(ProfileService.getInstance(config.getContext()).isActive(config.getContext(), PROFILE.INJECTION)) {
+		if(ProfileService.getInstance(config.getContext()).isActive(config.getContext(), Profile.INJECTION)) {
 		
 			ExplicitInjectors.CONFIGURATION.inject(config);
 			ExplicitInjectors.LAYOUT.inject(config);

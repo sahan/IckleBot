@@ -23,7 +23,7 @@ package com.lonepulse.icklebot.event;
 
 import android.util.Log;
 
-import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
+import com.lonepulse.icklebot.annotation.profile.Profile;
 import com.lonepulse.icklebot.profile.ProfileService;
 
 /**
@@ -55,7 +55,7 @@ public final class EventUtils {
 		
 		long millis = System.currentTimeMillis();
 
-		if(ProfileService.getInstance(config.getContext()).isActive(config.getContext(), PROFILE.EVENT)) {
+		if(ProfileService.getInstance(config.getContext()).isActive(config.getContext(), Profile.EVENT)) {
 		
 			EventLinkers[] allLinkers = EventLinkers.values();
 			

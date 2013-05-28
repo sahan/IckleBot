@@ -24,8 +24,9 @@ package com.lonepulse.icklebot.profile;
 import android.content.Context;
 
 import com.lonepulse.icklebot.IckleActivity;
-import com.lonepulse.icklebot.annotation.profile.Profiles;
-import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
+import com.lonepulse.icklebot.annotation.profile.ExcludeProfiles;
+import com.lonepulse.icklebot.annotation.profile.IncludeProfiles;
+import com.lonepulse.icklebot.annotation.profile.Profile;
 import com.lonepulse.icklebot.util.ContextUtils;
 
 /**
@@ -95,7 +96,7 @@ public class ProfileService implements ProfileManager {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean isActive(Object context, PROFILE profile) {
+	public boolean isActive(Object context, Profile profile) {
 		
 		if(context == null || profile == null) {
 			
@@ -106,21 +107,32 @@ public class ProfileService implements ProfileManager {
 				builder.append("Context cannot be null. ");
 				
 			if(profile == null)
-				builder.append("PROFILE cannot be null. ");
+				builder.append("Profile cannot be null. ");
 			
 			throw new IllegalArgumentException(builder.toString());
 		}
 		
-		if(context.getClass().isAnnotationPresent(Profiles.class)) {
+		if(context.getClass().isAnnotationPresent(IncludeProfiles.class)) {
 			
-			Profiles profiles = context.getClass().getAnnotation(Profiles.class);
+			IncludeProfiles profiles = context.getClass().getAnnotation(IncludeProfiles.class);
 			
-			PROFILE[] activeProfiles = profiles.value();
+			Profile[] activeProfiles = profiles.value();
 			
-			for (PROFILE currentProfile : activeProfiles)
+			for (Profile currentProfile : activeProfiles)
 				if(currentProfile.equals(profile)) return true;
 			
 			return false;
+		}
+		if(context.getClass().isAnnotationPresent(ExcludeProfiles.class)) {
+			
+			ExcludeProfiles profiles = context.getClass().getAnnotation(ExcludeProfiles.class);
+			
+			Profile[] inactiveProfiles = profiles.value();
+			
+			for (Profile currentProfile : inactiveProfiles)
+				if(currentProfile.equals(profile)) return false;
+			
+			return true;
 		}
 		else {
 			

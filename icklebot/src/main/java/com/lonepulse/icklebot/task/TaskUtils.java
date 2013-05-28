@@ -23,7 +23,7 @@ package com.lonepulse.icklebot.task;
 
 import android.util.Log;
 
-import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
+import com.lonepulse.icklebot.annotation.profile.Profile;
 import com.lonepulse.icklebot.profile.ProfileService;
 
 /**
@@ -48,7 +48,7 @@ public final class TaskUtils {
 	 */
 	public static void runAsyncTask(Object context, int asyncTaskId, Object... args) {
 		
-		if(!ProfileService.getInstance(context).isActive(context, PROFILE.THREADING)) {
+		if(!ProfileService.getInstance(context).isActive(context, Profile.THREADING)) {
 
 			StringBuilder builder = new StringBuilder()
 			.append("Async task with ID ")
@@ -70,7 +70,7 @@ public final class TaskUtils {
 	 */
 	public static void runUITask(Object context, int uiTaskId, final Object... args) {
 
-		if(!ProfileService.getInstance(context).isActive(context, PROFILE.THREADING)) {
+		if(!ProfileService.getInstance(context).isActive(context, Profile.THREADING)) {
 		
 			StringBuilder builder = new StringBuilder()
 			.append("UI task with ID ")

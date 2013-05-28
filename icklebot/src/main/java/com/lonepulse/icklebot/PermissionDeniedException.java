@@ -21,7 +21,7 @@ package com.lonepulse.icklebot;
  */
 
 
-import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
+import com.lonepulse.icklebot.annotation.profile.Profile;
 
 
 /**
@@ -61,11 +61,11 @@ public class PermissionDeniedException extends IckleBotRuntimeException {
 	 * 			the missing permission
 	 * 
 	 * @param profile
-	 * 			the {@link PROFILE} which the permission belongs to
+	 * 			the {@link Profile} which the permission belongs to
 	 * 
 	 * @since 1.1.0
 	 */
-	public PermissionDeniedException(String permission, PROFILE profile) {
+	public PermissionDeniedException(String permission, Profile profile) {
 		
 		super("Required permission " + permission + " for profile " + profile.name() + " is denied. " +
 			  "Please add it to you manifest using the <uses-permission> tag. ");

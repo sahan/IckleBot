@@ -24,7 +24,7 @@ package com.lonepulse.icklebot.state;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
+import com.lonepulse.icklebot.annotation.profile.Profile;
 import com.lonepulse.icklebot.profile.ProfileService;
 import com.lonepulse.icklebot.util.ContextUtils;
 
@@ -48,7 +48,7 @@ public final class StateUtils {
 	 */
 	public static void onSaveInstanceState(Object context, Bundle outState) {
 
-		if(ProfileService.getInstance(context).isActive(context, PROFILE.STATE) && outState != null) {
+		if(ProfileService.getInstance(context).isActive(context, Profile.STATE) && outState != null) {
 			
 			long millis = System.currentTimeMillis();
 		
@@ -72,7 +72,7 @@ public final class StateUtils {
 	 */
 	public static void onRestoreInstanceState(Object context, Bundle savedInstanceState) {
 		
-		if(ProfileService.getInstance(context).isActive(context, PROFILE.STATE) && savedInstanceState != null) {
+		if(ProfileService.getInstance(context).isActive(context, Profile.STATE) && savedInstanceState != null) {
 			
 			long millis = System.currentTimeMillis();
 		

@@ -25,7 +25,7 @@ import android.Manifest;
 
 import com.lonepulse.icklebot.IckleActivity;
 import com.lonepulse.icklebot.PermissionDeniedException;
-import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
+import com.lonepulse.icklebot.annotation.profile.Profile;
 import com.lonepulse.icklebot.util.ContextUtils;
 import com.lonepulse.icklebot.util.PermissionUtils;
 
@@ -49,7 +49,7 @@ public final class NetworkUtils {
 	 * discover additional information about the network.</p>
 	 * 
 	 * <p>This service is restricted by <b>profiles</b>. It can be used even if 
-	 * {@link PROFILE#DATA} is not activated.</p>
+	 * {@link Profile#NETWORK} is not activated.</p>
 	 * 
 	 * <p>This service requires the following permission:
 	 * <ul>

@@ -42,7 +42,7 @@ import com.lonepulse.icklebot.network.NetworkUtils;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-abstract class DataFragment extends Fragment {
+abstract class NetworkFragment extends Fragment {
 
 	
 	/**

@@ -28,7 +28,7 @@ import android.os.Bundle;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 
-import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
+import com.lonepulse.icklebot.annotation.profile.Profile;
 import com.lonepulse.icklebot.network.NetworkManager;
 import com.lonepulse.icklebot.network.NetworkUtils;
 import com.lonepulse.icklebot.profile.ProfileService;
@@ -37,7 +37,7 @@ import com.lonepulse.icklebot.util.PermissionUtils;
 /**
  * <p>This profile detects changes in the data connection and provides 
  * callbacks to handle them. In addition it can be used to discover 
- * additional network information via {@link DataActivity#network()}.</p>
+ * additional network information via {@link NetworkActivity#network()}.</p>
  * 
  * <p>This profile requires the following permission:
  * <ul>
@@ -49,7 +49,7 @@ import com.lonepulse.icklebot.util.PermissionUtils;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-abstract class DataActivity extends Activity {
+abstract class NetworkActivity extends Activity {
 
 	
 	/**
@@ -102,10 +102,10 @@ abstract class DataActivity extends Activity {
 
 		super.onCreate(savedInstanceState);
 
-		if(ProfileService.getInstance(getApplicationContext()).isActive(this, PROFILE.DATA)) {
+		if(ProfileService.getInstance(getApplicationContext()).isActive(this, Profile.NETWORK)) {
 		
 			if(!PermissionUtils.isGranted(this, Manifest.permission.READ_PHONE_STATE))
-				throw new PermissionDeniedException(Manifest.permission.READ_PHONE_STATE, PROFILE.DATA);
+				throw new PermissionDeniedException(Manifest.permission.READ_PHONE_STATE, Profile.NETWORK);
 			
 			((TelephonyManager)getSystemService(TELEPHONY_SERVICE))
 			.listen(phoneStateListener, PhoneStateListener.LISTEN_DATA_CONNECTION_STATE);
@@ -124,7 +124,7 @@ abstract class DataActivity extends Activity {
 		
 		super.onDestroy();
 		
-		if(ProfileService.getInstance(getApplicationContext()).isActive(this, PROFILE.DATA)
+		if(ProfileService.getInstance(getApplicationContext()).isActive(this, Profile.NETWORK)
 			&& PermissionUtils.isGranted(this, Manifest.permission.READ_PHONE_STATE)) {
 			
 			((TelephonyManager)getSystemService(TELEPHONY_SERVICE))

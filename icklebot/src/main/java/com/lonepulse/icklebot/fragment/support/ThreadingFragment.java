@@ -31,7 +31,7 @@ import com.lonepulse.icklebot.task.TaskUtils;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-abstract class ThreadingFragment extends DataFragment {
+abstract class ThreadingFragment extends NetworkFragment {
 	
 	
 	/**

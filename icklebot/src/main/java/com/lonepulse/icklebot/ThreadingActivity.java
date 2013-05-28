@@ -30,7 +30,7 @@ import com.lonepulse.icklebot.task.TaskUtils;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-abstract class ThreadingActivity extends DataActivity {
+abstract class ThreadingActivity extends NetworkActivity {
 	
 	
 	/**

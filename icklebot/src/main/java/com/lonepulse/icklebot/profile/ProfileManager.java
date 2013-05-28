@@ -24,13 +24,12 @@ package com.lonepulse.icklebot.profile;
 import android.app.Activity;
 
 import com.lonepulse.icklebot.IckleActivity;
-import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
+import com.lonepulse.icklebot.annotation.profile.Profile;
 
 /**
  * <p>This contract specifies the service offered on managing the 
- * {@link PROFILE}s associated with an {@link IckleActivity}.
+ * {@link Profile}s associated with an {@link IckleActivity}.
  * 
- * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -48,6 +47,8 @@ public interface ProfileManager {
 	 * 			the {@link PROFILE} to be checked 
 	 * 
 	 * @return {@code true} if the given profile is active, else {@code false}
+	 * 
+	 * @since 1.2.0
 	 */
-	public abstract boolean isActive(Object context, PROFILE profile);
+	public abstract boolean isActive(Object context, Profile profile);
 }

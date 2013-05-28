@@ -28,7 +28,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.lonepulse.icklebot.annotation.profile.Profiles.PROFILE;
+import com.lonepulse.icklebot.annotation.profile.Profile;
 import com.lonepulse.icklebot.event.EventLinker;
 import com.lonepulse.icklebot.event.EventUtils;
 import com.lonepulse.icklebot.injector.InjectionUtils;
@@ -329,7 +329,7 @@ public interface IckleSupportManager extends Serializable {
 	 * discover additional information about the network.</p>
 	 * 
 	 * <p>This service is restricted by <b>profiles</b>. It can be used even if 
-	 * {@link PROFILE#DATA} is not activated.</p>
+	 * {@link Profile#NETWORK} is not activated.</p>
 	 * 
 	 * <p>This service requires the following permission:
 	 * <ul>
