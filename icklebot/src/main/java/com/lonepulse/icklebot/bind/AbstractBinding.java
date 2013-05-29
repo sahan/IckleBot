@@ -61,4 +61,60 @@ public abstract class AbstractBinding<V extends View, E> implements Binding<V, E
 		this.view = view;
 		this.data = data;
 	}
+	
+	/**
+	 * <p>Retrieves the {@link View} to which the data is to be bound. 
+	 *
+	 * @return the {@link View} to which the data is to be bound
+	 * 
+	 * @since 1.1.0
+	 */
+	public V getView() {
+		
+		return this.view;
+	}
+	
+	/**
+	 * <p>Retrieves the data which is to be bound. 
+	 *
+	 * @return the data which is to be bound
+	 * 
+	 * @since 1.1.0
+	 */
+	public E getData() {
+		
+		return this.data;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void bind() throws BindException {
+		
+		try {
+			
+			onBind(data, view);
+		}
+		catch(Exception e) {
+			
+			throw new BindException(data, view);
+		}
+		
+	}
+
+	/**
+	 * <p>Declares the strategy which will perform a <b>unidirectional binding</b> 
+	 * from data to view.
+	 * 
+	 * @param data
+	 * 			the data which is to be bound to the {@link View}.
+	 * 			if binding data to the view failed
+	 * 
+	 * @param view
+	 * 			the {@link View} to which the data is to be bound
+	 * <br><br>
+	 * @since 1.1.0
+	 */
+	public abstract void onBind(E data, V view);
 }

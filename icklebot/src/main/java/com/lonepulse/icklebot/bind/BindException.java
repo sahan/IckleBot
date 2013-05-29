@@ -1,5 +1,7 @@
 package com.lonepulse.icklebot.bind;
 
+import android.view.View;
+
 import com.lonepulse.icklebot.IckleBotRuntimeException;
 
 /*
@@ -38,7 +40,23 @@ public class BindException extends IckleBotRuntimeException {
 
 	
 	/**
-	 * See {@link IckleBotRuntimeException#IckleBotRuntimeException()} 
+	 * <p>Prints a detailed message with the data and view whose binding failed.
+	 * 
+	 * @param data
+	 * 			the data which failed to be bound to the view
+	 * 
+	 * @param view
+	 * 			the which to which the data couldn't be bound
+	 * 
+	 * @since 1.1.0
+	 */
+	public BindException(Object data, View view) {
+		
+		this("Binding data " + data + " to view with " + view + " failed!");
+	}
+	
+	/**
+	 * See {@link IckleBotRuntimeException#IckleBotRuntimeException()}
 	 */
 	public BindException() {
 	}

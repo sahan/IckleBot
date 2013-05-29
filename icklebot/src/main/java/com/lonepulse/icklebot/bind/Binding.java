@@ -35,7 +35,7 @@ import android.view.View;
 public interface Binding<V extends View, E> {
 
 	/**
-	 * <p>The strategy which will perform a <b>unidirectional binding</b> 
+	 * <p>Executes the strategy which will perform a <b>unidirectional binding</b> 
 	 * from data to view. Be sure to post invocation to the UI thread. 
 	 * 
 	 * @throws BindException 

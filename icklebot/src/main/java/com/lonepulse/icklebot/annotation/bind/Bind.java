@@ -64,10 +64,10 @@ public @interface Bind {
 	int viewId() default 0;
 	
 	/**
-	 * <p>The {@link Binding} strategy to be used on this attribute.By default the 
-	 * {@link TextViewBinding} strategy is used. You can implement your own binding 
-	 * strategy by implementing an instance of {@link AbstractBinding} and provide 
-	 * its {@link Class} here.
+	 * <p>The {@link Class} of the {@link Binding} strategy to be used. By default 
+	 * the {@link TextViewBinding} strategy is used. You can create your own binding 
+	 * strategy by implementing an instance of {@link AbstractBinding} and declaring 
+	 * the strategy in {@link AbstractBinding#onBind(Object, View)}.
 	 *
 	 * @return the {@link Binding} strategy to be used on this attribute.
 	 * 

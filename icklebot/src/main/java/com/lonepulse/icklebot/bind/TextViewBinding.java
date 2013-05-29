@@ -54,12 +54,12 @@ public class TextViewBinding extends AbstractBinding<TextView, Object> {
 	
 		super(textView, data);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void bind() {
+	public void onBind(Object data, TextView view) {
 		
 		view.setText(data.toString());
 	}
