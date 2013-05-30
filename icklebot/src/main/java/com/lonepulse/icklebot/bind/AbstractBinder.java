@@ -23,30 +23,33 @@ package com.lonepulse.icklebot.bind;
 
 import android.view.View;
 
+import com.lonepulse.icklebot.IckleBotRuntimeException;
+
 /**
- * <p>This is an abstract implementation of a {@link Binding} which mandates the use 
- * of a parameterized constructor that supplies the arguments to the binding strategy.
+ * <p>This is an abstract implementation of a {@link BindingStrategy} which mandates the 
+ * use of a parameterized constructor that supplies the arguments to the binding strategy. 
+ * This essentially serves as the <b>ViewModel</b>.
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public abstract class AbstractBinding<V extends View, E> implements Binding<V, E> {
+public abstract class AbstractBinder<V extends View, E> implements BindingStrategy<V, E> {
 
 	
 	/**
 	 * <p>The {@link View} to which the data is to be bound.
 	 */
-	protected V view;
+	private final V view;
 	
 	/**
 	 * <p>The data which is to be bound to the {@link View}.
 	 */
-	protected E data;
+	private final E data;
 
 	
 	/**
-	 * <p>Instantiates a new {@link AbstractBinding} with the given {@link View} and data. 
+	 * <p>Instantiates a new {@link AbstractBinder} with the given {@link View} and data. 
 	 * 
 	 * @param view
 	 * 			the {@link View} to which the data is to be bound
@@ -56,8 +59,33 @@ public abstract class AbstractBinding<V extends View, E> implements Binding<V, E
 	 *
 	 * @since 1.1.0
 	 */
-	public AbstractBinding(V view, E data) {
+	public AbstractBinder(V view, E data) {
 	
+		StringBuilder errorContext = new StringBuilder()
+		.append("Failed to instantiate a ")
+		.append(this.getClass().getName())
+		.append(". The argument(s), ");
+		
+		boolean hasNullArguments = false;
+		
+		if(view == null) {
+			
+			errorContext.append("view, ");
+			hasNullArguments = true;
+		}
+		
+		if(data == null) {
+			
+			errorContext.append("data, ");
+			hasNullArguments = true;
+		}
+		
+		if(hasNullArguments) {
+			
+			errorContext.append("cannot be null. ");
+			throw new IckleBotRuntimeException(new InstantiationError(errorContext.toString()));
+		}
+		
 		this.view = view;
 		this.data = data;
 	}
@@ -94,11 +122,11 @@ public abstract class AbstractBinding<V extends View, E> implements Binding<V, E
 		
 		try {
 			
-			onBind(data, view);
+			onBind(view, data);
 		}
 		catch(Exception e) {
 			
-			throw new BindException(data, view);
+			throw new BindException(view, data, e);
 		}
 		
 	}
@@ -107,14 +135,14 @@ public abstract class AbstractBinding<V extends View, E> implements Binding<V, E
 	 * <p>Declares the strategy which will perform a <b>unidirectional binding</b> 
 	 * from data to view.
 	 * 
+	 * @param view
+	 * 			the {@link View} to which the data is to be bound
+	 * 
 	 * @param data
 	 * 			the data which is to be bound to the {@link View}.
 	 * 			if binding data to the view failed
-	 * 
-	 * @param view
-	 * 			the {@link View} to which the data is to be bound
 	 * <br><br>
 	 * @since 1.1.0
 	 */
-	public abstract void onBind(E data, V view);
+	public abstract void onBind(V view, E data);
 }

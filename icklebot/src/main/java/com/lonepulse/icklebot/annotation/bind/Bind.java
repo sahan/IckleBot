@@ -27,10 +27,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import android.view.View;
+import android.widget.TextView;
 
-import com.lonepulse.icklebot.bind.AbstractBinding;
-import com.lonepulse.icklebot.bind.Binding;
-import com.lonepulse.icklebot.bind.TextViewBinding;
+import com.lonepulse.icklebot.bind.AbstractBinder;
+import com.lonepulse.icklebot.bind.BindingStrategy;
+import com.lonepulse.icklebot.bind.TextViewBinder;
+import com.lonepulse.icklebot.bind.VoidBinder;
 
 /**
  * <p>Identifies a model attribute whose value is to be bound to a view.
@@ -43,6 +45,68 @@ import com.lonepulse.icklebot.bind.TextViewBinding;
 @Target(ElementType.FIELD)
 public @interface Bind {
 
+	/**
+	 * <p>Indicates the {@link BindingStrategy} strategy to be used for this bind.
+	 * 
+	 * @version 1.1.0
+	 * <br><br> 
+	 * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
+	 */
+	public static enum BINDER {
+		
+		/**
+		 * <p>The binding strategy to be employed for {@link TextView}s or any of 
+		 * its children to bind {@link String} data.
+		 * 
+		 * @since 1.1.0
+		 */
+		TEXT_VIEW(TextViewBinder.class),
+		
+		/**
+		 * <p>Indicates that a custom binding strategy whose {@link Class} is 
+		 * given in {@link Bind#strategyType()} should be used.
+		 * 
+		 * @since 1.1.0
+		 */
+		UNDEFINED(VoidBinder.class);
+		
+		
+		/**
+		 * <p>The {@link Class} of the {@link AbstractBinder} identified by 
+		 * this {@link BINDER}.
+		 */
+		private Class<? extends AbstractBinder<? extends View, ? extends Object>> type;
+		
+
+		/**
+		 * <p>Instantiates this {@link BINDER} with a {@link Class} 
+		 * of the assigned {@link AbstractBinder}.
+		 * 
+		 * @param type
+		 * 			the {@link Class} of the {@link AbstractBinder} identified by 
+		 * 			this {@link BINDER}
+		 *
+		 * @since 1.1.0
+		 */
+		private BINDER(Class<? extends AbstractBinder<? extends View, ? extends Object>> type) {
+			
+			this.type = type;
+		}
+
+		/**
+		 * <p>Accessor for the {@link Class} of the {@link AbstractBinder} identified by 
+		 * this {@link BINDER}.
+		 *
+		 * @return the {@link Class} of the {@link AbstractBinder}
+		 * 
+		 * @since 1.1.0
+		 */
+		public Class<? extends AbstractBinder<? extends View, ? extends Object>> getType() {
+			
+			return type;
+		}
+	};
+	
 	/**
 	 * <p>The {@code integer} which identifies the <b>id</b> 
 	 * of the view to bind to.</p>
@@ -64,14 +128,24 @@ public @interface Bind {
 	int viewId() default 0;
 	
 	/**
-	 * <p>The {@link Class} of the {@link Binding} strategy to be used. By default 
-	 * the {@link TextViewBinding} strategy is used. You can create your own binding 
-	 * strategy by implementing an instance of {@link AbstractBinding} and declaring 
-	 * the strategy in {@link AbstractBinding#onBind(Object, View)}.
+	 * <p>Identifies an existing binding strategy to be used. This overrides the binding 
+	 * strategy specified in {@link #binderType()}.</p> 
 	 *
-	 * @return the {@link Binding} strategy to be used on this attribute.
+	 * @return the {@link BindingStrategy} strategy to be used on this attribute.
 	 * 
 	 * @since 1.1.0
 	 */
-	Class<? extends Binding<? extends View, ? extends Object>> strategy() default TextViewBinding.class;
+	BINDER binder() default BINDER.UNDEFINED;
+	
+	/**
+	 * <p>The {@link Class} of the {@link BindingStrategy} strategy to be used. By default 
+	 * the {@link TextViewBinder} strategy is used. You can create your own binding strategy 
+	 * by implementing an instance of {@link AbstractBinder} and declaring the strategy in 
+	 * {@link AbstractBinder#onBind(View, Object)}.</p>
+	 *
+	 * @return the {@link BindingStrategy} strategy to be used on this attribute.
+	 * 
+	 * @since 1.1.0
+	 */
+	Class<? extends AbstractBinder<? extends View, ? extends Object>> binderType() default TextViewBinder.class;
 }

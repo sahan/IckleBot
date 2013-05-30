@@ -22,26 +22,33 @@ package com.lonepulse.icklebot.bind;
 
 
 import android.view.View;
+import android.view.ViewGroup;
+
+import com.lonepulse.icklebot.annotation.bind.Model;
+import com.lonepulse.icklebot.annotation.inject.Pojo;
 
 /**
- * <p>Represents a simple mapping between one unit of data and a view and wraps 
- * the strategy which will be used to perform binding depending on the type of 
- * data and the view. This essentially serves as the <b>view-model</b>.
+ * <p>This contract specifies the services offered for managing 
+ * model-view binding.
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public interface Binding<V extends View, E> {
+@Pojo(BindService.class) //TODO add support for @IckleService & @InjectIckleService; ISSUE #2
+public interface BindManager {
 
+	
 	/**
-	 * <p>Executes the strategy which will perform a <b>unidirectional binding</b> 
-	 * from data to view. Be sure to post invocation to the UI thread. 
+	 * <p>Binds the given model to the {@link View} or {@link ViewGroup}.
 	 * 
-	 * @throws BindException 
-	 * 			if binding data to the view failed
-	 * <br><br>
+	 * @param view
+	 * 			the {@link View} to which the model is to be bound 
+	 * 
+	 * @param model
+	 * 			the {@link Model} to be bound to the view
+	 * 
 	 * @since 1.1.0
 	 */
-	void bind() throws BindException;
+	public abstract void bind(View view, Object model);
 }

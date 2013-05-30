@@ -34,10 +34,10 @@ import android.widget.TextView;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public class TextViewBinding extends AbstractBinding<TextView, Object> {
+public class TextViewBinder extends AbstractBinder<TextView, Object> {
 
 	/**
-	 * <p>Instantiates a new {@link TextViewBinding} with the given 
+	 * <p>Instantiates a new {@link TextViewBinder} with the given 
 	 * {@link TextView} and data. 
 	 * 
 	 * @param textView
@@ -50,16 +50,16 @@ public class TextViewBinding extends AbstractBinding<TextView, Object> {
 	 *
 	 * @since 1.1.0
 	 */
-	public TextViewBinding(TextView textView, Object data) {
+	public TextViewBinder(TextView textView, Object data) {
 	
-		super(textView, data);
+		super(textView, data == null? "" :data);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void onBind(Object data, TextView view) {
+	public void onBind(TextView view, Object data) {
 		
 		view.setText(data.toString());
 	}

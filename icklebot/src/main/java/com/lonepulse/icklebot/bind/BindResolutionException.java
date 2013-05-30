@@ -1,7 +1,5 @@
 package com.lonepulse.icklebot.bind;
 
-import android.view.View;
-
 import com.lonepulse.icklebot.IckleBotRuntimeException;
 
 /*
@@ -26,62 +24,43 @@ import com.lonepulse.icklebot.IckleBotRuntimeException;
 
 
 /**
- * <p>A {@link RuntimeException} which signals an unexpected failure 
- * when binding a view to it's model data.</p> 
+ * <p>A {@link RuntimeException} which signals a failure to discover the 
+ * binding strategy for a model attribute. 
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public class BindException extends IckleBotRuntimeException {
-
-
-	private static final long serialVersionUID = 2914642704185985938L;
+public class BindResolutionException extends IckleBotRuntimeException {
 
 	
-	/**
-	 * <p>Prints a detailed message with the data and view whose binding failed.
-	 * 
-	 * @param view
-	 * 			the which to which the data couldn't be bound
-	 * 
-	 * @param data
-	 * 			the data which failed to be bound to the view
-	 * 
-	 * @param cause
-	 * 			the root cause for this {@link BindException}
-	 * 
-	 * @since 1.1.0
-	 */
-	public BindException(View view, Object data, Throwable cause) {
-		
-		this("Binding data " + data + " to view " + view + " failed!");
-	}
+	private static final long serialVersionUID = -2662966653771948277L;
+
 	
 	/**
 	 * See {@link IckleBotRuntimeException#IckleBotRuntimeException()}
 	 */
-	public BindException() {
+	public BindResolutionException() {
 	}
 
 	/**
 	 * See {@link RuntimIckleBotRuntimeExceptioneException#IckleBotRuntimeException(String)} 
 	 */
-	public BindException(String detailMessage) {
+	public BindResolutionException(String detailMessage) {
 		super(detailMessage);
 	}
 
 	/**
 	 * See {@link IckleBotRuntimeException#IckleBotRuntimeException(Throwable)} 
 	 */
-	public BindException(Throwable throwable) {
+	public BindResolutionException(Throwable throwable) {
 		super(throwable);
 	}
 
 	/**
 	 * See {@link IckleBotRuntimeException#IckleBotRuntimeException(String, Throwable)} 
 	 */
-	public BindException(String detailMessage, Throwable throwable) {
+	public BindResolutionException(String detailMessage, Throwable throwable) {
 		super(detailMessage, throwable);
 	}
 }
