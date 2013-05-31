@@ -80,7 +80,7 @@ public enum ExplicitInjectors implements Injector {
 	 * 
 	 * @since 1.0.0
 	 */
-	SERVICES(new ExplicitServiceInjector()),
+	SERVICES(new ExplicitSystemServiceInjector()),
 	
 	/**
 	 * <p>This {@link Injector} is responsible for injecting any 

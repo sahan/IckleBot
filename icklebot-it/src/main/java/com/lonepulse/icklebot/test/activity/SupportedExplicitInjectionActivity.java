@@ -42,7 +42,7 @@ import com.lonepulse.icklebot.annotation.inject.InjectDimension;
 import com.lonepulse.icklebot.annotation.inject.InjectDrawable;
 import com.lonepulse.icklebot.annotation.inject.InjectInteger;
 import com.lonepulse.icklebot.annotation.inject.InjectPojo;
-import com.lonepulse.icklebot.annotation.inject.InjectService;
+import com.lonepulse.icklebot.annotation.inject.InjectSystemService;
 import com.lonepulse.icklebot.annotation.inject.InjectString;
 import com.lonepulse.icklebot.annotation.inject.InjectView;
 import com.lonepulse.icklebot.annotation.inject.Layout;
@@ -103,7 +103,7 @@ public class SupportedExplicitInjectionActivity extends Activity {
 	@InjectAnimator(R.animator.grow)
 	AnimatorSet grow;
 	
-	@InjectService(Context.TELEPHONY_SERVICE)
+	@InjectSystemService(Context.TELEPHONY_SERVICE)
 	TelephonyManager telephonyManager;
 	
 	@InjectPojo(AccountsServiceImpl.class)

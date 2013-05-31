@@ -25,31 +25,25 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import android.app.Activity;
-import android.content.Context;
-
 /**
- * <p>This annotation marks a <b>System Service</b> which is to be 
- * injected into an {@link Activity}.</p>
+ * <p>Marks the contract of an <b>IckleService</b> and specifies the 
+ * implementation which is exposed to clients.
  * 
- * <p>System services are identified using their constant names 
- * declared in {@link Context}.</p>
- * 
- * @version 1.0.0
+ * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-public @interface InjectService {
-	
+@Target(ElementType.TYPE)
+public @interface IckleService {
+
 	/**
-	 * <p>The {@code String} which identifies the <b>constant name</b> 
-	 * of the System Service as declared in {@link Context}.</p>
+	 * <p>The {@link Class} of the exposed implementation for 
+	 * annotated service contract.
 	 * 
-	 * @return the constant name of the System Service
+	 * @return the {@link Class} of the exposed implementation
 	 * <br><br>
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
-	String value();
+	Class<? extends Object> value();
 }

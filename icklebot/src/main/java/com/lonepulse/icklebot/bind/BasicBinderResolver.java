@@ -114,7 +114,7 @@ class BasicBinderResolver implements BinderResolver {
 			}
 			else {
 			
-				return VoidBinder.INSTANCE;
+				return VoidBinder.getInstance(view.getContext());
 			}
 		}
 		catch(Exception e) {

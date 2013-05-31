@@ -27,8 +27,8 @@ import com.lonepulse.icklebot.IckleBotRuntimeException;
 
 /**
  * <p>This is an abstract implementation of a {@link BindingStrategy} which mandates the 
- * use of a parameterized constructor that supplies the arguments to the binding strategy. 
- * This essentially serves as the <b>ViewModel</b>.
+ * use of a parameterized constructor that supplies the arguments to the binding strategy 
+ * and it serves as the <b>ViewModel</b>.
  * 
  * @version 1.1.0
  * <br><br>
@@ -83,7 +83,7 @@ public abstract class AbstractBinder<V extends View, E> implements BindingStrate
 		if(hasNullArguments) {
 			
 			errorContext.append("cannot be null. ");
-			throw new IckleBotRuntimeException(new InstantiationError(errorContext.toString()));
+			throw new IckleBotRuntimeException(new InstantiationException(errorContext.toString()));
 		}
 		
 		this.view = view;
@@ -128,7 +128,6 @@ public abstract class AbstractBinder<V extends View, E> implements BindingStrate
 			
 			throw new BindException(view, data, e);
 		}
-		
 	}
 
 	/**

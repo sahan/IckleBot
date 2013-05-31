@@ -49,7 +49,7 @@ class ImplicitServiceInjector implements Injector {
 
 		Context context = ContextUtils.discover(config.getContext());
 		
-		Set<Field> fields = config.getInjectionTargets(InjectionCategory.SERVICE);	
+		Set<Field> fields = config.getInjectionTargets(InjectionCategory.SYSTEM_SERVICE);	
 		Field[] contextFields = Context.class.getDeclaredFields();
 		
 		for (Field field : fields) {

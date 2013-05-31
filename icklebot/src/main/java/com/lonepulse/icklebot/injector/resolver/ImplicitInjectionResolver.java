@@ -96,7 +96,7 @@ class ImplicitInjectionResolver implements InjectionResolver {
 			return InjectionCategory.POJO;
 		
 		else if(isCategoryService(field))
-			return InjectionCategory.SERVICE;
+			return InjectionCategory.SYSTEM_SERVICE;
 		
 		return InjectionCategory.NONE;
 	}
@@ -322,7 +322,7 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	
 	/**
 	 * <p>Determines if this {@link Field} injection falls into 
-	 * {@link InjectionCategory#SERVICE}.</p>
+	 * {@link InjectionCategory#SYSTEM_SERVICE}.</p>
 	 * 
 	 * <p>The {@link Field}'s <i>declared name</i> must match the 
 	 * respective constant in {@link Context} (case insensitive). 
@@ -337,7 +337,7 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	 * 			the {@link Field} whose {@link InjectionCategory} is to 
 	 * 			be resolved
 	 * <br><br>
-	 * @return {@code true} if it's {@link InjectionCategory#SERVICE}, 
+	 * @return {@code true} if it's {@link InjectionCategory#SYSTEM_SERVICE}, 
 	 * <br><br>
 	 * @since 1.1.0
 	 */

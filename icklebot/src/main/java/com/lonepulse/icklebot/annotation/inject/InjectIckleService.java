@@ -1,8 +1,8 @@
-package com.lonepulse.icklebot.bind;
+package com.lonepulse.icklebot.annotation.inject;
 
 /*
  * #%L
- * IckleBot Library
+ * IckleBot
  * %%
  * Copyright (C) 2013 Lonepulse
  * %%
@@ -20,34 +20,21 @@ package com.lonepulse.icklebot.bind;
  * #L%
  */
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.lonepulse.icklebot.annotation.bind.Model;
-import com.lonepulse.icklebot.annotation.inject.IckleService;
+import android.app.Activity;
 
 /**
- * <p>This contract specifies the services offered for managing 
- * model-view binding.
+ * <p>This annotation marks an <b>Ickle Service</b> which is to be 
+ * injected into an {@link Activity}.</p>
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-@IckleService(BindService.class)
-public interface BindManager {
-
-	/**
-	 * <p>Binds the given model to the {@link View} or {@link ViewGroup}.
-	 * 
-	 * @param view
-	 * 			the {@link View} to which the model is to be bound 
-	 * 
-	 * @param model
-	 * 			the {@link Model} to be bound to the view
-	 * 
-	 * @since 1.1.0
-	 */
-	public abstract void bind(View view, Object model);
-}
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+public @interface InjectIckleService {}

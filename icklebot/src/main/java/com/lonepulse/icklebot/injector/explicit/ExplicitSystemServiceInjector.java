@@ -26,7 +26,7 @@ import java.util.Set;
 import android.content.Context;
 import android.util.Log;
 
-import com.lonepulse.icklebot.annotation.inject.InjectService;
+import com.lonepulse.icklebot.annotation.inject.InjectSystemService;
 import com.lonepulse.icklebot.injector.Injector;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
 import com.lonepulse.icklebot.util.ContextUtils;
@@ -39,7 +39,7 @@ import com.lonepulse.icklebot.util.ContextUtils;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-class ExplicitServiceInjector implements Injector {
+class ExplicitSystemServiceInjector implements Injector {
 	
 	
 	/**
@@ -50,7 +50,7 @@ class ExplicitServiceInjector implements Injector {
 
 		Context baseContext = ContextUtils.discover(config.getContext());
 		
-		Set<Field> fields = config.getInjectionTargets(InjectionCategory.SERVICE);
+		Set<Field> fields = config.getInjectionTargets(InjectionCategory.SYSTEM_SERVICE);
 				
 		for (Field field : fields) {
 			
@@ -58,7 +58,7 @@ class ExplicitServiceInjector implements Injector {
 			
 			try {
 				
-				String serviceName = field.getAnnotation(InjectService.class).value();
+				String serviceName = field.getAnnotation(InjectSystemService.class).value();
 				
 				field.set(config.getContext(), baseContext.getSystemService(serviceName));
 			} 

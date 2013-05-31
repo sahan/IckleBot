@@ -21,6 +21,7 @@ package com.lonepulse.icklebot.bind;
  */
 
 
+import android.content.Context;
 import android.view.View;
 
 /**
@@ -37,21 +38,43 @@ public class VoidBinder extends AbstractBinder<View, Object> {
 	 * <p>The default instance of {@link VoidBinder} which signifies 
 	 * all non-existent or nullified binds. 
 	 */
-	public static final VoidBinder INSTANCE = new VoidBinder(); 
+	private static VoidBinder INSTANCE; 
 	
 	
 	/**
-	 * <p>Instantiates a new {@link VoidBinder}.
+	 * <p>Retrieves a static instance of {@link VoidBinder} by initializing it 
+	 * if necessary.
 	 *
+	 * @param context
+	 * 			the {@link Context} from which the {@link VoidBinder} is requested
+	 * 
+	 * @return the only instance of {@link VoidBinder}
+	 * 
 	 * @since 1.1.0
 	 */
-	private VoidBinder() {
+	public static final VoidBinder getInstance(Context context) {
+		
+		if(INSTANCE == null)
+			INSTANCE = new VoidBinder(new View(context), new Object());
+		
+		return INSTANCE; 
+	}
 	
-		super(null, null);
+	/**
+	 * <p>This constructor is exposed to conform to the general usage policy of an 
+	 * {@link AbstractBinder}. It's advised to use {@link #getInstance(Context)} instead.
+	 * 
+	 * @since 1.1.0
+	 */
+	public VoidBinder(View view, Object data) {
+	
+		super(view, data);
 	}
 
 	/**
-	 * <p>For a {@link VoidBinder}, {@link #onBind(View, Object)} does <b>absolutely nothing</b>. 
+	 * <p>For a {@link VoidBinder}, {@link #onBind(View, Object)} does <b>absolutely nothing</b>.
+	 * 
+	 * @since 1.1.0
 	 */
 	@Override
 	public void onBind(View view, Object data) {}

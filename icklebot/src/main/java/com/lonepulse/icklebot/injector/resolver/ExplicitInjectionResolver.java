@@ -30,10 +30,11 @@ import com.lonepulse.icklebot.annotation.inject.InjectBoolean;
 import com.lonepulse.icklebot.annotation.inject.InjectColor;
 import com.lonepulse.icklebot.annotation.inject.InjectDimension;
 import com.lonepulse.icklebot.annotation.inject.InjectDrawable;
+import com.lonepulse.icklebot.annotation.inject.InjectIckleService;
 import com.lonepulse.icklebot.annotation.inject.InjectInteger;
 import com.lonepulse.icklebot.annotation.inject.InjectPojo;
-import com.lonepulse.icklebot.annotation.inject.InjectService;
 import com.lonepulse.icklebot.annotation.inject.InjectString;
+import com.lonepulse.icklebot.annotation.inject.InjectSystemService;
 import com.lonepulse.icklebot.annotation.inject.InjectView;
 
 /**
@@ -54,7 +55,7 @@ class ExplicitInjectionResolver implements InjectionResolver {
 		
 		if(field.isAnnotationPresent(InjectApplication.class))
 			return InjectionCategory.APPLICATION;
-			
+		
 		else if(field.isAnnotationPresent(InjectView.class))
 			return InjectionCategory.RESOURCE_VIEW;
 		
@@ -88,8 +89,11 @@ class ExplicitInjectionResolver implements InjectionResolver {
 		else if(field.isAnnotationPresent(InjectPojo.class))
 			return InjectionCategory.POJO;
 		
-		else if(field.isAnnotationPresent(InjectService.class))
-			return InjectionCategory.SERVICE;
+		else if(field.isAnnotationPresent(InjectSystemService.class))
+			return InjectionCategory.SYSTEM_SERVICE;
+		
+		else if(field.isAnnotationPresent(InjectIckleService.class))
+			return InjectionCategory.ICKLE_SERVICE;
 		
 		return InjectionCategory.NONE;
 	}

@@ -27,7 +27,7 @@ import android.graphics.drawable.Drawable;
  * <p>Identifies the <i>category</i> to which a particular 
  * injection operation falls.</p>
  * 
- * @version 1.1.1
+ * @version 1.1.2
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -127,7 +127,15 @@ public enum InjectionCategory {
 	 * 
 	 * @since 1.1.0 
 	 */
-	SERVICE,
+	SYSTEM_SERVICE,
+	
+	/**
+	 * <p>This <i>category</i> is responsible for identifying an 
+	 * <b>Ickle Service</b> to be injected.</p>
+	 * 
+	 * @since 1.1.2 
+	 */
+	ICKLE_SERVICE,
 	
 	/**
 	 * <p>This <i>category</i> is responsible for identifying a 
