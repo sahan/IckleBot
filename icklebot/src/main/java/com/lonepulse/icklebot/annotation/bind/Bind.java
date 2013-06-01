@@ -27,11 +27,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.lonepulse.icklebot.bind.AbstractBinder;
+import com.lonepulse.icklebot.bind.BasicTextBinder;
 import com.lonepulse.icklebot.bind.BindingStrategy;
-import com.lonepulse.icklebot.bind.TextViewBinder;
 import com.lonepulse.icklebot.bind.VoidBinder;
 
 /**
@@ -56,19 +57,19 @@ public @interface Bind {
 		
 		/**
 		 * <p>The binding strategy to be employed for {@link TextView}s or any of 
-		 * its children to bind {@link String} data.</p>
+		 * its children (e.g. {@link Button}) to bind {@link String} data.</p>
 		 * 
 		 * <p><b>Targets:</b><ul><li>any model attribute which provides a meaningful 
-		 * {@code toString()} representation.</li></ul></p> 
+		 * {@code toString()} representation.</li></ul></p>
 		 * 
 		 * @since 1.1.0
 		 */
-		TEXT_VIEW(TextViewBinder.class),
+		TEXT(BasicTextBinder.class),
 		
 		/**
 		 * <p>This is the default value for {@link Bind#binder()}. It indicates 
 		 * that the binding strategy given in {@link Bind#binderType()} is being 
-		 * used, which is a {@link TextViewBinder} by default.
+		 * used, which is {@link Bind.BINDER#TEXT} by default.
 		 * 
 		 * @since 1.1.0
 		 */
@@ -143,7 +144,7 @@ public @interface Bind {
 	
 	/**
 	 * <p>The {@link Class} of the {@link BindingStrategy} strategy to be used. By default 
-	 * the {@link TextViewBinder} strategy is used. You can create your own binding strategy 
+	 * the {@link Bind.BINDER#TEXT} strategy is used. You can create your own binding strategy 
 	 * by implementing an instance of {@link AbstractBinder} and declaring the strategy in 
 	 * {@link AbstractBinder#onBind(View, Object)}.</p>
 	 *
@@ -151,5 +152,5 @@ public @interface Bind {
 	 * 
 	 * @since 1.1.0
 	 */
-	Class<? extends AbstractBinder<? extends View, ? extends Object>> binderType() default TextViewBinder.class;
+	Class<? extends AbstractBinder<? extends View, ? extends Object>> binderType() default BasicTextBinder.class;
 }
