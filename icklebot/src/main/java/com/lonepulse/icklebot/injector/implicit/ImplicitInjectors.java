@@ -66,7 +66,7 @@ public enum ImplicitInjectors implements Injector {
 	 * 
 	 * @since 1.0.0
 	 */
-	SERVICES(new ImplicitServiceInjector()),
+	SYSTEM_SERVICES(new ImplicitServiceInjector()),
 	
 	/**
 	 * <p>This {@link Injector} is responsible for injecting 

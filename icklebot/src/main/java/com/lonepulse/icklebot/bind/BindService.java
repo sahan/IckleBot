@@ -24,8 +24,10 @@ package com.lonepulse.icklebot.bind;
 import java.lang.reflect.Field;
 import java.util.Set;
 
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.lonepulse.icklebot.IckleBotRuntimeException;
 import com.lonepulse.icklebot.annotation.bind.Bind;
@@ -43,11 +45,43 @@ public class BindService implements BindManager {
 
 
 	/**
-	 * {@inheritDoc}
+	 * <p>Binds the given model to the {@link View} or {@link ViewGroup}. 
+	 * Make sure that your invoke this service from the <b>UI thread</b>. 
+	 * 
+	 * @param view
+	 * 			the {@link View} to which the model is to be bound 
+	 * 
+	 * @param model
+	 * 			the {@link Model} to be bound to the view
+	 * 
+	 * @throws IllegalAccessException
+	 * 			if invoked from outside the UI thread
+	 * 
+	 * @throws IllegalArgumentException
+	 * 			if any of the views are {@code null}
+	 * 
+	 * @throws BindResolutionException
+	 * 			if a {@link BindingStrategy} could not be discovered
+	 * 
+	 * @throws BindException
+	 * 			if a {@link BindingStrategy} failed to execute successfully
+	 * 
+	 * @since 1.1.0
 	 */
 	@Override
 	public void bind(View view, Object model) {
 
+		if(Looper.myLooper() != Looper.getMainLooper()) {
+			
+			StringBuilder errorContext = new StringBuilder()
+			.append("Model-View binding failed. ")
+			.append(" You should invoke ")
+			.append(BindManager.class.getSimpleName())
+			.append("#bind(View, Object) from the UI thread. ");
+			
+			throw new IckleBotRuntimeException(new IllegalAccessException(errorContext.toString()));
+		}
+		
 		StringBuilder errorContext = new StringBuilder("Model-View binding failed. The argument(s), ");
 		boolean hasNullArguments = false;
 		
@@ -77,7 +111,8 @@ public class BindService implements BindManager {
 			.append("Model-View binding failed. ")
 			.append(" The supplied model failed to be identified as a ")
 			.append(Model.class.getName())
-			.append(".  Please annotate it using @Model. ");
+			.append(".  Please annotate it using @")
+			.append(Model.class.getName());
 			
 			throw new IllegalArgumentException(errorContext2.toString());
 		}
@@ -87,7 +122,7 @@ public class BindService implements BindManager {
 		for (Field field : fields) {
 
 			try {
-			
+				
 				BinderResolvers.BASIC.resolve(view, model, field).bind();
 			}
 			catch(BindResolutionException bre) {

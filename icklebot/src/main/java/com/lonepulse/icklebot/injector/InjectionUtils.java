@@ -53,7 +53,8 @@ public final class InjectionUtils {
 	 * 	<li>Layout Injection</li>
 	 * 	<li>Application Injection</li>
 	 * 	<li>Resource Injection</li>
-	 * 	<li>Service Injection</li>
+	 * 	<li>System Service Injection</li>
+	 * 	<li>Ickle Service Injection</li>
 	 * 	<li>POJO Injection</li>
 	 * </ol>
 	 */
@@ -93,7 +94,8 @@ public final class InjectionUtils {
 		
 		ExplicitInjectors.APPLICATION.inject(config);
 		ExplicitInjectors.RESOURCES.inject(config);
-		ExplicitInjectors.SERVICES.inject(config);
+		ExplicitInjectors.SYSTEM_SERVICES.inject(config);
+		ExplicitInjectors.ICKLE_SERVICES.inject(config);
 		ExplicitInjectors.POJOS.inject(config);
 	}
 	
@@ -108,7 +110,7 @@ public final class InjectionUtils {
 		
 		ImplicitInjectors.APPLICATION.inject(config);		
 		ImplicitInjectors.RESOURCES.inject(config);
-		ImplicitInjectors.SERVICES.inject(config);
+		ImplicitInjectors.SYSTEM_SERVICES.inject(config);
 		ImplicitInjectors.POJOS.inject(config);
 	}
 }

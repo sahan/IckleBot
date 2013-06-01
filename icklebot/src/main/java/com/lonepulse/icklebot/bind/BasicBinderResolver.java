@@ -40,7 +40,8 @@ import com.lonepulse.icklebot.util.FieldUtils;
  */
 class BasicBinderResolver implements BinderResolver {
 
-	@Override
+	@Override 
+	@SuppressWarnings("unchecked") //safe cast from Object (at Constructor#newInstance()) to AbstractBinder
 	public AbstractBinder<? extends View, ? extends Object> resolve(View view, Object model, Field attribute) 
 	throws BindResolutionException {
 
@@ -55,7 +56,7 @@ class BasicBinderResolver implements BinderResolver {
 				
 				switch (binder) {
 				
-					case UNDEFINED: binderType = bind.binderType(); break;
+					case VOID: binderType = bind.binderType(); break;
 					
 					default: binderType = binder.getType(); break;
 				}
@@ -71,46 +72,53 @@ class BasicBinderResolver implements BinderResolver {
 					throw new BindResolutionException(errorContext.toString());
 				}
 				
-				int viewId = (bind.value() == 0)? bind.viewId() :bind.value();
+				int widgetId = (bind.value() == 0)? bind.widgetId() :bind.value();
 				
-				if(viewId == 0) {
+				if(widgetId == 0) {
 					
 					StringBuilder errorContext = new StringBuilder()
-					.append("A view ID must be supplied via the ")
+					.append("A widget ID must be supplied via the ")
 					.append(Bind.class.getName())
 					.append(" annotation. ");
 					
 					throw new BindResolutionException(errorContext.toString());
 				}
 				
-				Constructor<? extends AbstractBinder<? extends View, ? extends Object>> constructor 
-					= binderType.getConstructor(View.class, Object.class);
+				Constructor<?>[] constructors = binderType.getConstructors();
+				Constructor<?> constructor = null;
+				
+				for (Constructor<?> candidateConstructor : constructors) {
+					
+					Class<?>[] parameters = candidateConstructor.getParameterTypes();
+					if(parameters.length == 2) constructor = candidateConstructor;
+				}
 
 				if(constructor == null) {
 					
 					StringBuilder errorContext = new StringBuilder()
 					.append("The required constructor signature was not found on ")
 					.append(binderType.getName())
-					.append(". Please ensure that an exposed constructor which takes ")
-					.append("a view and its data is present. ");
+					.append(". Please ensure that a public constructor which takes only ")
+					.append("a widget and its data is present. ");
 					
 					throw new BindResolutionException(errorContext.toString());
 				}
 				
-				View viewElement = view.findViewById(viewId);
+				View widget = view.findViewById(widgetId);
 				
-				if(viewElement == null) {
+				if(widget == null) {
 					
 					StringBuilder errorContext = new StringBuilder()
-					.append("The view-element with ID ")
-					.append(viewId)
+					.append("The widget with ID ")
+					.append(widgetId)
 					.append(" was not found in given view. ");
 					
 					throw new BindResolutionException(errorContext.toString());
 				}
 				
 				Object data = FieldUtils.getFieldValue(model, Object.class, attribute);
-				return constructor.newInstance(viewElement, data);
+				
+				return AbstractBinder.class.cast(constructor.newInstance(widget, data));
 			}
 			else {
 			

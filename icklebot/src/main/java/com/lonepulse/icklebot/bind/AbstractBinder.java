@@ -38,20 +38,22 @@ public abstract class AbstractBinder<V extends View, E> implements BindingStrate
 
 	
 	/**
-	 * <p>The {@link View} to which the data is to be bound.
+	 * <p>The <b>widget</b> to which the data is to be bound. This 
+	 * will be an instance of {@link View}. 
 	 */
-	private final V view;
+	private final V widget;
 	
 	/**
-	 * <p>The data which is to be bound to the {@link View}.
+	 * <p>The data which is to be bound to the <b>widget</b>.
 	 */
 	private final E data;
 
 	
 	/**
-	 * <p>Instantiates a new {@link AbstractBinder} with the given {@link View} and data. 
+	 * <p>Instantiates a new {@link AbstractBinder} with the given 
+	 * {@link View} widget and data. 
 	 * 
-	 * @param view
+	 * @param widget
 	 * 			the {@link View} to which the data is to be bound
 	 * 
 	 * @param data
@@ -59,7 +61,7 @@ public abstract class AbstractBinder<V extends View, E> implements BindingStrate
 	 *
 	 * @since 1.1.0
 	 */
-	public AbstractBinder(V view, E data) {
+	public AbstractBinder(V widget, E data) {
 	
 		StringBuilder errorContext = new StringBuilder()
 		.append("Failed to instantiate a ")
@@ -68,9 +70,9 @@ public abstract class AbstractBinder<V extends View, E> implements BindingStrate
 		
 		boolean hasNullArguments = false;
 		
-		if(view == null) {
+		if(widget == null) {
 			
-			errorContext.append("view, ");
+			errorContext.append("widget, ");
 			hasNullArguments = true;
 		}
 		
@@ -86,20 +88,20 @@ public abstract class AbstractBinder<V extends View, E> implements BindingStrate
 			throw new IckleBotRuntimeException(new InstantiationException(errorContext.toString()));
 		}
 		
-		this.view = view;
+		this.widget = widget;
 		this.data = data;
 	}
 	
 	/**
-	 * <p>Retrieves the {@link View} to which the data is to be bound. 
+	 * <p>Retrieves the {@link View} widget to which the data is to be bound. 
 	 *
-	 * @return the {@link View} to which the data is to be bound
+	 * @return the {@link View} widget to which the data is to be bound
 	 * 
 	 * @since 1.1.0
 	 */
-	public V getView() {
+	public V getWidget() {
 		
-		return this.view;
+		return this.widget;
 	}
 	
 	/**
@@ -122,26 +124,25 @@ public abstract class AbstractBinder<V extends View, E> implements BindingStrate
 		
 		try {
 			
-			onBind(view, data);
+			onBind(widget, data);
 		}
 		catch(Exception e) {
 			
-			throw new BindException(view, data, e);
+			throw new BindException(widget, data, e);
 		}
 	}
 
 	/**
 	 * <p>Declares the strategy which will perform a <b>unidirectional binding</b> 
-	 * from data to view.
+ 	 * from data to widget.
 	 * 
-	 * @param view
-	 * 			the {@link View} to which the data is to be bound
+	 * @param widget
+	 * 			the {@link View} widget to which the data is to be bound
 	 * 
 	 * @param data
-	 * 			the data which is to be bound to the {@link View}.
-	 * 			if binding data to the view failed
+	 * 			the data which is to be bound to the {@link View} widget
 	 * <br><br>
 	 * @since 1.1.0
 	 */
-	public abstract void onBind(V view, E data);
+	public abstract void onBind(V widget, E data);
 }

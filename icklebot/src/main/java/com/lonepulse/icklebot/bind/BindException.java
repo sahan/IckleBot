@@ -42,8 +42,8 @@ public class BindException extends IckleBotRuntimeException {
 	/**
 	 * <p>Prints a detailed message with the data and view whose binding failed.
 	 * 
-	 * @param view
-	 * 			the which to which the data couldn't be bound
+	 * @param widget
+	 * 			the {@link View} widget to which the data failed to be bound
 	 * 
 	 * @param data
 	 * 			the data which failed to be bound to the view
@@ -53,9 +53,9 @@ public class BindException extends IckleBotRuntimeException {
 	 * 
 	 * @since 1.1.0
 	 */
-	public BindException(View view, Object data, Throwable cause) {
+	public BindException(View widget, Object data, Throwable cause) {
 		
-		this("Binding data " + data + " to view " + view + " failed!");
+		this("Binding data " + data + " to view " + widget + " failed!");
 	}
 	
 	/**

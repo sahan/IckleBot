@@ -53,7 +53,7 @@ class ExplicitIckleServiceInjector implements Injector {
 	@Override
 	public void inject(Configuration config) {
 
-		Set<Field> fields = config.getInjectionTargets(InjectionCategory.SYSTEM_SERVICE);
+		Set<Field> fields = config.getInjectionTargets(InjectionCategory.ICKLE_SERVICE);
 				
 		for (Field field : fields) {
 			

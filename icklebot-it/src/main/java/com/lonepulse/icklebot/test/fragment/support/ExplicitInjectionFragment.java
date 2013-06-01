@@ -37,12 +37,14 @@ import com.lonepulse.icklebot.annotation.inject.InjectBoolean;
 import com.lonepulse.icklebot.annotation.inject.InjectColor;
 import com.lonepulse.icklebot.annotation.inject.InjectDimension;
 import com.lonepulse.icklebot.annotation.inject.InjectDrawable;
+import com.lonepulse.icklebot.annotation.inject.InjectIckleService;
 import com.lonepulse.icklebot.annotation.inject.InjectInteger;
 import com.lonepulse.icklebot.annotation.inject.InjectPojo;
 import com.lonepulse.icklebot.annotation.inject.InjectSystemService;
 import com.lonepulse.icklebot.annotation.inject.InjectString;
 import com.lonepulse.icklebot.annotation.inject.InjectView;
 import com.lonepulse.icklebot.annotation.inject.Layout;
+import com.lonepulse.icklebot.bind.BindManager;
 import com.lonepulse.icklebot.fragment.support.IckleFragment;
 import com.lonepulse.icklebot.test.R;
 import com.lonepulse.icklebot.test.app.ApplicationService;
@@ -107,4 +109,7 @@ public class ExplicitInjectionFragment extends IckleFragment {
 	
 	@Layout(R.layout.act_explicit_injection)
 	ViewGroup rootView;
+	
+	@InjectIckleService
+	BindManager bindManager;
 }

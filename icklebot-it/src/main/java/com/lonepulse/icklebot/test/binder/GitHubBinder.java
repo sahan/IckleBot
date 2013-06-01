@@ -1,8 +1,8 @@
-package com.lonepulse.icklebot.annotation.bind;
+package com.lonepulse.icklebot.test.binder;
 
 /*
  * #%L
- * IckleBot Library
+ * IckleBot Integration Tests
  * %%
  * Copyright (C) 2013 Lonepulse
  * %%
@@ -21,21 +21,32 @@ package com.lonepulse.icklebot.annotation.bind;
  */
 
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import android.widget.TextView;
 
-import android.view.ViewGroup;
+import com.lonepulse.icklebot.bind.AbstractBinder;
 
 /**
- * <p>To be used on a <b>model</b> to denote its intention of binding 
- * to a {@link ViewGroup}.
+ * <p>This is a simple AbstractBinder implementation which binds 
+ * GitHub URLs to {@link TextView}s. 
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface Model {}
+public class GitHubBinder extends AbstractBinder<TextView, Object> {
+
+
+	public GitHubBinder(TextView view, String slug) {
+		
+		super(view, slug);
+	}
+
+	@Override
+	public void onBind(TextView view, Object slug) {
+		
+		String url = "https://github.com/" + slug;
+		
+		view.setText(url);
+		view.setLinksClickable(true);
+	}
+}

@@ -28,7 +28,7 @@ import android.view.View;
 /**
  * <p>An aggregation of all {@link BinderResolver}s.
  * 
- * @version 1.0.0
+ * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -37,7 +37,7 @@ public enum BinderResolvers implements BinderResolver {
 	/**
 	 * <p>See {@link BasicBinderResolver}.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	BASIC(new BasicBinderResolver());
 	
@@ -45,7 +45,7 @@ public enum BinderResolvers implements BinderResolver {
 	/**
 	 * <p>The instance of {@link BinderResolver} reflected by this facet.
 	 * 
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	private BinderResolver binderResolver;
 	
@@ -55,7 +55,7 @@ public enum BinderResolvers implements BinderResolver {
 	 * @param binderResolver
 	 * 			populates {@link #binderResolver}
 	 * 
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	private BinderResolvers(BinderResolver binderResolver) {
 		
@@ -65,7 +65,7 @@ public enum BinderResolvers implements BinderResolver {
 	/**
 	 * <p>Delegate method for {@link #BinderResolver#resolve(View, Object, Field)}.
 	 * 
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	@Override
 	public AbstractBinder<? extends View, ? extends Object> resolve(View view, Object model, Field field) 

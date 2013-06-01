@@ -24,9 +24,9 @@ package com.lonepulse.icklebot.bind;
 import android.view.View;
 
 /**
- * <p>Represents a simple mapping between one unit of data and a view and wraps 
+ * <p>Represents a simple mapping between one unit of data and a widget and wraps 
  * the strategy which will be used to perform binding depending on the type of 
- * data and the view.
+ * data and the .
  * 
  * @version 1.1.0
  * <br><br>

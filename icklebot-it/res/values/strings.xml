@@ -9,4 +9,6 @@
     <string name="btn_submit">Submit</string>
     <string name="token">~</string>
     <string name="alias">Lonepulse</string>
+    <string name="lbl_name">Hi, my name is </string>
+    <string name="lbl_github">You can find me on GitHub at </string>
 </resources>

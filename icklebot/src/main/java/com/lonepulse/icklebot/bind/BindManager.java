@@ -29,7 +29,7 @@ import com.lonepulse.icklebot.annotation.inject.IckleService;
 
 /**
  * <p>This contract specifies the services offered for managing 
- * model-view binding.
+ * Unidirectional Model-View Binding.
  * 
  * @version 1.1.0
  * <br><br>
@@ -39,7 +39,8 @@ import com.lonepulse.icklebot.annotation.inject.IckleService;
 public interface BindManager {
 
 	/**
-	 * <p>Binds the given model to the {@link View} or {@link ViewGroup}.
+	 * <p>Binds the given model to the {@link View} or {@link ViewGroup}. 
+	 * Ensure that this service is invoked from the UI thread. 
 	 * 
 	 * @param view
 	 * 			the {@link View} to which the model is to be bound 

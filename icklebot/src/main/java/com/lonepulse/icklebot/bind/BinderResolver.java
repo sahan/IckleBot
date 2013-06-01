@@ -44,7 +44,7 @@ interface BinderResolver {
 	 * implementation suited for it.  
 	 *
 	 * @param view 
-	 * 			the view to which the model attribute is to be bound
+	 * 			the view to which the model is to be bound
 	 * 
 	 * @param model
 	 * 			the model to which the view is bound
@@ -55,6 +55,9 @@ interface BinderResolver {
 	 * @return the resolved instance of {@link AbstractBinder}, else the 
 	 * 		   {@link VoidBinder#INSTANCE} if the attribute is not exposed 
 	 * 		   for binding
+	 * 
+	 * @throws BindResolutionException
+	 * 			if a {@link BindingStrategy} could not be discovered
 	 * 
 	 * @since 1.1.0
 	 */

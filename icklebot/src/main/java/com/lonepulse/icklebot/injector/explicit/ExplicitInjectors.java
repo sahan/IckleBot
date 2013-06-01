@@ -31,7 +31,7 @@ import com.lonepulse.icklebot.injector.Injector;
  * <p>Maintains a set of {@link Injector} <i>singletons</i> which are used 
  * by any {@link Activity} which implements the {@link Activity}.</p>
  * 
- * @version 1.0.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -80,7 +80,15 @@ public enum ExplicitInjectors implements Injector {
 	 * 
 	 * @since 1.0.0
 	 */
-	SERVICES(new ExplicitSystemServiceInjector()),
+	SYSTEM_SERVICES(new ExplicitSystemServiceInjector()),
+	
+	/**
+	 * <p>This {@link Injector} is responsible for injecting any 
+	 * <i>Ickle Services</i> in an {@link Activity}.</p>
+	 * 
+	 * @since 1.1.1
+	 */
+	ICKLE_SERVICES(new ExplicitIckleServiceInjector()),
 	
 	/**
 	 * <p>This {@link Injector} is responsible for injecting any 

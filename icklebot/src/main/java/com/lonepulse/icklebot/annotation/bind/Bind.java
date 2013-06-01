@@ -35,9 +35,9 @@ import com.lonepulse.icklebot.bind.TextViewBinder;
 import com.lonepulse.icklebot.bind.VoidBinder;
 
 /**
- * <p>Identifies a model attribute whose value is to be bound to a view.
+ * <p>Identifies a <i>model attribute</i> whose value is to be bound to a <b>widget</b>.
  * 
- * @version 1.1.0
+ * @version 1.2.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -56,19 +56,23 @@ public @interface Bind {
 		
 		/**
 		 * <p>The binding strategy to be employed for {@link TextView}s or any of 
-		 * its children to bind {@link String} data.
+		 * its children to bind {@link String} data.</p>
+		 * 
+		 * <p><b>Targets:</b><ul><li>any model attribute which provides a meaningful 
+		 * {@code toString()} representation.</li></ul></p> 
 		 * 
 		 * @since 1.1.0
 		 */
 		TEXT_VIEW(TextViewBinder.class),
 		
 		/**
-		 * <p>Indicates that a custom binding strategy whose {@link Class} is 
-		 * given in {@link Bind#strategyType()} should be used.
+		 * <p>This is the default value for {@link Bind#binder()}. It indicates 
+		 * that the binding strategy given in {@link Bind#binderType()} is being 
+		 * used, which is a {@link TextViewBinder} by default.
 		 * 
 		 * @since 1.1.0
 		 */
-		UNDEFINED(VoidBinder.class);
+		VOID(VoidBinder.class);
 		
 		
 		/**
@@ -109,7 +113,7 @@ public @interface Bind {
 	
 	/**
 	 * <p>The {@code integer} which identifies the <b>id</b> 
-	 * of the view to bind to.</p>
+	 * of the <b>widget</b> to bind to.</p>
 	 * 
 	 * @return the id of the view to bind to
 	 * <br><br>
@@ -119,13 +123,13 @@ public @interface Bind {
 	
 	/**
 	 * <p>The {@code integer} which identifies the <b>id</b> 
-	 * of the view to bind to.</p>
+	 * of the <b>widget</b> to bind to.</p>
 	 * 
 	 * @return the id of the view to bind to
 	 * <br><br>
-	 * @since 1.0.0
+	 * @since 1.2.0
 	 */
-	int viewId() default 0;
+	int widgetId() default 0;
 	
 	/**
 	 * <p>Identifies an existing binding strategy to be used. This overrides the binding 
@@ -135,7 +139,7 @@ public @interface Bind {
 	 * 
 	 * @since 1.1.0
 	 */
-	BINDER binder() default BINDER.UNDEFINED;
+	BINDER binder() default BINDER.VOID;
 	
 	/**
 	 * <p>The {@link Class} of the {@link BindingStrategy} strategy to be used. By default 
