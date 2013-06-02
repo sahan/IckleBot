@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.injector.explicit;
+package com.lonepulse.icklebot.injector.implicit;
 
 /*
  * #%L
@@ -28,52 +28,37 @@ import android.content.Context;
 import android.util.Log;
 
 import com.lonepulse.icklebot.annotation.inject.IckleService;
-import com.lonepulse.icklebot.annotation.inject.InjectIckleService;
-import com.lonepulse.icklebot.injector.IllegalValueTypeException;
 import com.lonepulse.icklebot.injector.InjectionException;
 import com.lonepulse.icklebot.injector.Injector;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
 import com.lonepulse.icklebot.util.ContextUtils;
 
 /**
- * <p>An implementation of {@link Injector} which is responsible for injecting 
- * <b>Ickle Services</b>.
+ * <p>An implementation of {@link Injector} which is responsible 
+ * for injecting <i>Ickle Services</i>.</p>
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-class ExplicitIckleServiceInjector implements Injector {
+class ImplicitIckleServiceInjector implements Injector {
+
 	
 	/**
-	 * <p>Injects <b>Ickle Service</b> implementations, where each implementation 
-	 * has a public no-argument constructor or a constructor which takes <i>only</i> 
-	 * a single {@link Context}.
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void inject(Configuration config) {
 
 		Set<Field> fields = config.getInjectionTargets(InjectionCategory.ICKLE_SERVICE);
-				
+		
 		for (Field field : fields) {
 			
 			try {
 				
-				Class<? extends Object> contractClass = field.getType();
-				
-				if(!contractClass.isAnnotationPresent(IckleService.class)) {
-					
-					StringBuilder errorContext = new StringBuilder()
-					.append(contractClass.getName())
-					.append(" is not an Ickle Service. Please remove the @")
-					.append(InjectIckleService.class.getSimpleName())
-					.append(" annotation or else change the type to a valid Ickle Service. ");
-					
-					throw new InjectionException(new IllegalValueTypeException(errorContext.toString()));
-				}
-				
 				if(!field.isAccessible()) field.setAccessible(true);
 				
+				Class<? extends Object> contractClass = field.getType();
 				IckleService ickleService = contractClass.getAnnotation(IckleService.class);
 				Class<? extends Object> implementationClass = ickleService.value();
 				
@@ -106,7 +91,7 @@ class ExplicitIckleServiceInjector implements Injector {
 			} 
 			catch (Exception e) {
 				
-				Log.e(getClass().getName(), "Ickle Service Injection Failed. ", e);
+				Log.e(getClass().getName(), "Implicit Ickle Service Injection Failed. ", e);
 			}
 		}
 	}

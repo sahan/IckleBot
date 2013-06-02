@@ -229,6 +229,20 @@ public class SupportedImplicitInjectionFragmentTest {
 	}
 	
 	/**
+	 * <p>Test ickle service injection.
+	 * 
+	 * @throws Exception
+	 * 			if test terminated with an error
+	 * 
+	 * @since 1.1.0
+	 */
+	@Test
+	public final void testIckleService() throws Exception {
+		
+		assertNotNull(activity.fragment.bindManager);
+	}
+	
+	/**
 	 * <p>Test POJO injection.
 	 * 
 	 * @throws Exception

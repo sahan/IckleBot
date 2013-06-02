@@ -22,8 +22,9 @@ package com.lonepulse.icklebot.network;
 
 
 import android.Manifest;
+import android.content.Context;
 
-import com.lonepulse.icklebot.IckleActivity;
+import com.lonepulse.icklebot.IckleBotRuntimeException;
 import com.lonepulse.icklebot.PermissionDeniedException;
 import com.lonepulse.icklebot.annotation.profile.Profile;
 import com.lonepulse.icklebot.util.ContextUtils;
@@ -32,7 +33,7 @@ import com.lonepulse.icklebot.util.PermissionUtils;
 /**
  * <p>This class offers a set of utility operations for network management.
  * 
- * @version 1.1.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -70,14 +71,36 @@ public final class NetworkUtils {
 	public static NetworkManager getNetworkManager(Object context) {
 		
 		if(!PermissionUtils.isGranted(context, Manifest.permission.ACCESS_NETWORK_STATE))
-			throw new PermissionDeniedException(
-					Manifest.permission.ACCESS_NETWORK_STATE, 
-					IckleActivity.class.getSimpleName() + "#network()");
+			throw new IckleBotRuntimeException(
+				new PermissionDeniedException(Manifest.permission.ACCESS_NETWORK_STATE, Profile.NETWORK));
 		
 		if(ContextUtils.isApplication(context))
 			return NetworkService.getInstance(context);
 		
 		else
-			return NetworkService.newInstance(ContextUtils.discover(context));
+			return new NetworkService(ContextUtils.discover(context));
+	}
+	
+	/**
+	 * <p>Returns an instance of {@link NetworkState} to describe the connectivity state 
+	 * of the available network.
+	 *
+	 * @param context
+	 *			the {@link Context} which is requesting the network state 
+	 * 
+	 * @return a {@link String} which represents the network state
+	 * 
+	 * @since 1.1.1
+	 */
+	public static final NetworkState getNetworkState(Context context) {
+		
+		NetworkManager networkManager = NetworkUtils.getNetworkManager(context);
+		
+		if(networkManager.isConnecting()) return NetworkState.CONNECTING;
+		else if(networkManager.isConnected()) return NetworkState.CONNECTED;
+		else if(networkManager.isSuspended()) return NetworkState.SUSPENDED;
+		else if(networkManager.isDisconnecting()) return NetworkState.DISCONNECTING;
+		else if(networkManager.isDisconnected()) return NetworkState.DISCONNECTED;
+		else return NetworkState.UNKNOWN;
 	}
 }

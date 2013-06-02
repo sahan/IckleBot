@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.animation.Animation;
 
 import com.lonepulse.icklebot.annotation.inject.ApplicationContract;
+import com.lonepulse.icklebot.annotation.inject.IckleService;
 import com.lonepulse.icklebot.annotation.inject.IgnoreInjection;
 import com.lonepulse.icklebot.annotation.inject.InjectAll;
 import com.lonepulse.icklebot.annotation.inject.Layout;
@@ -42,7 +43,7 @@ import com.lonepulse.icklebot.util.ReflectiveR;
  * <p>An implementation of {@link EventResolver} which caters to 
  * <b>Implicit Injections</b> activated via {@link InjectAll}.</p>
  * 
- * @version 1.1.1
+ * @version 1.1.2
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -95,8 +96,11 @@ class ImplicitInjectionResolver implements InjectionResolver {
 		else if(isCategoryPojo(field))
 			return InjectionCategory.POJO;
 		
-		else if(isCategoryService(field))
+		else if(isCategorySystemService(field))
 			return InjectionCategory.SYSTEM_SERVICE;
+		
+		else if(isCategoryIckleService(field))
+			return InjectionCategory.ICKLE_SERVICE;
 		
 		return InjectionCategory.NONE;
 	}
@@ -331,7 +335,7 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	 * 
 	 * <br><br>&nbsp;&nbsp;&nbsp;
 	 * 
-	 * {@code TelephonyManager TELEPHONY_SERVICE;}
+	 * {@code TelephonyManager telephony_service;}
 	 * 
 	 * @param field
 	 * 			the {@link Field} whose {@link InjectionCategory} is to 
@@ -341,7 +345,7 @@ class ImplicitInjectionResolver implements InjectionResolver {
 	 * <br><br>
 	 * @since 1.1.0
 	 */
-	private boolean isCategoryService(Field field) {
+	private boolean isCategorySystemService(Field field) {
 		
 		if(!(field.getName().endsWith("_service") 
 			|| field.getName().endsWith("_SERVICE"))) {
@@ -361,5 +365,34 @@ class ImplicitInjectionResolver implements InjectionResolver {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * <p>Determines if this {@link Field} injection falls into 
+	 * {@link InjectionCategory#ICKLE_SERVICE}.</p>
+	 * 
+	 * <p>There are no restrictions to the {@link Field}'s <i> declared 
+	 * name</i>. Simply use a service contract with any field name and 
+	 * if the contract is an Ickle Service an instance of it will be 
+	 * injected. For example, the following declaration is acceptable:</p>
+	 * 
+	 * <br><br>&nbsp;&nbsp;&nbsp;
+	 * 
+	 * {@code BindManager myBinder;}
+	 * 
+	 * @param field
+	 * 			the {@link Field} whose {@link InjectionCategory} is to 
+	 * 			be resolved
+	 * <br><br>
+	 * @return {@code true} if it's {@link InjectionCategory#ICKLE_SERVICE}, 
+	 * <br><br>
+	 * @since 1.1.2
+	 */
+	private boolean isCategoryIckleService(Field field) {
+		
+		Class<?> type = field.getType();
+		
+		return (type.getName().startsWith("com.lonepulse.icklebot") 
+				&& type.isAnnotationPresent(IckleService.class));
 	}
 }

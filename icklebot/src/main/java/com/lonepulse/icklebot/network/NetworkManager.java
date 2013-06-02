@@ -23,6 +23,8 @@ package com.lonepulse.icklebot.network;
 
 import android.net.NetworkInfo;
 
+import com.lonepulse.icklebot.annotation.inject.IckleService;
+
 /**
  * <p>This contract specifies the services offered for querying network information.
  * 
@@ -30,13 +32,15 @@ import android.net.NetworkInfo;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
+@IckleService(NetworkService.class)
 public interface NetworkManager {
 
 	
 	/**
-	 * <p>Retrives the {@link NetworkInfo} for an available network connection.
+	 * <p>Retrieves the {@link NetworkInfo} for an available network connection.
 	 * 
-	 * @return {@code NetworkInfo} of an available network connection exists
+	 * @return {@code NetworkInfo} of an available network connection exists, 
+	 * 		   else {@code null} if no active network is available
 	 * 
 	 * @since 1.1.0
 	 */

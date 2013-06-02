@@ -38,7 +38,7 @@ import com.xtremelabs.robolectric.RobolectricTestRunner;
  * 
  * @category test
  * <br><br>
- * @version 1.1.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -224,6 +224,20 @@ public class ImplicitInjectionFragmentTest {
 	public final void testSystemService() throws Exception {
 		
 		assertNotNull(activity.fragment.telephony_service);
+	}
+	
+	/**
+	 * <p>Test ickle service injection.
+	 * 
+	 * @throws Exception
+	 * 			if test terminated with an error
+	 * 
+	 * @since 1.1.1
+	 */
+	@Test
+	public final void testIckleService() throws Exception {
+		
+		assertNotNull(activity.fragment.bindManager);
 	}
 	
 	/**

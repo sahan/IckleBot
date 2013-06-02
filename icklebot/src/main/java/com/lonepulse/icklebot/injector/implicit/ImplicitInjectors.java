@@ -66,7 +66,15 @@ public enum ImplicitInjectors implements Injector {
 	 * 
 	 * @since 1.0.0
 	 */
-	SYSTEM_SERVICES(new ImplicitServiceInjector()),
+	SYSTEM_SERVICES(new ImplicitSystemServiceInjector()),
+	
+	/**
+	 * <p>This {@link Injector} is responsible for injecting any 
+	 * <i>Ickle Services</i> in an {@link Activity}.</p>
+	 * 
+	 * @since 1.0.0
+	 */
+	ICKLE_SERVICES(new ImplicitIckleServiceInjector()),
 	
 	/**
 	 * <p>This {@link Injector} is responsible for injecting 

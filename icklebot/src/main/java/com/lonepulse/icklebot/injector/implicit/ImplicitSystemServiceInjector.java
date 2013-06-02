@@ -32,13 +32,13 @@ import com.lonepulse.icklebot.util.ContextUtils;
 
 /**
  * <p>An implementation of {@link Injector} which is responsible 
- * for injecting <i>POJOs</i>.</p>
+ * for injecting <i>System Services</i>.</p>
  * 
  * @version 1.0.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-class ImplicitServiceInjector implements Injector {
+class ImplicitSystemServiceInjector implements Injector {
 
 	
 	/**

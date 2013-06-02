@@ -52,10 +52,11 @@ public class NetworkService implements NetworkManager {
 	
 	
 	/**
-	 * <p>Instantiation is restricted. Use the {@link #newInstance()} 
-	 * or {@link #getInstance()} instead.
+	 * <p>Retrieves a new instance of {@link NetworkService}. Use 
+	 * {@link #getInstance()} if your accessing the {@link NetworkService} 
+	 * from an application {@link Context}.
 	 */
-	private NetworkService(Context context) {
+	public NetworkService(Context context) {
 		
 		this.connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE); 
 	}
@@ -75,22 +76,6 @@ public class NetworkService implements NetworkManager {
 		
 		return (instance == null)? 
 				(instance = new NetworkService(ContextUtils.asApplication(context))) :instance;
-	}
-	
-	/**
-	 * <p>Creates a new instance of an implementation of 
-	 * {@link NetworkManager}.
-	 * 
-	 * @param context
-	 * 			the context in which the service is instantiated
-	 * 
-	 * @return a new instance of {@link NetworkManager}.
-	 * 
-	 * @since 1.1.1
-	 */
-	public static final NetworkManager newInstance(Context context) {
-		
-		return new NetworkService(context);
 	}
 	
 	/**

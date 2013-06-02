@@ -111,6 +111,7 @@ public final class InjectionUtils {
 		ImplicitInjectors.APPLICATION.inject(config);		
 		ImplicitInjectors.RESOURCES.inject(config);
 		ImplicitInjectors.SYSTEM_SERVICES.inject(config);
+		ImplicitInjectors.ICKLE_SERVICES.inject(config);
 		ImplicitInjectors.POJOS.inject(config);
 	}
 }

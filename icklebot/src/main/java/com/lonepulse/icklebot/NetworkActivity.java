@@ -22,11 +22,16 @@ package com.lonepulse.icklebot;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.NetworkInfo.State;
 import android.os.Bundle;
 import android.telephony.PhoneStateListener;
-import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import com.lonepulse.icklebot.annotation.profile.Profile;
 import com.lonepulse.icklebot.network.NetworkManager;
@@ -53,42 +58,41 @@ abstract class NetworkActivity extends Activity {
 
 	
 	/**
-	 * <p>An instance of {@link PhoneStateListener} which is registered to listen 
-	 * for data connection states.
+	 * <p>This {@link BroadcastReceiver} is used to detect changes in network state.
 	 */
-	private PhoneStateListener phoneStateListener = new PhoneStateListener() {
-		
-		@Override
-		public void onDataConnectionStateChanged(int state) {
-			
-			switch (state) { 
-				
-				case TelephonyManager.DATA_CONNECTED: {
-					
-					onDataConnected();
-					break;
-				}
-					
-				case TelephonyManager.DATA_CONNECTING: {
-						
-					onDataConnecting();
-					break;
-				}
-					
-				case TelephonyManager.DATA_SUSPENDED: {
-						
-					onDataSuspended();
-					break;
-				}
-					
-				case TelephonyManager.DATA_DISCONNECTED: {
-					
-					onDataDisconnected();
-					break;
-				}
-			}
-		}
+	BroadcastReceiver networkStateReceiver = new BroadcastReceiver() {
+		 
+	    @Override
+	    public void onReceive(final Context context, final Intent intent) {
+
+	    	try {
+
+	    		NetworkInfo networkInfo = 
+	    			(NetworkInfo)intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
+	    		
+	    		if(networkInfo != null) {
+	    		
+			    	if(networkInfo.getState().equals(State.CONNECTING)) onNetworkConnecting();
+			    	else if(networkInfo.getState().equals(State.CONNECTED)) onNetworkConnected();
+			    	else if(networkInfo.getState().equals(State.SUSPENDED)) onNetworkSuspended();
+			    	else if(networkInfo.getState().equals(State.DISCONNECTING)) onNetworkDisconnecting();
+			    	else if(networkInfo.getState().equals(State.DISCONNECTED)) onNetworkDisconnected();
+	    		}
+	    	}
+	    	catch(Exception e) {
+	    		
+	    		StringBuilder errorContext = new StringBuilder()
+	    		.append("Failed to handle network state change to ")
+	    		.append(NetworkUtils.getNetworkState(getApplicationContext()).name())
+	    		.append(" at ")
+	    		.append(this.getClass().getName())
+	    		.append(". ");
+	    		
+	    		Log.e(NetworkActivity.class.getSimpleName(), errorContext.toString(), e);
+	    	}
+	    }
 	};
+	
 	
 	/**
 	 * <p>Registers a {@link PhoneStateListener} to listen for changes in the data 
@@ -104,11 +108,19 @@ abstract class NetworkActivity extends Activity {
 
 		if(ProfileService.getInstance(getApplicationContext()).isActive(this, Profile.NETWORK)) {
 		
-			if(!PermissionUtils.isGranted(this, Manifest.permission.READ_PHONE_STATE))
-				throw new PermissionDeniedException(Manifest.permission.READ_PHONE_STATE, Profile.NETWORK);
+			if(!PermissionUtils.isGranted(this, Manifest.permission.ACCESS_NETWORK_STATE)) {
+				
+				Log.e(getClass().getSimpleName(), "Failed to register a receiver for changes in network state. ", 
+					new IckleBotRuntimeException(
+						new PermissionDeniedException(Manifest.permission.ACCESS_NETWORK_STATE, Profile.NETWORK)));
+			}
+			else {
 			
-			((TelephonyManager)getSystemService(TELEPHONY_SERVICE))
-			.listen(phoneStateListener, PhoneStateListener.LISTEN_DATA_CONNECTION_STATE);
+				IntentFilter intentFilter = new IntentFilter();
+				intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+				
+				registerReceiver(networkStateReceiver, intentFilter);
+			}
 		}
 	}
 	
@@ -117,7 +129,7 @@ abstract class NetworkActivity extends Activity {
 	 * data connection state.
 	 * 
 	 * @throws PermissionDeniedException
-	 * 			if {@link Manifest.permission#READ_PHONE_STATE} is denied
+	 * 			if {@link Manifest.permission#ACCESS_NETWORK_STATE} is denied
 	 */
 	@Override
 	protected void onDestroy() {
@@ -125,44 +137,47 @@ abstract class NetworkActivity extends Activity {
 		super.onDestroy();
 		
 		if(ProfileService.getInstance(getApplicationContext()).isActive(this, Profile.NETWORK)
-			&& PermissionUtils.isGranted(this, Manifest.permission.READ_PHONE_STATE)) {
+			&& PermissionUtils.isGranted(this, Manifest.permission.ACCESS_NETWORK_STATE)) {
 			
-			((TelephonyManager)getSystemService(TELEPHONY_SERVICE))
-			.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
+			unregisterReceiver(networkStateReceiver);
 		}
 	}
-	
-	/**
-	 * <p><b>Override</b> this method to handle callbacks for connection availability.</p>
-	 * 
-	 * @param networkInfo
-	 * 			{@link NetworkInfo} for the active data connection.
-	 * 
-	 * @since 1.1.0
-	 */
-	protected void onDataConnected() {}
-	
-	/**
-	 * <p><b>Override</b> this method to handle callbacks for connection unavailability.</p>
-	 * 
-	 * @since 1.1.0
-	 */
-	protected void onDataDisconnected() {}
 	
 	/**
 	 * <p><b>Override</b> this method to handle callbacks for connection establishment.</p>
 	 * 
 	 * @since 1.1.0
 	 */
-	protected void onDataConnecting() {}
+	protected void onNetworkConnecting() {}
+	
+	/**
+	 * <p><b>Override</b> this method to handle callbacks for connection availability.</p>
+	 * 
+	 * @since 1.1.0
+	 */
+	protected void onNetworkConnected() {}
 	
 	/**
 	 * <p><b>Override</b> this method to handle callbacks for data connection suspension.</p>
 	 * 
 	 * @since 1.1.0
 	 */
-	protected void onDataSuspended() {}
+	protected void onNetworkSuspended() {}
 	
+	/**
+	 * <p><b>Override</b> this method to handle callbacks for connection termination.</p>
+	 * 
+	 * @since 1.1.0
+	 */
+	protected void onNetworkDisconnecting() {}
+	
+	/**
+	 * <p><b>Override</b> this method to handle callbacks for connection unavailability.</p>
+	 * 
+	 * @since 1.1.0
+	 */
+	protected void onNetworkDisconnected() {}
+
 	/**
 	 * See {@link NetworkUtils#getNetworkManager(Context)}.
 	 */

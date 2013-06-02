@@ -33,6 +33,7 @@ import com.lonepulse.icklebot.IckleActivity;
 import com.lonepulse.icklebot.annotation.inject.InjectAll;
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.annotation.inject.Title;
+import com.lonepulse.icklebot.bind.BindManager;
 import com.lonepulse.icklebot.test.R;
 import com.lonepulse.icklebot.test.app.ApplicationService;
 import com.lonepulse.icklebot.test.service.AccountsService;
@@ -78,6 +79,8 @@ public class ImplicitInjectionActivity extends IckleActivity {
 	AnimatorSet grow;
 	
 	TelephonyManager telephony_service;
+	
+	BindManager bindManager;
 	
 	AccountsService accountsService;
 	

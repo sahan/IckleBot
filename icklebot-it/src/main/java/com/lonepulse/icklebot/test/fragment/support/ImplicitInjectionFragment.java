@@ -30,6 +30,7 @@ import android.widget.Button;
 
 import com.lonepulse.icklebot.annotation.inject.InjectAll;
 import com.lonepulse.icklebot.annotation.inject.Layout;
+import com.lonepulse.icklebot.bind.BindManager;
 import com.lonepulse.icklebot.fragment.support.IckleFragment;
 import com.lonepulse.icklebot.test.R;
 import com.lonepulse.icklebot.test.app.ApplicationService;
@@ -75,6 +76,8 @@ public class ImplicitInjectionFragment extends IckleFragment {
 	AnimatorSet grow;
 	
 	TelephonyManager telephony_service;
+	
+	BindManager bindManager;
 	
 	AccountsService accountsService;
 	
