@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot;
+package com.lonepulse.icklebot.activity.support;
 
 /*
  * #%L
@@ -21,7 +21,6 @@ package com.lonepulse.icklebot;
  */
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -30,9 +29,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.telephony.PhoneStateListener;
 import android.util.Log;
 
+import com.lonepulse.icklebot.IckleBotRuntimeException;
+import com.lonepulse.icklebot.PermissionDeniedException;
 import com.lonepulse.icklebot.annotation.profile.Profile;
 import com.lonepulse.icklebot.network.NetworkManager;
 import com.lonepulse.icklebot.network.NetworkUtils;
@@ -42,7 +44,7 @@ import com.lonepulse.icklebot.util.PermissionUtils;
 /**
  * <p>This profile detects changes in the data connection and provides 
  * callbacks to handle them. In addition it can be used to discover 
- * additional network information via {@link NetworkActivity#network()}.</p>
+ * additional network information via {@link NetworkFragmentActivity#network()}.</p>
  * 
  * <p>This profile requires the following permission:
  * <ul>
@@ -54,7 +56,7 @@ import com.lonepulse.icklebot.util.PermissionUtils;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-abstract class NetworkActivity extends Activity {
+abstract class NetworkFragmentActivity extends FragmentActivity {
 
 	
 	/**
@@ -88,7 +90,7 @@ abstract class NetworkActivity extends Activity {
 	    		.append(this.getClass().getName())
 	    		.append(". ");
 	    		
-	    		Log.e(NetworkActivity.class.getSimpleName(), errorContext.toString(), e);
+	    		Log.e(NetworkFragmentActivity.class.getSimpleName(), errorContext.toString(), e);
 	    	}
 	    }
 	};

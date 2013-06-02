@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot;
+package com.lonepulse.icklebot.activity;
 
 /*
  * #%L
@@ -28,6 +28,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.lonepulse.icklebot.PermissionDeniedException;
 import com.lonepulse.icklebot.annotation.profile.Profile;
 import com.lonepulse.icklebot.event.EventLinker;
 import com.lonepulse.icklebot.event.EventUtils;

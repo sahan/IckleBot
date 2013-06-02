@@ -1,8 +1,8 @@
-package com.lonepulse.icklebot.fragment.support;
+package com.lonepulse.icklebot.activity.support;
 
 /*
  * #%L
- * IckleBot Library
+ * IckleBot
  * %%
  * Copyright (C) 2013 Lonepulse
  * %%
@@ -20,43 +20,40 @@ package com.lonepulse.icklebot.fragment.support;
  * #L%
  */
 
-
 import android.os.Bundle;
-import android.view.View;
 
 import com.lonepulse.icklebot.activity.IckleActivity;
-import com.lonepulse.icklebot.event.EventLinker;
-import com.lonepulse.icklebot.event.EventLinkers;
-import com.lonepulse.icklebot.event.EventUtils;
+import com.lonepulse.icklebot.injector.InjectionUtils;
+import com.lonepulse.icklebot.injector.Injector;
 
 /**
- * <p>This profile offers event linking features.
+ * <p>This profile performs explicit and implicit dependency injection.
  * 
  * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-abstract class EventFragment extends StateFragment {
-	
+abstract class InjectionFragmentActivity extends ThreadingFragmentActivity {
+
 	
 	/**
-	 * <p>The {@link EventLinkers.Configuration} for this {@link IckleActivity}.</p>
+	 * <p>The {@link Injector.Configuration} for this {@link IckleActivity}.</p>
 	 * 
 	 * @since 1.1.0
 	 */
-	private final EventLinker.Configuration EVENT_CONFIGURATION;
+	private final Injector.Configuration INJECTOR_CONFIGURATION;
 	{
-		EVENT_CONFIGURATION = EventLinker.Configuration.newInstance(this);
+		INJECTOR_CONFIGURATION = Injector.Configuration.newInstance(this);
 	}
 	
 	
 	/**
-	 * <p>Performs <b>event listener linking</b> by invoking {@link EventUtils#link()}.</p>
+	 * <p>Performs <b>dependency injection</b> by invoking {@link #inject()}.</p>
 	 */
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-	
-		super.onViewCreated(view, savedInstanceState);
-		EventUtils.link(EVENT_CONFIGURATION);
+	protected void onCreate(Bundle savedInstanceState) {
+		
+		super.onCreate(savedInstanceState);
+		InjectionUtils.inject(INJECTOR_CONFIGURATION);
 	}
 }

@@ -23,7 +23,7 @@ package com.lonepulse.icklebot.util;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-import com.lonepulse.icklebot.IckleActivity;
+import com.lonepulse.icklebot.activity.IckleActivity;
 
 /**
  * <p>A utility class which performs some common operations involved 

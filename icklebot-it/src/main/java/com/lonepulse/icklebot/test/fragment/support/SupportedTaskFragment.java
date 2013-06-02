@@ -28,7 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.lonepulse.icklebot.IckleSupportManager;
+import com.lonepulse.icklebot.activity.IckleSupportManager;
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.annotation.thread.Async;
 import com.lonepulse.icklebot.annotation.thread.UI;

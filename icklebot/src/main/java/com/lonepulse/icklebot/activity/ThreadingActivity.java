@@ -1,10 +1,8 @@
-package com.lonepulse.icklebot.app;
-
-import com.lonepulse.icklebot.activity.IckleSupportManager;
+package com.lonepulse.icklebot.activity;
 
 /*
  * #%L
- * IckleBot Library
+ * IckleBot
  * %%
  * Copyright (C) 2013 Lonepulse
  * %%
@@ -22,25 +20,36 @@ import com.lonepulse.icklebot.activity.IckleSupportManager;
  * #L%
  */
 
+import com.lonepulse.icklebot.task.TaskUtils;
 
 /**
- * <p>This contract is followed by Fragments which offer services 
- * supported by the {@link IckleSupportManager}.
+ * <p>This profile offers an alternative threading model for running background 
+ * worker threads and posting events on the UI thread.
  * 
- * 
- * @version 1.1.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public interface SupportFragment extends Fragment {
-
+abstract class ThreadingActivity extends NetworkActivity {
+	
+	
 	/**
-	 * <p>Retrieves the instance of the {@link IckleSupportManager} 
-	 * associated with this {@link SupportFragment}. 
-	 *
-	 * @return the associated {@link IckleSupportManager}
+	 * <p>See {@link AsyncTaskService#execute(ThreadingActivity, int, Object...)}.</p>
 	 * 
 	 * @since 1.1.0
 	 */
-	IckleSupportManager getSupportManager();
+	protected void runAsyncTask(int asyncTaskId, Object... args) {
+		
+		TaskUtils.runAsyncTask(this, asyncTaskId, args);
+	}
+	
+	/**
+	 * <p>See {@link UITaskService#execute(ThreadingActivity, int, Object...)}.</p>
+	 * 
+	 * @since 1.1.0
+	 */
+	protected void runUITask(int uiTaskId, final Object... args) {
+
+		TaskUtils.runUITask(this, uiTaskId, args);
+	}
 }

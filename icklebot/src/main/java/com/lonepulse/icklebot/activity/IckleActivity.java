@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot;
+package com.lonepulse.icklebot.activity;
 
 /*
  * #%L
@@ -21,38 +21,35 @@ package com.lonepulse.icklebot;
  */
 
 import android.os.Bundle;
-
-import com.lonepulse.icklebot.injector.InjectionUtils;
-import com.lonepulse.icklebot.injector.Injector;
+import android.util.Log;
 
 /**
- * <p>This profile offers dependency injection features.
+ * <p>All activities that wish to be <i>wired</i> by <b>dependency injection</b> 
+ * should extend this activity.</p>
  * 
- * @version 1.1.1
+ * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-abstract class InjectionActivity extends ThreadingActivity {
+public abstract class IckleActivity extends EventActivity {
 
-	
 	/**
-	 * <p>The {@link Injector.Configuration} for this {@link IckleActivity}.</p>
+	 * <p>This callback is executed when the {@link IckleActivity} is being 
+	 * created. It invokes the dependency injection and event listener linking 
+	 * via the {@link InjectionActivity} and the {@link EventActivity}.</p>
 	 * 
-	 * @since 1.1.0
-	 */
-	private final Injector.Configuration INJECTOR_CONFIGURATION;
-	{
-		INJECTOR_CONFIGURATION = Injector.Configuration.newInstance(this);
-	}
-	
-	
-	/**
-	 * <p>Performs <b>dependency injection</b> by invoking {@link #inject()}.</p>
+	 * <p>See {@link InjectionActivity#onCreate(Bundle)}.</p> 
+	 * <p>See {@link EventActivity#onCreate(Bundle)}.</p>
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
+		long millis = System.currentTimeMillis();
+		
 		super.onCreate(savedInstanceState);
-		InjectionUtils.inject(INJECTOR_CONFIGURATION);
+
+		millis = System.currentTimeMillis() - millis;
+		
+		Log.i("INSTRUMENTATION:IckleActivity", getClass().getSimpleName() + ": " + millis + "ms");
 	}
 }

@@ -22,7 +22,7 @@ package com.lonepulse.icklebot.injector;
 
 import java.lang.annotation.Annotation;
 
-import com.lonepulse.icklebot.IckleActivity;
+import com.lonepulse.icklebot.activity.IckleActivity;
 
 /**
  * <p>A {@link RuntimeException} which signals an unexpected failure 

@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
 
 import android.view.View;
 
-import com.lonepulse.icklebot.IckleActivity;
+import com.lonepulse.icklebot.activity.IckleActivity;
 
 /**
  * <p>Allows the declaration of {@link Profile}s which selectively <b>activates</b> 

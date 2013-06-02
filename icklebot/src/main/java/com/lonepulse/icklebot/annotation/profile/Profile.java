@@ -21,7 +21,7 @@ package com.lonepulse.icklebot.annotation.profile;
  */
 
 
-import com.lonepulse.icklebot.IckleActivity;
+import com.lonepulse.icklebot.activity.IckleActivity;
 
 /**
  * <p>Declares all the available profiles which are offered by 

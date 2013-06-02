@@ -1,9 +1,8 @@
-
-package com.lonepulse.icklebot;
+package com.lonepulse.icklebot.activity.support;
 
 /*
  * #%L
- * IckleBot Library
+ * IckleBot
  * %%
  * Copyright (C) 2013 Lonepulse
  * %%
@@ -21,43 +20,38 @@ package com.lonepulse.icklebot;
  * #L%
  */
 
-
 import android.os.Bundle;
-import android.view.View;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
-import com.lonepulse.icklebot.event.EventLinker;
-import com.lonepulse.icklebot.event.EventLinkers;
-import com.lonepulse.icklebot.event.EventUtils;
+import com.lonepulse.icklebot.annotation.profile.Profile;
 
 /**
- * <p>This profile offers the linking of event listeners to {@link View}s.
+ * <p>A {@link FragmentActivity} that wish to leverage IckleBot's features 
+ * should extend this activity.</p>
  * 
- * @version 1.1.1
+ * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-abstract class EventActivity extends StateActivity {
-	
-		
-	/**
-	 * <p>The {@link EventLinkers.Configuration} for this {@link IckleActivity}.</p>
-	 * 
-	 * @since 1.1.0
-	 */
-	private final EventLinker.Configuration EVENT_CONFIGURATION;
-	{
-		EVENT_CONFIGURATION = EventLinker.Configuration.newInstance(this);
-	}
-	
+public abstract class IckleFragmentActivity extends EventFragmentActivity {
 
 	/**
-	 * <p>Performs <b>event listener linking</b> by invoking {@link #link()}.</p>
+	 * <p>This callback is executed when the {@link IckleFragmentActivity} is being 
+	 * created. It initializes IckleBot's features and cache each {@link Profile} 
+	 * configuration for use.
+	 * 
+	 * @since 1.1.0
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
+		long millis = System.currentTimeMillis();
+		
 		super.onCreate(savedInstanceState);
-		EventUtils.link(EVENT_CONFIGURATION);
+
+		millis = System.currentTimeMillis() - millis;
+		
+		Log.i("INSTRUMENTATION:IckleFragmentActivity", getClass().getSimpleName() + ": " + millis + "ms");
 	}
 }
-

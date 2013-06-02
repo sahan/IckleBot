@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot;
+package com.lonepulse.icklebot.activity;
 
 /*
  * #%L
@@ -20,36 +20,39 @@ package com.lonepulse.icklebot;
  * #L%
  */
 
-import com.lonepulse.icklebot.task.TaskUtils;
+import android.os.Bundle;
+
+import com.lonepulse.icklebot.injector.InjectionUtils;
+import com.lonepulse.icklebot.injector.Injector;
 
 /**
- * <p>This profile offers an alternative threading model for running background 
- * worker threads and posting events on the UI thread.
+ * <p>This profile offers dependency injection features.
  * 
  * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-abstract class ThreadingActivity extends NetworkActivity {
-	
+abstract class InjectionActivity extends ThreadingActivity {
+
 	
 	/**
-	 * <p>See {@link AsyncTaskService#execute(ThreadingActivity, int, Object...)}.</p>
+	 * <p>The {@link Injector.Configuration} for this {@link IckleActivity}.</p>
 	 * 
 	 * @since 1.1.0
 	 */
-	protected void runAsyncTask(int asyncTaskId, Object... args) {
-		
-		TaskUtils.runAsyncTask(this, asyncTaskId, args);
+	private final Injector.Configuration INJECTOR_CONFIGURATION;
+	{
+		INJECTOR_CONFIGURATION = Injector.Configuration.newInstance(this);
 	}
 	
+	
 	/**
-	 * <p>See {@link UITaskService#execute(ThreadingActivity, int, Object...)}.</p>
-	 * 
-	 * @since 1.1.0
+	 * <p>Performs <b>dependency injection</b> by invoking {@link #inject()}.</p>
 	 */
-	protected void runUITask(int uiTaskId, final Object... args) {
-
-		TaskUtils.runUITask(this, uiTaskId, args);
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		
+		super.onCreate(savedInstanceState);
+		InjectionUtils.inject(INJECTOR_CONFIGURATION);
 	}
 }

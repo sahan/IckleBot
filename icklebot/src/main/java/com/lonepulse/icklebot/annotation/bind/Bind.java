@@ -53,7 +53,7 @@ public @interface Bind {
 	 * <br><br> 
 	 * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
 	 */
-	public static enum BINDER {
+	public static enum Binder {
 		
 		/**
 		 * <p>The binding strategy to be employed for {@link TextView}s or any of 
@@ -69,7 +69,7 @@ public @interface Bind {
 		/**
 		 * <p>This is the default value for {@link Bind#binder()}. It indicates 
 		 * that the binding strategy given in {@link Bind#binderType()} is being 
-		 * used, which is {@link Bind.BINDER#TEXT} by default.
+		 * used, which is {@link Bind.Binder#TEXT} by default.
 		 * 
 		 * @since 1.1.0
 		 */
@@ -78,29 +78,29 @@ public @interface Bind {
 		
 		/**
 		 * <p>The {@link Class} of the {@link AbstractBinder} identified by 
-		 * this {@link BINDER}.
+		 * this {@link Binder}.
 		 */
 		private Class<? extends AbstractBinder<? extends View, ? extends Object>> type;
 		
 
 		/**
-		 * <p>Instantiates this {@link BINDER} with a {@link Class} 
+		 * <p>Instantiates this {@link Binder} with a {@link Class} 
 		 * of the assigned {@link AbstractBinder}.
 		 * 
 		 * @param type
 		 * 			the {@link Class} of the {@link AbstractBinder} identified by 
-		 * 			this {@link BINDER}
+		 * 			this {@link Binder}
 		 *
 		 * @since 1.1.0
 		 */
-		private BINDER(Class<? extends AbstractBinder<? extends View, ? extends Object>> type) {
+		private Binder(Class<? extends AbstractBinder<? extends View, ? extends Object>> type) {
 			
 			this.type = type;
 		}
 
 		/**
 		 * <p>Accessor for the {@link Class} of the {@link AbstractBinder} identified by 
-		 * this {@link BINDER}.
+		 * this {@link Binder}.
 		 *
 		 * @return the {@link Class} of the {@link AbstractBinder}
 		 * 
@@ -140,11 +140,11 @@ public @interface Bind {
 	 * 
 	 * @since 1.1.0
 	 */
-	BINDER binder() default BINDER.VOID;
+	Binder binder() default Binder.VOID;
 	
 	/**
 	 * <p>The {@link Class} of the {@link BindingStrategy} strategy to be used. By default 
-	 * the {@link Bind.BINDER#TEXT} strategy is used. You can create your own binding strategy 
+	 * the {@link Bind.Binder#TEXT} strategy is used. You can create your own binding strategy 
 	 * by implementing an instance of {@link AbstractBinder} and declaring the strategy in 
 	 * {@link AbstractBinder#onBind(View, Object)}.</p>
 	 *

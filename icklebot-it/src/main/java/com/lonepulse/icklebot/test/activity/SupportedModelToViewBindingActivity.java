@@ -25,8 +25,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.lonepulse.icklebot.IckleActivity;
-import com.lonepulse.icklebot.IckleSupportManager;
+import com.lonepulse.icklebot.activity.IckleActivity;
+import com.lonepulse.icklebot.activity.IckleSupportManager;
 import com.lonepulse.icklebot.annotation.inject.Fullscreen;
 import com.lonepulse.icklebot.annotation.inject.InjectIckleService;
 import com.lonepulse.icklebot.annotation.inject.InjectView;

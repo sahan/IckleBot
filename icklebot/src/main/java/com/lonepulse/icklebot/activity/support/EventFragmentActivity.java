@@ -1,8 +1,9 @@
-package com.lonepulse.icklebot;
+
+package com.lonepulse.icklebot.activity.support;
 
 /*
  * #%L
- * IckleBot
+ * IckleBot Library
  * %%
  * Copyright (C) 2013 Lonepulse
  * %%
@@ -20,36 +21,44 @@ package com.lonepulse.icklebot;
  * #L%
  */
 
+
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+
+import com.lonepulse.icklebot.activity.IckleActivity;
+import com.lonepulse.icklebot.event.EventLinker;
+import com.lonepulse.icklebot.event.EventLinkers;
+import com.lonepulse.icklebot.event.EventUtils;
 
 /**
- * <p>All activities that wish to be <i>wired</i> by <b>dependency injection</b> 
- * should extend this activity.</p>
+ * <p>This profile links event listeners to {@link View}s.
  * 
- * @version 1.1.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public abstract class IckleActivity extends EventActivity {
+abstract class EventFragmentActivity extends StateFragmentActivity {
+	
+		
+	/**
+	 * <p>The {@link EventLinkers.Configuration} for this {@link IckleActivity}.</p>
+	 * 
+	 * @since 1.1.0
+	 */
+	private final EventLinker.Configuration EVENT_CONFIGURATION;
+	{
+		EVENT_CONFIGURATION = EventLinker.Configuration.newInstance(this);
+	}
+	
 
 	/**
-	 * <p>This callback is executed when the {@link IckleActivity} is being 
-	 * created. It invokes the dependency injection and event listener linking 
-	 * via the {@link InjectionActivity} and the {@link EventActivity}.</p>
-	 * 
-	 * <p>See {@link InjectionActivity#onCreate(Bundle)}.</p> 
-	 * <p>See {@link EventActivity#onCreate(Bundle)}.</p>
+	 * <p>Performs <b>event listener linking</b> by invoking {@link #link()}.</p>
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
-		long millis = System.currentTimeMillis();
-		
 		super.onCreate(savedInstanceState);
-
-		millis = System.currentTimeMillis() - millis;
-		
-		Log.i("INSTRUMENTATION:IckleActivity", getClass().getSimpleName() + ": " + millis + "ms");
+		EventUtils.link(EVENT_CONFIGURATION);
 	}
 }
+

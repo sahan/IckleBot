@@ -22,7 +22,7 @@ package com.lonepulse.icklebot.injector;
 
 import java.lang.reflect.Field;
 
-import com.lonepulse.icklebot.IckleActivity;
+import com.lonepulse.icklebot.activity.IckleActivity;
 
 /**
  * <p>Identifies the <b>mode</b> of the injection. For example 

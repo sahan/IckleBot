@@ -24,8 +24,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.Set;
 
-import com.lonepulse.icklebot.IckleActivity;
 import com.lonepulse.icklebot.IckleBotRuntimeException;
+import com.lonepulse.icklebot.activity.IckleActivity;
 
 /**
  * <p>This {@link IckleBotRuntimeException} is thrown when the 

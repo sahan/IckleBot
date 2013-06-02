@@ -32,7 +32,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.Button;
 
-import com.lonepulse.icklebot.IckleSupportManager;
+import com.lonepulse.icklebot.activity.IckleSupportManager;
 import com.lonepulse.icklebot.annotation.inject.InjectAll;
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.bind.BindManager;

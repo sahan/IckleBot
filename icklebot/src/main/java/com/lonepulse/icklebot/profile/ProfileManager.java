@@ -23,7 +23,7 @@ package com.lonepulse.icklebot.profile;
 
 import android.app.Activity;
 
-import com.lonepulse.icklebot.IckleActivity;
+import com.lonepulse.icklebot.activity.IckleActivity;
 import com.lonepulse.icklebot.annotation.profile.Profile;
 
 /**

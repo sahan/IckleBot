@@ -24,7 +24,7 @@ package com.lonepulse.icklebot.test.activity;
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.lonepulse.icklebot.IckleSupportManager;
+import com.lonepulse.icklebot.activity.IckleSupportManager;
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.annotation.inject.Stateful;
 import com.lonepulse.icklebot.annotation.inject.Title;

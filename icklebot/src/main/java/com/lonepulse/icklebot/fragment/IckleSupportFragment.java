@@ -31,7 +31,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lonepulse.icklebot.IckleBotRuntimeException;
-import com.lonepulse.icklebot.IckleSupportManager;
+import com.lonepulse.icklebot.activity.IckleSupportManager;
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.app.Fragment;
 import com.lonepulse.icklebot.app.SupportFragment;

@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
 
 import android.view.Window;
 
-import com.lonepulse.icklebot.IckleActivity;
+import com.lonepulse.icklebot.activity.IckleActivity;
 
 /**
  * <p>Used to annotate an {@link IckleActivity} with <i>Window 

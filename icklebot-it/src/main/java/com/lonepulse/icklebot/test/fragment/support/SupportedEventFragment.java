@@ -30,7 +30,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.lonepulse.icklebot.IckleSupportManager;
+import com.lonepulse.icklebot.activity.IckleSupportManager;
 import com.lonepulse.icklebot.annotation.event.Click;
 import com.lonepulse.icklebot.annotation.event.Touch;
 import com.lonepulse.icklebot.annotation.inject.InjectView;

@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot;
+package com.lonepulse.icklebot.activity;
 
 /*
  * #%L

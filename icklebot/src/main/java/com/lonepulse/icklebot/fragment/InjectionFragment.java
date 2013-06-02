@@ -25,7 +25,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.view.View;
 
-import com.lonepulse.icklebot.IckleActivity;
+import com.lonepulse.icklebot.activity.IckleActivity;
 import com.lonepulse.icklebot.injector.InjectionUtils;
 import com.lonepulse.icklebot.injector.Injector;
 

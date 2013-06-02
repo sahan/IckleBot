@@ -21,7 +21,7 @@ package com.lonepulse.icklebot.test.fragment.support;
  */
 
 
-import com.lonepulse.icklebot.IckleActivity;
+import com.lonepulse.icklebot.activity.IckleActivity;
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.annotation.inject.Stateful;
 import com.lonepulse.icklebot.fragment.support.IckleFragment;

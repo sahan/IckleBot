@@ -27,7 +27,7 @@ import java.lang.reflect.Field;
 import android.view.View;
 
 import com.lonepulse.icklebot.annotation.bind.Bind;
-import com.lonepulse.icklebot.annotation.bind.Bind.BINDER;
+import com.lonepulse.icklebot.annotation.bind.Bind.Binder;
 import com.lonepulse.icklebot.util.FieldUtils;
 
 /**
@@ -50,7 +50,7 @@ class BasicBinderResolver implements BinderResolver {
 			if(attribute.isAnnotationPresent(Bind.class)) {
 			
 				Bind bind = attribute.getAnnotation(Bind.class);
-				BINDER binder = bind.binder();
+				Binder binder = bind.binder();
 				
 				Class<? extends AbstractBinder<? extends View, ? extends Object>> binderType;
 				
