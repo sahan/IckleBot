@@ -21,18 +21,23 @@ package com.lonepulse.icklebot.network;
  */
 
 
-import android.app.Activity;
-import android.app.Application;
+import android.Manifest;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
 
-import com.lonepulse.icklebot.util.ContextUtils;
+import com.lonepulse.icklebot.IckleBotRuntimeException;
+import com.lonepulse.icklebot.PermissionDeniedException;
+import com.lonepulse.icklebot.annotation.profile.Profile;
+import com.lonepulse.icklebot.util.PermissionUtils;
 
 /**
  * <p>A concrete implementation of {@link NetworkManager} which offers 
- * services for querying network information.
+ * services for querying network information.</p>
+ * 
+ * <p>Use {@link NetworkManager#isAvailable()} to get the {@link NetworkInfo} 
+ * for the currently <b>available and active</b> network.</p>
  * 
  * @version 1.1.0
  * <br><br>
@@ -40,9 +45,6 @@ import com.lonepulse.icklebot.util.ContextUtils;
  */
 public class NetworkService implements NetworkManager {
 
-	
-	private static volatile NetworkManager instance;
-	
 	
 	/**
 	 * <p>The {@link ConnectivityManager} which is used to 
@@ -55,6 +57,7 @@ public class NetworkService implements NetworkManager {
 	 * <p>Retrieves a new instance of {@link NetworkService}. Use 
 	 * {@link #getInstance()} if your accessing the {@link NetworkService} 
 	 * from an application {@link Context}.
+	 * 
 	 */
 	public NetworkService(Context context) {
 		
@@ -62,27 +65,16 @@ public class NetworkService implements NetworkManager {
 	}
 	
 	/**
-	 * <p>Creates a new instance of an implementation of {@link NetworkManager}.
-	 * 
-	 * @param context
-	 * 			the {@link Context} of the {@link Application} instance via 
-	 * 			{@link Activity#getApplication()} or {@link Activity#getApplicationContext()}
-	 * 
-	 * @return a new instance of {@link NetworkManager}.
-	 * 
-	 * @since 1.1.1
-	 */
-	public static final synchronized NetworkManager getInstance(Object context) {
-		
-		return (instance == null)? 
-				(instance = new NetworkService(ContextUtils.asApplication(context))) :instance;
-	}
-	
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public NetworkInfo isAvailable() {
+		
+		if(!PermissionUtils.isGranted(this, Manifest.permission.ACCESS_NETWORK_STATE)) {
+			
+			new IckleBotRuntimeException(
+				new PermissionDeniedException(Manifest.permission.ACCESS_NETWORK_STATE, Profile.NETWORK));
+		}
 		
 		NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 		

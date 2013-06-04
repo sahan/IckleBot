@@ -127,11 +127,11 @@ public class BindService implements BindManager {
 			}
 			catch(BindResolutionException bre) {
 				
-				Log.e(getClass().getSimpleName(), "Bind Resolution Failure. ", bre);
+				Log.w(getClass().getSimpleName(), "Bind Resolution Failure. ", bre);
 			}
 			catch(BindException be) {
 				
-				Log.e(getClass().getSimpleName(), "Bind Failure. ", be);
+				Log.w(getClass().getSimpleName(), "Bind Failure. ", be);
 			}
 		}
 	}

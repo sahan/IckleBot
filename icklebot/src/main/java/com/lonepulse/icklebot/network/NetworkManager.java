@@ -21,8 +21,10 @@ package com.lonepulse.icklebot.network;
  */
 
 
+import android.Manifest;
 import android.net.NetworkInfo;
 
+import com.lonepulse.icklebot.IckleBotRuntimeException;
 import com.lonepulse.icklebot.annotation.inject.IckleService;
 
 /**
@@ -37,10 +39,15 @@ public interface NetworkManager {
 
 	
 	/**
-	 * <p>Retrieves the {@link NetworkInfo} for an available network connection.
+	 * <p>Retrieves the {@link NetworkInfo} for an available and active network connection. 
+	 * This service requires the manifest permission <b>ACCESS_NETWORK_STATE</b>.</p> 
 	 * 
 	 * @return {@code NetworkInfo} of an available network connection exists, 
 	 * 		   else {@code null} if no active network is available
+	 * 
+	 * @throws IckleBotRuntimeException
+	 * 			if the {@link Manifest.permission#ACCESS_NETWORK_STATE} 
+	 * 			permission has not been granted 
 	 * 
 	 * @since 1.1.0
 	 */

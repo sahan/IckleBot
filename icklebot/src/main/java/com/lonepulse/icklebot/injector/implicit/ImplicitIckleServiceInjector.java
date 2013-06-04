@@ -51,6 +51,7 @@ class ImplicitIckleServiceInjector implements Injector {
 	public void inject(Configuration config) {
 
 		Set<Field> fields = config.getInjectionTargets(InjectionCategory.ICKLE_SERVICE);
+		Class<? extends Object> implementationClass = null;
 		
 		for (Field field : fields) {
 			
@@ -60,7 +61,7 @@ class ImplicitIckleServiceInjector implements Injector {
 				
 				Class<? extends Object> contractClass = field.getType();
 				IckleService ickleService = contractClass.getAnnotation(IckleService.class);
-				Class<? extends Object> implementationClass = ickleService.value();
+				implementationClass = ickleService.value();
 				
 				try {
 					
@@ -91,7 +92,21 @@ class ImplicitIckleServiceInjector implements Injector {
 			} 
 			catch (Exception e) {
 				
-				Log.e(getClass().getName(), "Implicit Ickle Service Injection Failed. ", e);
+				StringBuilder errorContext = new StringBuilder()
+				.append("Ickle Service injection failed");
+				
+				if(implementationClass != null) {
+					
+					errorContext.append(" for ")
+					.append(implementationClass.getName())
+					.append(". ");
+				}
+				else {
+					
+					errorContext.append(". ");
+				}
+				
+				Log.e(getClass().getName(), errorContext.toString(), e);
 			}
 		}
 	}

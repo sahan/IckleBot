@@ -23,19 +23,14 @@ package com.lonepulse.icklebot.activity;
 
 import java.io.Serializable;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.lonepulse.icklebot.PermissionDeniedException;
-import com.lonepulse.icklebot.annotation.profile.Profile;
 import com.lonepulse.icklebot.event.EventLinker;
 import com.lonepulse.icklebot.event.EventUtils;
 import com.lonepulse.icklebot.injector.InjectionUtils;
 import com.lonepulse.icklebot.injector.Injector;
-import com.lonepulse.icklebot.network.NetworkManager;
-import com.lonepulse.icklebot.network.NetworkUtils;
 import com.lonepulse.icklebot.state.StateUtils;
 import com.lonepulse.icklebot.task.TaskUtils;
 import com.lonepulse.icklebot.util.ContextUtils;
@@ -241,12 +236,6 @@ public interface IckleSupportManager extends Serializable {
 					
 					StateUtils.onRestoreInstanceState(context, savedInstanceState);
 				}
-
-				@Override
-				public NetworkManager network() {
-					
-					return NetworkUtils.getNetworkManager(ContextUtils.asApplication(context));
-				}
 			};
 		}
 	}
@@ -324,26 +313,4 @@ public interface IckleSupportManager extends Serializable {
 	 * @since 1.1.0
 	 */
 	void onRestoreInstanceState(Bundle savedInstanceState);
-	
-	/**
-	 * <p>Retrieves an instance of {@link NetworkManager} which can be used to 
-	 * discover additional information about the network.</p>
-	 * 
-	 * <p>This service is restricted by <b>profiles</b>. It can be used even if 
-	 * {@link Profile#NETWORK} is not activated.</p>
-	 * 
-	 * <p>This service requires the following permission:
-	 * <ul>
-	 * 	<li>ACCESS_NETWORK_STATE: to discover network information.</li>
-	 * </ul>
-	 * </p>
-	 * 
-	 * @return an instance of {@link NetworkManager}
-	 * 
-	 * @throws PermissionDeniedException
-	 * 			if {@link Manifest.permission#ACCESS_NETWORK_STATE} is denied
-	 * 
-	 * @since 1.1.1
-	 */
-	NetworkManager network();
 }

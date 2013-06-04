@@ -51,6 +51,7 @@ import com.lonepulse.icklebot.annotation.inject.InjectView;
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.bind.BindManager;
 import com.lonepulse.icklebot.fragment.IckleSupportFragment;
+import com.lonepulse.icklebot.network.NetworkManager;
 import com.lonepulse.icklebot.test.R;
 import com.lonepulse.icklebot.test.app.ApplicationService;
 import com.lonepulse.icklebot.test.service.AccountsService;
@@ -118,6 +119,9 @@ public class SupportedExplicitInjectionFragment extends Fragment {
 	
 	@InjectIckleService
 	BindManager bindManager;
+	
+	@InjectIckleService
+	NetworkManager networkManager;
 	
 	
 	private com.lonepulse.icklebot.app.Fragment shadow;

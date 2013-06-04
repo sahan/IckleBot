@@ -30,6 +30,8 @@ import org.junit.runner.RunWith;
 import android.support.v4.app.Fragment;
 import android.view.animation.Animation;
 
+import com.lonepulse.icklebot.bind.BindManager;
+import com.lonepulse.icklebot.network.NetworkManager;
 import com.lonepulse.icklebot.test.R;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 
@@ -227,7 +229,7 @@ public class ExplicitInjectionFragmentTest {
 	}
 	
 	/**
-	 * <p>Test Ickle service injection.
+	 * <p>Test {@link BindManager} injection.
 	 * 
 	 * @throws Exception
 	 * 			if test terminated with an error
@@ -235,9 +237,23 @@ public class ExplicitInjectionFragmentTest {
 	 * @since 1.1.1
 	 */
 	@Test
-	public final void testIckleService() throws Exception {
+	public final void testIckleServiceBind() throws Exception {
 		
 		assertNotNull(activity.fragment.bindManager);
+	}
+	
+	/**
+	 * <p>Test {@link NetworkManager} injection.
+	 * 
+	 * @throws Exception
+	 * 			if test terminated with an error
+	 * 
+	 * @since 1.1.1
+	 */
+	@Test
+	public final void testIckleServiceNetwork() throws Exception {
+		
+		assertNotNull(activity.fragment.networkManager);
 	}
 	
 	/**

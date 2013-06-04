@@ -30,29 +30,25 @@ import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.telephony.PhoneStateListener;
 import android.util.Log;
 
 import com.lonepulse.icklebot.IckleBotRuntimeException;
 import com.lonepulse.icklebot.PermissionDeniedException;
 import com.lonepulse.icklebot.annotation.profile.Profile;
-import com.lonepulse.icklebot.network.NetworkManager;
-import com.lonepulse.icklebot.network.NetworkUtils;
 import com.lonepulse.icklebot.profile.ProfileService;
 import com.lonepulse.icklebot.util.PermissionUtils;
 
 /**
- * <p>This profile detects changes in the data connection and provides 
- * callbacks to handle them. In addition it can be used to discover 
- * additional network information via {@link NetworkFragmentActivity#network()}.</p>
- * 
- * <p>This profile requires the following permission:
- * <ul>
- *  <li>READ_PHONE_STATE: to register for data state changes.</li>
- * </ul>
- * </p>
+ * <p>This profile detects changes in the data connection and provides callbacks 
+ * to handle them. It registers a {@link BroadcastReceiver} in the largest possible 
+ * scope, between {@code onCreate()} and {@code onDestroy()}.</p>
  *  
- * @version 1.1.1
+ * <p>Use {@code @InjectIckleService NetworkManager} to discover additional network 
+ * information.</p>
+ * 
+ * <p>This profile requires the manifest permission <b>ACCESS_NETWORK_STATE</b>.</p>
+ *  
+ * @version 1.1.2
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -67,28 +63,37 @@ abstract class NetworkFragmentActivity extends FragmentActivity {
 	    @Override
 	    public void onReceive(final Context context, final Intent intent) {
 
+	    	State state = null;
+	    	
 	    	try {
 
 	    		NetworkInfo networkInfo = 
 	    			(NetworkInfo)intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
 	    		
 	    		if(networkInfo != null) {
+	    			
+	    			state = networkInfo.getState();
 	    		
-			    	if(networkInfo.getState().equals(State.CONNECTING)) onNetworkConnecting();
-			    	else if(networkInfo.getState().equals(State.CONNECTED)) onNetworkConnected();
-			    	else if(networkInfo.getState().equals(State.SUSPENDED)) onNetworkSuspended();
-			    	else if(networkInfo.getState().equals(State.DISCONNECTING)) onNetworkDisconnecting();
-			    	else if(networkInfo.getState().equals(State.DISCONNECTED)) onNetworkDisconnected();
+	    			switch (state) {
+	    			
+						case CONNECTING: onNetworkConnecting(); break;
+						case CONNECTED: onNetworkConnected(); break;
+						case SUSPENDED: onNetworkSuspended(); break;
+						case DISCONNECTING: onNetworkDisconnecting(); break;
+						case DISCONNECTED: onNetworkDisconnected(); break;
+						default: case UNKNOWN: onNetworkUnknown();
+	    			}
 	    		}
 	    	}
 	    	catch(Exception e) {
 	    		
 	    		StringBuilder errorContext = new StringBuilder()
-	    		.append("Failed to handle network state change to ")
-	    		.append(NetworkUtils.getNetworkState(getApplicationContext()).name())
-	    		.append(" at ")
-	    		.append(this.getClass().getName())
-	    		.append(". ");
+	    		.append("Failed to handle network state change");
+	    		
+	    		if(state != null)
+	    			errorContext.append(" to ").append(state.name());
+	    		
+	    		errorContext.append(" at ").append(this.getClass().getName()).append(". ");
 	    		
 	    		Log.e(NetworkFragmentActivity.class.getSimpleName(), errorContext.toString(), e);
 	    	}
@@ -97,11 +102,8 @@ abstract class NetworkFragmentActivity extends FragmentActivity {
 	
 	
 	/**
-	 * <p>Registers a {@link PhoneStateListener} to listen for changes in the data 
+	 * <p>Registers a {@link BroadcastReceiver} to listen for changes in the data 
 	 * connection state and invoke the appropriate callbacks.
-	 * 
-	 * @throws PermissionDeniedException
-	 * 			if {@link Manifest.permission#READ_PHONE_STATE} is denied
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -127,11 +129,8 @@ abstract class NetworkFragmentActivity extends FragmentActivity {
 	}
 	
 	/**
-	 * <p>Unregisters the {@link PhoneStateListener} which listens for changes in the 
+	 * <p>Unregisters the {@link BroadcastReceiver} which listens for changes in the 
 	 * data connection state.
-	 * 
-	 * @throws PermissionDeniedException
-	 * 			if {@link Manifest.permission#ACCESS_NETWORK_STATE} is denied
 	 */
 	@Override
 	protected void onDestroy() {
@@ -179,12 +178,12 @@ abstract class NetworkFragmentActivity extends FragmentActivity {
 	 * @since 1.1.0
 	 */
 	protected void onNetworkDisconnected() {}
-
+	
 	/**
-	 * See {@link NetworkUtils#getNetworkManager(Context)}.
+	 * <p><b>Override</b> this method to handle callbacks for a situation where the network 
+	 * state cannot be determined.</p>
+	 * 
+	 * @since 1.1.2
 	 */
-	protected final NetworkManager network() {
-		
-		return NetworkUtils.getNetworkManager(getApplicationContext());
-	}
+	protected void onNetworkUnknown() {}
 }

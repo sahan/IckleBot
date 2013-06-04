@@ -35,6 +35,7 @@ import com.lonepulse.icklebot.annotation.inject.InjectAll;
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.annotation.inject.Title;
 import com.lonepulse.icklebot.bind.BindManager;
+import com.lonepulse.icklebot.network.NetworkManager;
 import com.lonepulse.icklebot.test.R;
 import com.lonepulse.icklebot.test.app.ApplicationService;
 import com.lonepulse.icklebot.test.service.AccountsService;
@@ -82,6 +83,8 @@ public class SupportedImplicitInjectionActivity extends Activity {
 	TelephonyManager telephony_service;
 	
 	BindManager bindManager;
+	
+	NetworkManager networkManager;
 	
 	AccountsService accountsService;
 	

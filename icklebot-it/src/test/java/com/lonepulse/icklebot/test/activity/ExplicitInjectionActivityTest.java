@@ -31,6 +31,8 @@ import org.junit.runner.RunWith;
 
 import android.view.animation.Animation;
 
+import com.lonepulse.icklebot.bind.BindManager;
+import com.lonepulse.icklebot.network.NetworkManager;
 import com.lonepulse.icklebot.test.R;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 
@@ -215,7 +217,7 @@ public class ExplicitInjectionActivityTest {
 	}
 	
 	/**
-	 * <p>Test system service injection.
+	 * <p>Test {@link BindManager} injection.
 	 * 
 	 * @throws Exception
 	 * 			if test terminated with an error
@@ -229,6 +231,20 @@ public class ExplicitInjectionActivityTest {
 	}
 	
 	/**
+	 * <p>Test {@link NetworkManager} injection.
+	 * 
+	 * @throws Exception
+	 * 			if test terminated with an error
+	 * 
+	 * @since 1.1.3
+	 */
+	@Test
+	public final void testIckleServiceBind() throws Exception {
+		
+		assertNotNull(activity.bindManager);
+	}
+	
+	/**
 	 * <p>Test Ickle service injection.
 	 * 
 	 * @throws Exception
@@ -237,9 +253,9 @@ public class ExplicitInjectionActivityTest {
 	 * @since 1.1.3
 	 */
 	@Test
-	public final void testIckleService() throws Exception {
+	public final void testIckleServiceNetwork() throws Exception {
 		
-		assertNotNull(activity.bindManager);
+		assertNotNull(activity.networkManager);
 	}
 	
 	/**
