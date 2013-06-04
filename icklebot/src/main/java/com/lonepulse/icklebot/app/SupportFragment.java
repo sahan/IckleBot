@@ -4,7 +4,7 @@ import com.lonepulse.icklebot.activity.IckleSupportManager;
 
 /*
  * #%L
- * IckleBot Library
+ * IckleBot
  * %%
  * Copyright (C) 2013 Lonepulse
  * %%

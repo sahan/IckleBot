@@ -2,7 +2,7 @@ package com.lonepulse.icklebot.fragment.support;
 
 /*
  * #%L
- * IckleBot Library
+ * IckleBot
  * %%
  * Copyright (C) 2013 Lonepulse
  * %%

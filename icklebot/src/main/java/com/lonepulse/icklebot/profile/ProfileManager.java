@@ -2,7 +2,7 @@ package com.lonepulse.icklebot.profile;
 
 /*
  * #%L
- * IckleBot Library
+ * IckleBot
  * %%
  * Copyright (C) 2013 Lonepulse
  * %%

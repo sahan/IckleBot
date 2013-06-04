@@ -2,7 +2,7 @@ package com.lonepulse.icklebot.annotation.bind;
 
 /*
  * #%L
- * IckleBot Library
+ * IckleBot
  * %%
  * Copyright (C) 2013 Lonepulse
  * %%
