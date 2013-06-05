@@ -26,7 +26,7 @@ import android.view.View;
 /**
  * <p>Represents a simple mapping between one unit of data and a widget and wraps 
  * the strategy which will be used to perform binding depending on the type of 
- * data and the .
+ * data and the {@link View}.
  * 
  * @version 1.1.0
  * <br><br>

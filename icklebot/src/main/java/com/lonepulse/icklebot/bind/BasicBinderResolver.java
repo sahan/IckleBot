@@ -27,7 +27,6 @@ import java.lang.reflect.Field;
 import android.view.View;
 
 import com.lonepulse.icklebot.annotation.bind.Bind;
-import com.lonepulse.icklebot.annotation.bind.Bind.Binder;
 import com.lonepulse.icklebot.util.FieldUtils;
 
 /**

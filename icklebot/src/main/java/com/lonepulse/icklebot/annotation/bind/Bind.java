@@ -27,13 +27,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.lonepulse.icklebot.bind.AbstractBinder;
-import com.lonepulse.icklebot.bind.BasicTextBinder;
+import com.lonepulse.icklebot.bind.Binder;
 import com.lonepulse.icklebot.bind.BindingStrategy;
-import com.lonepulse.icklebot.bind.VoidBinder;
+import com.lonepulse.icklebot.bind.TextBinder;
 
 /**
  * <p>Identifies a <i>model attribute</i> whose value is to be bound to a <b>widget</b>.
@@ -46,71 +44,6 @@ import com.lonepulse.icklebot.bind.VoidBinder;
 @Target(ElementType.FIELD)
 public @interface Bind {
 
-	/**
-	 * <p>Indicates the {@link BindingStrategy} strategy to be used for this bind.
-	 * 
-	 * @version 1.1.0
-	 * <br><br> 
-	 * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
-	 */
-	public static enum Binder {
-		
-		/**
-		 * <p>The binding strategy to be employed for {@link TextView}s or any of 
-		 * its children (e.g. {@link Button}) to bind {@link String} data.</p>
-		 * 
-		 * <p><b>Targets:</b><ul><li>any model attribute which provides a meaningful 
-		 * {@code toString()} representation.</li></ul></p>
-		 * 
-		 * @since 1.1.0
-		 */
-		TEXT(BasicTextBinder.class),
-		
-		/**
-		 * <p>This is the default value for {@link Bind#binder()}. It indicates 
-		 * that the binding strategy given in {@link Bind#binderType()} is being 
-		 * used, which is {@link Bind.Binder#TEXT} by default.
-		 * 
-		 * @since 1.1.0
-		 */
-		VOID(VoidBinder.class);
-		
-		
-		/**
-		 * <p>The {@link Class} of the {@link AbstractBinder} identified by 
-		 * this {@link Binder}.
-		 */
-		private Class<? extends AbstractBinder<? extends View, ? extends Object>> type;
-		
-
-		/**
-		 * <p>Instantiates this {@link Binder} with a {@link Class} 
-		 * of the assigned {@link AbstractBinder}.
-		 * 
-		 * @param type
-		 * 			the {@link Class} of the {@link AbstractBinder} identified by 
-		 * 			this {@link Binder}
-		 *
-		 * @since 1.1.0
-		 */
-		private Binder(Class<? extends AbstractBinder<? extends View, ? extends Object>> type) {
-			
-			this.type = type;
-		}
-
-		/**
-		 * <p>Accessor for the {@link Class} of the {@link AbstractBinder} identified by 
-		 * this {@link Binder}.
-		 *
-		 * @return the {@link Class} of the {@link AbstractBinder}
-		 * 
-		 * @since 1.1.0
-		 */
-		public Class<? extends AbstractBinder<? extends View, ? extends Object>> getType() {
-			
-			return type;
-		}
-	};
 	
 	/**
 	 * <p>The {@code integer} which identifies the <b>id</b> 
@@ -152,5 +85,5 @@ public @interface Bind {
 	 * 
 	 * @since 1.1.0
 	 */
-	Class<? extends AbstractBinder<? extends View, ? extends Object>> binderType() default BasicTextBinder.class;
+	Class<? extends AbstractBinder<? extends View, ? extends Object>> binderType() default TextBinder.class;
 }

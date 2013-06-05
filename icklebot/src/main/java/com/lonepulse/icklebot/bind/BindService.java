@@ -37,12 +37,31 @@ import com.lonepulse.icklebot.util.FieldUtils;
 /**
  * <p>This is a concrete implementation of {@link BindManager} which performs Model-View binding.
  * 
- * @version 1.1.0
+ * @version 1.1.1
  * <b></b>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 public class BindService implements BindManager {
 
+	
+	/**
+	 * <p>The {@link BinderResolver} to be used for determining 
+	 * the {@link BindingStrategy} for a particular {@link View} 
+	 * and model attribute.
+	 */
+	private BinderResolver binderResolver;
+	
+	
+	/**
+	 * <p>Creates a new instance of {@link BindService} by instantiation 
+	 * an appropriate {@link BinderResolver}.
+	 *
+	 * @since 1.1.1
+	 */
+	public BindService() {
+		
+		binderResolver = new BasicBinderResolver();
+	}
 
 	/**
 	 * <p>Binds the given model to the {@link View} or {@link ViewGroup}. 
@@ -123,7 +142,7 @@ public class BindService implements BindManager {
 
 			try {
 				
-				BinderResolvers.BASIC.resolve(view, model, field).bind();
+				binderResolver.resolve(view, model, field).bind();
 			}
 			catch(BindResolutionException bre) {
 				
