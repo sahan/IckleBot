@@ -144,5 +144,5 @@ public abstract class AbstractBinder<V extends View, E> implements BindingStrate
 	 * <br><br>
 	 * @since 1.1.0
 	 */
-	public abstract void onBind(V widget, E data);
+	protected abstract void onBind(V widget, E data);
 }
