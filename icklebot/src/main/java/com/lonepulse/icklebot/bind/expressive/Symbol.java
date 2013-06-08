@@ -75,7 +75,7 @@ public class Symbol {
 	 *
 	 * @return the {@link #head}
 	 */
-	public String getHead() {
+	public String head() {
 		
 		return head;
 	}
@@ -85,7 +85,7 @@ public class Symbol {
 	 *
 	 * @return the {@link #tail}
 	 */
-	public String getTail() {
+	public String tail() {
 		
 		return tail;
 	}

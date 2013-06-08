@@ -36,32 +36,37 @@ public class Expression {
 
 	
 	/**
-	 * <p>The target of this expression, which could be the <b>result</b> 
-	 * of an expression itself.
+	 * <p>The parent node of this expression tree.
 	 */
-	private final Object parent;
+	private Expression parent;
 	
 	/**
 	 * <p>The operator which is used by this expression for <i>evaluation</i>. 
 	 */
-	private final Operator operator;
+	private Operator operator;
 	
 	/**
 	 * <p>The list of child {@link Expression}s which supply the argument(s) 
 	 * to this node 
 	 */
-	private final List<Expression> children;
+	private List<Expression> children;
 
+	
+	/**
+	 * <p>Instantiates a new {@link Expression} without any state.
+	 *
+	 * @since 1.1.0
+	 */
+	public Expression() {}
 	
 	/**
 	 * <p>Constructs a new node in an <b>expression tree</b>. 
 	 * 
 	 * @param parent
-	 * 			the target of this expression, which could be the <b>result</b> 
-	 * 			of an expression itself. 
+	 * 			the parent node of this {@link Expression} tree 
 	 * 
 	 * @param operator
-	 * 			the operator which is used by this expression for <i>evaluation</i>.
+	 * 			the operator which is used by this expression for <i>evaluation</i>
 	 * 			
 	 * @param children
 	 * 			the list of child {@link Expression}s which supply the argument(s) 
@@ -69,7 +74,7 @@ public class Expression {
 	 *
 	 * @since 1.1.0
 	 */
-	public Expression(Object parent, Operator operator, List<Expression> children) {
+	public Expression(Expression parent, Operator operator, List<Expression> children) {
 		
 		this.parent = parent;
 		this.operator = operator;
@@ -81,9 +86,20 @@ public class Expression {
 	 *
 	 * @return the {@link #parent}
 	 */
-	public Object getParent() {
+	public Expression getParent() {
 		
 		return parent;
+	}
+
+	/**
+	 * <p>Mutator for {@link #parent}.
+	 *
+	 * @param parent 
+	 *			the {@link #parent} to set
+	 */
+	public void setParent(Expression parent) {
+		
+		this.parent = parent;
 	}
 
 	/**
@@ -95,6 +111,17 @@ public class Expression {
 		
 		return operator;
 	}
+	
+	/**
+	 * <p>Mutator for {@link #operator}.
+	 *
+	 * @param operator 
+	 *			the {@link #operator} to set
+	 */
+	public void setOperator(Operator operator) {
+		
+		this.operator = operator;
+	}
 
 	/**
 	 * <p>Accessor for {@link #children}.
@@ -104,5 +131,35 @@ public class Expression {
 	public List<Expression> getChildren() {
 		
 		return children;
+	}
+
+	/**
+	 * <p>Mutator for {@link #children}.
+	 *
+	 * @param children 
+	 *			the {@link #children} to set
+	 */
+	public void setChildren(List<Expression> children) {
+		
+		this.children = children;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		
+		StringBuilder builder = new StringBuilder();
+		
+		builder.append("Expression [parent=");
+		builder.append(parent);
+		builder.append(", operator=");
+		builder.append(operator);
+		builder.append(", children=");
+		builder.append(children);
+		builder.append("]");
+		
+		return builder.toString();
 	}
 }

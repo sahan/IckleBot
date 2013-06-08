@@ -1,5 +1,6 @@
 package com.lonepulse.icklebot.bind.expressive;
 
+
 /*
  * #%L
  * IckleBot
@@ -76,5 +77,30 @@ public enum Op implements Operator {
 	public Object evaluate(Object target, Object... args) throws OperationFailedException {
 		
 		return operator.evaluate(target, args);
+	}
+
+	/**
+	 * <p>Resolves an {@link Operator} for the given {@link Symbol#head()}.
+	 * 
+	 * @param head
+	 * 			the {@link Symbol#head()} for the {@link Operator} 
+	 * 
+	 * @return the resolved {@link Op}
+	 * 
+	 * @throws OperatorResolutionFailedException
+	 * 			if the no operator was found with the given symbol-head
+	 * 
+	 * @since 1.1.0
+	 */
+	public static final Op resolve(String head) throws OperatorResolutionFailedException {
+		
+		Op[] values = values();
+		
+		for (Op op : values) {
+			
+			if(op.symbol().head().equals(head)) return op;
+		}
+		
+		throw new OperatorResolutionFailedException();
 	}
 }
