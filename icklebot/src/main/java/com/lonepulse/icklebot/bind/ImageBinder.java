@@ -28,9 +28,10 @@ import android.util.Base64;
 import android.widget.ImageView;
 
 /**
- * <p>The binding strategy to be employed for {@link ImageView}s. This binding 
- * strategy can be used on a {@link Drawable}, {@link Bitmap}, {@code byte[]}, 
- * {@link Byte}[], or a <b>Base64</b> encoded {@link String}.
+ * <p>The binding strategy to be employed for {@link ImageView}s. This 
+ * binding strategy can be used on a {@link Drawable}, {@link Bitmap}, 
+ * {@code byte[]}, {@link Byte}[], integer drawable identifier, or a 
+ * <b>Base64</b> encoded {@link String}.
  * 
  * @version 1.1.0
  * <br><br>
@@ -71,7 +72,7 @@ public class ImageBinder extends AbstractBinder<ImageView, Object> {
 			view.setImageBitmap((Bitmap) data);
 		}
 		else if(data instanceof String) {
-			
+		
 			byte[] bytes = Base64.decode((String) data, Base64.DEFAULT);
 			Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 			
@@ -94,6 +95,16 @@ public class ImageBinder extends AbstractBinder<ImageView, Object> {
 			
 			Bitmap bitmap = BitmapFactory.decodeByteArray(primitiveBytes, 0, primitiveBytes.length);
 			view.setImageBitmap(bitmap);
+		}
+		else if(int.class.isAssignableFrom(data.getClass())) {
+			
+			Drawable drawable = view.getResources().getDrawable(int.class.cast(data));
+			view.setImageDrawable(drawable);
+		}
+		else if(data instanceof Integer) {
+			
+			Drawable drawable = view.getResources().getDrawable((Integer)data);
+			view.setImageDrawable(drawable);
 		}
 		else {
 			

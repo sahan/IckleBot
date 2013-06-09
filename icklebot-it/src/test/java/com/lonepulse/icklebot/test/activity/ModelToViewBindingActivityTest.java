@@ -22,14 +22,15 @@ package com.lonepulse.icklebot.test.activity;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.lonepulse.icklebot.bind.AbstractBinder;
 import com.lonepulse.icklebot.test.R;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 
@@ -67,32 +68,51 @@ public class ModelToViewBindingActivityTest {
 		activity.onCreate(null);
 	}
 
-	/**
-	 * <p>Test non-expressive {@link TextView} binding.
-	 * 
-	 * @throws Exception
-	 * 			if test terminated with an error
-	 * 
-	 * @since 1.1.0
-	 */
 	@Test
-	public final void testTextViewBinding() throws Exception {
+	public final void testTextBinding() throws Exception {
 	
 		assertEquals(((TextView)activity.findViewById(R.id.name)).getText().toString(), "Lahiru Sahan J.");
 	}
 	
-	/**
-	 * <p>Test non-expressive {@link TextView} binding with a 
-	 * custom {@link AbstractBinder}.
-	 * 
-	 * @throws Exception
-	 * 			if test terminated with an error
-	 * 
-	 * @since 1.1.0
-	 */
 	@Test
-	public final void testCustomBinder() throws Exception {
+	public final void testCustomTextBinder() throws Exception {
 		
 		assertEquals(((TextView)activity.findViewById(R.id.github)).getText().toString(), "https://github.com/sahan");
+	}
+	
+	@Test
+	public final void testImageBinderDrawable() throws Exception {
+		
+		assertNotNull(((ImageView)activity.findViewById(R.id.img_drawable)).getDrawable());
+	}
+	
+	@Test
+	public final void testImageBinderBitmap() throws Exception {
+		
+		assertNotNull(((ImageView)activity.findViewById(R.id.img_bitmap)).getDrawable());
+	}
+	
+	@Test
+	public final void testImageBinderPrimitiveBytes() throws Exception {
+		
+		assertNotNull(((ImageView)activity.findViewById(R.id.img_primitive_bytes)).getDrawable());
+	}
+	
+	@Test
+	public final void testImageBinderWrapperBytes() throws Exception {
+		
+		assertNotNull(((ImageView)activity.findViewById(R.id.img_wrapper_bytes)).getDrawable());
+	}
+	
+	@Test
+	public final void testImageBinderPrimitiveInt() throws Exception {
+		
+		assertNotNull(((ImageView)activity.findViewById(R.id.img_primitive_int)).getDrawable());
+	}
+	
+	@Test
+	public final void testImageBinderWrapperInt() throws Exception {
+		
+		assertNotNull(((ImageView)activity.findViewById(R.id.img_wrapper_int)).getDrawable());
 	}
 }

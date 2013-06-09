@@ -42,7 +42,7 @@ public class GitHubBinder extends AbstractBinder<TextView, Object> {
 	}
 
 	@Override
-	public void onBind(TextView view, Object slug) {
+	protected void onBind(TextView view, Object slug) {
 		
 		String url = "https://github.com/" + slug;
 		

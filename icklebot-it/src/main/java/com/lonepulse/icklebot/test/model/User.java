@@ -22,11 +22,15 @@ package com.lonepulse.icklebot.test.model;
 
 
 import java.io.Serializable;
+import java.util.Arrays;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.view.ViewGroup;
 
 import com.lonepulse.icklebot.annotation.bind.Bind;
 import com.lonepulse.icklebot.annotation.bind.Model;
+import com.lonepulse.icklebot.bind.Binder;
 import com.lonepulse.icklebot.test.R;
 import com.lonepulse.icklebot.test.binder.GitHubBinder;
 
@@ -34,6 +38,8 @@ import com.lonepulse.icklebot.test.binder.GitHubBinder;
  * <p>This entity represents the current user of the application. It's a 
  * <b>Model</b> which can be bound to a {@link ViewGroup}.
  * 
+ * @category test
+ * <br><br>
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
@@ -51,7 +57,25 @@ public class User implements Serializable {
 	
 	@Bind(widgetId = R.id.github, binderType = GitHubBinder.class)
 	private String githubUsername;
-
+	
+	@Bind(widgetId = R.id.img_drawable, binder = Binder.IMAGE)
+	private Drawable icDrawable;
+	
+	@Bind(widgetId = R.id.img_bitmap, binder = Binder.IMAGE)
+	private Bitmap icBitmap;
+	
+	@Bind(widgetId = R.id.img_primitive_int, binder = Binder.IMAGE)
+	private int icInt;
+	
+	@Bind(widgetId = R.id.img_wrapper_int, binder = Binder.IMAGE)
+	private Integer icWrapperInt;
+	
+	@Bind(widgetId = R.id.img_primitive_bytes, binder = Binder.IMAGE)
+	private byte[] icPrimitiveBytes;
+	
+	@Bind(widgetId = R.id.img_wrapper_bytes, binder = Binder.IMAGE)
+	private Byte[] icWrapperBytes;
+	
 
 	public long getId() {
 		return id;
@@ -77,38 +101,79 @@ public class User implements Serializable {
 		this.githubUsername = githubUsername;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
-		return result;
+	public Drawable getIcDrawable() {
+		return icDrawable;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (id != other.id)
-			return false;
-		return true;
+	public void setIcDrawable(Drawable icDrawable) {
+		this.icDrawable = icDrawable;
+	}
+
+	public Bitmap getIcBitmap() {
+		return icBitmap;
+	}
+
+	public void setIcBitmap(Bitmap icBitmap) {
+		this.icBitmap = icBitmap;
+	}
+
+	public int getIcInt() {
+		return icInt;
+	}
+
+	public void setIcInt(int icInt) {
+		this.icInt = icInt;
+	}
+
+	public Integer getIcWrapperInt() {
+		return icWrapperInt;
+	}
+
+	public void setIcWrapperInt(Integer icWrapperInt) {
+		this.icWrapperInt = icWrapperInt;
+	}
+
+	public byte[] getIcPrimitiveBytes() {
+		return icPrimitiveBytes;
+	}
+
+	public void setIcPrimitiveBytes(byte[] icPrimitiveBytes) {
+		this.icPrimitiveBytes = icPrimitiveBytes;
+	}
+
+	public Byte[] getIcWrapperBytes() {
+		return icWrapperBytes;
+	}
+
+	public void setIcWrapperBytes(Byte[] icWrapperBytes) {
+		this.icWrapperBytes = icWrapperBytes;
 	}
 
 	@Override
 	public String toString() {
+		
 		StringBuilder builder = new StringBuilder();
+		
 		builder.append("User [id=");
 		builder.append(id);
 		builder.append(", fullName=");
 		builder.append(fullName);
 		builder.append(", githubUsername=");
 		builder.append(githubUsername);
+		builder.append(", icDrawable=");
+		builder.append(icDrawable);
+		builder.append(", icBitmap=");
+		builder.append(icBitmap);
+		builder.append(", icInt=");
+		builder.append(icInt);
+		builder.append(", icWrapperInt=");
+		builder.append(icWrapperInt);
+		builder.append(", icPrimitiveBytes=");
+		builder.append(Arrays.toString(icPrimitiveBytes));
+		builder.append(", icWrapperBytes=");
+		builder.append(Arrays.toString(icWrapperBytes));
 		builder.append("]");
+		
 		return builder.toString();
 	}
 }

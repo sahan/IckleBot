@@ -107,7 +107,6 @@ public final class ParserUtils {
 		int tailLength = tail.length();
 		int tailsToSkip = 0;
 		
-		
 		for (int i = 0; i < xp.length(); i+=tailLength) {
 			
 			if(xp.substring(i, i + tailLength).equals(tail)) {

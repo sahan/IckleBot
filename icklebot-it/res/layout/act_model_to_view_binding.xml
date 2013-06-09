@@ -1,50 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/lbl_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/lbl_name"
-        android:maxLines="1"
-        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:layout_margin="10dp"/>
-    
-    <TextView 
+        android:layout_margin="10dp"
+        android:maxLines="1"
+        android:text="@string/lbl_name" />
+
+    <TextView
         android:id="@id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxLines="1"
-        android:textIsSelectable="true"
-        android:layout_toRightOf="@id/lbl_name"
         android:layout_alignBaseline="@id/lbl_name"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp" />
-    
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/lbl_name"
+        android:maxLines="1"
+        android:textIsSelectable="true" />
+
     <TextView
         android:id="@+id/lbl_github"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/lbl_github"
-        android:maxLines="1"
-        android:layout_below="@id/lbl_name"
-        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:layout_margin="10dp"/>
-    
-    <TextView 
+        android:layout_below="@id/lbl_name"
+        android:layout_margin="10dp"
+        android:maxLines="1"
+        android:text="@string/lbl_github" />
+
+    <TextView
         android:id="@id/github"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxLines="1"
-        android:textIsSelectable="true"
         android:layout_below="@id/lbl_github"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="10dp"
+        android:maxLines="1"
+        android:textIsSelectable="true" />
+
+    <ImageView
+        android:id="@+id/img_drawable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/github"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/img_bitmap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/github"
+        android:layout_toRightOf="@id/img_drawable"
+        tools:ignore="ContentDescription" />
+    
+    <ImageView
+        android:id="@+id/img_primitive_int"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/github"
+        android:layout_toRightOf="@id/img_bitmap"
+        tools:ignore="ContentDescription" />
+    
+    <ImageView
+        android:id="@+id/img_wrapper_int"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/github"
+        android:layout_toRightOf="@id/img_primitive_int"
+        tools:ignore="ContentDescription" />
+    
+    <ImageView
+        android:id="@+id/img_primitive_bytes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/github"
+        android:layout_toRightOf="@id/img_wrapper_int"
+        tools:ignore="ContentDescription" />
+    
+    <ImageView
+        android:id="@+id/img_wrapper_bytes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/github"
+        android:layout_toRightOf="@id/img_primitive_bytes"
+        tools:ignore="ContentDescription" />
+    
+    <ImageView
+        android:id="@+id/img_base_64"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_drawable"
+        tools:ignore="ContentDescription" />
 
 </RelativeLayout>

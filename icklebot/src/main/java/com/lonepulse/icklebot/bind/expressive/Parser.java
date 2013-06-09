@@ -31,13 +31,6 @@ package com.lonepulse.icklebot.bind.expressive;
  */
 public class Parser implements ParserPolicy {
 
-	/* 
-	 * Currently no expression tree is parsed, seems more like an expression pipe...
-	 * 
-	 * e.g. (i) #{user.email?:'N/A'} vs (ii) #{(user.profile.prefs['public'] && user.online)?user.email?:user.mobile?:'Contacts N/A'}
-	 * 
-	 * (i) looks innocent enough, (ii) looks scary...should not encourage service logic in presentation.
-	 */
 	
 	/**
 	 * <p>Takes an expression String and parses it into an {@link Expression} tree 
@@ -70,7 +63,7 @@ public class Parser implements ParserPolicy {
 			} 
 			catch (OperatorResolutionFailedException orfe2) {
 				
-				throw new IllegalSyntaxException("Failed to parse expression " + xp.toString() + ". "); 
+				throw new IllegalSyntaxException("Failed to parse expression " + xp.toString() + ". ");
 			}
 		}
 		
