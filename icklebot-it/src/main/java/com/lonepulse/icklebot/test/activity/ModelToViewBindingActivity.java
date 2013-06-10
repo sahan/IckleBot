@@ -60,6 +60,7 @@ public class ModelToViewBindingActivity extends IckleActivity {
 	BindManager bindManager;
 
 	User user;
+
 	
 	/**
 	 * <p>Exposes {@link #onCreate(Bundle)} and allows unit 

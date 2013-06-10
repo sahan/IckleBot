@@ -21,8 +21,7 @@ package com.lonepulse.icklebot.bind;
  */
 
 
-import java.lang.reflect.Field;
-import java.util.Set;
+import java.util.List;
 
 import android.os.Looper;
 import android.util.Log;
@@ -30,9 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lonepulse.icklebot.IckleBotRuntimeException;
-import com.lonepulse.icklebot.annotation.bind.Bind;
 import com.lonepulse.icklebot.annotation.bind.Model;
-import com.lonepulse.icklebot.util.FieldUtils;
 
 /**
  * <p>This is a concrete implementation of {@link BindManager} which performs Model-View binding.
@@ -136,22 +133,30 @@ public class BindService implements BindManager {
 			throw new IllegalArgumentException(errorContext2.toString());
 		}
 		
-		Set<Field> fields = FieldUtils.getAllFields(model, Bind.class);
-		
-		for (Field field : fields) {
-
-			try {
+		try {
 				
-				binderResolver.resolve(view, model, field).bind();
-			}
-			catch(BindResolutionException bre) {
+			List<AbstractBinder<? extends View, ? extends Object>> binderList 
+			= binderResolver.resolve(view, model);
 				
-				Log.w(getClass().getSimpleName(), "Bind Resolution Failure. ", bre);
+			for (AbstractBinder<? extends View, ? extends Object> binder : binderList) {
+					
+				try {
+					
+					binder.bind();
+				}
+				catch(BindException be) {
+					
+					be.printStackTrace();
+					
+					Log.w(getClass().getSimpleName(), "Bind Failure. ", be);
+				}
 			}
-			catch(BindException be) {
+		}
+		catch(BindResolutionException bre) {
+			
+			bre.printStackTrace();
 				
-				Log.w(getClass().getSimpleName(), "Bind Failure. ", be);
-			}
+			Log.w(getClass().getSimpleName(), "Bind Resolution Failure. ", bre);
 		}
 	}
 }

@@ -23,10 +23,14 @@ package com.lonepulse.icklebot.bind;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.view.View;
 
 import com.lonepulse.icklebot.annotation.bind.Bind;
+import com.lonepulse.icklebot.annotation.bind.BindImage;
+import com.lonepulse.icklebot.annotation.bind.BindText;
 import com.lonepulse.icklebot.util.FieldUtils;
 
 /**
@@ -41,87 +45,88 @@ class BasicBinderResolver implements BinderResolver {
 
 	@Override 
 	@SuppressWarnings("unchecked") //safe cast from Object (at Constructor#newInstance()) to AbstractBinder
-	public AbstractBinder<? extends View, ? extends Object> resolve(View view, Object model, Field attribute) 
+	public List<AbstractBinder<? extends View, ? extends Object>> resolve(View view, Object model) 
 	throws BindResolutionException {
 
-		try {
+		List<AbstractBinder<? extends View, ? extends Object>> binderList 
+			= new ArrayList<AbstractBinder<? extends View,? extends Object>>();
 		
-			if(attribute.isAnnotationPresent(Bind.class)) {
+		try {
+
+			Field[] fields = model.getClass().getDeclaredFields();
 			
-				Bind bind = attribute.getAnnotation(Bind.class);
-				Binder binder = bind.binder();
+			for (Field attribute : fields) {
 				
-				Class<? extends AbstractBinder<? extends View, ? extends Object>> binderType;
+				Class<? extends AbstractBinder<? extends View, ? extends Object>> binderType = null;
+				int widgetId = 0;
 				
-				switch (binder) {
-				
-					case VOID: binderType = bind.binderType(); break;
+				if(attribute.isAnnotationPresent(BindText.class)) {
 					
-					default: binderType = binder.getType(); break;
+					binderType = Binder.TEXT.getType();
+					widgetId = attribute.getAnnotation(BindText.class).value();
 				}
-				
-				if(binderType == null) {
+				else if(attribute.isAnnotationPresent(BindImage.class)) {
 					
-					StringBuilder errorContext = new StringBuilder()
-					.append("An existing binding strategy, ")
-					.append("or a custom binder must be specified via the ")
-					.append(Bind.class.getName())
-					.append(" annotation. ");
-					
-					throw new BindResolutionException(errorContext.toString());
+					binderType = Binder.IMAGE.getType();
+					widgetId = attribute.getAnnotation(BindImage.class).value();
 				}
-				
-				int widgetId = (bind.value() == 0)? bind.widgetId() :bind.value();
+				else if(attribute.isAnnotationPresent(Bind.class)) {
+					
+					Bind bind = attribute.getAnnotation(Bind.class);
+					
+					binderType = bind.type();
+					widgetId = bind.id();
+				}
+				else {
+					
+					binderList.add(VoidBinder.getInstance(view.getContext()));
+					continue;
+				}
 				
 				if(widgetId == 0) {
-					
+						
 					StringBuilder errorContext = new StringBuilder()
 					.append("A widget ID must be supplied via the ")
 					.append(Bind.class.getName())
 					.append(" annotation. ");
-					
+						
 					throw new BindResolutionException(errorContext.toString());
 				}
-				
+					
 				Constructor<?>[] constructors = binderType.getConstructors();
 				Constructor<?> constructor = null;
-				
-				for (Constructor<?> candidateConstructor : constructors) {
 					
+				for (Constructor<?> candidateConstructor : constructors) {
+						
 					Class<?>[] parameters = candidateConstructor.getParameterTypes();
 					if(parameters.length == 2) constructor = candidateConstructor;
 				}
-
+				
 				if(constructor == null) {
-					
+						
 					StringBuilder errorContext = new StringBuilder()
 					.append("The required constructor signature was not found on ")
 					.append(binderType.getName())
 					.append(". Please ensure that a public constructor which takes only ")
 					.append("a widget and its data is present. ");
-					
+						
 					throw new BindResolutionException(errorContext.toString());
 				}
-				
-				View widget = view.findViewById(widgetId);
-				
-				if(widget == null) {
 					
+				View widget = view.findViewById(widgetId);
+					
+				if(widget == null) {
+						
 					StringBuilder errorContext = new StringBuilder()
 					.append("The widget with ID ")
 					.append(widgetId)
 					.append(" was not found in given view. ");
-					
+						
 					throw new BindResolutionException(errorContext.toString());
 				}
-				
+					
 				Object data = FieldUtils.getFieldValue(model, Object.class, attribute);
-				
-				return AbstractBinder.class.cast(constructor.newInstance(widget, data));
-			}
-			else {
-			
-				return VoidBinder.getInstance(view.getContext());
+				binderList.add(AbstractBinder.class.cast(constructor.newInstance(widget, data)));
 			}
 		}
 		catch(Exception e) {
@@ -129,5 +134,7 @@ class BasicBinderResolver implements BinderResolver {
 			throw (e instanceof BindResolutionException)? 
 					(BindResolutionException)e :new BindResolutionException(e);
 		}
+		
+		return binderList;
 	}
 }

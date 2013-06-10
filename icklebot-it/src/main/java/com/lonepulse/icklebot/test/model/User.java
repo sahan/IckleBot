@@ -29,8 +29,9 @@ import android.graphics.drawable.Drawable;
 import android.view.ViewGroup;
 
 import com.lonepulse.icklebot.annotation.bind.Bind;
+import com.lonepulse.icklebot.annotation.bind.BindImage;
+import com.lonepulse.icklebot.annotation.bind.BindText;
 import com.lonepulse.icklebot.annotation.bind.Model;
-import com.lonepulse.icklebot.bind.Binder;
 import com.lonepulse.icklebot.test.R;
 import com.lonepulse.icklebot.test.binder.GitHubBinder;
 
@@ -52,28 +53,28 @@ public class User implements Serializable {
 
 	private long id; //this model attribute will not be bound
 	
-	@Bind(R.id.name)
+	@BindText(R.id.name)
 	private String fullName;
 	
-	@Bind(widgetId = R.id.github, binderType = GitHubBinder.class)
+	@Bind(id = R.id.github, type = GitHubBinder.class)
 	private String githubUsername;
 	
-	@Bind(widgetId = R.id.img_drawable, binder = Binder.IMAGE)
+	@BindImage(R.id.img_drawable)
 	private Drawable icDrawable;
 	
-	@Bind(widgetId = R.id.img_bitmap, binder = Binder.IMAGE)
+	@BindImage(R.id.img_bitmap)
 	private Bitmap icBitmap;
 	
-	@Bind(widgetId = R.id.img_primitive_int, binder = Binder.IMAGE)
+	@BindImage(R.id.img_primitive_int)
 	private int icInt;
 	
-	@Bind(widgetId = R.id.img_wrapper_int, binder = Binder.IMAGE)
+	@BindImage(R.id.img_wrapper_int)
 	private Integer icWrapperInt;
 	
-	@Bind(widgetId = R.id.img_primitive_bytes, binder = Binder.IMAGE)
+	@BindImage(R.id.img_primitive_bytes)
 	private byte[] icPrimitiveBytes;
 	
-	@Bind(widgetId = R.id.img_wrapper_bytes, binder = Binder.IMAGE)
+	@BindImage(R.id.img_wrapper_bytes)
 	private Byte[] icWrapperBytes;
 	
 
@@ -173,7 +174,7 @@ public class User implements Serializable {
 		builder.append(", icWrapperBytes=");
 		builder.append(Arrays.toString(icWrapperBytes));
 		builder.append("]");
-		
+
 		return builder.toString();
 	}
 }

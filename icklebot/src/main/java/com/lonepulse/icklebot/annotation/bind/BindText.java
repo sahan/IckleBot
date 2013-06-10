@@ -26,42 +26,31 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import android.view.View;
-
-import com.lonepulse.icklebot.bind.AbstractBinder;
-import com.lonepulse.icklebot.bind.BindingStrategy;
+import android.widget.TextView;
 
 /**
- * <p>Identifies a <i>model attribute</i> whose value is to be bound to a 
- * <b>widget</b> using a custom binding strategy which can be defined using 
- * and extension of {@link AbstractBinder}.
+ * <p>Identifies a <i>model attribute</i> whose value is to be bound to any <b>widget</b> 
+ * which is an extension of {@link TextView}. The <i>data</i> is obtained by invoking 
+ * {@code toString()} on the given {@link Object}, so be sure to override this method 
+ * and provide the String to bind the {@link TextView} with if the super implementation 
+ * is not satisfactory.
  * 
- * @version 1.3.0
+ * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface Bind {
+public @interface BindText {
 
 	/**
-	 * <p>The {@code integer} which identifies the <b>id</b> 
-	 * of the <b>widget</b> to bind to.</p>
+	 * <p>The {@code integer} which identifies the <b>id</b> of 
+	 * the <b>widget</b> to bind to which could be any extension 
+	 * of {@link TextView}.</p>
 	 * 
-	 * @return the id of the view to bind to
+	 * @return the id of the {@link TextView} extension to bind to
 	 * <br><br>
-	 * @since 1.2.0
+	 * @since 1.1.0
 	 */
-	int id();
-	
-	/**
-	 * <p>The {@link Class} of the {@link BindingStrategy} strategy to be used. You can 
-	 * create your own binding strategy by implementing an instance of {@link AbstractBinder} 
-	 * and declaring the strategy in {@link AbstractBinder#onBind(View, Object)}.</p>
-	 *
-	 * @return the {@link BindingStrategy} strategy to be used on this attribute.
-	 * 
-	 * @since 1.1.1
-	 */
-	Class<? extends AbstractBinder<? extends View, ? extends Object>> type();
+	int value();
 }

@@ -21,7 +21,7 @@ package com.lonepulse.icklebot.bind;
  */
 
 
-import java.lang.reflect.Field;
+import java.util.List;
 
 import android.view.View;
 
@@ -32,7 +32,7 @@ import com.lonepulse.icklebot.annotation.bind.Bind;
  * an {@link AbstractBinder} for a model attribute annotated with 
  * {@link Bind}.
  * 
- * @version 1.1.0
+ * @version 1.2.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -41,7 +41,8 @@ interface BinderResolver {
 	
 	/**
 	 * <p>Takes a model attribute and resolves the {@link AbstractBinder} 
-	 * implementation suited for it.  
+	 * implementation suited for it all the attributes which are exposed 
+	 * to be bound.  
 	 *
 	 * @param view 
 	 * 			the view to which the model is to be bound
@@ -49,18 +50,15 @@ interface BinderResolver {
 	 * @param model
 	 * 			the model to which the view is bound
 	 * 
-	 * @param field
-	 * 			the field in the model which is annotated for binding 
-	 * 
-	 * @return the resolved instance of {@link AbstractBinder}, else the 
-	 * 		   {@link VoidBinder#INSTANCE} if the attribute is not exposed 
+	 * @return the resolved {@link AbstractBinder} list, which may 
+	 * 		   include {@link VoidBinder}s for fields are not exposed 
 	 * 		   for binding
 	 * 
 	 * @throws BindResolutionException
 	 * 			if a {@link BindingStrategy} could not be discovered
 	 * 
-	 * @since 1.1.0
+	 * @since 1.2.0
 	 */
-	AbstractBinder<? extends View, ? extends Object> resolve(View view, Object model, Field field) 
+	List<AbstractBinder<? extends View, ? extends Object>> resolve(View view, Object model) 
 	throws BindResolutionException;
 }

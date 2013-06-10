@@ -21,6 +21,11 @@ package com.lonepulse.icklebot.test.fragment.support;
  */
 
 
+import java.io.ByteArrayOutputStream;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -58,11 +63,6 @@ public class SupportedModelToViewBindingFragment extends Fragment {
 	BindManager bindManager;
 
 	User user;
-	{
-		user = new User();
-		user.setFullName("Lahiru Sahan J.");
-		user.setGithubUsername("sahan");
-	}
 	
 	private com.lonepulse.icklebot.app.Fragment shadow;
 	{
@@ -82,6 +82,31 @@ public class SupportedModelToViewBindingFragment extends Fragment {
 		
 		super.onViewCreated(view, savedInstanceState);
 		shadow.onViewCreated(view, savedInstanceState);
+		
+		user = new User();
+		user.setFullName("Lahiru Sahan J.");
+		user.setGithubUsername("sahan");
+		
+		Drawable drawable = getResources().getDrawable(R.drawable.ic_launcher); 
+		Bitmap decodedBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+		
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		decodedBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+		
+		byte[] primitiveBytes = baos.toByteArray();
+		
+		Byte[] wrapperBytes = new Byte[primitiveBytes.length];
+		
+		for (int i = 0; i < primitiveBytes.length; i++)
+			wrapperBytes[i] = Byte.valueOf(primitiveBytes[i]);
+		
+		user.setIcInt(R.drawable.ic_launcher);
+		user.setIcWrapperInt(Integer.valueOf(R.drawable.ic_launcher));
+		user.setIcDrawable(drawable);
+		user.setIcBitmap(decodedBitmap);
+		user.setIcPrimitiveBytes(primitiveBytes);
+		user.setIcWrapperBytes(wrapperBytes);
+		
 		bindManager.bind(rootView, user);
 	}
 }
