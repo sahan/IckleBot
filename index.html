@@ -176,22 +176,34 @@ Run a background task.</p>
 </pre></div>
 
 <p><br>
+Bind models to views.</p>
+
+<div class="highlight"><pre><span class="nd">@Layout</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">act_home</span><span class="o">)</span>
+<span class="nd">@Title</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">string</span><span class="o">.</span><span class="na">ttl_act_home</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HomeActivity</span> <span class="kd">extends</span> <span class="n">IckleActivity</span> <span class="o">{</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onPostCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o"><span class="o">{</span>
+
+        	<span class="kd">super</span><span class="o">.</span><span class="na">onPostCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">)</span>;</span>
+        	
+        	<span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="n">accountService</span><span class="o">.</span><span class="na">getCurrentUser</span><span class="o">(<span class="na">getBaseContext</span>());</span>
+        	<span class="n">bindManager</span><span class="o">.</span><span class="na">bind</span><span class="o">(profileSection, user);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+<p><br>
 Check for a data connection.</p>
 
 <div class="highlight"><pre><span class="nd">@Layout</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">act_mail</span><span class="o">)</span>
 <span class="nd">@Title</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">string</span><span class="o">.</span><span class="na">ttl_act_mail</span><span class="o">)</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">MailActivity</span> <span class="kd">extends</span> <span class="n">IckleActivity</span> <span class="o">{</span>
 
-    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">sync</span><span class="o">()</span> <span class="o">{</span>
-
-        <span class="k">if</span><span class="o">(</span><span class="n">network</span><span class="o">().</span><span class="na">isConnected</span><span class="o">())</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onNetworkConnected</span><span class="o">()</span> <span class="o">{</span>
 
             <span class="n">inbox</span><span class="o">.</span><span class="na">refresh</span><span class="o">();</span>
-        <span class="o">}</span>
-        <span class="k">else</span> <span class="o">{</span>
-
-            <span class="o">...</span>
-        <span class="o">}</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </pre></div>
