@@ -8,9 +8,9 @@ simplified threading and event model. **2** A runtime dependency injection frame
 ##About
 
 **IckleBot** facilitates quick Android development by generating boilerplate code in 
-`Activity` instances and offers alternative simplified threading and event models. It encourages 
-loose-coupling and maintainability by providing a runtime [dependency injection](http://en.wikipedia.org/wiki/Dependency_injection) 
-framework.   
+`Activity` and `Fragment` instances and offers alternative simplified threading and event models. 
+It encourages loose-coupling and maintainability by providing a runtime [dependency injection]
+(http://en.wikipedia.org/wiki/Dependency_injection) framework and model-view binding.   
    
 Annotation based Android development with...
    
@@ -22,14 +22,15 @@ Annotation based Android development with...
 	4. Applications
 	5. POJOs   
 	
-* An alternative threading model which simplifies the execution of worker threads and 
-UI tasks.   
+* An alternative threading model which simplifies the execution of worker threads and UI tasks.   
 
-* An alternative event model which simplifies the linking of event listeners.   
+* An alternative event model which simplifies binding event listeners.   
 
 * Activity state management and configuration of window features.   
+
+* Model-View binding which welcomes custom binders. 
    
-* Utilities to discover and manage network state changes.   
+* Support for handling network state changes.   
 <br/>
 
 ##Setup
@@ -42,7 +43,7 @@ Add the following dependency in your project's pom.xml.
 <dependency>
    <groupId>com.lonepulse</groupId>
    <artifactId>icklebot</artifactId>
-   <version>1.1.4</version>
+   <version>1.2.0</version>
    <type>jar</type>
 </dependency>
 ```
@@ -52,7 +53,7 @@ For information on building Android projects using Maven here's [Chapter 14](htt
 
 ### 2. For Standard Android Projects
 
-Download the [IckleBot](http://repo1.maven.org/maven2/com/lonepulse/icklebot/1.1.4/icklebot-1.1.4.jar) + [Android-Support](http://repo1.maven.org/maven2/com/google/android/support-v4/r7/support-v4-r7.jar) 
+Download the [IckleBot](http://repo1.maven.org/maven2/com/lonepulse/icklebot/1.2.0/icklebot-1.2.0.jar) + [Android-Support](http://repo1.maven.org/maven2/com/google/android/support-v4/r7/support-v4-r7.jar) 
 jars and add them to your **libs** folder.
 <br/><br/>
 
@@ -66,17 +67,28 @@ Kickoff with the [quickstart](https://github.com/sahan/IckleBot/wiki/Quickstart)
 
 3. [Inject Views and Resources](https://github.com/sahan/IckleBot/wiki/Inject-Views-and-Resources)
 
-4. [Inject System Services, Application Instances and POJOs](https://github.com/sahan/IckleBot/wiki/Inject-System-Services,-Application-Instances-and-POJOs)
+4. [Inject Services, Application Instances and POJOs](https://github.com/sahan/IckleBot/wiki/Inject-Services,-Application-Instances-and-POJOs)
 
 5. [Leverage Implicit Injection](https://github.com/sahan/IckleBot/wiki/Leverage-Implicit-Injection)
 
-6. [Use IckleBot's Threading Model](https://github.com/sahan/IckleBot/wiki/Use-IckleBot's-Threading-Model)
-  
-7. [Use IckleBot's Event Model](https://github.com/sahan/IckleBot/wiki/Use-IckleBot's-Event-Model)
+6. [Employ Ickle Services](https://github.com/sahan/IckleBot/wiki/Employ-Ickle-Services)
 
-8. [Detect Network State](https://github.com/sahan/IckleBot/wiki/Detect-Network-State)
+7. [Use IckleBot's Threading Model](https://github.com/sahan/IckleBot/wiki/Use-IckleBot's-Threading-Model)
   
-9. [Avoid Coupling with IckleActivity](https://github.com/sahan/IckleBot/wiki/Avoid-Coupling-with-IckleActivity)   
+8. [Use IckleBot's Event Model](https://github.com/sahan/IckleBot/wiki/Use-IckleBot's-Event-Model)
+
+9. [Handle Network State Changes](https://github.com/sahan/IckleBot/wiki/Handle-Network-State-Changes)
+
+10. [Bind Models to Views](https://github.com/sahan/IckleBot/wiki/Bind-Models-to-Views)
+
+11. [Working with Fragments and the Support Library](https://github.com/sahan/IckleBot/wiki/Working-with-Fragments-and-the-Support-Library)
+
+12. [Activate Features Selectively](https://github.com/sahan/IckleBot/wiki/Activate-Features-Selectively)
+  
+13. [Avoid Coupling with IckleActivity](https://github.com/sahan/IckleBot/wiki/Avoid-Coupling-with-IckleActivity)
+
+14. [Avoid Coupling with IckleFragment](https://github.com/sahan/IckleBot/wiki/Avoid-Coupling-with-IckleFragment)   
+   
 
 <br/>
 ##License
