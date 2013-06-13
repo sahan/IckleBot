@@ -77,7 +77,7 @@ Kickoff with the [quickstart](https://github.com/sahan/IckleBot/wiki/Quickstart)
   
 8. [Use IckleBot's Event Model](https://github.com/sahan/IckleBot/wiki/Use-IckleBot's-Event-Model)
 
-9. [Handle Network State Changes](https://github.com/sahan/IckleBot/wiki/Handle-Network-State-Changes)
+9. [Handle Changes in Network State](https://github.com/sahan/IckleBot/wiki/Handle-Changes-in-Network-State)
 
 10. [Bind Models to Views](https://github.com/sahan/IckleBot/wiki/Bind-Models-to-Views)
 
