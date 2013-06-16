@@ -50,7 +50,7 @@ public class ExpressiveTextBinder extends TextBinder implements ExpressiveBindin
 	 * <p>The {@link Symbol} used for tokenizing expressions within the text 
 	 * content of the {@link TextView}.
 	 */
-	public static final Symbol SYMBOL = new Symbol("#{", "}");
+	public static final Symbol SYMBOL = new Symbol("${", "}");
 	
 	/**
 	 * <p>The {@link Parser} which is used for parsing the {@link TextView} content. 
