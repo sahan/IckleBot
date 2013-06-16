@@ -22,7 +22,7 @@ package com.lonepulse.icklebot.bind.expressive;
 
 
 /**
- * <p>This utility class provides common services which are used by {@link Parser}s.
+ * <p>This utility class provides common services which are used by {@link TextParser}s.
  * 
  * @version 1.1.0
  * <br><br>

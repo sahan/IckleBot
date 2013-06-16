@@ -22,22 +22,24 @@ package com.lonepulse.icklebot.bind.expressive;
 
 
 /**
- * <p>A concrete implementation of {@link ParserPolicy} which parses expression 
- * Strings into an {@link Expression} tree.
+ * <p>This contract defines the services offered by a parser which parses 
+ * an {@link Expression} tree using a given string.
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public class Parser implements ParserPolicy {
-
+public interface Parser<Type> {
 	
 	/**
-	 * <p>Takes an expression String and parses it into an {@link Expression} tree 
-	 * and executed the nodes.
+	 * <p>Takes the expression content and parses it into an {@link Expression} 
+	 * pipe and executes the nodes.
 	 * 
-	 * @param xp
-	 * 			the expression String to be parsed and excuted
+	 * @param target
+	 * 			the target which this expression pipe will act on
+	 * 
+	 * @param content
+	 * 			the expression content to be parsed and executed
 	 * 
 	 * @return the result of the parsed expression
 	 * 
@@ -46,45 +48,5 @@ public class Parser implements ParserPolicy {
 	 * 
 	 * @since 1.1.0
 	 */
-	@Override
-	public Object parse(Object target, StringBuilder xp) throws IllegalSyntaxException {
-		
-		Op op = null;
-		
-		try {
-			
-			op = Op.resolve(xp.substring(0, 2));
-		}
-		catch(OperatorResolutionFailedException orfe) {
-			
-			try {
-				
-				op = Op.resolve(String.valueOf(xp.charAt(0)));
-			} 
-			catch (OperatorResolutionFailedException orfe2) {
-				
-				throw new IllegalSyntaxException("Failed to parse expression " + xp.toString() + ". ");
-			}
-		}
-		
-		xp.delete(0, op.symbol().head().length());
-		
-		int nextIndex = 0;
-		
-		if(op.symbol().tail().isEmpty()) {
-			
-			nextIndex = ParserUtils.indexOfNextHead(xp);
-		}
-		else {
-			
-			nextIndex = ParserUtils.indexOfTail(xp, op.symbol());
-			xp.delete(nextIndex, op.symbol().tail().length());
-		}
-		
-		String argString = xp.substring(0, nextIndex);
-		Object subResult = op.evaluate(target, ParserUtils.extractArgs(argString));  
-		
-		return (xp.length() == 0)? 
-				subResult :parse(subResult, new StringBuilder(xp.substring(nextIndex, xp.length())));
-	}
+	Object parse(Object target, Type content) throws IllegalSyntaxException;
 }

@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.bind.expressive;
+package com.lonepulse.icklebot.bind;
 
 /*
  * #%L
@@ -23,7 +23,6 @@ package com.lonepulse.icklebot.bind.expressive;
 
 import android.view.View;
 
-import com.lonepulse.icklebot.bind.BindException;
 
 /**
  * <p>Represents an <b>expressive</b> mapping between one unit of data and a widget 

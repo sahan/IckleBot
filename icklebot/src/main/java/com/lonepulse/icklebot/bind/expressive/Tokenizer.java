@@ -21,33 +21,26 @@ package com.lonepulse.icklebot.bind.expressive;
  */
 
 
+import java.util.List;
 
 /**
- * <p>This contract defines the services offered by a parser which parses 
- * an {@link Expression} tree using a given string.
+ * <p>This contract specifies the services offered for delimiting and extracting 
+ * sets of expressions from content.
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public interface ParserPolicy {
+public interface Tokenizer<Type> extends Iterable<Type> {
+
 	
 	/**
-	 * <p>Takes an expression String and parses it into an {@link Expression} tree 
-	 * and executed the nodes.
-	 * 
-	 * @param target
-	 * 			the target which this expression will act on
-	 * 
-	 * @param xp
-	 * 			the expression String to be parsed and excuted
-	 * 
-	 * @return the result of the parsed expression
-	 * 
-	 * @throws IllegalSyntaxException
-	 * 			if the given expression {@link String} failed to be parsed
+	 * <p>Retrieves the list of tokens which were extracted by 
+	 * this implementation of {@link Tokenizer}. 
+	 *
+	 * @return the list of extracted tokens
 	 * 
 	 * @since 1.1.0
 	 */
-	Object parse(Object target, StringBuilder xp) throws IllegalSyntaxException;
+	List<Type> getTokens();
 }
