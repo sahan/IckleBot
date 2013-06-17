@@ -31,6 +31,7 @@ import android.view.ViewGroup;
 import com.lonepulse.icklebot.annotation.bind.Bind;
 import com.lonepulse.icklebot.annotation.bind.BindImage;
 import com.lonepulse.icklebot.annotation.bind.BindText;
+import com.lonepulse.icklebot.annotation.bind.Expressive;
 import com.lonepulse.icklebot.annotation.bind.Model;
 import com.lonepulse.icklebot.test.R;
 import com.lonepulse.icklebot.test.binder.GitHubBinder;
@@ -58,6 +59,10 @@ public class User implements Serializable {
 	
 	@Bind(id = R.id.github, type = GitHubBinder.class)
 	private String githubUsername;
+	
+	@Expressive("contact") 
+	@BindText(R.id.expressive)
+	private Contact contact;
 	
 	@BindImage(R.id.img_drawable)
 	private Drawable icDrawable;
@@ -148,6 +153,14 @@ public class User implements Serializable {
 
 	public void setIcWrapperBytes(Byte[] icWrapperBytes) {
 		this.icWrapperBytes = icWrapperBytes;
+	}
+	
+	public Contact getContact() {
+		return contact;
+	}
+
+	public void setContact(Contact contact) {
+		this.contact = contact;
 	}
 
 	@Override

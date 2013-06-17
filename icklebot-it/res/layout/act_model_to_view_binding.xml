@@ -36,6 +36,16 @@
         android:layout_margin="10dp"
         android:maxLines="1"
         android:text="@string/lbl_github" />
+    
+    <TextView
+        android:id="@+id/expressive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/lbl_name"
+        android:layout_margin="10dp"
+        android:maxLines="1"
+        android:text="@string/lbl_expressive" />
 
     <TextView
         android:id="@id/github"

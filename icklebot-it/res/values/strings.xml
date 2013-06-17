@@ -11,4 +11,5 @@
     <string name="alias">Lonepulse</string>
     <string name="lbl_name">Hi, my name is </string>
     <string name="lbl_github">You can find me on GitHub at </string>
+    <string name="lbl_expressive">Email ${contact.email}, Mobile ${contact.mobile}</string>
 </resources>

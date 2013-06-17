@@ -21,7 +21,10 @@ package com.lonepulse.icklebot.bind;
  */
 
 
-import java.util.List;
+import java.lang.reflect.Field;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import android.os.Looper;
 import android.util.Log;
@@ -29,6 +32,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lonepulse.icklebot.IckleBotRuntimeException;
+import com.lonepulse.icklebot.annotation.bind.Expressive;
 import com.lonepulse.icklebot.annotation.bind.Model;
 
 /**
@@ -135,14 +139,40 @@ public class BindService implements BindManager {
 		
 		try {
 				
-			List<AbstractBinder<? extends View, ? extends Object>> binderList 
+			Map<Field, AbstractBinder<? extends View, ? extends Object>> binderMap 
 			= binderResolver.resolve(view, model);
-				
-			for (AbstractBinder<? extends View, ? extends Object> binder : binderList) {
+			
+			Set<Entry<Field, AbstractBinder<? extends View, ? extends Object>>> entries = binderMap.entrySet();
+			
+			for (Entry<Field, AbstractBinder<? extends View, ? extends Object>> binderEntry : entries) {
 					
 				try {
+				
+					AbstractBinder<? extends View, ? extends Object> binder = binderEntry.getValue();
 					
-					binder.bind();
+					if(binderEntry.getKey().isAnnotationPresent(Expressive.class)) {
+						
+						if(binder instanceof ExpressiveBindingStrategy) {
+							
+							ExpressiveBindingStrategy.class.cast(binder).xbind();
+						}
+						else {
+							
+							StringBuilder warningContext = new StringBuilder()
+							.append("The attribute ")
+							.append(binderEntry.getKey().getName())
+							.append(" on ")
+							.append(model.getClass().getName())
+							.append(" cannot be bound expressively. Remove the @Expressive annotation")
+							.append(" or use a binder which supports expressive binding. ");
+							
+							Log.w(getClass().getSimpleName(), warningContext.toString());
+						}
+					}
+					else {
+						
+						binder.bind();
+					}
 				}
 				catch(BindException be) {
 					

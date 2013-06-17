@@ -31,15 +31,15 @@ import com.lonepulse.icklebot.bind.Binder;
 /**
  * <p>Identifies a bind as being expressive; i.e. the <i>content</i> within 
  * the target element is parsed to identify a placeholder for the content 
- * to be bound. {@code @Expressive} must be used together with {@code @Bind}, 
- * using a {@link Binder} which supports expressive binding. 
+ * to be bound. {@code @Expressive} must be used together with {@code @Bind...} 
+ * type annotations using a {@link Binder} which supports expressive binding. 
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
+@Target(ElementType.FIELD)
 public @interface Expressive {
 	
 	/**

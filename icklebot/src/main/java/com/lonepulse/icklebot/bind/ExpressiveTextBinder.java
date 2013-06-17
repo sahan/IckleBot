@@ -21,8 +21,6 @@ package com.lonepulse.icklebot.bind;
  */
 
 
-import java.lang.reflect.Field;
-
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -33,7 +31,6 @@ import com.lonepulse.icklebot.bind.expressive.Symbol;
 import com.lonepulse.icklebot.bind.expressive.TextParser;
 import com.lonepulse.icklebot.bind.expressive.TextTokenizer;
 import com.lonepulse.icklebot.bind.expressive.Tokenizer;
-import com.lonepulse.icklebot.util.FieldUtils;
 
 /**
  * <p>An extension of {@link TextBinder} which provides an implementation of an 
@@ -105,23 +102,20 @@ public class ExpressiveTextBinder extends TextBinder implements ExpressiveBindin
 				
 					int index = ParserUtils.indexOfNextHead(xp);
 					
-					Field field = target.getClass().getField(xp.substring(0, index + 1));
-					target = FieldUtils.getFieldValue(target, Object.class, field);
+					String expression = xp.toString().substring(index);
+					
+					Object result = parser.parse(target, new StringBuilder(expression));
+					
+					content = content.replaceAll(
+						xp.insert(0, SYMBOL.head()).insert(0, "\\Q")
+							.append(SYMBOL.tail()).append("\\E").toString(), result.toString());
 				}
 				catch(IndexNotFoundException infe) {
 					
 					content = content.replaceAll(
-						xp.insert(0, SYMBOL.head()).append(SYMBOL.tail()).toString(), target.toString());
+						xp.insert(0, SYMBOL.head()).insert(0, "\\Q")
+							.append(SYMBOL.tail()).append("\\E").toString(), target.toString());
 				}
-				catch (NoSuchFieldException nsfe) {
-			
-					throw new BindException(getWidget(), target, nsfe);
-				}
-				
-				Object result = parser.parse(target, xp);
-				
-				content = content.replaceAll(
-					xp.insert(0, SYMBOL.head()).append(SYMBOL.tail()).toString(), result.toString());
 			}
 			catch(Exception e) {
 				

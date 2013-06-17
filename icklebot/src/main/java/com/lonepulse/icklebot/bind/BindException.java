@@ -55,7 +55,7 @@ public class BindException extends IckleBotRuntimeException {
 	 */
 	public BindException(View widget, Object data, Throwable cause) {
 		
-		this("Binding data " + data + " to view " + widget + " failed!");
+		this("Binding data " + data + " to view " + widget + " failed!", cause);
 	}
 	
 	/**

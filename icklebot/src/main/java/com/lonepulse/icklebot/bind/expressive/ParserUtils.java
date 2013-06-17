@@ -30,7 +30,7 @@ package com.lonepulse.icklebot.bind.expressive;
  */
 public final class ParserUtils {
 
-	
+
 	/**
 	 * <p>Constructor visibility is restricted. Instantiation is nonsensical.
 	 * 
@@ -136,7 +136,7 @@ public final class ParserUtils {
 	 */
 	public static Object[] extractArgs(String argString) {
 		
-		String[] args = argString.split(":");
+		String[] args = argString.split("\\:");
 		
 		Object[] refinedArgs = new Object[args.length];
 		

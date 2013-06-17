@@ -71,8 +71,17 @@ public class TextTokenizer implements Tokenizer<String> {
 	
 		this.symbol = symbol;
 		
-		if(symbol.tail().isEmpty())
-			throw new TokenizerException("The symbol with the head " + symbol.head() + " is missing a tail. ");
+		if(symbol.tail().isEmpty()) {
+			
+			StringBuilder errorContext = new StringBuilder()
+			.append("The symbol with the head ")
+			.append(symbol.head())
+			.append(" is missing a tail. ")
+			.append(getClass().getName())
+			.append(" requires a symbol with a tail. ");
+			
+			throw new TokenizerException(errorContext.toString());
+		}
 		
 		this.tokens = tokenize(content);
 	}
@@ -97,7 +106,7 @@ public class TextTokenizer implements Tokenizer<String> {
 	protected List<String> tokenize(String content) throws TokenizerException {
 	
 		List<String> extractedTokens = new ArrayList<String>();
-		String[] unrefinedTokens = content.split(symbol.head());
+		String[] unrefinedTokens = content.split("\\Q" + symbol.head() + "\\E");
 		
 		for (String unrefinedToken : unrefinedTokens) {
 			
@@ -105,7 +114,7 @@ public class TextTokenizer implements Tokenizer<String> {
 			
 			if(index > 0) {
 				
-				extractedTokens.add(unrefinedToken.substring(0, index + 1));
+				extractedTokens.add(unrefinedToken.substring(0, index));
 			}
 		}
 		

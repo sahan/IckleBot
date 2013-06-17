@@ -33,7 +33,7 @@ import com.lonepulse.icklebot.annotation.bind.Bind;
 /**
  * <p>Identifies the {@link BindingStrategy} strategy to be used.
  * 
- * @version 1.1.1
+ * @version 1.1.2
  * <br><br> 
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -43,12 +43,14 @@ public enum Binder {
 	 * <p>The binding strategy to be employed for {@link TextView}s or any of 
 	 * its children (e.g. {@link Button}) to bind {@link String} data.</p>
 	 * 
+	 * <p>This binding strategy supports <b>expressive binding</b>.</p>
+	 * 
 	 * <p><b>Targets:</b><ul><li>any model attribute which provides a meaningful 
 	 * {@code toString()} representation.</li></ul></p>
 	 * 
 	 * @since 1.1.0
 	 */
-	TEXT(TextBinder.class),
+	TEXT(ExpressiveTextBinder.class),
 	
 	/**
 	 * <p>The binding strategy to be employed for {@link ImageView}s. 
@@ -57,9 +59,11 @@ public enum Binder {
 	 * <ul>
 	 * 	<li>{@link Drawable}</li>
 	 * 	<li>{@link Bitmap}</li>
-	 * 	<li>{@code byte[]}</li>
-	 * 	<li>{@link Byte}[]</li>
-	 * 	<li>Base64 encoded {@link String}</li>
+	 * 	<li>{@code byte[]} - image bytes</li>
+	 * 	<li>{@link Byte}[] - images {@link Byte}s</li>
+	 * 	<li>{@link int} - drawable identifier</li>
+	 * 	<li>{@link Integer} - drawable identifier</li>
+	 * 	<li>Base64 encoded {@link String}- Base64 encoded string</li>
 	 * </ul>
 	 * </p>
 	 * 
