@@ -60,8 +60,7 @@ public class User implements Serializable {
 	@Bind(id = R.id.github, type = GitHubBinder.class)
 	private String githubUsername;
 	
-	@Expressive("contact") 
-	@BindText(R.id.expressive)
+	@Expressive @BindText(R.id.expressive)
 	private Contact contact;
 	
 	@BindImage(R.id.img_drawable)

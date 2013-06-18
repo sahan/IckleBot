@@ -117,4 +117,11 @@ public class SupportedModelToViewBindingFragmentTest {
 		
 		assertNotNull(((ImageView)activity.fragment.getView().findViewById(R.id.img_wrapper_int)).getDrawable());
 	}
+	
+	@Test
+	public final void testExpressiveBinding() throws Exception {
+		
+		String text = ((TextView)activity.fragment.getView().findViewById(R.id.expressive)).getText().toString();
+		assertEquals("Email lahiru@lonepulse.com, Mobile 201184919", text);
+	}
 }

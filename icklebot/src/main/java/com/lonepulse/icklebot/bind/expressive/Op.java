@@ -36,9 +36,16 @@ public enum Op implements Operator {
 	/**
 	 * <p>Performs a projection from a model attribute.</p>
 	 * 
-	 * <b>Usage:</b> <pre>${tag.attr1.attr2}</pre>
+	 * <b>Usage:</b> <pre>${attr1.attr2.attr3}</pre>
 	 */
-	PROJECT(new Projection());
+	PROJECT(new Projection()),
+	
+	/**
+	 * <p>Initiates the evaluation of an expression.</p>
+	 * 
+	 * <b>Usage:</b> <pre>${&lt;your-expression-here&gt;}</pre>
+	 */
+	EVALUATE(new Evaluate());
 
 	
 	/**

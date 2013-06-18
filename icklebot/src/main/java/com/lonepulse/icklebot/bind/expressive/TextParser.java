@@ -64,28 +64,49 @@ public class TextParser implements Parser<StringBuilder> {
 			} 
 			catch (OperatorResolutionFailedException orfe2) {
 				
-				throw new IllegalSyntaxException("Failed to parse expression " + xp.toString() + ". ");
+				StringBuilder errorContext = new StringBuilder()
+				.append("Malformed expression segment ")
+				.append(xp.toString())
+				.append(" cannot be parsed. ");
+				
+				throw new IllegalSyntaxException(errorContext.toString());
 			}
 		}
 		
 		xp.delete(0, op.symbol().head().length());
 		
-		int nextIndex = 0;
-		
-		if(op.symbol().tail().isEmpty()) {
+		if(!op.symbol().tail().isEmpty()) {
 			
-			nextIndex = ParserUtils.indexOfNextHead(xp);
-		}
-		else {
+			try {
 			
-			nextIndex = ParserUtils.indexOfTail(xp, op.symbol());
-			xp.delete(nextIndex, op.symbol().tail().length());
+				int tailIndex = ParserUtils.indexOfTail(xp, op.symbol());
+				xp.delete(tailIndex, tailIndex + op.symbol().tail().length());
+			}
+			catch(IndexNotFoundException infe) {
+				
+				StringBuilder errorContext = new StringBuilder()
+				.append("Malformed expression segment ")
+				.append(xp.toString())
+				.append(" cannot be parsed. ");
+				
+				throw new IllegalSyntaxException(errorContext.toString());
+			}
 		}
 		
-		String argString = xp.substring(0, nextIndex);
-		Object subResult = op.evaluate(target, ParserUtils.extractArgs(argString));  
+		int nextHeadIndex = 0;
 		
-		return (xp.length() == 0)? 
-				subResult :parse(subResult, new StringBuilder(xp.substring(nextIndex, xp.length())));
+		try {
+			
+			nextHeadIndex = ParserUtils.indexOfNextHead(xp);
+		}
+		catch(IndexNotFoundException infe) {
+				
+			return op.evaluate(target, xp.toString());
+		}
+		
+		String argString = xp.substring(0, nextHeadIndex);
+		Object subResult = op.evaluate(target, ParserUtils.extractArgs(argString));
+		
+		return parse(subResult, new StringBuilder(xp.substring(nextHeadIndex, xp.length())));
 	}
 }

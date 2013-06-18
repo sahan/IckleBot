@@ -1,7 +1,6 @@
 package com.lonepulse.icklebot.bind.expressive;
 
 import com.lonepulse.icklebot.IckleBotException;
-import com.lonepulse.icklebot.IckleBotRuntimeException;
 
 /*
  * #%L
@@ -32,20 +31,20 @@ import com.lonepulse.icklebot.IckleBotRuntimeException;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public class IndexNotFoundException extends IckleBotRuntimeException {
+public class IndexNotFoundException extends IckleBotException {
 
 
 	private static final long serialVersionUID = -575393923244873095L;
 	
 
 	/**
-	 * See {@link IckleBotRuntimeException#IckleBotRuntimeException()}
+	 * See {@link IckleBotException#IckleBotException()}
 	 */
 	public IndexNotFoundException() {}
 
 	
 	/**
-	 * See {@link RuntimIckleBotRuntimeExceptioneException#IckleBotRuntimeException(String)} 
+	 * See {@link IckleBotException#IckleBotException(String)} 
 	 */
 	public IndexNotFoundException(String detailMessage) {
 		
@@ -53,7 +52,7 @@ public class IndexNotFoundException extends IckleBotRuntimeException {
 	}
 
 	/**
-	 * See {@link IckleBotRuntimeException#IckleBotRuntimeException(Throwable)} 
+	 * See {@link IckleBotException#IckleBotException(Throwable)} 
 	 */
 	public IndexNotFoundException(Throwable throwable) {
 		
@@ -61,7 +60,7 @@ public class IndexNotFoundException extends IckleBotRuntimeException {
 	}
 
 	/**
-	 * See {@link IckleBotRuntimeException#IckleBotRuntimeException(String, Throwable)} 
+	 * See {@link IckleBotException#IckleBotException(String, Throwable)} 
 	 */
 	public IndexNotFoundException(String detailMessage, Throwable throwable) {
 		

@@ -47,15 +47,15 @@ public class OperationFailedException extends IckleBotRuntimeException {
 	 * @param target
 	 *			the target of this {@link Operator} 		
 	 * 
-	 * @param args
+	 * @param arg
 	 * 			the arguments which the {@link Operator} acted on
 	 * 
 	 * @since 1.1.0
 	 */
-	public OperationFailedException(Operator operator, Object target, Object... args) {
+	public OperationFailedException(Operator operator, Object target, Object arg) {
 		
 		this(operator.getClass().getName() + " failed on " + 
-			 target.getClass().getName() + " for argument(s) " + args + ". ");
+			 target.getClass().getName() + " for argument " + arg);
 	}
 	
 	/**

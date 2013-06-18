@@ -25,7 +25,8 @@ import java.lang.reflect.Field;
 
 
 /**
- * <p>
+ * <p>This {@link Operator} exposes member attributes of a given model 
+ * for consumption by further operators or for use as a result.
  * 
  * @version 1.1.0
  * <br><br>
@@ -50,11 +51,11 @@ public class Projection extends AbstractOperator {
 	@Override
 	public Object onEvaluate(Object target, Object... args) {
 
-		if(args == null || args.length == 0 || !(args[0] instanceof String)) {
+		if(args == null || args.length != 1 || !(args[0] instanceof String)) {
 			
 			StringBuilder errorContext = new StringBuilder()
 			.append(getClass().getName())
-			.append(" requires a single String parameter as an argument ");
+			.append(" requires a single String parameter as an argument. ");
 			
 			throw new IllegalArgumentException(errorContext.toString());
 		}

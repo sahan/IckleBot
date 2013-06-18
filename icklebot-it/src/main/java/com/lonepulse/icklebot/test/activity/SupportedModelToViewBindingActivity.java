@@ -38,6 +38,7 @@ import com.lonepulse.icklebot.annotation.inject.InjectView;
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.bind.BindManager;
 import com.lonepulse.icklebot.test.R;
+import com.lonepulse.icklebot.test.model.Contact;
 import com.lonepulse.icklebot.test.model.User;
 
 /** 
@@ -84,6 +85,7 @@ public class SupportedModelToViewBindingActivity extends IckleActivity {
 		user = new User();
 		user.setFullName("Lahiru Sahan J.");
 		user.setGithubUsername("sahan");
+		user.setContact(new Contact("lahiru@lonepulse.com", "201184919"));
 		
 		Drawable drawable = getResources().getDrawable(R.drawable.ic_launcher); 
 		Bitmap decodedBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);

@@ -30,6 +30,14 @@ package com.lonepulse.icklebot.bind.expressive;
  */
 public final class ParserUtils {
 
+	
+	/**
+	 * <p>The delimiter which is used to separate multiple arguments 
+	 * to an operation. The default value is {@code ":"} escaped to 
+	 * be taken as a literal in a regex string.
+	 */
+	public static final String ARG_DELIMITER = "\\:";
+	
 
 	/**
 	 * <p>Constructor visibility is restricted. Instantiation is nonsensical.
@@ -136,7 +144,7 @@ public final class ParserUtils {
 	 */
 	public static Object[] extractArgs(String argString) {
 		
-		String[] args = argString.split("\\:");
+		String[] args = argString.split(ARG_DELIMITER);
 		
 		Object[] refinedArgs = new Object[args.length];
 		

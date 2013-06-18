@@ -34,20 +34,10 @@ import com.lonepulse.icklebot.bind.Binder;
  * to be bound. {@code @Expressive} must be used together with {@code @Bind...} 
  * type annotations using a {@link Binder} which supports expressive binding. 
  * 
- * @version 1.1.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface Expressive {
-	
-	/**
-	 * <p>The tag used to locate this expression.
-	 *
-	 * @return the tag used to locate this expression
-	 * 
-	 * @since 1.1.0
-	 */
-	String value();
-}
+public @interface Expressive {}
