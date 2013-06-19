@@ -22,14 +22,14 @@ package com.lonepulse.icklebot.bind.expressive;
 
 
 /**
- * <p>This is an abstract implementation of {@link Operator} which mandates the 
- * provision of a {@link Symbol} and implementation of {@link Operator#evaluate(Object...)}.
+ * <p>This is an abstract implementation of {@link Operation} which mandates the 
+ * provision of a {@link Symbol} and implementation of {@link Operation#evaluate(Object...)}.
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public abstract class AbstractOperator implements Operator {
+public abstract class AbstractOperation implements Operation {
 
 
 	/**
@@ -39,14 +39,14 @@ public abstract class AbstractOperator implements Operator {
 	
 	
 	/**
-	 * <p>Instantiates a new {@link Operator} with the given {@link Symbol}.
+	 * <p>Instantiates a new {@link Operation} with the given {@link Symbol}.
 	 * 
 	 * @param symbol
-	 * 			the {@link Symbol} associated with this {@link Operator}
+	 * 			the {@link Symbol} associated with this {@link Operation}
 	 * 
 	 * @since 1.1.0
 	 */
-	public AbstractOperator(Symbol symbol) {
+	public AbstractOperation(Symbol symbol) {
 		
 		if(symbol == null) {
 			
@@ -86,7 +86,7 @@ public abstract class AbstractOperator implements Operator {
 	/**
 	 * <p>This callback must be overridden to define the evaluation stratagem.</p> 
 	 *
-	 * <p>See {@link Operator#evaluate(Object, Object...)}.
+	 * <p>See {@link Operation#evaluate(Object, Object...)}.
 	 * 
 	 * @since 1.1.0
 	 */

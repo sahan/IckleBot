@@ -1,5 +1,8 @@
 package com.lonepulse.icklebot.bind.expressive;
 
+import java.util.regex.Pattern;
+
+
 /*
  * #%L
  * IckleBot
@@ -22,7 +25,7 @@ package com.lonepulse.icklebot.bind.expressive;
 
 
 /**
- * <p>This utility class provides common services which are used by {@link TextParser}s.
+ * <p>This utility class provides common services which are used by {@link ExpressionParser}s.
  * 
  * @version 1.1.0
  * <br><br>
@@ -36,7 +39,7 @@ public final class ParserUtils {
 	 * to an operation. The default value is {@code ":"} escaped to 
 	 * be taken as a literal in a regex string.
 	 */
-	public static final String ARG_DELIMITER = "\\:";
+	public static final String ARG_DELIMITER = Pattern.quote(":");
 	
 
 	/**
@@ -176,8 +179,7 @@ public final class ParserUtils {
 					}
 					catch(NumberFormatException nfe2) {
 						
-						throw new IllegalSyntaxException("The argument " + 
-							arg + " failed to be parsed. Only primitives are accepted. ");
+						refinedArgs[i] = arg;
 					}
 				}
 			}

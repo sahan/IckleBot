@@ -1,5 +1,6 @@
 package com.lonepulse.icklebot.test.model;
 
+
 /*
  * #%L
  * IckleBot Integration Tests

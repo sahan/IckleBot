@@ -25,7 +25,7 @@ import com.lonepulse.icklebot.IckleBotException;
 
 /**
  * <p>This exception is thrown due to a recoverable failure which occurs 
- * while resolving an {@link Operator} from a given {@link String}.
+ * while resolving an {@link Operation} from a given {@link String}.
  * 
  * @version 1.1.0
  * <br><br>

@@ -25,14 +25,14 @@ import java.lang.reflect.Field;
 
 
 /**
- * <p>This {@link Operator} exposes member attributes of a given model 
+ * <p>This {@link Operation} exposes member attributes of a given model 
  * for consumption by further operators or for use as a result.
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public class Projection extends AbstractOperator {
+public class Projection extends AbstractOperation {
 
 
 	/**

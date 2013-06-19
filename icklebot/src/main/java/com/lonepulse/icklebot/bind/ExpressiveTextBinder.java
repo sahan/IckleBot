@@ -21,15 +21,15 @@ package com.lonepulse.icklebot.bind;
  */
 
 
+import java.util.regex.Pattern;
+
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.lonepulse.icklebot.bind.expressive.IndexNotFoundException;
+import com.lonepulse.icklebot.bind.expressive.ExpressionParser;
+import com.lonepulse.icklebot.bind.expressive.ExpressionTokenizer;
 import com.lonepulse.icklebot.bind.expressive.Parser;
-import com.lonepulse.icklebot.bind.expressive.ParserUtils;
 import com.lonepulse.icklebot.bind.expressive.Symbol;
-import com.lonepulse.icklebot.bind.expressive.TextParser;
-import com.lonepulse.icklebot.bind.expressive.TextTokenizer;
 import com.lonepulse.icklebot.bind.expressive.Tokenizer;
 
 /**
@@ -52,7 +52,7 @@ public class ExpressiveTextBinder extends TextBinder implements ExpressiveBindin
 	/**
 	 * <p>The {@link Parser} which is used for parsing the {@link TextView} content. 
 	 */
-	private Parser<StringBuilder> parser;
+	private Parser<StringBuilder, Object> parser;
 	
 	/**
 	 * <p>The {@link Tokenizer} which is used for extracting the expressions from 
@@ -79,8 +79,8 @@ public class ExpressiveTextBinder extends TextBinder implements ExpressiveBindin
 		
 		super(textView, data);
 		
-		this.parser = new TextParser();
-		this.tokenizer = new TextTokenizer(SYMBOL, textView.getText().toString());
+		this.parser = new ExpressionParser();
+		this.tokenizer = new ExpressionTokenizer(SYMBOL, textView.getText().toString());
 	}
 
 	/**
@@ -92,30 +92,13 @@ public class ExpressiveTextBinder extends TextBinder implements ExpressiveBindin
 		String content = getWidget().getText().toString();
 		Object target = getData();
 
-		for (String token : tokenizer) {
+		for (String xpToken : tokenizer) {
 			
 			try {
 			
-				StringBuilder xp = new StringBuilder(token);
+				Object result = parser.parse(target, new StringBuilder(xpToken));
 				
-				try {
-				
-					int index = ParserUtils.indexOfNextHead(xp);
-					
-					String expression = xp.toString().substring(index);
-					
-					Object result = parser.parse(target, new StringBuilder(expression));
-					
-					content = content.replaceAll(
-						xp.insert(0, SYMBOL.head()).insert(0, "\\Q")
-							.append(SYMBOL.tail()).append("\\E").toString(), result.toString());
-				}
-				catch(IndexNotFoundException infe) {
-					
-					content = content.replaceAll(
-						xp.insert(0, SYMBOL.head()).insert(0, "\\Q")
-							.append(SYMBOL.tail()).append("\\E").toString(), target.toString());
-				}
+				content = content.replaceAll(Pattern.quote(xpToken), result.toString());
 			}
 			catch(Exception e) {
 				

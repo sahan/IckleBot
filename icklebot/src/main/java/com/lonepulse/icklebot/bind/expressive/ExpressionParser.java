@@ -30,7 +30,7 @@ package com.lonepulse.icklebot.bind.expressive;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public class TextParser implements Parser<StringBuilder> {
+public class ExpressionParser implements Parser<StringBuilder, Object> {
 
 	
 	/**

@@ -29,16 +29,16 @@ package com.lonepulse.icklebot.bind.expressive;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public interface Parser<Type> {
+public interface Parser<Input, Output> {
 	
 	/**
-	 * <p>Takes the expression content and parses it into an {@link Expression} 
-	 * pipe and executes the nodes.
+	 * <p>Takes an expression, parses it into an expression pipe and executes 
+	 * the segments on the given target to produce a result.
 	 * 
-	 * @param target
+	 * @param resultOfPreviousSegment
 	 * 			the target which this expression pipe will act on
 	 * 
-	 * @param content
+	 * @param expressionForThisSegment
 	 * 			the expression content to be parsed and executed
 	 * 
 	 * @return the result of the parsed expression
@@ -48,5 +48,5 @@ public interface Parser<Type> {
 	 * 
 	 * @since 1.1.0
 	 */
-	Object parse(Object target, Type content) throws IllegalSyntaxException;
+	Object parse(Object resultOfPreviousSegment, Input expressionForThisSegment) throws IllegalSyntaxException;
 }

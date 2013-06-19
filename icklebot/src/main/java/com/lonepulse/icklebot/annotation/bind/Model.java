@@ -38,4 +38,15 @@ import android.view.ViewGroup;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface Model {}
+public @interface Model {
+	
+	/**
+	 * <p>An optional identifier which is usually used in expressive binding 
+	 * to distinguish a model as the target of an expression.   
+	 *
+	 * @return a user defined identifier for this model
+	 * 
+	 * @since 1.1.0
+	 */
+	String value() default "";
+}

@@ -25,9 +25,9 @@ import com.lonepulse.icklebot.IckleBotRuntimeException;
 
 /**
  * <p>An {@link IckleBotRuntimeException} which signals a failure in executing 
- * an {@link Operator} strategy. 
+ * an {@link Operation} strategy. 
  * 
- * @version 1.1.0
+ * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -38,24 +38,49 @@ public class OperationFailedException extends IckleBotRuntimeException {
 
 	
 	/**
-	 * <p>Prints a detailed message using the {@link Operator} which failed 
+	 * <p>Prints a detailed message using the {@link Operation} which failed 
 	 * and the arguments it was supposed to act on.
 	 * 
 	 * @param operator
-	 * 			the {@link Operator} which failed
+	 * 			the {@link Operation} which failed
 	 *
 	 * @param target
-	 *			the target of this {@link Operator} 		
+	 *			the target of this {@link Operation} 		
 	 * 
 	 * @param arg
-	 * 			the arguments which the {@link Operator} acted on
+	 * 			the arguments which the {@link Operation} acted on
 	 * 
 	 * @since 1.1.0
 	 */
-	public OperationFailedException(Operator operator, Object target, Object arg) {
+	public OperationFailedException(Operation operator, Object target, Object arg) {
 		
 		this(operator.getClass().getName() + " failed on " + 
 			 target.getClass().getName() + " for argument " + arg);
+	}
+	
+	/**
+	 * <p>Prints a detailed message using the {@link Operation} which failed 
+	 * and the arguments it was supposed to act on.
+	 * 
+	 * @param operator
+	 * 			the {@link Operation} which failed
+	 *
+	 * @param target
+	 *			the target of this {@link Operation} 		
+	 * 
+	 * @param arg
+	 * 			the arguments which the {@link Operation} acted on
+	 * 
+	 * @param cause
+	 * 			the root cause of this exception
+	 * 
+	 * 
+	 * @since 1.1.1
+	 */
+	public OperationFailedException(Operation operator, Object target, Object arg, Throwable cause) {
+		
+		this(operator.getClass().getName() + " failed on " + 
+				target.getClass().getName() + " for argument " + arg, cause);
 	}
 	
 	/**

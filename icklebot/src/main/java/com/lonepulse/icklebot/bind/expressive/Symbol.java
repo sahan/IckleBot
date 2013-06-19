@@ -24,9 +24,9 @@ package com.lonepulse.icklebot.bind.expressive;
 
 
 /**
- * <p>Represents the textual format of an {@link Operator}. All symbols must 
+ * <p>Represents the textual format of an {@link Operation}. All symbols must 
  * have a <b>head</b>, although the <b>tail</b> is optional. The data which 
- * an {@link Operator} acts on is bound between the head and tail. 
+ * an {@link Operation} acts on is bound between the head and tail. 
  * 
  * @version 1.1.0
  * <br><br>

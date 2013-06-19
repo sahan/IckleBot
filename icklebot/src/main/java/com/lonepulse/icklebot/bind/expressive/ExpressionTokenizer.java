@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * <p>An abstract implementation of {@link Tokenizer} which tailors a specific 
@@ -37,7 +38,7 @@ import java.util.List;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public class TextTokenizer implements Tokenizer<String> {
+public class ExpressionTokenizer implements Tokenizer<String> {
 
 	
 	/**
@@ -52,8 +53,8 @@ public class TextTokenizer implements Tokenizer<String> {
 	
 	
 	/**
-	 * <p>Instantiates a new {@link Tokenizer} based on the given {@link Symbol} and 
-	 * the textual content to be tokenized.
+	 * <p>Instantiates a new {@link Tokenizer} based on the given {@link Symbol} and the 
+	 * textual content to be tokenized.
 	 * 
 	 * @param symbol
 	 * 			the {@link Symbol} which delimits the token
@@ -62,12 +63,12 @@ public class TextTokenizer implements Tokenizer<String> {
 	 * 			the textual content to be tokenized
 	 * 
 	 * @throws TokenizerException
-	 * 			if instantiation failed due to the absence of a symbol tail 
-	 * 			or if tokenizing failed on the given content
+	 * 			if instantiation failed due to the absence of a symbol tail or if tokenizing 
+	 * 			failed on the given content
 	 *
 	 * @since 1.1.0
 	 */
-	public TextTokenizer(Symbol symbol, String content) throws TokenizerException {
+	public ExpressionTokenizer(Symbol symbol, String content) throws TokenizerException {
 	
 		this.symbol = symbol;
 		
@@ -87,11 +88,11 @@ public class TextTokenizer implements Tokenizer<String> {
 	}
 	
 	/**
-	 * <p>Performs tokenization for the {@link Symbol} with which this {@link Tokenizer} 
-	 * was instantiated and returns the list of tokens.</p> 
+	 * <p>Performs tokenization for the {@link Symbol} with which this {@link Tokenizer} was 
+	 * instantiated and returns the list of tokens.</p> 
 	 * 
-	 * This method is invoked when the {@link TextTokenizer} is first instantiated. 
-	 * Override this method to implement a custom tokenizing strategy.</p>
+	 * This method is invoked when the {@link ExpressionTokenizer} is first instantiated. Override 
+	 * this method to implement a custom tokenizing strategy.</p>
 	 *
 	 * @param content
 	 * 			the textual content to be tokenized
@@ -106,7 +107,7 @@ public class TextTokenizer implements Tokenizer<String> {
 	protected List<String> tokenize(String content) throws TokenizerException {
 	
 		List<String> extractedTokens = new ArrayList<String>();
-		String[] unrefinedTokens = content.split("\\Q" + symbol.head() + "\\E");
+		String[] unrefinedTokens = content.split(Pattern.quote(symbol.head()));
 		
 		for (String unrefinedToken : unrefinedTokens) {
 			
@@ -114,7 +115,7 @@ public class TextTokenizer implements Tokenizer<String> {
 			
 			if(index > 0) {
 				
-				extractedTokens.add(unrefinedToken.substring(0, index));
+				extractedTokens.add(symbol.head() + unrefinedToken.substring(0, index + 1));
 			}
 		}
 		
@@ -122,8 +123,7 @@ public class TextTokenizer implements Tokenizer<String> {
 	}
 
 	/**
-	 * <p>Returns an instance of {@link Iterator} which can be used 
-	 * to iterate overall all the extracted tokens.
+	 * <p>Returns an instance of {@link Iterator} which can be used to iterate over all the extracted tokens.
 	 * 
 	 * @since 1.1.0
 	 */
@@ -134,8 +134,7 @@ public class TextTokenizer implements Tokenizer<String> {
 	}
 
 	/**
-	 * <p>Retrieves the list of tokens which were extracted by this 
-	 * implementation of {@link Tokenizer}. 
+	 * <p>Retrieves the list of tokens which were extracted by this implementation of {@link Tokenizer}. 
 	 * 
 	 * @return the list of tokens
 	 * 

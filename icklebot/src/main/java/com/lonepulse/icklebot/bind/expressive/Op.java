@@ -30,7 +30,7 @@ package com.lonepulse.icklebot.bind.expressive;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public enum Op implements Operator {
+public enum Op implements Operation {
 	
 	
 	/**
@@ -45,25 +45,25 @@ public enum Op implements Operator {
 	 * 
 	 * <b>Usage:</b> <pre>${&lt;your-expression-here&gt;}</pre>
 	 */
-	EVALUATE(new Evaluate());
+	EVALUATE(new Evaluation());
 
 	
 	/**
 	 * <p>The operator which this instance of {@link Op}s 
 	 * delegates its calls to.
 	 */
-	private Operator operator;
+	private Operation operator;
 	
 
 	/**
 	 * <p>Adds the given operator to this aggregation.
 	 * 
 	 * @param operator
-	 * 			the {@link Operator} to which service calls are delegated
+	 * 			the {@link Operation} to which service calls are delegated
 	 *
 	 * @since 1.1.0
 	 */
-	private Op(Operator operator) {
+	private Op(Operation operator) {
 		
 		this.operator = operator;
 	}
@@ -87,10 +87,10 @@ public enum Op implements Operator {
 	}
 
 	/**
-	 * <p>Resolves an {@link Operator} for the given {@link Symbol#head()}.
+	 * <p>Resolves an {@link Operation} for the given {@link Symbol#head()}.
 	 * 
 	 * @param head
-	 * 			the {@link Symbol#head()} for the {@link Operator} 
+	 * 			the {@link Symbol#head()} for the {@link Operation} 
 	 * 
 	 * @return the resolved {@link Op}
 	 * 
