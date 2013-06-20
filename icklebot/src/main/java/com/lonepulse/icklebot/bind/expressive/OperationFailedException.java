@@ -25,7 +25,7 @@ import com.lonepulse.icklebot.IckleBotRuntimeException;
 
 /**
  * <p>An {@link IckleBotRuntimeException} which signals a failure in executing 
- * an {@link Operation} strategy. 
+ * an {@link Operator} strategy. 
  * 
  * @version 1.1.1
  * <br><br>
@@ -38,38 +38,38 @@ public class OperationFailedException extends IckleBotRuntimeException {
 
 	
 	/**
-	 * <p>Prints a detailed message using the {@link Operation} which failed 
+	 * <p>Prints a detailed message using the {@link Operator} which failed 
 	 * and the arguments it was supposed to act on.
 	 * 
 	 * @param operator
-	 * 			the {@link Operation} which failed
+	 * 			the {@link Operator} which failed
 	 *
 	 * @param target
-	 *			the target of this {@link Operation} 		
+	 *			the target of this {@link Operator} 		
 	 * 
 	 * @param arg
-	 * 			the arguments which the {@link Operation} acted on
+	 * 			the arguments which the {@link Operator} acted on
 	 * 
 	 * @since 1.1.0
 	 */
-	public OperationFailedException(Operation operator, Object target, Object arg) {
+	public OperationFailedException(Operator operator, Object target, Object arg) {
 		
 		this(operator.getClass().getName() + " failed on " + 
 			 target.getClass().getName() + " for argument " + arg);
 	}
 	
 	/**
-	 * <p>Prints a detailed message using the {@link Operation} which failed 
+	 * <p>Prints a detailed message using the {@link Operator} which failed 
 	 * and the arguments it was supposed to act on.
 	 * 
 	 * @param operator
-	 * 			the {@link Operation} which failed
+	 * 			the {@link Operator} which failed
 	 *
 	 * @param target
-	 *			the target of this {@link Operation} 		
+	 *			the target of this {@link Operator} 		
 	 * 
 	 * @param arg
-	 * 			the arguments which the {@link Operation} acted on
+	 * 			the arguments which the {@link Operator} acted on
 	 * 
 	 * @param cause
 	 * 			the root cause of this exception
@@ -77,7 +77,7 @@ public class OperationFailedException extends IckleBotRuntimeException {
 	 * 
 	 * @since 1.1.1
 	 */
-	public OperationFailedException(Operation operator, Object target, Object arg, Throwable cause) {
+	public OperationFailedException(Operator operator, Object target, Object arg, Throwable cause) {
 		
 		this(operator.getClass().getName() + " failed on " + 
 				target.getClass().getName() + " for argument " + arg, cause);

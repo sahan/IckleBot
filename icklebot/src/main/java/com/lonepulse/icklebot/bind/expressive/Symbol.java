@@ -24,9 +24,9 @@ package com.lonepulse.icklebot.bind.expressive;
 
 
 /**
- * <p>Represents the textual format of an {@link Operation}. All symbols must 
+ * <p>Represents the textual format of an {@link Operator}. All symbols must 
  * have a <b>head</b>, although the <b>tail</b> is optional. The data which 
- * an {@link Operation} acts on is bound between the head and tail. 
+ * an {@link Operator} acts on is bound between the head and tail. 
  * 
  * @version 1.1.0
  * <br><br>
@@ -65,6 +65,12 @@ public class Symbol {
 		
 		if(head == null || head.isEmpty())
 			throw new IllegalArgumentException("A symbol cannot be constructed without a head. ");
+		
+		if(head.length() > 2)
+			throw new IllegalArgumentException("The symbol head can consist of a maximum of 2 characters. ");
+		
+		if(tail != null && tail.length() > 2)
+			throw new IllegalArgumentException("The symbol tail can consist of a maximum of 2 characters. ");
 		
 		this.head = head;
 		this.tail = (tail == null || tail.isEmpty())? "" :tail;

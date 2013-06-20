@@ -26,44 +26,57 @@ package com.lonepulse.icklebot.bind.expressive;
  * <p>Aggregates all available operators and delegates services calls to 
  * their individual instances.
  * 
- * @version 1.1.0
+ * @version 1.1.2
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public enum Op implements Operation {
+public enum Op implements Operator {
 	
-	
-	/**
-	 * <p>Performs a projection from a model attribute.</p>
-	 * 
-	 * <b>Usage:</b> <pre>${attr1.attr2.attr3}</pre>
-	 */
-	PROJECT(new Projection()),
 	
 	/**
 	 * <p>Initiates the evaluation of an expression.</p>
 	 * 
 	 * <b>Usage:</b> <pre>${&lt;your-expression-here&gt;}</pre>
+	 * 
+	 * @since 1.1.1
 	 */
-	EVALUATE(new Evaluation());
+	EVALUATE(new Evaluate()),
+	
+	/**
+	 * <p>Performs a projection from a model attribute.</p>
+	 * 
+	 * <b>Usage:</b> <pre>${property1.property2.propertyN}</pre>
+	 * 
+	 * @since 1.1.0
+	 */
+	PROJECT(new Project()),
+	
+	/**
+	 * <p>Simulates an <b>Elvis Operator</b>.</p>
+	 * 
+	 * <b>Usage:</b> <pre>${property?:'n/a'}</pre>
+	 * 
+	 * @since 1.1.2
+	 */
+	ELVIS(new Elvis());
 
 	
 	/**
 	 * <p>The operator which this instance of {@link Op}s 
 	 * delegates its calls to.
 	 */
-	private Operation operator;
+	private Operator operator;
 	
 
 	/**
 	 * <p>Adds the given operator to this aggregation.
 	 * 
 	 * @param operator
-	 * 			the {@link Operation} to which service calls are delegated
+	 * 			the {@link Operator} to which service calls are delegated
 	 *
 	 * @since 1.1.0
 	 */
-	private Op(Operation operator) {
+	private Op(Operator operator) {
 		
 		this.operator = operator;
 	}
@@ -87,10 +100,10 @@ public enum Op implements Operation {
 	}
 
 	/**
-	 * <p>Resolves an {@link Operation} for the given {@link Symbol#head()}.
+	 * <p>Resolves an {@link Operator} for the given {@link Symbol#head()}.
 	 * 
 	 * @param head
-	 * 			the {@link Symbol#head()} for the {@link Operation} 
+	 * 			the {@link Symbol#head()} for the {@link Operator} 
 	 * 
 	 * @return the resolved {@link Op}
 	 * 

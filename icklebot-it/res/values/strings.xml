@@ -12,4 +12,6 @@
     <string name="lbl_name">Hi, my name is </string>
     <string name="lbl_github">You can find me on GitHub at </string>
     <string name="lbl_expressive">Email ${contact.email}, Mobile ${contact.mobile}</string>
+    <string name="lbl_item1">${contact.item1?:unavailable}</string>
+    <string name="lbl_item2">${contact.item2?:unavailable}</string>
 </resources>

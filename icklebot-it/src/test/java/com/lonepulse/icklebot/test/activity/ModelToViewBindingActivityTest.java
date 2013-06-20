@@ -122,4 +122,18 @@ public class ModelToViewBindingActivityTest {
 		String text = ((TextView)activity.findViewById(R.id.expressive)).getText().toString();
 		assertEquals("Email lahiru@lonepulse.com, Mobile 201184919", text);
 	}
+	
+	@Test
+	public final void testElvisBindingUnavailable() throws Exception {
+		
+		String text = ((TextView)activity.findViewById(R.id.item1)).getText().toString();
+		assertEquals("unavailable", text);
+	}
+	
+	@Test
+	public final void testElvisBindingAvailable() throws Exception {
+		
+		String text = ((TextView)activity.findViewById(R.id.item2)).getText().toString();
+		assertEquals("available", text);
+	}
 }

@@ -25,26 +25,23 @@ import com.lonepulse.icklebot.annotation.bind.Model;
 
 
 /**
- * <p>This {@link Operation} identifies the root target for an expression and 
+ * <p>This {@link Operator} identifies the root target for an expression and 
  * exposes the target attribute of the model on which the expression is executed 
  * for usage as a result or for consumption by further operators.</p>
- *  
- * <p><b>Note</b> that this operator expects an expression string with the 
- * placeholders stripped.</p>
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public class Evaluation extends AbstractOperation {
+public class Evaluate extends AbstractOperator {
 	
 	
 	/**
-	 * <p>Instantiates a new {@link Evaluation} operator. 
+	 * <p>Instantiates a new {@link Evaluate} operator. 
 	 *
 	 * @since 1.1.0
 	 */
-	public Evaluation() {
+	public Evaluate() {
 		
 		super(new Symbol("${", "}"));
 	}

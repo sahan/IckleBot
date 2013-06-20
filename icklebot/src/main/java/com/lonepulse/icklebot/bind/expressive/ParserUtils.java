@@ -161,6 +161,12 @@ public final class ParserUtils {
 				builder.deleteCharAt(0).deleteCharAt(builder.length() - 1);
 				refinedArgs[i] = builder.toString();
 			}
+			if(arg.startsWith("\'") && arg.endsWith("\'")) {
+				
+				StringBuilder builder = new StringBuilder(arg);
+				builder.delete(0, 2).delete(builder.length() - 2, builder.length());
+				refinedArgs[i] = builder.toString();
+			}
 			else if(arg.equals("true") || arg.equals("false")) {
 				
 				refinedArgs[i] = Boolean.parseBoolean(arg);

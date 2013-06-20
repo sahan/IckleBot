@@ -100,8 +100,8 @@ public class ExpressionParser implements Parser<StringBuilder, Object> {
 			nextHeadIndex = ParserUtils.indexOfNextHead(xp);
 		}
 		catch(IndexNotFoundException infe) {
-				
-			return op.evaluate(target, xp.toString());
+			
+			return op.evaluate(target, ParserUtils.extractArgs(xp.toString()));
 		}
 		
 		String argString = xp.substring(0, nextHeadIndex);

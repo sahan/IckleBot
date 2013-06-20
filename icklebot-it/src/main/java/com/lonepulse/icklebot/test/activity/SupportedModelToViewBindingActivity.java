@@ -85,7 +85,13 @@ public class SupportedModelToViewBindingActivity extends IckleActivity {
 		user = new User();
 		user.setFullName("Lahiru Sahan J.");
 		user.setGithubUsername("sahan");
-		user.setContact(new Contact("lahiru@lonepulse.com", "201184919"));
+		
+		Contact contact = new Contact();
+		contact.setEmail("lahiru@lonepulse.com");
+		contact.setMobile("201184919");
+		contact.setItem1(null);
+		contact.setItem2("available");
+		user.setContact(contact);
 		
 		Drawable drawable = getResources().getDrawable(R.drawable.ic_launcher); 
 		Bitmap decodedBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);

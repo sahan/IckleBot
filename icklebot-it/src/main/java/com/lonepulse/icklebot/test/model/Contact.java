@@ -37,14 +37,12 @@ public class Contact {
 	private String email;
 	
 	private String mobile;
+	
+	private Object item1;
+	
+	private Object item2;
 
 	
-	public Contact(String email, String mobile) {
-		
-		this.email = email;
-		this.mobile = mobile;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -60,14 +58,20 @@ public class Contact {
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
+	
+	public Object getItem1() {
+		return item1;
+	}
 
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Contact [email=");
-		builder.append(email);
-		builder.append(", mobile=");
-		builder.append(mobile);
-		builder.append("]");
-		return builder.toString();
+	public void setItem1(Object item1) {
+		this.item1 = item1;
+	}
+	
+	public Object getItem2() {
+		return item2;
+	}
+
+	public void setItem2(Object item2) {
+		this.item2 = item2;
 	}
 }
