@@ -22,7 +22,6 @@ package com.lonepulse.icklebot.test.model;
 
 
 import java.io.Serializable;
-import java.util.Arrays;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -62,6 +61,9 @@ public class User implements Serializable {
 	
 	@Expressive @BindText(R.id.expressive)
 	private Contact contact;
+	
+	@Expressive @BindText(R.id.inventory)
+	private Inventory inventory;
 	
 	@BindImage(R.id.img_drawable)
 	private Drawable icDrawable;
@@ -162,31 +164,11 @@ public class User implements Serializable {
 		this.contact = contact;
 	}
 
-	@Override
-	public String toString() {
-		
-		StringBuilder builder = new StringBuilder();
-		
-		builder.append("User [id=");
-		builder.append(id);
-		builder.append(", fullName=");
-		builder.append(fullName);
-		builder.append(", githubUsername=");
-		builder.append(githubUsername);
-		builder.append(", icDrawable=");
-		builder.append(icDrawable);
-		builder.append(", icBitmap=");
-		builder.append(icBitmap);
-		builder.append(", icInt=");
-		builder.append(icInt);
-		builder.append(", icWrapperInt=");
-		builder.append(icWrapperInt);
-		builder.append(", icPrimitiveBytes=");
-		builder.append(Arrays.toString(icPrimitiveBytes));
-		builder.append(", icWrapperBytes=");
-		builder.append(Arrays.toString(icWrapperBytes));
-		builder.append("]");
+	public Inventory getInventory() {
+		return inventory;
+	}
 
-		return builder.toString();
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
 	}
 }

@@ -1,6 +1,5 @@
 package com.lonepulse.icklebot.test.model;
 
-
 /*
  * #%L
  * IckleBot Integration Tests
@@ -23,35 +22,36 @@ package com.lonepulse.icklebot.test.model;
 
 
 /**
- * <p>Represents the contact details of a {@link User}.
- *
+ * <p>A sample model which is used to test expressive binding.
+ * 
  * @category test
  * <br><br>
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public class Contact {
+public class Inventory {
+
+
+	private Object item1;
+	
+	private Object item2;
 
 	
-	private String email;
-	
-	private String mobile;
-	
-	
-	public String getEmail() {
-		return email;
+	public Object getItem1() {
+		return item1;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setItem1(Object item1) {
+		this.item1 = item1;
 	}
 
-	public String getMobile() {
-		return mobile;
+	public Object getItem2() {
+		return item2;
 	}
 
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
+	public void setItem2(Object item2) {
+		this.item2 = item2;
 	}
 }
+

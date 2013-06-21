@@ -53,7 +53,7 @@ public class Elvis extends AbstractOperator {
 	 */
 	@Override
 	public Object onEvaluate(Object target, Object... args) {
-
+		
 		if(args == null || args.length != 1) {
 			
 			StringBuilder errorContext = new StringBuilder()

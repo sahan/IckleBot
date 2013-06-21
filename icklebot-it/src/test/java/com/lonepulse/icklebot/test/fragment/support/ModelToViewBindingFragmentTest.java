@@ -124,16 +124,9 @@ public class ModelToViewBindingFragmentTest {
 	}
 	
 	@Test
-	public final void testElvisBindingUnavailable() throws Exception {
+	public final void testElvisBinding() throws Exception {
 		
-		String text = ((TextView)activity.fragment.getView().findViewById(R.id.item1)).getText().toString();
-		assertEquals("unavailable", text);
-	}
-	
-	@Test
-	public final void testElvisBindingAvailable() throws Exception {
-		
-		String text = ((TextView)activity.fragment.getView().findViewById(R.id.item2)).getText().toString();
-		assertEquals("available", text);
+		String text = ((TextView)activity.fragment.getView().findViewById(R.id.inventory)).getText().toString();
+		assertEquals("Item 1 is unavailable and Item 2 is bot", text);
 	}
 }

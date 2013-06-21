@@ -155,13 +155,14 @@ public final class ParserUtils {
 			
 			String arg = args[i];
 			
-			if(arg.startsWith("'") && arg.endsWith("'")) {
+			if((arg.startsWith("'") && arg.endsWith("'"))) {
 				
 				StringBuilder builder = new StringBuilder(arg);
 				builder.deleteCharAt(0).deleteCharAt(builder.length() - 1);
 				refinedArgs[i] = builder.toString();
 			}
-			if(arg.startsWith("\'") && arg.endsWith("\'")) {
+			if((arg.startsWith("\'") && arg.endsWith("\'"))
+				|| (arg.startsWith("\\\"") && arg.endsWith("\\\""))) {
 				
 				StringBuilder builder = new StringBuilder(arg);
 				builder.delete(0, 2).delete(builder.length() - 2, builder.length());

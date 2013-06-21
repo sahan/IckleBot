@@ -37,6 +37,7 @@ import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.bind.BindManager;
 import com.lonepulse.icklebot.test.R;
 import com.lonepulse.icklebot.test.model.Contact;
+import com.lonepulse.icklebot.test.model.Inventory;
 import com.lonepulse.icklebot.test.model.User;
 
 /**
@@ -79,9 +80,12 @@ public class ModelToViewBindingActivity extends IckleActivity {
 		Contact contact = new Contact();
 		contact.setEmail("lahiru@lonepulse.com");
 		contact.setMobile("201184919");
-		contact.setItem1(null);
-		contact.setItem2("available");
 		user.setContact(contact);
+		
+		Inventory inventory = new Inventory();
+		inventory.setItem1(null);
+		inventory.setItem2("bot");
+		user.setInventory(inventory);
 		
 		Drawable drawable = getResources().getDrawable(R.drawable.ic_launcher); 
 		Bitmap decodedBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
