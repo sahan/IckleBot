@@ -149,6 +149,8 @@ public final class ParserUtils {
 		
 		String[] args = argString.split(ARG_DELIMITER);
 		
+		for (String argToken : args) argToken.trim();
+		 
 		Object[] refinedArgs = new Object[args.length];
 		
 		for (int i = 0; i < args.length; i++) {

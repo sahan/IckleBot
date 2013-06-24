@@ -107,6 +107,6 @@ public class ExpressionParser implements Parser<StringBuilder, Object> {
 		String argString = xp.substring(0, nextHeadIndex);
 		Object subResult = op.evaluate(target, ParserUtils.extractArgs(argString));
 		
-		return parse(subResult, new StringBuilder(xp.substring(nextHeadIndex, xp.length())));
+		return parse(subResult, new StringBuilder(xp.substring(nextHeadIndex, xp.length()).trim()));
 	}
 }

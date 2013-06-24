@@ -44,7 +44,12 @@ import com.lonepulse.icklebot.util.PermissionUtils;
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 public class NetworkService implements NetworkManager {
-
+	
+	
+	/**
+	 * <p>The {@link Context} in which this {@link NetworkManager} was instantiated.
+	 */
+	private Context context;
 	
 	/**
 	 * <p>The {@link ConnectivityManager} which is used to 
@@ -61,6 +66,7 @@ public class NetworkService implements NetworkManager {
 	 */
 	public NetworkService(Context context) {
 		
+		this.context = context;
 		this.connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE); 
 	}
 	
@@ -70,7 +76,7 @@ public class NetworkService implements NetworkManager {
 	@Override
 	public NetworkInfo isAvailable() {
 		
-		if(!PermissionUtils.isGranted(this, Manifest.permission.ACCESS_NETWORK_STATE)) {
+		if(!PermissionUtils.isGranted(context, Manifest.permission.ACCESS_NETWORK_STATE)) {
 			
 			new IckleBotRuntimeException(
 				new PermissionDeniedException(Manifest.permission.ACCESS_NETWORK_STATE, Profile.NETWORK));
