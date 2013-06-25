@@ -45,14 +45,14 @@ import com.lonepulse.icklebot.bind.BindingStrategy;
 public @interface Bind {
 
 	/**
-	 * <p>The {@code integer} which identifies the <b>id</b> 
-	 * of the <b>widget</b> to bind to.</p>
+	 * <p>The {@code integer} array which identifies the <b>ID</b>s 
+	 * of the <b>widget</b>s to bind to.</p>
 	 * 
-	 * @return the id of the view to bind to
+	 * @return the IDs of the widgets to bind to
 	 * <br><br>
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 */
-	int id();
+	int[] ids();
 	
 	/**
 	 * <p>The {@link Class} of the {@link BindingStrategy} strategy to be used. You can 

@@ -56,7 +56,7 @@ public class User implements Serializable {
 	@BindText(R.id.name)
 	private String fullName;
 	
-	@Bind(id = R.id.github, type = GitHubBinder.class)
+	@Bind(ids = R.id.github, type = GitHubBinder.class)
 	private String githubUsername;
 	
 	@Expressive @BindText(R.id.expressive)

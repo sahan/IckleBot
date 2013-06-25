@@ -36,7 +36,7 @@ import android.widget.ImageView;
  * {@link Bitmap}, {@code byte[]}, {@link Byte}[], integer drawable identifier, 
  * or a <b>Base64</b> encoded {@link String}.
  * 
- * @version 1.1.0
+ * @version 1.2.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -46,12 +46,12 @@ public @interface BindImage {
 
 	
 	/**
-	 * <p>The {@code integer} which identifies the <b>id</b> of 
-	 * the {@link ImageView} to bind to.
+	 * <p>The {@code integer} array which identifies the <b>ID</b>s of 
+	 * the {@link ImageView}s to bind to.
 	 * 
-	 * @return the id of the {@link ImageView} to bind to
+	 * @return the IDs of the {@link ImageView}s to bind to
 	 * <br><br>
-	 * @since 1.1.0
+	 * @since 1.2.0
 	 */
-	int value();
+	int[] value();
 }

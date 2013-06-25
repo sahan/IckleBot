@@ -35,7 +35,7 @@ import android.widget.TextView;
  * and provide the String to bind the {@link TextView} with if the super implementation 
  * is not satisfactory.
  * 
- * @version 1.1.0
+ * @version 1.2.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -44,13 +44,13 @@ import android.widget.TextView;
 public @interface BindText {
 
 	/**
-	 * <p>The {@code integer} which identifies the <b>id</b> of 
-	 * the <b>widget</b> to bind to which could be any extension 
+	 * <p>The {@code integer} arrats which identifies the <b>ID</b>s 
+	 * of the <b>widget</b> to bind to which could be any extension 
 	 * of {@link TextView}.</p>
 	 * 
 	 * @return the id of the {@link TextView} extension to bind to
 	 * <br><br>
-	 * @since 1.1.0
+	 * @since 1.2.0
 	 */
-	int value();
+	int[] value();
 }

@@ -26,6 +26,7 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.util.Log;
 import android.view.View;
 
 import com.lonepulse.icklebot.annotation.bind.Bind;
@@ -61,24 +62,24 @@ class BasicBinderResolver implements BinderResolver {
 			for (Field attribute : fields) {
 				
 				Class<? extends AbstractBinder<? extends View, ? extends Object>> binderType = null;
-				int widgetId = 0;
+				int[] widgetIds = null;
 				
 				if(attribute.isAnnotationPresent(BindText.class)) {
 					
 					binderType = Binder.TEXT.getType();
-					widgetId = attribute.getAnnotation(BindText.class).value();
+					widgetIds = attribute.getAnnotation(BindText.class).value();
 				}
 				else if(attribute.isAnnotationPresent(BindImage.class)) {
 					
 					binderType = Binder.IMAGE.getType();
-					widgetId = attribute.getAnnotation(BindImage.class).value();
+					widgetIds = attribute.getAnnotation(BindImage.class).value();
 				}
 				else if(attribute.isAnnotationPresent(Bind.class)) {
 					
 					Bind bind = attribute.getAnnotation(Bind.class);
 					
 					binderType = bind.type();
-					widgetId = bind.id();
+					widgetIds = bind.ids();
 				}
 				else {
 					
@@ -86,14 +87,10 @@ class BasicBinderResolver implements BinderResolver {
 					continue;
 				}
 				
-				if(widgetId == 0) {
-						
-					StringBuilder errorContext = new StringBuilder()
-					.append("A widget ID must be supplied via the ")
-					.append(Bind.class.getName())
-					.append(" annotation. ");
-						
-					throw new BindResolutionException(errorContext.toString());
+				if(widgetIds == null || widgetIds.length == 0) {
+					
+					throw new BindResolutionException(
+						"One or more widget IDs must be supplied via the bind annotation. ");
 				}
 					
 				Constructor<?>[] constructors = binderType.getConstructors();
@@ -115,21 +112,31 @@ class BasicBinderResolver implements BinderResolver {
 						
 					throw new BindResolutionException(errorContext.toString());
 				}
+				
+				for (int widgetId : widgetIds) {
 					
-				View widget = view.findViewById(widgetId);
+					try {
 					
-				if(widget == null) {
+						View widget = view.findViewById(widgetId);
 						
-					StringBuilder errorContext = new StringBuilder()
-					.append("The widget with ID ")
-					.append(widgetId)
-					.append(" was not found in given view. ");
+						if(widget == null) {
+							
+							StringBuilder errorContext = new StringBuilder()
+							.append("The widget with ID ")
+							.append(widgetId)
+							.append(" was not found in given view. ");
+							
+							throw new BindResolutionException(errorContext.toString());
+						}
 						
-					throw new BindResolutionException(errorContext.toString());
+						Object data = FieldUtils.getFieldValue(model, Object.class, attribute);
+						binderMap.put(attribute, AbstractBinder.class.cast(constructor.newInstance(widget, data)));
+					}
+					catch(Exception e) {
+						
+						Log.e(getClass().getSimpleName(), "Binder resolution failed. ", e);
+					}
 				}
-					
-				Object data = FieldUtils.getFieldValue(model, Object.class, attribute);
-				binderMap.put(attribute, AbstractBinder.class.cast(constructor.newInstance(widget, data)));
 			}
 		}
 		catch(Exception e) {
