@@ -58,7 +58,7 @@ public class ProjectElement extends AbstractOperator {
 			throw new IllegalArgumentException(errorContext.toString());
 		}
 		
-		if(!int.class.isAssignableFrom(args[0].getClass()) && !(args[0] instanceof Integer)) {
+		if(!(args[0] instanceof Integer)) {
 			
 			StringBuilder errorContext = new StringBuilder()
 			.append(getClass().getName())
