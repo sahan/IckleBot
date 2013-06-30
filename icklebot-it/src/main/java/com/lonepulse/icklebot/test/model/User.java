@@ -62,7 +62,7 @@ public class User implements Serializable {
 	@Expressive @BindText(R.id.expressive)
 	private Contact contact;
 	
-	@Expressive @BindText({R.id.inventory, R.id.location})
+	@Expressive @BindText({R.id.location, R.id.inventory})
 	private Inventory inventory;
 	
 	@BindImage(R.id.img_drawable)

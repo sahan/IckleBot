@@ -4,5 +4,6 @@
 	<item type="id" name="github">github</item>    
 	<item type="id" name="expressive">expressive</item>    
 	<item type="id" name="inventory">inventory</item>    
+	<item type="id" name="location">location</item>    
 	    
 </resources>

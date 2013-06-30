@@ -91,7 +91,7 @@ public class ExpressiveTextBinder extends TextBinder implements ExpressiveBindin
 
 		String content = getWidget().getText().toString();
 		Object target = getData();
-
+		
 		for (String xpToken : tokenizer) {
 			
 			try {

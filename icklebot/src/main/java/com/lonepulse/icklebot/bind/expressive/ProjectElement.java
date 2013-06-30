@@ -124,6 +124,6 @@ public class ProjectElement extends AbstractOperator {
 			throw new OperationFailedException(this, target, index, aioobe);
 		}
 		
-		throw new OperationFailedException(this, target, args[0]);
+		throw new OperationFailedException(this, target, index);
 	}
 }

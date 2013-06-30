@@ -50,6 +50,7 @@ public class ExpressionParser implements Parser<StringBuilder, Object> {
 	@Override
 	public Object parse(Object target, StringBuilder xp) throws IllegalSyntaxException {
 		
+		
 		Op op = null;
 		
 		try {
@@ -73,14 +74,14 @@ public class ExpressionParser implements Parser<StringBuilder, Object> {
 			}
 		}
 		
-		xp.delete(0, op.symbol().getHead().length());
+		xp.delete(0, op.getSymbol().getHead().length());
 		
-		if(!op.symbol().getTail().isEmpty()) {
+		if(!op.getSymbol().getTail().isEmpty()) {
 			
 			try {
 			
-				int tailIndex = ParserUtils.indexOfTail(xp, op.symbol());
-				xp.delete(tailIndex, tailIndex + op.symbol().getTail().length());
+				int tailIndex = ParserUtils.indexOfTail(xp, op.getSymbol());
+				xp.delete(tailIndex, tailIndex + op.getSymbol().getTail().length());
 			}
 			catch(IndexNotFoundException infe) {
 				

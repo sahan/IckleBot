@@ -40,7 +40,7 @@ public interface Operator {
 	 * 
 	 * @since 1.1.0
 	 */
-	Symbol symbol();
+	Symbol getSymbol();
 	
 	/**
 	 * <p>Takes an argument(s), executes the operator's evaluation strategy 

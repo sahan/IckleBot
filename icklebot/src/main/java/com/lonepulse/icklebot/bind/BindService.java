@@ -21,10 +21,7 @@ package com.lonepulse.icklebot.bind;
  */
 
 
-import java.lang.reflect.Field;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
+import java.util.List;
 
 import android.os.Looper;
 import android.util.Log;
@@ -139,18 +136,15 @@ public class BindService implements BindManager {
 		
 		try {
 				
-			Map<Field, AbstractBinder<? extends View, ? extends Object>> binderMap 
-			= binderResolver.resolve(view, model);
+			List<BinderEntry> binderEntries = binderResolver.resolve(view, model);
 			
-			Set<Entry<Field, AbstractBinder<? extends View, ? extends Object>>> entries = binderMap.entrySet();
-			
-			for (Entry<Field, AbstractBinder<? extends View, ? extends Object>> binderEntry : entries) {
+			for (BinderEntry binderEntry : binderEntries) {
 					
 				try {
 				
-					AbstractBinder<? extends View, ? extends Object> binder = binderEntry.getValue();
+					AbstractBinder<? extends View, ? extends Object> binder = binderEntry.getBinder();
 					
-					if(binderEntry.getKey().isAnnotationPresent(Expressive.class)) {
+					if(binderEntry.getField().isAnnotationPresent(Expressive.class)) {
 						
 						if(binder instanceof ExpressiveBindingStrategy) {
 							
@@ -160,7 +154,7 @@ public class BindService implements BindManager {
 							
 							StringBuilder warningContext = new StringBuilder()
 							.append("The attribute ")
-							.append(binderEntry.getKey().getName())
+							.append(binderEntry.getField().getName())
 							.append(" on ")
 							.append(model.getClass().getName())
 							.append(" cannot be bound expressively. Remove the @Expressive annotation")

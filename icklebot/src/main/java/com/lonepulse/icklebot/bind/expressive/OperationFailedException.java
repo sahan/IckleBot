@@ -52,17 +52,18 @@ public class OperationFailedException extends IckleBotRuntimeException {
 	 * 
 	 * @since 1.1.0
 	 */
-	public OperationFailedException(Operator operator, Object target, Object arg) {
+	public OperationFailedException(Operator op, Object target, Object arg) {
 		
-		this(operator.getClass().getName() + " failed on " + 
-			 target.getClass().getName() + " for argument " + arg);
+		this(op == null? "A null operator" :op.getClass().getName() + " failed on " + 
+			 target == null? "a null target" :target.getClass().getName() + arg == null? 
+			 " for a null argument " :" for argument " + arg);
 	}
 	
 	/**
 	 * <p>Prints a detailed message using the {@link Operator} which failed 
 	 * and the arguments it was supposed to act on.
 	 * 
-	 * @param operator
+	 * @param op
 	 * 			the {@link Operator} which failed
 	 *
 	 * @param target
@@ -77,10 +78,11 @@ public class OperationFailedException extends IckleBotRuntimeException {
 	 * 
 	 * @since 1.1.1
 	 */
-	public OperationFailedException(Operator operator, Object target, Object arg, Throwable cause) {
+	public OperationFailedException(Operator op, Object target, Object arg, Throwable cause) {
 		
-		this(operator.getClass().getName() + " failed on " + 
-				target.getClass().getName() + " for argument " + arg, cause);
+		this(op == null? "A null operator" :op.getClass().getName() + " failed on " + 
+			 target == null? "a null target" :target.getClass().getName() + arg == null? 
+			 " for a null argument " :" for argument " + arg, cause);
 	}
 	
 	/**

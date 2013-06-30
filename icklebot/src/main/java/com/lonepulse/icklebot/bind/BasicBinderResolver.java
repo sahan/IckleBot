@@ -23,8 +23,8 @@ package com.lonepulse.icklebot.bind;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.util.Log;
 import android.view.View;
@@ -49,11 +49,10 @@ class BasicBinderResolver implements BinderResolver {
 	 */
 	@Override 
 	@SuppressWarnings("unchecked") //safe cast from Object (at Constructor#newInstance()) to AbstractBinder
-	public Map<Field, AbstractBinder<? extends View, ? extends Object>> resolve(View view, Object model) 
+	public List<BinderEntry> resolve(View view, Object model) 
 	throws BindResolutionException {
 
-		Map<Field, AbstractBinder<? extends View, ? extends Object>> binderMap 
-			= new HashMap<Field, AbstractBinder<? extends View,? extends Object>>();
+		List<BinderEntry> binderEntries = new ArrayList<BinderEntry>();
 		
 		try {
 
@@ -82,8 +81,8 @@ class BasicBinderResolver implements BinderResolver {
 					widgetIds = bind.ids();
 				}
 				else {
-					
-					binderMap.put(attribute, VoidBinder.getInstance(view.getContext()));
+					 
+					binderEntries.add(new BinderEntry(attribute, VoidBinder.getInstance(view.getContext())));
 					continue;
 				}
 				
@@ -130,7 +129,7 @@ class BasicBinderResolver implements BinderResolver {
 						}
 						
 						Object data = FieldUtils.getFieldValue(model, Object.class, attribute);
-						binderMap.put(attribute, AbstractBinder.class.cast(constructor.newInstance(widget, data)));
+						binderEntries.add(new BinderEntry(attribute, AbstractBinder.class.cast(constructor.newInstance(widget, data))));
 					}
 					catch(Exception e) {
 						
@@ -145,6 +144,6 @@ class BasicBinderResolver implements BinderResolver {
 				(BindResolutionException)e :new BindResolutionException(e);
 		}
 		
-		return binderMap;
+		return binderEntries;
 	}
 }

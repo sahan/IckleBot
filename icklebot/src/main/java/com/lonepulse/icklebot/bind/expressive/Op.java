@@ -111,9 +111,9 @@ public enum Op implements Operator {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Symbol symbol() {
+	public Symbol getSymbol() {
 		
-		return operator.symbol();
+		return operator.getSymbol();
 	}
 
 	/**
@@ -144,7 +144,7 @@ public enum Op implements Operator {
 		
 		for (Op op : values) {
 			
-			if(op.symbol().getHead().equals(head)) return op;
+			if(op.getSymbol().getHead().equals(head)) return op;
 		}
 		
 		throw new OperatorResolutionFailedException();

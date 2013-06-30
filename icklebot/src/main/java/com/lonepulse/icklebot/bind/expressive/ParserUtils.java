@@ -71,7 +71,7 @@ public final class ParserUtils {
 			
 			for (Op op : ops) {
 				
-				String head = op.symbol().getHead();
+				String head = op.getSymbol().getHead();
 
 				if(xp.charAt(i) == head.charAt(0)) {
 					

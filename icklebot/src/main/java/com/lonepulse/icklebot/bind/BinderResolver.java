@@ -22,7 +22,7 @@ package com.lonepulse.icklebot.bind;
 
 
 import java.lang.reflect.Field;
-import java.util.Map;
+import java.util.List;
 
 import android.view.View;
 
@@ -60,6 +60,6 @@ interface BinderResolver {
 	 * 
 	 * @since 1.2.0
 	 */
-	Map<Field, AbstractBinder<? extends View, ? extends Object>> resolve(View view, Object model) 
+	List<BinderEntry> resolve(View view, Object model) 
 	throws BindResolutionException;
 }

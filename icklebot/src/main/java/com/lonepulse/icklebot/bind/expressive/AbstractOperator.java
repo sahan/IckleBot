@@ -61,7 +61,7 @@ public abstract class AbstractOperator implements Operator {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Symbol symbol() {
+	public Symbol getSymbol() {
 		
 		return symbol;
 	}
