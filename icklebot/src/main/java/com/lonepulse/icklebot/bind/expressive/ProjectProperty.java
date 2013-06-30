@@ -32,15 +32,15 @@ import java.lang.reflect.Field;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public class Project extends AbstractOperator {
+public class ProjectProperty extends AbstractOperator {
 
 
 	/**
-	 * <p>Instantiates a new {@link Project} operator. 
+	 * <p>Instantiates a new {@link ProjectProperty} operator. 
 	 *
 	 * @since 1.1.0
 	 */
-	public Project() {
+	public ProjectProperty() {
 		
 		super(new Symbol(".", ""));
 	}

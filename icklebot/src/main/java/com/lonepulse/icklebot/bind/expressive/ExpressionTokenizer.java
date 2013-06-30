@@ -72,11 +72,11 @@ public class ExpressionTokenizer implements Tokenizer<String> {
 	
 		this.symbol = symbol;
 		
-		if(symbol.tail().isEmpty()) {
+		if(symbol.getTail().isEmpty()) {
 			
 			StringBuilder errorContext = new StringBuilder()
 			.append("The symbol with the head ")
-			.append(symbol.head())
+			.append(symbol.getHead())
 			.append(" is missing a tail. ")
 			.append(getClass().getName())
 			.append(" requires a symbol with a tail. ");
@@ -107,15 +107,15 @@ public class ExpressionTokenizer implements Tokenizer<String> {
 	protected List<String> tokenize(String content) throws TokenizerException {
 	
 		List<String> extractedTokens = new ArrayList<String>();
-		String[] unrefinedTokens = content.split(Pattern.quote(symbol.head()));
+		String[] unrefinedTokens = content.split(Pattern.quote(symbol.getHead()));
 		
 		for (String unrefinedToken : unrefinedTokens) {
 			
-			int index = unrefinedToken.lastIndexOf(symbol.tail());
+			int index = unrefinedToken.lastIndexOf(symbol.getTail());
 			
 			if(index > 0) {
 				
-				extractedTokens.add(symbol.head() + unrefinedToken.substring(0, index + 1));
+				extractedTokens.add(symbol.getHead() + unrefinedToken.substring(0, index + 1));
 			}
 		}
 		

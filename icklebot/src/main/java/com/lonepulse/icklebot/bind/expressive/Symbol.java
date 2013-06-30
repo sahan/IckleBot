@@ -21,8 +21,6 @@ package com.lonepulse.icklebot.bind.expressive;
  */
 
 
-
-
 /**
  * <p>Represents the textual format of an {@link Operator}. All symbols must 
  * have a <b>head</b>, although the <b>tail</b> is optional. The data which 
@@ -70,7 +68,7 @@ public class Symbol {
 			throw new IllegalArgumentException("The symbol head can consist of a maximum of 2 characters. ");
 		
 		if(tail != null && tail.length() > 2)
-			throw new IllegalArgumentException("The symbol tail can consist of a maximum of 2 characters. ");
+				throw new IllegalArgumentException("The symbol tail can consist of a maximum of 2 characters. ");
 		
 		this.head = head;
 		this.tail = (tail == null || tail.isEmpty())? "" :tail;
@@ -81,7 +79,7 @@ public class Symbol {
 	 *
 	 * @return the {@link #head}
 	 */
-	public String head() {
+	public String getHead() {
 		
 		return head;
 	}
@@ -91,7 +89,7 @@ public class Symbol {
 	 *
 	 * @return the {@link #tail}
 	 */
-	public String tail() {
+	public String getTail() {
 		
 		return tail;
 	}

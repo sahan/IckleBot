@@ -73,14 +73,14 @@ public class ExpressionParser implements Parser<StringBuilder, Object> {
 			}
 		}
 		
-		xp.delete(0, op.symbol().head().length());
+		xp.delete(0, op.symbol().getHead().length());
 		
-		if(!op.symbol().tail().isEmpty()) {
+		if(!op.symbol().getTail().isEmpty()) {
 			
 			try {
 			
 				int tailIndex = ParserUtils.indexOfTail(xp, op.symbol());
-				xp.delete(tailIndex, tailIndex + op.symbol().tail().length());
+				xp.delete(tailIndex, tailIndex + op.symbol().getTail().length());
 			}
 			catch(IndexNotFoundException infe) {
 				

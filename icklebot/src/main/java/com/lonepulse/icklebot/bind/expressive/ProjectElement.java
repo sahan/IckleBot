@@ -1,6 +1,8 @@
 package com.lonepulse.icklebot.bind.expressive;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /*
  * #%L
@@ -24,7 +26,10 @@ import java.util.List;
 
 
 /**
- * <p>This {@link Operator} exposes an element in an <b>array</b> or a {@link List}. 
+ * <p>This {@link Operator} exposes an element in an <b>array</b> or a 
+ * {@link Collection}. However, only <i>ordered collections</i> are eligible 
+ * for selection of an element in proper sequence. If used on a {@link Map} 
+ * it exposes an {@link Entry}.
  * 
  * @version 1.1.0
  * <br><br>
@@ -53,12 +58,12 @@ public class ProjectElement extends AbstractOperator {
 			
 			StringBuilder errorContext = new StringBuilder()
 			.append(getClass().getName())
-			.append(" requires a single integer parameter as an argument. ");
+			.append(" requires a single integer or long parameter as an argument. ");
 			
 			throw new IllegalArgumentException(errorContext.toString());
 		}
 		
-		if(!(args[0] instanceof Integer)) {
+		if(!(args[0] instanceof Integer) && !(args[0] instanceof Long)) {
 			
 			StringBuilder errorContext = new StringBuilder()
 			.append(getClass().getName())
@@ -66,18 +71,26 @@ public class ProjectElement extends AbstractOperator {
 			.append(args[0].getClass().getName())
 			.append(", but requires a ")
 			.append(int.class.getName())
-			.append(" or an ")
-			.append(Integer.class.getName());
+			.append(", ")
+			.append(Integer.class.getName())
+			.append(", ")
+			.append(long.class.getName())
+			.append(" or a ")
+			.append(Long.class.getName());
 			
 			throw new IllegalArgumentException(errorContext.toString());
 		}
 		
-		int index = ((Integer) args[0]).intValue();
+		int index = (args[0] instanceof Integer)? 
+					  ((Integer)args[0]).intValue() :((Long)args[0]).intValue();
 		
 		try {
 			
-			if(target instanceof List<?>)
-				return ((List<?>) target).get(index);
+			if(target instanceof Collection<?>)
+				return ((Collection<?>) target).toArray()[index];
+			
+			if(target instanceof Map<?, ?>)
+				return ((Map<?, ?>) target).entrySet().toArray()[index];
 			
 			else if(target instanceof byte[])
 				return ((byte[]) target)[index];

@@ -71,7 +71,7 @@ public final class ParserUtils {
 			
 			for (Op op : ops) {
 				
-				String head = op.symbol().head();
+				String head = op.symbol().getHead();
 
 				if(xp.charAt(i) == head.charAt(0)) {
 					
@@ -111,8 +111,8 @@ public final class ParserUtils {
 	 */
 	public static int indexOfTail(StringBuilder xp, Symbol symbol) throws IndexNotFoundException {
 		
-		String head = symbol.head();
-		String tail = symbol.tail();
+		String head = symbol.getHead();
+		String tail = symbol.getTail();
 		
 		int headLength = head.length();
 		int tailLength = tail.length();
@@ -177,7 +177,7 @@ public final class ParserUtils {
 			else {
 				
 				try {
-					
+			
 					refinedArgs[i] = Long.parseLong(arg);
 				}
 				catch(NumberFormatException nfe) {

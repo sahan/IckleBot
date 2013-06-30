@@ -23,7 +23,6 @@ import java.util.Collection;
  */
 
 
-
 /**
  * <p>This an implementation of {@link AbstractOperator} which emulates an 
  * <b>Elvis Operator</b>. It determines if the input is {@code null}, <b>empty

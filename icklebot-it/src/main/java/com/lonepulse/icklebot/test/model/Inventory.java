@@ -37,6 +37,8 @@ public class Inventory {
 	
 	private Object item2;
 
+	private String[] locations;
+	
 	
 	public Object getItem1() {
 		return item1;
@@ -52,6 +54,14 @@ public class Inventory {
 
 	public void setItem2(Object item2) {
 		this.item2 = item2;
+	}
+
+	public String[] getLocations() {
+		return locations;
+	}
+
+	public void setLocations(String[] locations) {
+		this.locations = locations;
 	}
 }
 

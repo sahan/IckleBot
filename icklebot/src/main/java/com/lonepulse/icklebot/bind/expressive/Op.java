@@ -1,5 +1,10 @@
 package com.lonepulse.icklebot.bind.expressive;
 
+import java.util.Collection;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Properties;
+
 
 /*
  * #%L
@@ -26,7 +31,7 @@ package com.lonepulse.icklebot.bind.expressive;
  * <p>Aggregates all available operators and delegates services calls to 
  * their individual instances.
  * 
- * @version 1.1.2
+ * @version 1.1.3
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -49,12 +54,33 @@ public enum Op implements Operator {
 	 * 
 	 * @since 1.1.0
 	 */
-	PROJECT(new Project()),
+	PROJECT_PROPERTY(new ProjectProperty()),
+	
+	/**
+	 * <p>Performs the projection of an element in a {@link Collection} or an 
+	 * array. If used on a {@link Map} it exposes an {@link Entry}.</p>
+	 * 
+	 * <b>Usage:</b> <pre>${arrayOrCollection[4]}</pre>
+	 * 
+	 * @since 1.1.3
+	 */
+	PROJECT_ELEMENT(new ProjectElement()),
+	
+	/**
+	 * <p>Performs the projection of a value associated with a particular key 
+	 * in {@link Map}s or {@link Properties}.</p>
+	 * 
+	 * <b>Usage:</b> <pre>${property1.property2.propertyN}</pre>
+	 * 
+	 * @since 1.1.3
+	 */
+	PROJECT_VALUE(new ProjectValue()),
 	
 	/**
 	 * <p>Simulates an <b>Elvis Operator</b>.</p>
 	 * 
-	 * <b>Usage:</b> <pre>${property?:'n/a'}</pre>
+	 * <b>Usage:</b> <pre>${property?:n/a}</pre>, <pre>${property?:'n/a'}</pre>, 
+	 * <pre>${property?:\'n/a\'}</pre> or <pre>${property?:\"n/a\"}</pre>
 	 * 
 	 * @since 1.1.2
 	 */
@@ -100,10 +126,10 @@ public enum Op implements Operator {
 	}
 
 	/**
-	 * <p>Resolves an {@link Operator} for the given {@link Symbol#head()}.
+	 * <p>Resolves an {@link Operator} for the given {@link Symbol#getHead()}.
 	 * 
 	 * @param head
-	 * 			the {@link Symbol#head()} for the {@link Operator} 
+	 * 			the {@link Symbol#getHead()} for the {@link Operator} 
 	 * 
 	 * @return the resolved {@link Op}
 	 * 
@@ -118,7 +144,7 @@ public enum Op implements Operator {
 		
 		for (Op op : values) {
 			
-			if(op.symbol().head().equals(head)) return op;
+			if(op.symbol().getHead().equals(head)) return op;
 		}
 		
 		throw new OperatorResolutionFailedException();

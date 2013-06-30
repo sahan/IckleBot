@@ -62,7 +62,7 @@ public class User implements Serializable {
 	@Expressive @BindText(R.id.expressive)
 	private Contact contact;
 	
-	@Expressive @BindText(R.id.inventory)
+	@Expressive @BindText({R.id.inventory, R.id.location})
 	private Inventory inventory;
 	
 	@BindImage(R.id.img_drawable)
@@ -82,8 +82,8 @@ public class User implements Serializable {
 	
 	@BindImage(R.id.img_wrapper_bytes)
 	private Byte[] icWrapperBytes;
-	
 
+	
 	public long getId() {
 		return id;
 	}

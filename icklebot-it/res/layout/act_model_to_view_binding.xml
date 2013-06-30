@@ -36,7 +36,7 @@
         android:layout_margin="10dp"
         android:maxLines="1"
         android:text="@string/lbl_github" />
-    
+
     <TextView
         android:id="@id/expressive"
         android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
         android:layout_margin="10dp"
         android:maxLines="1"
         android:text="@string/lbl_expressive" />
-    
+
     <TextView
         android:id="@id/inventory"
         android:layout_width="wrap_content"
@@ -55,8 +55,8 @@
         android:layout_below="@id/expressive"
         android:layout_margin="10dp"
         android:maxLines="1"
-        tools:ignore="HardcodedText" 
-        android:text="@string/lbl_inventory" />
+        android:text="@string/lbl_inventory"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@id/github"
@@ -81,7 +81,7 @@
         android:layout_below="@id/github"
         android:layout_toRightOf="@id/img_drawable"
         tools:ignore="ContentDescription" />
-    
+
     <ImageView
         android:id="@+id/img_primitive_int"
         android:layout_width="wrap_content"
@@ -89,7 +89,7 @@
         android:layout_below="@id/github"
         android:layout_toRightOf="@id/img_bitmap"
         tools:ignore="ContentDescription" />
-    
+
     <ImageView
         android:id="@+id/img_wrapper_int"
         android:layout_width="wrap_content"
@@ -97,7 +97,7 @@
         android:layout_below="@id/github"
         android:layout_toRightOf="@id/img_primitive_int"
         tools:ignore="ContentDescription" />
-    
+
     <ImageView
         android:id="@+id/img_primitive_bytes"
         android:layout_width="wrap_content"
@@ -105,7 +105,7 @@
         android:layout_below="@id/github"
         android:layout_toRightOf="@id/img_wrapper_int"
         tools:ignore="ContentDescription" />
-    
+
     <ImageView
         android:id="@+id/img_wrapper_bytes"
         android:layout_width="wrap_content"
@@ -113,12 +113,22 @@
         android:layout_below="@id/github"
         android:layout_toRightOf="@id/img_primitive_bytes"
         tools:ignore="ContentDescription" />
-    
+
     <ImageView
         android:id="@+id/img_base_64"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/img_drawable"
         tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_base_64"
+        android:layout_marginLeft="10dp"
+        android:maxLines="1"
+        android:textIsSelectable="false"
+        android:text="@string/lbl_inventory_location"  />
 
 </RelativeLayout>
