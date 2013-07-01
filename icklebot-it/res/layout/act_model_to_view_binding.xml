@@ -131,4 +131,13 @@
         android:textIsSelectable="false"
         android:text="@string/lbl_inventory_location"  />
 
+    <TextView
+        android:id="@id/sku_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/location"
+        android:layout_marginLeft="10dp"
+        android:maxLines="1"
+        android:textIsSelectable="false"
+        android:text="Item SKU4444 is ${inventory.items['SKU4444']}"  />
 </RelativeLayout>

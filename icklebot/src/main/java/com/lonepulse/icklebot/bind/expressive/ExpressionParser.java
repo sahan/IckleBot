@@ -50,7 +50,6 @@ public class ExpressionParser implements Parser<StringBuilder, Object> {
 	@Override
 	public Object parse(Object target, StringBuilder xp) throws IllegalSyntaxException {
 		
-		
 		Op op = null;
 		
 		try {

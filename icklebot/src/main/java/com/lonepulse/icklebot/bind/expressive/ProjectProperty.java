@@ -77,6 +77,7 @@ public class ProjectProperty extends AbstractOperator {
 				}
 				catch(Exception e) {
 					
+					e.printStackTrace();
 					throw new OperationFailedException(e);
 				}
 			}

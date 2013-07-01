@@ -131,4 +131,11 @@ public class SupportedModelToViewBindingFragmentTest {
 		String text = ((TextView)activity.fragment.getView().findViewById(R.id.inventory)).getText().toString();
 		assertEquals("Item 1 is unavailable and Item 2 is bot", text);
 	}
+	
+	@Test
+	public final void testStringElementBinding() throws Exception {
+		
+		String text = ((TextView)activity.fragment.getView().findViewById(R.id.location)).getText().toString();
+		assertEquals("Location 4 is Loc4", text);
+	}
 }

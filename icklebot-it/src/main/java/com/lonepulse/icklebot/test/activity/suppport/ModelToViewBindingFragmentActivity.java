@@ -85,6 +85,7 @@ public class ModelToViewBindingFragmentActivity extends IckleFragmentActivity {
 		Inventory inventory = new Inventory();
 		inventory.setItem1(null);
 		inventory.setItem2("bot");
+		inventory.setLocations(new String[] {"Loc1", "Loc2", "Loc3", "Loc4"});
 		user.setInventory(inventory);
 		
 		Drawable drawable = getResources().getDrawable(R.drawable.ic_launcher); 

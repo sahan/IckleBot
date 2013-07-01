@@ -1,5 +1,7 @@
 package com.lonepulse.icklebot.test.model;
 
+import java.util.Map;
+
 /*
  * #%L
  * IckleBot Integration Tests
@@ -39,6 +41,8 @@ public class Inventory {
 
 	private String[] locations;
 	
+	private Map<String, String> items;
+	
 	
 	public Object getItem1() {
 		return item1;
@@ -62,6 +66,14 @@ public class Inventory {
 
 	public void setLocations(String[] locations) {
 		this.locations = locations;
+	}
+
+	public Map<String, String> getItems() {
+		return items;
+	}
+
+	public void setItems(Map<String, String> items) {
+		this.items = items;
 	}
 }
 
