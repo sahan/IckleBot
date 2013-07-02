@@ -22,6 +22,8 @@ package com.lonepulse.icklebot.test.activity;
 
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -95,6 +97,14 @@ public class SupportedModelToViewBindingActivity extends IckleActivity {
 		Inventory inventory = new Inventory();
 		inventory.setItem1(null);
 		inventory.setItem2("bot");
+		
+		Map<String, String> items = new HashMap<String, String>();
+		items.put("SKU1111", "Item1");
+		items.put("SKU2222", "Item2");
+		items.put("SKU3333", "Item3");
+		items.put("SKU4444", "Item4");
+		
+		inventory.setItems(items);
 		inventory.setLocations(new String[] {"Loc1", "Loc2", "Loc3", "Loc4"});
 		user.setInventory(inventory);
 		

@@ -35,6 +35,7 @@ import com.lonepulse.icklebot.annotation.bind.Model;
 import com.lonepulse.icklebot.test.R;
 import com.lonepulse.icklebot.test.binder.GitHubBinder;
 
+
 /**
  * <p>This entity represents the current user of the application. It's a 
  * <b>Model</b> which can be bound to a {@link ViewGroup}.
@@ -63,7 +64,7 @@ public class User implements Serializable {
 	private Contact contact;
 	
 	@Expressive 
-	@BindText({R.id.location, R.id.inventory})
+	@BindText({R.id.location, R.id.inventory, R.id.sku_item})
 	private Inventory inventory;
 	
 	@BindImage(R.id.img_drawable)

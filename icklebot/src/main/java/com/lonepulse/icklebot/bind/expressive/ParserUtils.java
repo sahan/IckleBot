@@ -116,21 +116,29 @@ public final class ParserUtils {
 		
 		int headLength = head.length();
 		int tailLength = tail.length();
+		int tailLastIndex = tailLength - 1;
+		
 		int tailsToSkip = 0;
 		
-		for (int i = 0; i < xp.length(); i+=tailLength) {
+		for (int i = 0; (i + tailLastIndex) < xp.length(); i++) {
 			
 			if(xp.substring(i, i + tailLength).equals(tail)) {
 				
-				if(tailsToSkip == 0) return i;
-				else --tailsToSkip;
+				if(tailsToSkip == 0) {
+					
+					return i;
+				}
+				else {
+					
+					--tailsToSkip;
+				}
 			}
 			else if (xp.substring(i, i + headLength).equals(head)) {
 				
 				++tailsToSkip;
 			}
 		}
-		
+			
 		throw new IndexNotFoundException();
 	}
 	

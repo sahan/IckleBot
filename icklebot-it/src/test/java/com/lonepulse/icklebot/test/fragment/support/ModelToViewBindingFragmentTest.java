@@ -136,4 +136,11 @@ public class ModelToViewBindingFragmentTest {
 		String text = ((TextView)activity.fragment.getView().findViewById(R.id.location)).getText().toString();
 		assertEquals("Location 4 is Loc4", text);
 	}
+	
+	@Test
+	public final void testStringValueBinding() throws Exception {
+		
+		String text = ((TextView)activity.fragment.getView().findViewById(R.id.sku_item)).getText().toString();
+		assertEquals("Item SKU4444 is Item4", text);
+	}
 }

@@ -95,8 +95,8 @@ public class ModelToViewBindingActivity extends IckleActivity {
 		items.put("SKU3333", "Item3");
 		items.put("SKU4444", "Item4");
 		
-		inventory.setLocations(new String[] {"Loc1", "Loc2", "Loc3", "Loc4"});
 		inventory.setItems(items);
+		inventory.setLocations(new String[] {"Loc1", "Loc2", "Loc3", "Loc4"});
 		user.setInventory(inventory);
 		
 		Drawable drawable = getResources().getDrawable(R.drawable.ic_launcher); 
