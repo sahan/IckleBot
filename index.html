@@ -46,7 +46,8 @@
 
 <hr><p>Leverage features by extending <code>IckleActivity</code>.</p>
 
-<div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TokensActivity</span> <span class="kd">extends</span> <span class="n">IckleActivity</span> <span class="o">{</span>
+<div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LoginActivity</span> <span class="kd">extends</span> <span class="n">IckleActivity</span> <span class="o">{</span>	
+    ...
 <span class="o">}</span>
 </pre></div>
 
@@ -54,8 +55,9 @@
 Manage activity configuration.</p>
 
 <div class="highlight"><pre><span class="nd">@Fullscreen</span>
-<span class="nd">@Layout</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">act_tokens</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TokensActivity</span> <span class="kd">extends</span> <span class="n">IckleActivity</span> <span class="o">{</span>
+<span class="nd">@Layout</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">act_login</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">LoginActivity</span> <span class="kd">extends</span> <span class="n">IckleActivity</span> <span class="o">{</span>
+    ...
 <span class="o">}</span>
 </pre></div>
 
@@ -63,22 +65,19 @@ Manage activity configuration.</p>
 Inject views and resources.</p>
 
 <div class="highlight"><pre><span class="nd">@Fullscreen</span>
-<span class="nd">@Layout</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">act_tokens</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TokensActivity</span> <span class="kd">extends</span> <span class="n">IckleActivity</span> <span class="o">{</span>
+<span class="nd">@Layout</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">act_login</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">LoginActivity</span> <span class="kd">extends</span> <span class="n">IckleActivity</span> <span class="o">{</span>
 
-    <span class="nd">@InjectView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">token</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">TextView</span> <span class="n">token</span><span class="o">;</span>
+    <span class="nd">@InjectView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">edt_username</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">EditText</span> <span class="n">username</span><span class="o">;</span>
 
-    <span class="nd">@InjectInteger</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">integer</span><span class="o">.</span><span class="na">public_token</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">publicToken</span><span class="o">;</span>
-
-
-    <span class="nd">@Override</span>
-    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onResume</span><span class="o">()</span> <span class="o">{</span>
-
-        <span class="kd">super</span><span class="o">.</span><span class="na">onResume</span><span class="o">();</span>
-        <span class="n">token</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">publicToken</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
-    <span class="o">}</span>
+    <span class="nd">@InjectView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">btn_login</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">Button</span> <span class="n">login</span><span class="o">;</span>
+	
+    <span class="nd">@InjectDrawable</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">drawable</span><span class="o">.</span><span class="na">form_incomplete</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">Drawable</span> <span class="n">form_incomplete</span><span class="o">;</span>
+	
+    ...
 <span class="o">}</span>
 </pre></div>
 
@@ -87,19 +86,14 @@ Inject views and resources.</p>
 
 <div class="highlight"><pre><span class="nd">@InjectAll</span>
 <span class="nd">@Fullscreen</span>
-<span class="nd">@Layout</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">act_tokens</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TokensActivity</span> <span class="kd">extends</span> <span class="n">IckleActivity</span> <span class="o">{</span>
+<span class="nd">@Layout</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">act_login</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">LoginActivity</span> <span class="kd">extends</span> <span class="n">IckleActivity</span> <span class="o">{</span>
 
-    <span class="kd">private</span> <span class="n">TextView</span> <span class="n">token</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">public_token</span><span class="o">;</span>
-
-
-    <span class="nd">@Override</span>
-    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onResume</span><span class="o">()</span> <span class="o">{</span>
-
-        <span class="kd">super</span><span class="o">.</span><span class="na">onResume</span><span class="o">();</span>
-        <span class="n">token</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">public_token</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
-    <span class="o">}</span>
+    <span class="kd">private</span> <span class="n">EditText</span> <span class="n">edt_username</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Button</span> <span class="n">btn_login</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Drawable</span> <span class="n">form_incomplete</span><span class="o">;</span>
+	
+    ...
 <span class="o">}</span>
 </pre></div>
 
@@ -113,20 +107,12 @@ Preserve instance state.</p>
 <div class="highlight"><pre><span class="nd">@InjectAll</span>
 <span class="nd">@Fullscreen</span>
 <span class="nd">@Layout</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">act_tokens</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TokensActivity</span> <span class="kd">extends</span> <span class="n">IckleActivity</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">LoginActivity</span> <span class="kd">extends</span> <span class="n">IckleActivity</span> <span class="o">{</span>
 
-    <span class="kd">private</span> <span class="n">TextView</span> <span class="n">token</span><span class="o">;</span>
-
-    <span class="nd">@Stateful</span>
-    <span class="kd">private</span> <span class="n">Double</span> <span class="n">randomId</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">random</span><span class="o">();</span>
-
-
-    <span class="nd">@Override</span>
-    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onResume</span><span class="o">()</span> <span class="o">{</span>
-
-        <span class="kd">super</span><span class="o">.</span><span class="na">onResume</span><span class="o">();</span>
-        <span class="n">token</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">randomId</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
-    <span class="o">}</span>
+    <span class="nd">@Stateful</span> 
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">loginAttempts</span><span class="o">;</span>
+    
+    ...
 <span class="o">}</span>
 </pre></div>
 
@@ -140,12 +126,11 @@ Bind an event listener.</p>
     <span class="nd">@InjectView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">btn_send</span><span class="o">)</span>
     <span class="kd">private</span> <span class="n">Button</span> <span class="n">btnSend</span><span class="o">;</span>
 
-    <span class="o">...</span>   
-
     <span class="nd">@Click</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">btn_send</span><span class="o">)</span>
-    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">submit</span><span class="o">(</span><span class="n">Button</span> <span class="n">button</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">submit</span><span class="o">()</span> <span class="o">{</span>
 
-        <span class="n">button</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">"Sending..."</span><span class="o">);</span>
+        <span class="n">btnSend</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">"Sending..."</span><span class="o">);</span>
+        
         <span class="o">...</span>
     <span class="o">}</span>
 <span class="o">}</span>
@@ -159,7 +144,6 @@ Run a background task.</p>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">NewsActivity</span> <span class="kd">extends</span> <span class="n">IckleActivity</span> <span class="o">{</span>
 
     <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">ASYNC_SYNC_NEWS</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-    <span class="o">...</span>
 
     <span class="nd">@Override</span>
     <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onResume</span><span class="o">()</span> <span class="o">{</span>
@@ -170,7 +154,8 @@ Run a background task.</p>
 
     <span class="nd">@Async</span><span class="o">(</span><span class="n">ASYNC_SYNC_NEWS</span><span class="o">)</span>
     <span class="kd">private</span> <span class="kt">void</span> <span class="nf">refreshNews</span><span class="o">()</span> <span class="o">{</span> 
-        <span class="o">....</span>
+        
+        <span class="o">...</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </pre></div>
@@ -182,19 +167,25 @@ Bind models to views.</p>
 <span class="nd">@Title</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">string</span><span class="o">.</span><span class="na">ttl_act_home</span><span class="o">)</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">HomeActivity</span> <span class="kd">extends</span> <span class="n">IckleActivity</span> <span class="o">{</span>
 
-    <span class="nd">@Override</span>
-    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onPostCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o"><span class="o">{</span>
+    <span class="nd">@InjectIckleService</span>
+    <span class="kd">private</span> <span class="n">BindManager</span> <span class="n">bindManager</span><span class="o">;</span>
+	
+    <span class="nd">@InjectPojo</span>
+    <span class="kd">private</span> <span class="n">AccountService</span> <span class="n">accountService</span><span class="o">;</span>
 
-       <span class="kd">super</span><span class="o">.</span><span class="na">onPostCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">)</span>;</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onPostCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
+	
+        <span class="kd">super</span><span class="o">.</span><span class="na">onPostCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">)</span>;</span>
         	
         <span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="n">accountService</span><span class="o">.</span><span class="na">getCurrentUser</span><span class="o">();</span>
-        <span class="n">bindManager</span><span class="o">.</span><span class="na">bind</span><span class="o">(profileSection, user);</span>
+        <span class="n">bindManager</span><span class="o">.</span><span class="na">bind</span><span class="o">(</span>profileSection, user<span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </pre></div>
 
 <p><br>
-Check for a data connection.</p>
+Respond to network state changes.</p>
 
 <div class="highlight"><pre><span class="nd">@Layout</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">act_mail</span><span class="o">)</span>
 <span class="nd">@Title</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">string</span><span class="o">.</span><span class="na">ttl_act_mail</span><span class="o">)</span>
@@ -203,7 +194,7 @@ Check for a data connection.</p>
     <span class="nd">@Override</span>
     <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onNetworkConnected</span><span class="o">()</span> <span class="o">{</span>
 
-            <span class="n">inbox</span><span class="o">.</span><span class="na">refresh</span><span class="o">();</span>
+        <span class="n">inbox</span><span class="o">.</span><span class="na">refresh</span><span class="o">();</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </pre></div>
