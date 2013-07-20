@@ -23,9 +23,9 @@ package com.lonepulse.icklebot.injector;
 
 import android.util.Log;
 
-import com.lonepulse.icklebot.annotation.profile.Profile;
 import com.lonepulse.icklebot.injector.explicit.ExplicitInjectors;
 import com.lonepulse.icklebot.injector.implicit.ImplicitInjectors;
+import com.lonepulse.icklebot.profile.Profile;
 import com.lonepulse.icklebot.profile.ProfileService;
 import com.lonepulse.icklebot.task.TaskManagers;
 

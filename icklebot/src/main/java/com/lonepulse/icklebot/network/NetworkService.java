@@ -29,7 +29,7 @@ import android.net.NetworkInfo.State;
 
 import com.lonepulse.icklebot.IckleBotRuntimeException;
 import com.lonepulse.icklebot.PermissionDeniedException;
-import com.lonepulse.icklebot.annotation.profile.Profile;
+import com.lonepulse.icklebot.profile.Profile;
 import com.lonepulse.icklebot.util.PermissionUtils;
 
 /**

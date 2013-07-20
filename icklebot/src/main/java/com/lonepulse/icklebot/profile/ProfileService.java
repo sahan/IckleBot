@@ -26,7 +26,6 @@ import android.content.Context;
 import com.lonepulse.icklebot.activity.IckleActivity;
 import com.lonepulse.icklebot.annotation.profile.ExcludeProfiles;
 import com.lonepulse.icklebot.annotation.profile.IncludeProfiles;
-import com.lonepulse.icklebot.annotation.profile.Profile;
 import com.lonepulse.icklebot.util.ContextUtils;
 
 /**

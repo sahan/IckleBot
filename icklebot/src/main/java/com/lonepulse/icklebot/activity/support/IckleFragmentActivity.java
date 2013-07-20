@@ -24,7 +24,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
-import com.lonepulse.icklebot.annotation.profile.Profile;
+import com.lonepulse.icklebot.profile.Profile;
 
 /**
  * <p>A {@link FragmentActivity} that wish to leverage IckleBot's features 

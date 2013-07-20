@@ -21,7 +21,7 @@ package com.lonepulse.icklebot;
  */
 
 
-import com.lonepulse.icklebot.annotation.profile.Profile;
+import com.lonepulse.icklebot.profile.Profile;
 
 
 /**

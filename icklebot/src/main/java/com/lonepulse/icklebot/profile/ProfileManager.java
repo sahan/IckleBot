@@ -24,7 +24,6 @@ package com.lonepulse.icklebot.profile;
 import android.app.Activity;
 
 import com.lonepulse.icklebot.activity.IckleActivity;
-import com.lonepulse.icklebot.annotation.profile.Profile;
 
 /**
  * <p>This contract specifies the service offered on managing the 

@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.annotation.profile;
+package com.lonepulse.icklebot.profile;
 
 /*
  * #%L
