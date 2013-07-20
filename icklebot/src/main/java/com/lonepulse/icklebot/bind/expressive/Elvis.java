@@ -1,6 +1,7 @@
 package com.lonepulse.icklebot.bind.expressive;
 
 import java.util.Collection;
+import java.util.Map;
 
 /*
  * #%L
@@ -24,11 +25,8 @@ import java.util.Collection;
 
 
 /**
- * <p>This an implementation of {@link AbstractOperator} which emulates an 
- * <b>Elvis Operator</b>. It determines if the input is {@code null}, <b>empty
- * </b> (for a {@link Collection} or {@code Object[]}) or {@code false} (for 
- * {@code boolean}s) and if so outputs the given argument as text, else the 
- * input is returned as is. 
+ * <p>This is an implementation of {@link AbstractOperator} which emulates a b>Elvis Operator</b>.</p>
+ * <p>See {@link Elvis#evaluate(Object, Object...)}.</p>
  *  
  * @version 1.1.0
  * <br><br>
@@ -48,7 +46,18 @@ public class Elvis extends AbstractOperator {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * <p>Evaluates the target object to determine if it's essentially <b>void</b>. If the 
+	 * target is void, the supplied argument is returned - else the target is returned as is.</p>
+	 * 
+	 * <p>The operator evaluates to the argument if the target is:</p>
+	 * 
+	 * <ul>
+	 * 	<li> {@code null}</li>
+	 * 	<li> of type {@code boolean} or {@link Boolean} and is {@code false}</li>
+	 * 	<li> of type {@link CharSequence} and is "{@code false}" or ""</li>
+	 * 	<li> of type Object[], primitive array, or {@link Collection} and is empty</li>
+	 * 	<li> of type {@link Map} and its entry set is empty</li>
+	 * </ul> 
 	 */
 	@Override
 	public Object onEvaluate(Object target, Object... args) {
@@ -72,26 +81,10 @@ public class Elvis extends AbstractOperator {
 			
 			return ((Boolean)target)? target :arg;
 		}
-		else if(target instanceof String) {
+		else if(target instanceof CharSequence) {
 
-			String targetString = (String)target;
-			
-			if(targetString.equalsIgnoreCase("true")) {
-				
-				return target;
-			}
-			else if(targetString.equalsIgnoreCase("false")) {
-				
-				return arg;
-			}
-			else if(targetString.equals("")) {
-				
-				return arg;
-			}
-			else {
-				
-				return target;
-			}
+			String targetString = ((CharSequence)target).toString();
+			return (targetString.equalsIgnoreCase("false") || targetString.equals(""))? arg :target;
 		}
 		else if(target instanceof Object[]) {
 			
@@ -100,6 +93,42 @@ public class Elvis extends AbstractOperator {
 		else if(target instanceof Collection<?>) {
 			
 			return (((Collection<?>)target).isEmpty())? arg :target;
+		}
+		else if(target instanceof Map<?, ?>) {
+			
+			return ((Map<?, ?>)target).entrySet().isEmpty()? arg :target;
+		}
+		else if(target instanceof char[]) {
+			
+			return (((char[])target).length == 0)? arg :target;
+		}
+		else if(target instanceof byte[]) {
+			
+			return (((byte[])target).length == 0)? arg :target;
+		}
+		else if(target instanceof short[]) {
+			
+			return (((short[])target).length == 0)? arg :target;
+		}
+		else if(target instanceof int[]) {
+			
+			return(((int[])target).length == 0)? arg :target;
+		}
+		else if(target instanceof long[]) {
+			
+			return (((long[])target).length == 0)? arg :target;
+		}
+		else if(target instanceof float[]) {
+			
+			return (((float[])target).length == 0)? arg :target;
+		}
+		else if(target instanceof double[]) {
+			
+			return (((double[])target).length == 0)? arg :target;
+		}
+		else if(target instanceof boolean[]) {
+			
+			return (((boolean[])target).length == 0)? arg :target;
 		}
 		else {
 			
