@@ -4,7 +4,7 @@
 simplified threading and event model. **2** A runtime dependency injection framework with model-view binding. 
 [![Build Status](https://travis-ci.org/sahan/IckleBot.png?branch=master)](https://travis-ci.org/sahan/IckleBot)
 
-<br/>
+<br>
 ##About
 
 **IckleBot** facilitates quick Android development by generating boilerplate code in 
@@ -31,31 +31,7 @@ Annotation based Android development with...
 * Model-View binding which welcomes custom binders. 
    
 * Support for handling network state changes.   
-<br/>
-
-##Setup
-
-### 1. For Maven Based Android Projects
-
-Add the following dependency in your project's pom.xml.
-
-```xml
-<dependency>
-   <groupId>com.lonepulse</groupId>
-   <artifactId>icklebot</artifactId>
-   <version>1.2.0</version>
-   <type>jar</type>
-</dependency>
-```
-
-For information on building Android projects using Maven here's [Chapter 14](http://www.sonatype.com/books/mvnref-book/reference/android-dev.html) of `Maven: The Complete Reference`.   
-<br/>   
-
-### 2. For Standard Android Projects
-
-Download the [IckleBot](http://repo1.maven.org/maven2/com/lonepulse/icklebot/1.2.0/icklebot-1.2.0.jar) + [Android-Support](http://repo1.maven.org/maven2/com/google/android/support-v4/r7/support-v4-r7.jar) 
-jars and add them to your **libs** folder.
-<br/><br/>
+<br>
 
 ##Overview   
 <br>
@@ -203,7 +179,31 @@ public class MailActivity extends IckleActivity {
     }
 }
 ```
-<br/><br/>
+<br><br>
+
+##Setup
+
+### 1. For Maven Based Android Projects
+
+Add the following dependency in your project's pom.xml.
+
+```xml
+<dependency>
+   <groupId>com.lonepulse</groupId>
+   <artifactId>icklebot</artifactId>
+   <version>1.2.0</version>
+   <type>jar</type>
+</dependency>
+```
+
+For information on building Android projects using Maven here's [Chapter 14](http://www.sonatype.com/books/mvnref-book/reference/android-dev.html) of `Maven: The Complete Reference`.   
+<br>   
+
+### 2. For Standard Android Projects
+
+Download the [IckleBot](http://repo1.maven.org/maven2/com/lonepulse/icklebot/1.2.0/icklebot-1.2.0.jar) + [Android-Support](http://repo1.maven.org/maven2/com/google/android/support-v4/r7/support-v4-r7.jar) 
+jars and add them to your **libs** folder.
+<br><br>
 
 ##Wiki
 
@@ -238,6 +238,6 @@ Kickoff with the [quickstart](https://github.com/sahan/IckleBot/wiki/Quickstart)
 14. [Avoid Coupling with IckleFragment](https://github.com/sahan/IckleBot/wiki/Avoid-Coupling-with-IckleFragment)   
    
 
-<br/>
+<br>
 ##License
 This library is licensed under [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
