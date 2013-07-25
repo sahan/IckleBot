@@ -57,7 +57,155 @@ Download the [IckleBot](http://repo1.maven.org/maven2/com/lonepulse/icklebot/1.2
 jars and add them to your **libs** folder.
 <br/><br/>
 
-##Usage
+##Overview   
+<br>
+Leverage features by extending IckleActivity.   
+```java
+public class LoginActivity extends IckleActivity {	
+    ...
+}
+```
+<br>
+Manage activity configuration.   
+```java
+@Fullscreen
+@Layout(R.layout.act_login)
+public class LoginActivity extends IckleActivity {
+    ...
+}
+```
+<br>
+Inject views and resources.   
+```java
+@Fullscreen
+@Layout(R.layout.act_login)
+public class LoginActivity extends IckleActivity {
+
+    @InjectView(R.id.edt_username)
+    private EditText username;
+
+    @InjectView(R.id.btn_login)
+    private Button login;
+	
+    @InjectDrawable(R.drawable.form_incomplete)
+    private Drawable form_incomplete;
+	
+    ...
+}
+```
+<br>
+...or let IckleBot figure it out.   
+```java
+@InjectAll
+@Fullscreen
+@Layout(R.layout.act_login)
+public class LoginActivity extends IckleActivity {
+
+    private EditText edt_username;
+    private Button btn_login;
+    private Drawable form_incomplete;
+	
+    ...
+}
+```
+> Notice that the variable names now assume the id.
+
+<br>
+Preserve instance state.   
+```java
+@InjectAll
+@Fullscreen
+@Layout(R.layout.act_tokens)
+public class LoginActivity extends IckleActivity {
+
+    @Stateful 
+    private Integer loginAttempts;
+    
+    ...
+}
+```
+<br>
+Bind an event listener.   
+```java
+@Layout(R.layout.act_messenger)
+@Title(R.string.ttl_act_messenger)
+public class MessengerActivity extends IckleActivity {
+
+    @InjectView(R.id.btn_send)
+    private Button btnSend;
+
+    @Click(R.id.btn_send)
+    private void submit() {
+
+        btnSend.setText("Sending...");
+        
+        ...
+    }
+}
+```
+<br>
+Run a background task.   
+```java
+@Layout(R.layout.act_news)
+@Title(R.string.ttl_act_news)
+public class NewsActivity extends IckleActivity {
+
+    private static final int ASYNC_SYNC_NEWS = 0;
+
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+        runAsyncTask(ASYNC_SYNC_NEWS);
+    }
+
+    @Async(ASYNC_SYNC_NEWS)
+    private void refreshNews() { 
+        
+        ...
+    }
+}
+```
+<br>
+Bind models to views.   
+```java
+@Layout(R.layout.act_home)
+@Title(R.string.ttl_act_home)
+public class HomeActivity extends IckleActivity {
+
+    @InjectIckleService
+    private BindManager bindManager;
+	
+    @InjectPojo
+    private AccountService accountService;
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+	
+        super.onPostCreate(savedInstanceState);
+        	
+        User user = accountService.getCurrentUser();
+        bindManager.bind(profileSection, user);
+    }
+}
+```
+<br>
+Respond to network state changes.   
+```java
+@Layout(R.layout.act_mail)
+@Title(R.string.ttl_act_mail)
+public class MailActivity extends IckleActivity {
+
+    @Override
+    protected void onNetworkConnected() {
+
+        inbox.refresh();
+    }
+}
+```
+<br/><br/>
+
+##Wiki
 
 Kickoff with the [quickstart](https://github.com/sahan/IckleBot/wiki/Quickstart) and follow the rest of the wiki pages.
 
