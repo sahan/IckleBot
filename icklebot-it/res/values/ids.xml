@@ -6,5 +6,6 @@
 	<item type="id" name="inventory">inventory</item>    
 	<item type="id" name="location">location</item>    
 	<item type="id" name="sku_item">sku_item</item>    
+	<item type="id" name="online">online</item>    
 	    
 </resources>

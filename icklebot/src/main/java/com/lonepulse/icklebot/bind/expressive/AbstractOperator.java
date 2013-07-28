@@ -1,5 +1,7 @@
 package com.lonepulse.icklebot.bind.expressive;
 
+import java.lang.reflect.Field;
+
 /*
  * #%L
  * IckleBot
@@ -70,11 +72,11 @@ public abstract class AbstractOperator implements Operator {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object evaluate(Object target, Object... args) throws OperationFailedException {
+	public Object evaluate(Field attribute, Object target, Object... args) throws OperationFailedException {
 		
 		try {
 			
-			return onEvaluate(target, args);
+			return onEvaluate(attribute, target, args);
 		}
 		catch(Exception e) {
 			
@@ -86,9 +88,9 @@ public abstract class AbstractOperator implements Operator {
 	/**
 	 * <p>This callback must be overridden to define the evaluation stratagem.</p> 
 	 *
-	 * <p>See {@link Operator#evaluate(Object, Object...)}.
+	 * <p>See {@link Operator#evaluate(Field, Object, Object...)}.
 	 * 
 	 * @since 1.1.0
 	 */
-	protected abstract Object onEvaluate(Object target, Object... args);
+	protected abstract Object onEvaluate(Field attribute, Object target, Object... args);
 }

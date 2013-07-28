@@ -145,4 +145,11 @@ public class ModelToViewBindingFragmentActivityTest {
 		String text = ((TextView)activity.findViewById(R.id.sku_item)).getText().toString();
 		assertEquals("Item SKU4444 is Item4", text);
 	}
+	
+	@Test
+	public final void testTernaryBinding() throws Exception {
+		
+		String text = ((TextView)activity.findViewById(R.id.online)).getText().toString();
+		assertEquals("The user is available", text);
+	}
 }

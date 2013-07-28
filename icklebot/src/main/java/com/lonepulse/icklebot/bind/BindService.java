@@ -21,6 +21,7 @@ package com.lonepulse.icklebot.bind;
  */
 
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import android.os.Looper;
@@ -142,19 +143,20 @@ public class BindService implements BindManager {
 					
 				try {
 				
+					Field attribute = binderEntry.getField();
 					AbstractBinder<? extends View, ? extends Object> binder = binderEntry.getBinder();
 					
-					if(binderEntry.getField().isAnnotationPresent(Expressive.class)) {
+					if(attribute.isAnnotationPresent(Expressive.class)) {
 						
 						if(binder instanceof ExpressiveBindingStrategy) {
 							
-							ExpressiveBindingStrategy.class.cast(binder).xbind();
+							ExpressiveBindingStrategy.class.cast(binder).xbind(attribute);
 						}
 						else {
 							
 							StringBuilder warningContext = new StringBuilder()
 							.append("The attribute ")
-							.append(binderEntry.getField().getName())
+							.append(attribute.getName())
 							.append(" on ")
 							.append(model.getClass().getName())
 							.append(" cannot be bound expressively. Remove the @Expressive annotation")

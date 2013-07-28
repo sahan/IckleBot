@@ -77,6 +77,7 @@ public class ModelToViewBindingFragment extends IckleFragment {
 		contact.setEmail("lahiru@lonepulse.com");
 		contact.setMobile("201184919");
 		user.setContact(contact);
+		user.setOnline(true);
 		
 		Inventory inventory = new Inventory();
 		inventory.setItem1(null);

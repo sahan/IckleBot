@@ -21,6 +21,8 @@ package com.lonepulse.icklebot.bind;
  */
 
 
+import java.lang.reflect.Field;
+
 import android.view.View;
 
 
@@ -39,10 +41,13 @@ public interface ExpressiveBindingStrategy<V extends View, E> {
 	 * <p>Executes the strategy which will perform <b>unidirectional expressive 
 	 * binding</b> from data to view. Be sure to post invocation to the UI thread. 
 	 * 
+	 * @param attribute
+	 * 			the {@link Field} on the model which is the subjected to the expressive bind 
+	 * 
 	 * @throws BindException 
 	 * 			if binding data to the view failed for any expressions discovered
 	 * <br><br>
 	 * @since 1.1.0
 	 */
-	void xbind() throws BindException;
+	void xbind(Field attribute) throws BindException;
 }

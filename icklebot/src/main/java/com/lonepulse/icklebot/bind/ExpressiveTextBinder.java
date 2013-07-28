@@ -21,6 +21,7 @@ package com.lonepulse.icklebot.bind;
  */
 
 
+import java.lang.reflect.Field;
 import java.util.regex.Pattern;
 
 import android.widget.Button;
@@ -28,8 +29,8 @@ import android.widget.TextView;
 
 import com.lonepulse.icklebot.bind.expressive.ExpressionParser;
 import com.lonepulse.icklebot.bind.expressive.ExpressionTokenizer;
+import com.lonepulse.icklebot.bind.expressive.Op;
 import com.lonepulse.icklebot.bind.expressive.Parser;
-import com.lonepulse.icklebot.bind.expressive.Symbol;
 import com.lonepulse.icklebot.bind.expressive.Tokenizer;
 
 /**
@@ -42,12 +43,6 @@ import com.lonepulse.icklebot.bind.expressive.Tokenizer;
  */
 public class ExpressiveTextBinder extends TextBinder implements ExpressiveBindingStrategy<TextView, Object> {
 
-	
-	/**
-	 * <p>The {@link Symbol} used for tokenizing expressions within the text 
-	 * content of the {@link TextView}.
-	 */
-	public static final Symbol SYMBOL = new Symbol("${", "}");
 	
 	/**
 	 * <p>The {@link Parser} which is used for parsing the {@link TextView} content. 
@@ -80,14 +75,14 @@ public class ExpressiveTextBinder extends TextBinder implements ExpressiveBindin
 		super(textView, data);
 		
 		this.parser = new ExpressionParser();
-		this.tokenizer = new ExpressionTokenizer(SYMBOL, textView.getText().toString());
+		this.tokenizer = new ExpressionTokenizer(Op.EVALUATE.getSymbol(), textView.getText().toString());
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void xbind() throws BindException {
+	public void xbind(Field attribute) throws BindException {
 
 		String content = getWidget().getText().toString();
 		Object target = getData();
@@ -96,7 +91,7 @@ public class ExpressiveTextBinder extends TextBinder implements ExpressiveBindin
 			
 			try {
 			
-				Object result = parser.parse(target, new StringBuilder(xpToken));
+				Object result = parser.parse(attribute, target, new StringBuilder(xpToken));
 				
 				content = content.replaceAll(Pattern.quote(xpToken), result.toString());
 			}

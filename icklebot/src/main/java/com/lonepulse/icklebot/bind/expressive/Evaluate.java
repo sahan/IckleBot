@@ -21,6 +21,8 @@ package com.lonepulse.icklebot.bind.expressive;
  */
 
 
+import java.lang.reflect.Field;
+
 import com.lonepulse.icklebot.annotation.bind.Model;
 
 
@@ -50,7 +52,7 @@ public class Evaluate extends AbstractOperator {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object onEvaluate(Object attribute, Object... args) {
+	public Object onEvaluate(Field attribute, Object target, Object... args) {
 
 		if(args == null || args.length != 1 || !(args[0] instanceof String)) {
 			
@@ -78,7 +80,12 @@ public class Evaluate extends AbstractOperator {
 				tag = xp.toString();
 			}
 			
-			Class<?> attributeClass = attribute.getClass();
+			if(attribute.getName().equalsIgnoreCase(tag)) {
+				
+				return target;
+			}
+			
+			Class<?> attributeClass = target.getClass();
 			boolean malformedTag = false;
 			Model model = null;
 			
@@ -103,15 +110,15 @@ public class Evaluate extends AbstractOperator {
 				.append("} is meant to target \"")
 				.append(tag)
 				.append("\" but was used on a type named ")
-				.append(attribute.getClass().getName())
+				.append(target.getClass().getName())
 				.append(model == null? " without an @Model annotation. " :" with an @Model annotation having " + 
 						(model.value().equals("")? "no identifier. " :"the identifier \"" + model.value() + "\". "))
-				.append("Please rewrite the expression with so that it begins with ")
-				.append(attribute.getClass().getSimpleName())
+				.append("Please rewrite the expression so that it begins with ")
+				.append(target.getClass().getSimpleName())
 				.append(" (ignore case), or change the type of the target attribute to ")
-				.append(attribute.getClass().getName())
+				.append(target.getClass().getName())
 				.append(", or annotate ")
-				.append(attribute.getClass().getName())
+				.append(target.getClass().getName())
 				.append(" with @Model(\"")
 				.append(tag)
 				.append("\")");
@@ -119,12 +126,12 @@ public class Evaluate extends AbstractOperator {
 				throw new OperationFailedException(errorContext.toString());
 			}
 			
-			return attribute;
+			return target;
 		}
 		catch(Exception e) {
 			
 			throw (e instanceof OperationFailedException)? 
-					(OperationFailedException)e :new OperationFailedException(this, attribute, xp.toString(), e);
+					(OperationFailedException)e :new OperationFailedException(this, target, xp.toString(), e);
 		}
 	}
 }

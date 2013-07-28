@@ -49,7 +49,7 @@ public class ProjectProperty extends AbstractOperator {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object onEvaluate(Object target, Object... args) {
+	public Object onEvaluate(Field attribute, Object target, Object... args) {
 
 		if(args == null || args.length != 1 || !(args[0] instanceof String)) {
 			
@@ -60,13 +60,13 @@ public class ProjectProperty extends AbstractOperator {
 			throw new IllegalArgumentException(errorContext.toString());
 		}
 		
-		String attribute = (String)args[0];
+		String property = (String)args[0];
 		
 		Field[] fields = target.getClass().getDeclaredFields();
 		
 		for (Field field : fields) {
 			
-			if(field.getName().equals(attribute)) {
+			if(field.getName().equals(property)) {
 				
 				try {
 					
@@ -83,6 +83,6 @@ public class ProjectProperty extends AbstractOperator {
 			}
 		}
 		
-		throw new OperationFailedException(this, target, attribute);
+		throw new OperationFailedException(this, target, property);
 	}
 }

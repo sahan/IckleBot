@@ -12,6 +12,7 @@
     <string name="lbl_name">Hi, my name is </string>
     <string name="lbl_github">You can find me on GitHub at </string>
     <string name="lbl_expressive">Email ${contact.email}, Mobile ${contact.mobile}</string>
+    <string name="lbl_online">The user is ${online?available:unavailable}</string>
     <string name="lbl_inventory">Item 1 is ${inventory.item1?:unavailable} and Item 2 is ${inventory.item2?:unavailable}</string>
     <string name="lbl_inventory_location">Location 4 is ${inventory.locations[3]}</string>
     <string name="lbl_inventory_items">Item SKU4444 is ${inventory.items[\'SKU4444\']}</string>

@@ -1,5 +1,6 @@
 package com.lonepulse.icklebot.bind.expressive;
 
+import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -52,7 +53,7 @@ public class ProjectElement extends AbstractOperator {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object onEvaluate(Object target, Object... args) {
+	public Object onEvaluate(Field attribute, Object target, Object... args) {
 
 		if(args == null || args.length != 1) {
 			

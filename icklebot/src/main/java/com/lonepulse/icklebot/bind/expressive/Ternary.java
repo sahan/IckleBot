@@ -26,33 +26,38 @@ import java.util.Map;
 
 
 /**
- * <p>This is an implementation of {@link AbstractOperator} which emulates an <b>Elvis Operator</b>.</p>
- * <p>See {@link Elvis#evaluate(Object, Object...)}.</p>
+ * <p>This is an implementation of {@link AbstractOperator} which emulates a <b>Ternary Operator</b>.</p>
+ * <p>See {@link Ternary#evaluate(Object, Object...)}.</p>
  *  
  * @version 1.1.0
  * <br><br>
  * @since 1.2.1
  * <br><br>
- * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
+ * @author <a href="mailto:sahan@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public class Elvis extends AbstractOperator {
+public class Ternary extends AbstractOperator {
 
 
 	/**
-	 * <p>Instantiates a new {@link Elvis} operator. 
+	 * <p>Instantiates a new {@link Ternary} operator. 
 	 *
 	 * @since 1.2.1
 	 */
-	public Elvis() {
+	public Ternary() {
 		
-		super(new Symbol("?:", ""));
+		super(new Symbol("?", ""));
 	}
 
 	/**
 	 * <p>Evaluates the target object to determine if it's essentially <b>void</b> or {@code false}. 
-	 * If the target is void or false, the supplied argument is returned - else the target is returned as is.</p>
+	 * If the target is void or false, the first argument is returned - else the second argument 
+	 * is returned.</p>
 	 * 
-	 * <p>The operator evaluates to the argument if the target is:</p>
+	 * <p>This operator is similar to the {@link Elvis} operator; but unlike the {@link Elvis} 
+	 * operator it acts on two arguments (strings). The current version of the {@link Ternary} 
+	 * operator does not accept <b>logical expressions</b> for evaluation.</p> 
+	 * 
+	 * <p>The operator evaluates to the first argument if the target is:</p>
 	 * 
 	 * <ul>
 	 * 	<li> {@code null}</li>
@@ -69,77 +74,78 @@ public class Elvis extends AbstractOperator {
 	@Override
 	public Object onEvaluate(Field attribute, Object target, Object... args) {
 		
-		if(args == null || args.length != 1) {
+		if(args == null || args.length != 2) {
 			
 			StringBuilder errorContext = new StringBuilder()
 			.append(getClass().getName())
-			.append(" requires a single argument. ");
+			.append(" requires two String arguments. ");
 			
 			throw new IllegalArgumentException(errorContext.toString());
 		}
 		
-		Object arg = args[0];
+		Object pass = args[0];
+		Object fail = args[1];
 		
 		if(target == null) {
 
-			return arg;
+			return fail;
 		}
 		else if(target instanceof Boolean) {
 			
-			return ((Boolean)target)? target :arg;
+			return ((Boolean)target)? pass :fail;
 		}
 		else if(target instanceof CharSequence) {
 
 			String targetString = ((CharSequence)target).toString();
-			return (targetString.equalsIgnoreCase("false") || targetString.equals(""))? arg :target;
+			return (targetString.equalsIgnoreCase("false") || targetString.equals(""))? fail :pass;
 		}
 		else if(target instanceof Object[]) {
 			
-			return (((Object[])target).length == 0)? arg :target;
+			return (((Object[])target).length == 0)? fail :pass;
 		}
 		else if(target instanceof Collection<?>) {
 			
-			return (((Collection<?>)target).isEmpty())? arg :target;
+			return (((Collection<?>)target).isEmpty())? fail :pass;
 		}
 		else if(target instanceof Map<?, ?>) {
 			
-			return ((Map<?, ?>)target).entrySet().isEmpty()? arg :target;
+			return ((Map<?, ?>)target).entrySet().isEmpty()? fail :pass;
 		}
 		else if(target instanceof char[]) {
 			
-			return (((char[])target).length == 0)? arg :target;
+			return (((char[])target).length == 0)? fail :pass;
 		}
 		else if(target instanceof byte[]) {
 			
-			return (((byte[])target).length == 0)? arg :target;
+			return (((byte[])target).length == 0)? fail :pass;
 		}
 		else if(target instanceof short[]) {
 			
-			return (((short[])target).length == 0)? arg :target;
+			return (((short[])target).length == 0)? fail :pass;
 		}
 		else if(target instanceof int[]) {
 			
-			return(((int[])target).length == 0)? arg :target;
+			return(((int[])target).length == 0)? fail :pass;
 		}
 		else if(target instanceof long[]) {
 			
-			return (((long[])target).length == 0)? arg :target;
+			return (((long[])target).length == 0)? fail :pass;
 		}
 		else if(target instanceof float[]) {
 			
-			return (((float[])target).length == 0)? arg :target;
+			return (((float[])target).length == 0)? fail :pass;
 		}
 		else if(target instanceof double[]) {
 			
-			return (((double[])target).length == 0)? arg :target;
+			return (((double[])target).length == 0)? fail :pass;
 		}
 		else if(target instanceof boolean[]) {
 			
-			return (((boolean[])target).length == 0)? arg :target;
+			return (((boolean[])target).length == 0)? fail :pass;
 		}
 		else {
 			
-			return target;
+			return fail;
 		}
 	}
 }

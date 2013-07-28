@@ -85,6 +85,9 @@ public class User implements Serializable {
 	@BindImage(R.id.img_wrapper_bytes)
 	private Byte[] icWrapperBytes;
 
+	@Expressive @BindText(R.id.online)
+	private boolean online;
+	
 	
 	public long getId() {
 		return id;
@@ -172,5 +175,13 @@ public class User implements Serializable {
 
 	public void setInventory(Inventory inventory) {
 		this.inventory = inventory;
+	}
+
+	public boolean isOnline() {
+		return online;
+	}
+
+	public void setOnline(boolean online) {
+		this.online = online;
 	}
 }

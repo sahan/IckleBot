@@ -1,5 +1,7 @@
 package com.lonepulse.icklebot.bind.expressive;
 
+import java.lang.reflect.Field;
+
 /*
  * #%L
  * IckleBot
@@ -46,6 +48,9 @@ public interface Operator {
 	 * <p>Takes an argument(s), executes the operator's evaluation strategy 
 	 * on the given target and returns the resulting data.
 	 *
+	 * @param attribute
+	 * 			the {@link Field} on the model which is the subjected to the expressive bind 
+	 *
 	 * @param target
 	 * 			the target of the operation
 	 * 
@@ -60,5 +65,5 @@ public interface Operator {
 	 * 
 	 * @since 1.1.0
 	 */
-	Object evaluate(Object target, Object... args) throws OperationFailedException;
+	Object evaluate(Field attribute, Object target, Object... args) throws OperationFailedException;
 }

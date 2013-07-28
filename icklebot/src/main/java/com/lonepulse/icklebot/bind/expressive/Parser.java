@@ -1,5 +1,7 @@
 package com.lonepulse.icklebot.bind.expressive;
 
+import java.lang.reflect.Field;
+
 /*
  * #%L
  * IckleBot
@@ -35,6 +37,9 @@ public interface Parser<Input, Output> {
 	 * <p>Takes an expression, parses it into an expression pipe and executes 
 	 * the segments on the given target to produce a result.
 	 * 
+	 * @param attribute
+	 * 			the {@link Field} on the model which is the subjected to the expressive bind 
+	 * 
 	 * @param resultOfPreviousSegment
 	 * 			the target which this expression pipe will act on
 	 * 
@@ -48,5 +53,5 @@ public interface Parser<Input, Output> {
 	 * 
 	 * @since 1.1.0
 	 */
-	Object parse(Object resultOfPreviousSegment, Input expressionForThisSegment) throws IllegalSyntaxException;
+	Output parse(Field attribute, Object resultOfPreviousSegment, Input expressionForThisSegment) throws IllegalSyntaxException;
 }

@@ -1,5 +1,7 @@
 package com.lonepulse.icklebot.bind.expressive;
 
+import java.lang.reflect.Field;
+
 /*
  * #%L
  * IckleBot
@@ -37,6 +39,9 @@ public class ExpressionParser implements Parser<StringBuilder, Object> {
 	 * <p>Takes an expression String and parses it into an {@link Expression} pipe 
 	 * and executes the nodes.
 	 * 
+	 * @param attribute
+	 * 			the {@link Field} on the model which is the subjected to the expressive bind 
+	 * 
 	 * @param xp
 	 * 			the expression String to be parsed and executed
 	 * 
@@ -48,7 +53,7 @@ public class ExpressionParser implements Parser<StringBuilder, Object> {
 	 * @since 1.1.0
 	 */
 	@Override
-	public Object parse(Object target, StringBuilder xp) throws IllegalSyntaxException {
+	public Object parse(Field attribute, Object target, StringBuilder xp) throws IllegalSyntaxException {
 		
 		Op op = null;
 		
@@ -101,12 +106,12 @@ public class ExpressionParser implements Parser<StringBuilder, Object> {
 		}
 		catch(IndexNotFoundException infe) {
 			
-			return op.evaluate(target, ParserUtils.extractArgs(xp.toString()));
+			return op.evaluate(attribute, target, ParserUtils.extractArgs(xp.toString()));
 		}
 		
 		String argString = xp.substring(0, nextHeadIndex);
-		Object subResult = op.evaluate(target, ParserUtils.extractArgs(argString));
+		Object subResult = op.evaluate(attribute, target, ParserUtils.extractArgs(argString));
 		
-		return parse(subResult, new StringBuilder(xp.substring(nextHeadIndex, xp.length()).trim()));
+		return parse(attribute, subResult, new StringBuilder(xp.substring(nextHeadIndex, xp.length()).trim()));
 	}
 }
