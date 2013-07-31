@@ -21,6 +21,7 @@ package com.lonepulse.icklebot.task;
  */
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Set;
 
 import android.app.Activity;
@@ -79,7 +80,7 @@ class UITaskService implements TaskManager {
 							.append(" on ")
 							.append(context.getClass().getName())
 							.append(" with arguments ")
-							.append(args)
+							.append(Arrays.toString(args))
 							.append(". ");
 										
 							Log.e(UITaskService.class.getName(), stringBuilder.toString(), e);

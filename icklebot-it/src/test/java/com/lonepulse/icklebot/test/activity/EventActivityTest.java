@@ -68,7 +68,7 @@ public class EventActivityTest {
 	 */
 	@Before
 	public final void setUp() throws Exception {
-		
+
 		activity = new EventActivity();
 		activity.onCreate(null);
 		

@@ -78,7 +78,7 @@ public class NetworkService implements NetworkManager {
 		
 		if(!PermissionUtils.isGranted(context, Manifest.permission.ACCESS_NETWORK_STATE)) {
 			
-			new IckleBotRuntimeException(
+			throw new IckleBotRuntimeException(
 				new PermissionDeniedException(Manifest.permission.ACCESS_NETWORK_STATE, Profile.NETWORK));
 		}
 		

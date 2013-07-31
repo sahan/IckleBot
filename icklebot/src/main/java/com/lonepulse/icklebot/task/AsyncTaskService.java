@@ -21,6 +21,7 @@ package com.lonepulse.icklebot.task;
  */
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Set;
 
 import android.app.Activity;
@@ -76,7 +77,7 @@ class AsyncTaskService implements TaskManager {
 			stringBuilder.append(" on ");
 			stringBuilder.append(context.getClass().getName() );
 			stringBuilder.append(" with arguments ");
-			stringBuilder.append(args);
+			stringBuilder.append(Arrays.toString(args));
 			stringBuilder.append(". ");
 			
 			Log.e(AsyncTaskService.class.getName(), stringBuilder.toString(), e);

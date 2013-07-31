@@ -21,6 +21,7 @@ package com.lonepulse.icklebot.task;
  */
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -92,7 +93,7 @@ enum TaskExecutor implements LifeCycle.Destroy {
 						stringBuilder.append(" on ");
 						stringBuilder.append(context.getClass().getName());
 						stringBuilder.append(" with arguments ");
-						stringBuilder.append(args);
+						stringBuilder.append(Arrays.toString(args));
 						stringBuilder.append(". ");
 						
 						Log.e(getClass().getName(), stringBuilder.toString(), e);
@@ -109,7 +110,7 @@ enum TaskExecutor implements LifeCycle.Destroy {
 			stringBuilder.append(" failed to execute on ");
 			stringBuilder.append(context.getClass().getName());
 			stringBuilder.append(" with arguments ");
-			stringBuilder.append(args);
+			stringBuilder.append(Arrays.toString(args));
 			stringBuilder.append(". ");
 			
 			Log.w(getClass().getName(), stringBuilder.toString(), e);

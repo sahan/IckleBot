@@ -36,6 +36,12 @@ public class ExpressionParser implements Parser<StringBuilder, Object> {
 
 	
 	/**
+	 * <p>The length of the longest head for the current {@link Operator} set.
+	 */
+	private static final int MAX_HEAD_LENGTH = ParserUtils.getMaxHeadLength();
+	
+	
+	/**
 	 * <p>Takes an expression String and parses it into an {@link Expression} pipe 
 	 * and executes the nodes.
 	 * 
@@ -57,25 +63,24 @@ public class ExpressionParser implements Parser<StringBuilder, Object> {
 		
 		Op op = null;
 		
-		try {
-			
-			op = Op.resolve(xp.substring(0, 2));
-		}
-		catch(OperatorResolutionFailedException orfe) {
+		for (int i = MAX_HEAD_LENGTH; i >= 1; i--) {
 			
 			try {
 				
-				op = Op.resolve(String.valueOf(xp.charAt(0)));
-			} 
-			catch (OperatorResolutionFailedException orfe2) {
-				
-				StringBuilder errorContext = new StringBuilder()
-				.append("Malformed expression segment ")
-				.append(xp.toString())
-				.append(" cannot be parsed. ");
-				
-				throw new IllegalSyntaxException(errorContext.toString());
+				op = Op.resolve(xp.substring(0, i));
+				break;
 			}
+			catch(OperatorResolutionFailedException orfe) {}; //a recovery is attempted on next iteration
+		}
+		
+		if(op == null) {
+			
+			StringBuilder errorContext = new StringBuilder()
+			.append("Malformed expression segment ")
+			.append(xp.toString())
+			.append(" cannot be parsed. ");
+			
+			throw new IllegalSyntaxException(errorContext.toString());
 		}
 		
 		xp.delete(0, op.getSymbol().getHead().length());

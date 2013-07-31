@@ -27,7 +27,9 @@ import java.util.regex.Pattern;
 /**
  * <p>This utility class provides common services which are used by {@link ExpressionParser}s.
  * 
- * @version 1.1.0
+ * @version 1.1.1
+ * <br><br>
+ * @since 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -116,11 +118,11 @@ public final class ParserUtils {
 		
 		int headLength = head.length();
 		int tailLength = tail.length();
-		int tailLastIndex = tailLength - 1;
+		int tailRearIndex = tailLength - 1;
 		
 		int tailsToSkip = 0;
 		
-		for (int i = 0; (i + tailLastIndex) < xp.length(); i++) {
+		for (int i = 0; (i + tailRearIndex) < xp.length(); i++) {
 			
 			if(xp.substring(i, i + tailLength).equals(tail)) {
 				
@@ -203,5 +205,31 @@ public final class ParserUtils {
 		}
 		
 		return refinedArgs;
+	}
+	
+	/**
+	 * <p>Retrieves the length of the longest head for the current {@link Operator} set. 
+	 *
+	 * @return the length of the longest head for the current {@link Operator} set
+	 * 
+	 * @since 1.1.0
+	 */
+	public static int getMaxHeadLength() {
+		
+		Op[] ops = Op.values();
+		
+		int maxHeadLength = 1;
+		
+		for (Op op : ops) {
+			
+			int headLength = op.getSymbol().getHead().length();
+			
+			if(headLength > maxHeadLength) {
+				
+				maxHeadLength = headLength;
+			}
+		}
+		
+		return maxHeadLength;
 	}
 }
