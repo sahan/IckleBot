@@ -138,7 +138,7 @@ abstract class NetworkFragment extends Fragment {
 	@Override
 	public void onPause() {
 	
-		super.onDestroy();
+		super.onPause();
 		
 		if(ProfileService.getInstance(getActivity().getApplicationContext()).isActive(this, Profile.NETWORK)
 			&& PermissionUtils.isGranted(this, Manifest.permission.ACCESS_NETWORK_STATE)) {
