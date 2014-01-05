@@ -36,6 +36,7 @@ import com.lonepulse.icklebot.annotation.inject.InjectPojo;
 import com.lonepulse.icklebot.annotation.inject.InjectString;
 import com.lonepulse.icklebot.annotation.inject.InjectSystemService;
 import com.lonepulse.icklebot.annotation.inject.InjectView;
+import com.lonepulse.icklebot.annotation.inject.Layout;
 
 /**
  * <p>An implementation of {@link InjectionResolver} which caters to 
@@ -53,47 +54,21 @@ class ExplicitInjectionResolver implements InjectionResolver {
 	@Override
 	public InjectionCategory resolve(Object context, Field field) {
 		
-		if(field.isAnnotationPresent(InjectApplication.class))
-			return InjectionCategory.APPLICATION;
-		
-		else if(field.isAnnotationPresent(InjectView.class))
-			return InjectionCategory.RESOURCE_VIEW;
-		
-		else if(field.isAnnotationPresent(InjectInteger.class))
-			return InjectionCategory.RESOURCE_INTEGER;
-		
-		else if(field.isAnnotationPresent(InjectString.class))
-			return InjectionCategory.RESOURCE_STRING;
-		
-		else if(field.isAnnotationPresent(InjectDrawable.class))
-			return InjectionCategory.RESOURCE_DRAWABLE;
-		
-		else if(field.isAnnotationPresent(InjectColor.class))
-			return InjectionCategory.RESOURCE_COLOR;
-		
-		else if(field.isAnnotationPresent(InjectDimension.class))
-			return InjectionCategory.RESOURCE_DIMENSION;
-		
-		else if(field.isAnnotationPresent(InjectBoolean.class))
-			return InjectionCategory.RESOURCE_BOOLEAN;
-		
-		else if(field.isAnnotationPresent(InjectArray.class))
-			return InjectionCategory.RESOURCE_ARRAY;
-		
-		else if(field.isAnnotationPresent(InjectAnimation.class))
-			return InjectionCategory.RESOURCE_ANIMATION;
-		
-		else if(field.isAnnotationPresent(InjectAnimator.class))
-			return InjectionCategory.RESOURCE_ANIMATOR;
-			
-		else if(field.isAnnotationPresent(InjectPojo.class))
-			return InjectionCategory.POJO;
-		
-		else if(field.isAnnotationPresent(InjectSystemService.class))
-			return InjectionCategory.SYSTEM_SERVICE;
-		
-		else if(field.isAnnotationPresent(InjectIckleService.class))
-			return InjectionCategory.ICKLE_SERVICE;
+		if(field.isAnnotationPresent(InjectApplication.class)) return InjectionCategory.APPLICATION;
+		if(field.isAnnotationPresent(Layout.class)) return InjectionCategory.LAYOUT;
+		if(field.isAnnotationPresent(InjectView.class)) return InjectionCategory.RESOURCE_VIEW;
+		if(field.isAnnotationPresent(InjectInteger.class)) return InjectionCategory.RESOURCE_INTEGER;
+		if(field.isAnnotationPresent(InjectString.class)) return InjectionCategory.RESOURCE_STRING;
+		if(field.isAnnotationPresent(InjectDrawable.class)) return InjectionCategory.RESOURCE_DRAWABLE;
+		if(field.isAnnotationPresent(InjectColor.class)) return InjectionCategory.RESOURCE_COLOR;
+		if(field.isAnnotationPresent(InjectDimension.class)) return InjectionCategory.RESOURCE_DIMENSION;
+		if(field.isAnnotationPresent(InjectBoolean.class)) return InjectionCategory.RESOURCE_BOOLEAN;
+		if(field.isAnnotationPresent(InjectArray.class)) return InjectionCategory.RESOURCE_ARRAY;
+		if(field.isAnnotationPresent(InjectAnimation.class)) return InjectionCategory.RESOURCE_ANIMATION;
+		if(field.isAnnotationPresent(InjectAnimator.class)) return InjectionCategory.RESOURCE_ANIMATOR;
+		if(field.isAnnotationPresent(InjectPojo.class)) return InjectionCategory.POJO;
+		if(field.isAnnotationPresent(InjectSystemService.class)) return InjectionCategory.SYSTEM_SERVICE;
+		if(field.isAnnotationPresent(InjectIckleService.class)) return InjectionCategory.ICKLE_SERVICE;
 		
 		return InjectionCategory.NONE;
 	}

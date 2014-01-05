@@ -27,7 +27,7 @@ import android.graphics.drawable.Drawable;
  * <p>Identifies the <i>category</i> to which a particular 
  * injection operation falls.</p>
  * 
- * @version 1.1.2
+ * @version 1.3.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -40,6 +40,14 @@ public enum InjectionCategory {
 	 * @since 1.1.0 
 	 */
 	APPLICATION,
+	
+	/**
+	 * <p>This <i>category</i> is responsible for identifying a 
+	 * layouts to be injected.</p>
+	 * 
+	 * @since 1.3.0 
+	 */
+	LAYOUT,
 	
 	/**
 	 * <p>This <i>category</i> is responsible for identifying an 

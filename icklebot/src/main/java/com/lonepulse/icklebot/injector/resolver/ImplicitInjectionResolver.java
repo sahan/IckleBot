@@ -57,50 +57,22 @@ class ImplicitInjectionResolver implements InjectionResolver {
 		
 		Context baseContext = ContextUtils.discover(context);
 		
-		if(field.isAnnotationPresent(IgnoreInjection.class))
-			return InjectionCategory.NONE;
-		
-		else if(isCategoryApplication(field))
-			return InjectionCategory.APPLICATION;
-		
-		else if(isCategoryResourceView(field))
-			return InjectionCategory.RESOURCE_VIEW;
-		
-		else if(isCategoryResourceInteger(baseContext, field))
-			return InjectionCategory.RESOURCE_INTEGER;
-		
-		else if(isCategoryResourceString(field))
-			return InjectionCategory.RESOURCE_STRING;
-		
-		else if(isCategoryResourceDrawable(field))
-			return InjectionCategory.RESOURCE_DRAWABLE;
-		
-		else if(isCategoryResourceColor(baseContext, field)) 
-			return InjectionCategory.RESOURCE_COLOR;
-		
-		else if(isCategoryResourceDimension(field))
-			return InjectionCategory.RESOURCE_DIMENSION;
-		
-		else if(isCategoryResourceBoolean(field))
-			return InjectionCategory.RESOURCE_BOOLEAN;
-		
-		else if(isCategoryResourceArray(field))
-			return InjectionCategory.RESOURCE_ARRAY;
-		
-		else if(isCategoryResourceAnimation(field))
-			return InjectionCategory.RESOURCE_ANIMATION;
-		
-		else if(isCategoryResourceAnimator(field))
-			return InjectionCategory.RESOURCE_ANIMATOR;
-		
-		else if(isCategoryPojo(field))
-			return InjectionCategory.POJO;
-		
-		else if(isCategorySystemService(field))
-			return InjectionCategory.SYSTEM_SERVICE;
-		
-		else if(isCategoryIckleService(field))
-			return InjectionCategory.ICKLE_SERVICE;
+		if(field.isAnnotationPresent(IgnoreInjection.class)) return InjectionCategory.NONE;
+		if(field.isAnnotationPresent(Layout.class)) return InjectionCategory.LAYOUT;
+		if(isCategoryApplication(field)) return InjectionCategory.APPLICATION;
+		if(isCategoryResourceView(field)) return InjectionCategory.RESOURCE_VIEW;
+		if(isCategoryResourceInteger(baseContext, field)) return InjectionCategory.RESOURCE_INTEGER;
+		if(isCategoryResourceString(field)) return InjectionCategory.RESOURCE_STRING;
+		if(isCategoryResourceDrawable(field)) return InjectionCategory.RESOURCE_DRAWABLE;
+		if(isCategoryResourceColor(baseContext, field)) return InjectionCategory.RESOURCE_COLOR;
+		if(isCategoryResourceDimension(field)) return InjectionCategory.RESOURCE_DIMENSION;
+		if(isCategoryResourceBoolean(field)) return InjectionCategory.RESOURCE_BOOLEAN;
+		if(isCategoryResourceArray(field)) return InjectionCategory.RESOURCE_ARRAY;
+		if(isCategoryResourceAnimation(field)) return InjectionCategory.RESOURCE_ANIMATION;
+		if(isCategoryResourceAnimator(field)) return InjectionCategory.RESOURCE_ANIMATOR;
+		if(isCategoryPojo(field)) return InjectionCategory.POJO;
+		if(isCategorySystemService(field)) return InjectionCategory.SYSTEM_SERVICE;
+		if(isCategoryIckleService(field)) return InjectionCategory.ICKLE_SERVICE;
 		
 		return InjectionCategory.NONE;
 	}

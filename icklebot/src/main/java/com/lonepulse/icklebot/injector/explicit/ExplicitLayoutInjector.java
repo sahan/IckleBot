@@ -31,8 +31,8 @@ import android.view.View;
 
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
 import com.lonepulse.icklebot.util.ContextUtils;
-import com.lonepulse.icklebot.util.FieldUtils;
 import com.lonepulse.icklebot.util.TypeUtils;
 
 /**
@@ -66,17 +66,18 @@ class ExplicitLayoutInjector implements Injector {
 				ContextUtils.asActivity(context).setContentView(layout.value());
 		}
 		
-		Set<Field> fields = FieldUtils.getAllFields(context, Layout.class);
+		Set<Field> fields = config.getInjectionTargets(InjectionCategory.LAYOUT);
 		Context baseContext = ContextUtils.discover(context);
 		
 		for (Field field : fields) {
 			
 			try {
 				
+				if(!field.isAccessible()) field.setAccessible(true);
+				
 				int id = field.getAnnotation(Layout.class).value();
 				View layoutView = LayoutInflater.from(baseContext).inflate(id, null);
 				
-				if(!field.isAccessible()) field.setAccessible(true);
 				field.set(context, layoutView);
 			}
 			catch (Exception e) {
