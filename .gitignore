@@ -1,11 +1,11 @@
 .settings
-icklebot/bin
-icklebot/gen
 icklebot/target
 icklebot/.settings
+icklebot/.classpath
 icklebot-it/bin
 icklebot-it/gen
 icklebot-it/target
 icklebot-it/.settings
+icklebot-it/.classpath
 icklebot-it/tmp
 target
