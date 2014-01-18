@@ -31,7 +31,6 @@ import org.junit.runner.RunWith;
 
 import android.view.animation.Animation;
 
-import com.lonepulse.icklebot.bind.BindManager;
 import com.lonepulse.icklebot.network.NetworkManager;
 import com.lonepulse.icklebot.test.R;
 import com.lonepulse.icklebot.test.activity.ExplicitInjectionActivity;
@@ -230,20 +229,6 @@ public class ExplicitInjectionFragmentActivityTest {
 	public final void testSystemService() throws Exception {
 		
 		assertNotNull(activity.telephonyManager);
-	}
-	
-	/**
-	 * <p>Test {@link BindManager} injection.
-	 * 
-	 * @throws Exception
-	 * 			if test terminated with an error
-	 * 
-	 * @since 1.1.3
-	 */
-	@Test
-	public final void testIckleServiceBind() throws Exception {
-		
-		assertNotNull(activity.bindManager);
 	}
 	
 	/**

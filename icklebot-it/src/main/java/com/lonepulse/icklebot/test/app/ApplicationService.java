@@ -21,9 +21,9 @@ package com.lonepulse.icklebot.test.app;
  */
 
 
-import com.lonepulse.icklebot.annotation.inject.ApplicationContract;
-
 import android.app.Application;
+
+import com.lonepulse.icklebot.annotation.inject.ApplicationContract;
 
 /**
  * <p>This contract specifies the services offered by the custom 

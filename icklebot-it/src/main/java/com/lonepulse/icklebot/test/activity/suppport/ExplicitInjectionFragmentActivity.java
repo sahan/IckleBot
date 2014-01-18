@@ -47,7 +47,6 @@ import com.lonepulse.icklebot.annotation.inject.InjectSystemService;
 import com.lonepulse.icklebot.annotation.inject.InjectView;
 import com.lonepulse.icklebot.annotation.inject.Layout;
 import com.lonepulse.icklebot.annotation.inject.Title;
-import com.lonepulse.icklebot.bind.BindManager;
 import com.lonepulse.icklebot.network.NetworkManager;
 import com.lonepulse.icklebot.test.R;
 import com.lonepulse.icklebot.test.app.ApplicationService;
@@ -113,9 +112,6 @@ public class ExplicitInjectionFragmentActivity extends IckleFragmentActivity {
 	
 	@Layout(R.layout.act_explicit_injection)
 	public ViewGroup rootView;
-	
-	@InjectIckleService
-	public BindManager bindManager;
 	
 	@InjectIckleService
 	public NetworkManager networkManager;

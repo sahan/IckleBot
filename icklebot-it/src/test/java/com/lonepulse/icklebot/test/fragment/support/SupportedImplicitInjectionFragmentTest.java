@@ -30,7 +30,6 @@ import org.junit.runner.RunWith;
 import android.support.v4.app.Fragment;
 import android.view.animation.Animation;
 
-import com.lonepulse.icklebot.bind.BindManager;
 import com.lonepulse.icklebot.network.NetworkManager;
 import com.lonepulse.icklebot.test.R;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
@@ -228,20 +227,6 @@ public class SupportedImplicitInjectionFragmentTest {
 	public final void testSystemService() throws Exception {
 		
 		assertNotNull(activity.fragment.telephony_service);
-	}
-	
-	/**
-	 * <p>Test {@link BindManager} injection.
-	 * 
-	 * @throws Exception
-	 * 			if test terminated with an error
-	 * 
-	 * @since 1.1.0
-	 */
-	@Test
-	public final void testIckleService() throws Exception {
-		
-		assertNotNull(activity.fragment.bindManager);
 	}
 	
 	/**
