@@ -3,7 +3,6 @@
 > **IckleBot** /'ikəl'bôt/ <em>noun.</em> **1** A boilerplate code generator with a 
 simplified threading and event model. **2** A runtime dependency injection framework with model-view binding. 
 [![Build Status](https://travis-ci.org/sahan/IckleBot.png?branch=master)](https://travis-ci.org/sahan/IckleBot) 
-[![Stories in Ready](https://badge.waffle.io/sahan/IckleBot.png)](http://waffle.io/sahan/IckleBot)
 
 <br>
 ##About
@@ -144,7 +143,7 @@ public class NewsActivity extends IckleActivity {
 }
 ```
 <br>
-Bind models to views.   
+Bind models to views. **(NOTE: This feature will be isolated in a separate module in the next release)**
 ```java
 @Layout(R.layout.act_home)
 @Title(R.string.ttl_act_home)
