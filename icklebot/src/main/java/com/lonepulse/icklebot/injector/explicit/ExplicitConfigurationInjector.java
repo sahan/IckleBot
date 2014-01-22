@@ -47,7 +47,7 @@ class ExplicitConfigurationInjector implements Injector {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void inject(Configuration config) {
+	public void run(Configuration config) {
 		
 		Activity injectionActivity = ContextUtils.asActivity(config.getContext());
 		

@@ -20,144 +20,176 @@ package com.lonepulse.icklebot.injector.resolver;
  * #L%
  */
 
+import java.lang.annotation.Annotation;
+
+import android.animation.Animator;
 import android.app.Application;
 import android.graphics.drawable.Drawable;
+import android.view.View;
+import android.view.animation.Animation;
+
+import com.lonepulse.icklebot.annotation.inject.IgnoreInjection;
+import com.lonepulse.icklebot.annotation.inject.InjectAnimation;
+import com.lonepulse.icklebot.annotation.inject.InjectAnimator;
+import com.lonepulse.icklebot.annotation.inject.InjectApplication;
+import com.lonepulse.icklebot.annotation.inject.InjectArray;
+import com.lonepulse.icklebot.annotation.inject.InjectBoolean;
+import com.lonepulse.icklebot.annotation.inject.InjectColor;
+import com.lonepulse.icklebot.annotation.inject.InjectDimension;
+import com.lonepulse.icklebot.annotation.inject.InjectDrawable;
+import com.lonepulse.icklebot.annotation.inject.InjectIckleService;
+import com.lonepulse.icklebot.annotation.inject.InjectInteger;
+import com.lonepulse.icklebot.annotation.inject.InjectPojo;
+import com.lonepulse.icklebot.annotation.inject.InjectString;
+import com.lonepulse.icklebot.annotation.inject.InjectSystemService;
+import com.lonepulse.icklebot.annotation.inject.InjectView;
+import com.lonepulse.icklebot.annotation.inject.Layout;
+import com.lonepulse.icklebot.injector.Injector;
 
 /**
- * <p>Identifies the <i>category</i> to which a particular 
- * injection operation falls.</p>
+ * <p>Identifies the <i>category</i> associated with a dependency request. This is used to resolve the 
+ * {@link Injector.InjectionProvider} used for injection.</p>
  * 
- * @version 1.3.0
+ * @version 1.4.0
  * <br><br>
- * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
+ * @since 1.0.0
+ * <br><br>
+ * @author <a href="http://sahan.me">Lahiru Sahan Jayasinghe</a>
  */
 public enum InjectionCategory {
 
 	/**
-	 * <p>This <i>category</i> is responsible for identifying an 
-	 * {@link Application} instance to be injected.</p>
+	 * <p>Identifies a dependency for the {@link Application} context.</p>
+	 * 
+	 * @since 1.0.0 
+	 */
+	APPLICATION(InjectApplication.class),
+	
+	/**
+	 * <p>Identifies a dependency for an inflated layout.</p>
 	 * 
 	 * @since 1.1.0 
 	 */
-	APPLICATION,
+	LAYOUT(Layout.class),
 	
 	/**
-	 * <p>This <i>category</i> is responsible for identifying a 
-	 * layouts to be injected.</p>
+	 * <p>Identifies a dependency for an inflated {@link View}.</p>
 	 * 
-	 * @since 1.3.0 
+	 * @since 1.0.0 
 	 */
-	LAYOUT,
+	RESOURCE_VIEW(InjectView.class),
 	
 	/**
-	 * <p>This <i>category</i> is responsible for identifying an 
-	 * <b>View Android Resource</b> to be injected.</p>
+	 * <p>Identifies a dependency for an {@code int} or {@link Integer} resource.</p>
 	 * 
-	 * @since 1.1.0 
+	 * @since 1.0.0 
 	 */
-	RESOURCE_VIEW,
+	RESOURCE_INTEGER(InjectInteger.class),
 	
 	/**
-	 * <p>This <i>category</i> is responsible for identifying an 
-	 * <b>Integer Android Resource</b> to be injected.</p>
+	 * <p>Identifies a dependency for a {@link String} resource.</p>
 	 * 
-	 * @since 1.1.0 
+	 * @since 1.0.0 
 	 */
-	RESOURCE_INTEGER,
+	RESOURCE_STRING(InjectString.class),
 	
 	/**
-	 * <p>This <i>category</i> is responsible for identifying a 
-	 * <b>String Android Resource</b> to be injected.</p>
+	 * <p>Identifies a dependency for a {@link Drawable} resource.</p>
 	 * 
-	 * @since 1.1.0 
+	 * @since 1.0.0 
 	 */
-	RESOURCE_STRING,
+	RESOURCE_DRAWABLE(InjectDrawable.class),
 	
 	/**
-	 * <p>This <i>category</i> is responsible for identifying a 
-	 * <b>{@link Drawable} Android Resource</b> to be injected.</p>
+	 * <p>Identifies a dependency for a dimension resource.</p>
 	 * 
-	 * @since 1.1.0 
+	 * @since 1.0.0 
 	 */
-	RESOURCE_DRAWABLE,
+	RESOURCE_DIMENSION(InjectDimension.class),
 	
 	/**
-	 * <p>This <i>category</i> is responsible for identifying an 
-	 * <b>Android Dimension Resource</b> to be injected.</p>
+	 * <p>Identifies a dependency for a color resource.</p>
 	 * 
-	 * @since 1.1.1 
+	 * @since 1.0.0 
 	 */
-	RESOURCE_DIMENSION,
+	RESOURCE_COLOR(InjectColor.class),
 	
 	/**
-	 * <p>This <i>category</i> is responsible for identifying an 
-	 * <b>Android Color Resource</b> to be injected.</p>
+	 * <p>Identifies a dependency for a {@code boolean} or {@link Boolean} resource.</p>
 	 * 
-	 * @since 1.1.1 
+	 * @since 1.0.0 
 	 */
-	RESOURCE_COLOR,
+	RESOURCE_BOOLEAN(InjectBoolean.class),
 	
 	/**
-	 * <p>This <i>category</i> is responsible for identifying an 
-	 * <b>Android Boolean Resource</b> to be injected.</p>
+	 * <p>Identifies a dependency for an array resource.</p>
 	 * 
-	 * @since 1.1.1 
+	 * @since 1.0.0 
 	 */
-	RESOURCE_BOOLEAN,
+	RESOURCE_ARRAY(InjectArray.class),
 	
 	/**
-	 * <p>This <i>category</i> is responsible for identifying an 
-	 * <b>Android String or Integer Array Resource</b> to be injected.</p>
+	 * <p>Identifies a dependency for an {@link Animation} resource.</p>
 	 * 
-	 * @since 1.1.1 
+	 * @since 1.0.0 
 	 */
-	RESOURCE_ARRAY,
+	RESOURCE_ANIMATION(InjectAnimation.class),
 	
 	/**
-	 * <p>This <i>category</i> is responsible for identifying an 
-	 * <b>Android Animation Resource</b> to be injected.</p>
+	 * <p>Identifies a dependency for an {@link Animator} resource.</p>
 	 * 
-	 * @since 1.1.1 
+	 * @since 1.0.0 
 	 */
-	RESOURCE_ANIMATION,
+	RESOURCE_ANIMATOR(InjectAnimator.class),
 	
 	/**
-	 * <p>This <i>category</i> is responsible for identifying an 
-	 * <b>Android Animator Resource</b> to be injected.</p>
+	 * <p>Identifies a dependency for a system service.</p>
 	 * 
-	 * @since 1.1.1 
+	 * @since 1.0.0 
 	 */
-	RESOURCE_ANIMATOR,
+	SYSTEM_SERVICE(InjectSystemService.class),
 	
 	/**
-	 * <p>This <i>category</i> is responsible for identifying a 
-	 * <b>System Service</b> to be injected.</p>
+	 * <p>Identifies a dependency for one of IckleBot's own services.</p>
 	 * 
-	 * @since 1.1.0 
+	 * @since 1.0.0 
 	 */
-	SYSTEM_SERVICE,
+	ICKLE_SERVICE(InjectIckleService.class),
 	
 	/**
-	 * <p>This <i>category</i> is responsible for identifying an 
-	 * <b>Ickle Service</b> to be injected.</p>
+	 * <p>Identifies a dependency for a simple POJO.</p>
 	 * 
-	 * @since 1.1.2 
+	 * @since 1.0.0 
 	 */
-	ICKLE_SERVICE,
+	POJO(InjectPojo.class),
 	
 	/**
-	 * <p>This <i>category</i> is responsible for identifying a 
-	 * <b>Plain Old Java Object (POJO)</b> to be injected.</p>
+	 * <p>Identifies a void request a dependency or an actively ignored injection.</p>
 	 * 
-	 * @since 1.1.0 
+	 * @since 1.0.0 
 	 */
-	POJO,
+	NONE(IgnoreInjection.class);
+
 	
+	
+	private Class<? extends Annotation> annotation;
+	
+	
+	private InjectionCategory(Class<? extends Annotation> annotation) {
+
+		this.annotation = annotation;
+	}
+
 	/**
-	 * <p>Used when the subject does not fall into any of existing 
-	 * categories.</p>
+	 * <p>Retrieves the {@link Class} of the annotation which identifies this {@link InjectionCategory} 
+	 * in a context which has requested <i>explicit injection</i>.</p>
 	 *
-	 * @since 1.1.0
+	 * @return the annotation {@link Class} which explicitly identifies this {@link InjectionCategory} 
+	 * <br><br>
+	 * @since 1.2.1
 	 */
-	NONE;
+	public Class<? extends Annotation> getAnnotation() {
+		
+		return annotation;
+	}
 }

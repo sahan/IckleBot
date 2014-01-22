@@ -22,32 +22,29 @@ package com.lonepulse.icklebot.injector.resolver;
 
 import java.lang.reflect.Field;
 
-import com.lonepulse.icklebot.event.resolver.EventCategory;
-import com.lonepulse.icklebot.event.resolver.EventResolver;
-import com.lonepulse.icklebot.event.resolver.EventResolvers;
-
+import com.lonepulse.icklebot.injector.InjectionMode;
 
 /**
- * <p>A repository of {@link EventResolvers} for different <i>modes</i> 
- * of injection - such as <i>Implicit</i> and <i>Explicit<i> Injection Modes.</p>
+ * <p>{@link InjectionResolver}s for each {@link InjectionMode} which discovers the {@link InjectionCategory} 
+ * of a particular injection binding.</p>
  * 
- * @version 1.0.0
+ * @version 1.2.0
  * <br><br>
- * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
+ * @since 1.0.0
+ * <br><br>
+ * @author <a href="http://sahan.me">Lahiru Sahan Jayasinghe</a>
  */
 public enum InjectionResolvers implements InjectionResolver {
 
 	/**
-	 * <p>The {@link EventResolver} responsible for resolving 
-	 * <i>Implicit Injection</i>.</p>
+	 * <p>The {@link InjectionResolver} responsible for <i>Implicit Injection</i>.</p>
 	 *
 	 * @since 1.0.0
 	 */
 	IMPLICIT(new ImplicitInjectionResolver()),
 	
 	/**
-	 * <p>The {@link EventResolver} responsible for resolving 
-	 * <i>Implicit Injection</i>.</p>
+	 * <p>The {@link InjectionResolver} responsible <i>Explicit Injection</i>.</p>
 	 *
 	 * @since 1.0.0
 	 */
@@ -55,28 +52,32 @@ public enum InjectionResolvers implements InjectionResolver {
 	
 	
 	/**
-	 * <p>The instance of {@link EventResolver} used to resolve 
-	 * the categories specified in {@link EventCategory}.</p>
-	 * 
-	 * @since 1.0.0
+	 * <p>Retrieves the {@link InjectionResolver} responsible for managing the given {@link InjectionMode}.</p>
+	 *
+	 * @param injectionMode
+	 * 			the {@link InjectionMode} for a context whose managing {@link InjectionResolver} is returned
+	 * <br><br>
+	 * @return the {@link InjectionResolver} which manages the given {@link InjectionMode}
+	 * <br><br>
+	 * @since 1.2.1
 	 */
+	public static InjectionResolver get(InjectionMode injectionMode) {
+		
+		return injectionMode == InjectionMode.EXPLICIT? 
+				InjectionResolvers.EXPLICIT :InjectionResolvers.IMPLICIT;
+	}
+	
+
 	private InjectionResolver injectionResolver;
 	
-	/**
-	 * <p>A parameterized constructor which populates {@link #injectionResolver}.</p>
-	 * 
-	 * @param injectionResolver
-	 * 			populates {@link #injectionResolver}
-	 * <br><br>
-	 * @since 1.0.0
-	 */
+	
 	private InjectionResolvers(InjectionResolver injectionResolver) {
 		
 		this.injectionResolver = injectionResolver;
 	}
 
 	/**
-	 * <p>Delegate method for {@link #injectionResolver#resolve(Object, Field)}.
+	 * <p>See {@link InjectionResolver#resolve(Object, Field)}.</p>
 	 * 
 	 * @since 1.0.0
 	 */

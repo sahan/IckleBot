@@ -21,11 +21,10 @@ package com.lonepulse.icklebot.injector.explicit;
  */
 
 import java.lang.reflect.Field;
-import java.util.Set;
 
 import android.app.Application;
-import android.util.Log;
 
+import com.lonepulse.icklebot.annotation.inject.InjectApplication;
 import com.lonepulse.icklebot.injector.InjectionException;
 import com.lonepulse.icklebot.injector.Injector;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
@@ -39,30 +38,26 @@ import com.lonepulse.icklebot.util.ContextUtils;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-class ExplicitApplicationInjector implements Injector {
-	
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void inject(Configuration config) throws InjectionException {
+class ExplicitApplicationInjector extends ExplicitInjectionProvider<InjectApplication> {
 
-		Object context = config.getContext();
-		Set<Field> fields = config.getInjectionTargets(InjectionCategory.APPLICATION);
+	
+	protected ExplicitApplicationInjector(InjectionCategory injectionCategory) {
 		
-		for (Field field : fields) {
+		super(injectionCategory);
+	}
+
+	@Override
+	protected void inject(Configuration config, InjectApplication annotation, Field field) {
+		
+		Object context = config.getContext();
+		
+		try {
 			
-			try {
-				
-				if(!field.isAccessible()) field.setAccessible(true);
-				
-				field.set(context, field.getType().cast(ContextUtils.asActivity(context).getApplication()));
-			} 
-			catch (Exception e) {
-				
-				Log.e(getClass().getName(), "Injection Failed!", e);
-			}
+			field.set(context, field.getType().cast(ContextUtils.asActivity(context).getApplication()));
+		} 
+		catch (Exception e) {
+		
+			throw new InjectionException(e);
 		}
 	}
 }

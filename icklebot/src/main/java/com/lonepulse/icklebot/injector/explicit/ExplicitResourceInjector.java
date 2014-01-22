@@ -46,26 +46,25 @@ import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
 import com.lonepulse.icklebot.util.ContextUtils;
 
 /**
- * <p>An implementation of {@link Injector} which is responsible for 
- * the <b>explicit injection of resources</b>.
+ * <p>The {@link Injector} responsible for the <b>explicit injection</b>.</p>
  * 
- * @version 1.1.0 
+ * @version 1.2.0 
  * <br><br>
- * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
+ * @since 1.0.0 
+ * <br><br>
+ * @author <a href="http://sahan.me">Lahiru Sahan Jayasinghe</a>
  */
 class ExplicitResourceInjector implements Injector {
 	
 
-	/**
-	 * <p>Maintains all the {@link InjectionStrategy}s which are used for <b>explicit injection</b>. 
-	 */
-	private static final Map<InjectionCategory, Injector.InjectionStrategy> EXPLICIT_INJECTION_STRATEGIES;
+	private static final Map<InjectionCategory, Injector.InjectionProvider> EXPLICIT_INJECTION_STRATEGIES;
+	
 	
 	static
 	{
-		EXPLICIT_INJECTION_STRATEGIES = new HashMap<InjectionCategory, Injector.InjectionStrategy>();
+		EXPLICIT_INJECTION_STRATEGIES = new HashMap<InjectionCategory, Injector.InjectionProvider>();
 		
-		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_VIEW, new Injector.InjectionStrategy() {
+		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_VIEW, new Injector.InjectionProvider() {
 			
 			@Override
 			public void run(Injector.Configuration config) {
@@ -108,7 +107,7 @@ class ExplicitResourceInjector implements Injector {
 			}
 		});
 		
-		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_STRING, new Injector.InjectionStrategy() {
+		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_STRING, new Injector.InjectionProvider() {
 			
 			@Override
 			public void run(Injector.Configuration config) {
@@ -142,7 +141,7 @@ class ExplicitResourceInjector implements Injector {
 			}
 		});
 		
-		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_DRAWABLE, new Injector.InjectionStrategy() {
+		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_DRAWABLE, new Injector.InjectionProvider() {
 			
 			@Override
 			public void run(Injector.Configuration config) {
@@ -176,7 +175,7 @@ class ExplicitResourceInjector implements Injector {
 			}
 		});
 
-		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_COLOR, new Injector.InjectionStrategy() {
+		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_COLOR, new Injector.InjectionProvider() {
 			
 			@Override
 			public void run(Injector.Configuration config) {
@@ -210,7 +209,7 @@ class ExplicitResourceInjector implements Injector {
 			}
 		});
 		
-		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_INTEGER, new Injector.InjectionStrategy() {
+		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_INTEGER, new Injector.InjectionProvider() {
 			
 			@Override
 			public void run(Injector.Configuration config) {
@@ -244,7 +243,7 @@ class ExplicitResourceInjector implements Injector {
 			}
 		});
 		
-		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_DIMENSION, new Injector.InjectionStrategy() {
+		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_DIMENSION, new Injector.InjectionProvider() {
 			
 			@Override
 			public void run(Injector.Configuration config) {
@@ -278,7 +277,7 @@ class ExplicitResourceInjector implements Injector {
 			}
 		});
 		
-		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_BOOLEAN, new Injector.InjectionStrategy() {
+		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_BOOLEAN, new Injector.InjectionProvider() {
 			
 			@Override
 			public void run(Injector.Configuration config) {
@@ -312,7 +311,7 @@ class ExplicitResourceInjector implements Injector {
 			}
 		});
 		
-		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_ARRAY, new Injector.InjectionStrategy() {
+		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_ARRAY, new Injector.InjectionProvider() {
 			
 			@Override
 			public void run(Injector.Configuration config) {
@@ -354,7 +353,7 @@ class ExplicitResourceInjector implements Injector {
 			}
 		});
 		
-		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_ANIMATION, new Injector.InjectionStrategy() {
+		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_ANIMATION, new Injector.InjectionProvider() {
 			
 			@Override
 			public void run(Injector.Configuration config) {
@@ -388,7 +387,7 @@ class ExplicitResourceInjector implements Injector {
 			}
 		});
 		
-		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_ANIMATOR, new Injector.InjectionStrategy() {
+		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_ANIMATOR, new Injector.InjectionProvider() {
 			
 			@Override
 			public void run(Injector.Configuration config) {
@@ -430,9 +429,9 @@ class ExplicitResourceInjector implements Injector {
 	@Override
 	public void inject(Configuration config) {
 		
-		Collection<Injector.InjectionStrategy> strategies = EXPLICIT_INJECTION_STRATEGIES.values();
+		Collection<Injector.InjectionProvider> strategies = EXPLICIT_INJECTION_STRATEGIES.values();
 		
-		for (InjectionStrategy strategy : strategies) {
+		for (InjectionProvider strategy : strategies) {
 			
 			strategy.run(config);
 		}
