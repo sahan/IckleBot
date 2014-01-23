@@ -74,10 +74,13 @@ public abstract class ExplicitInjectionProvider<T extends Annotation> implements
 	 * {@link RuntimeException}s are caught and logged with {@link Log#e(String, String, Throwable)} 
 	 * with information field and context names.</p>
 	 * 
+	 * <p>Implementations that wish to alter the default behaviour may override this method and invoke 
+	 * {@link #inject(Configuration, Annotation, Field)} as they see fit.</p> 
+	 * 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final void run(Configuration config) {
+	public void run(Configuration config) {
 		
 		Object context = config.getContext();
 		Set<Field> fields = config.getInjectionTargets(injectionCategory);

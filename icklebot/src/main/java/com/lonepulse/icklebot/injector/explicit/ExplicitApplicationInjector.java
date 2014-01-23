@@ -41,9 +41,9 @@ import com.lonepulse.icklebot.util.ContextUtils;
 class ExplicitApplicationInjector extends ExplicitInjectionProvider<InjectApplication> {
 
 	
-	protected ExplicitApplicationInjector(InjectionCategory injectionCategory) {
+	protected ExplicitApplicationInjector() {
 		
-		super(injectionCategory);
+		super(InjectionCategory.APPLICATION);
 	}
 
 	@Override

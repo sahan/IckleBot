@@ -21,15 +21,14 @@ package com.lonepulse.icklebot.injector.explicit;
  */
 
 import java.lang.reflect.Field;
-import java.util.Set;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.lonepulse.icklebot.annotation.inject.Layout;
+import com.lonepulse.icklebot.injector.InjectionException;
 import com.lonepulse.icklebot.injector.Injector;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
 import com.lonepulse.icklebot.util.ContextUtils;
@@ -47,14 +46,16 @@ import com.lonepulse.icklebot.util.TypeUtils;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-class ExplicitLayoutInjector implements Injector {
+class ExplicitLayoutInjector extends ExplicitInjectionProvider<Layout> {
 	
 
-	/**
-	 * {@inheritDoc}
-	 */
+	protected ExplicitLayoutInjector() {
+		
+		super(InjectionCategory.LAYOUT);
+	}
+	
 	@Override
-	public void inject(Configuration config) {
+	public void run(Configuration config) {
 		
 		Object context = config.getContext();
 		
@@ -62,28 +63,31 @@ class ExplicitLayoutInjector implements Injector {
 			
 			Layout layout = TypeUtils.getAnnotation(context, Layout.class);
 			
-			if(layout != null) 
+			if(layout != null) {
+				
 				ContextUtils.asActivity(context).setContentView(layout.value());
+			}
 		}
 		
-		Set<Field> fields = config.getInjectionTargets(InjectionCategory.LAYOUT);
-		Context baseContext = ContextUtils.discover(context);
+		super.run(config);
+	}
+
+	@Override
+	protected void inject(Configuration config, Layout annotation, Field field) {
 		
-		for (Field field : fields) {
+		try {
 			
-			try {
-				
-				if(!field.isAccessible()) field.setAccessible(true);
-				
-				int id = field.getAnnotation(Layout.class).value();
-				View layoutView = LayoutInflater.from(baseContext).inflate(id, null);
-				
-				field.set(context, layoutView);
-			}
-			catch (Exception e) {
-				
-				Log.e(getClass().getName(), "Layout Injection Failed!", e);
-			}
+			Object context = config.getContext();
+			Context baseContext = ContextUtils.discover(context);
+			
+			int id = field.getAnnotation(Layout.class).value();
+			View layoutView = LayoutInflater.from(baseContext).inflate(id, null);
+		
+			field.set(context, layoutView);
+		} 
+		catch (Exception e) {
+			
+			throw new InjectionException(e);
 		}
 	}
 }

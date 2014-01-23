@@ -196,5 +196,5 @@ public interface Injector {
 	 * <br><br>
 	 * @since 1.0.0
 	 */
-	void run(final Injector.Configuration config);
+	void run(final Injector.Configuration config); 
 }

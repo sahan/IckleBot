@@ -21,9 +21,6 @@ package com.lonepulse.icklebot.injector.explicit;
  */
 
 import java.lang.reflect.Field;
-import java.util.Set;
-
-import android.util.Log;
 
 import com.lonepulse.icklebot.annotation.inject.InjectPojo;
 import com.lonepulse.icklebot.annotation.inject.Pojo;
@@ -39,54 +36,49 @@ import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-class ExplicitPojoInjector implements Injector {
+class ExplicitPojoInjector extends ExplicitInjectionProvider<InjectPojo> {
 	
 	
-	/**
-	 * {@inheritDoc}
-	 */
+	protected ExplicitPojoInjector() {
+		
+		super(InjectionCategory.POJO);
+	}
+	
 	@Override
-	public void inject(Configuration config) {
+	protected void inject(Configuration config, InjectPojo annotation, Field field) {
+	
+		try {
 		
-		Set<Field> fields = config.getInjectionTargets(InjectionCategory.POJO);
-		
-		for (Field field : fields) {
+			Class<?> fieldType = field.getType();
+			Class<? extends Object> pojoType = null;
 			
-			if(!field.isAccessible()) field.setAccessible(true);
+			if(annotation.value().equals(Void.class)) {
 			
-			try {
-				
-				Class<?> fieldType = field.getType();
-				Class<? extends Object> pojoType = null;
-				
-				if(field.getAnnotation(InjectPojo.class).value().equals(Void.class)) {
-				
-					if(!fieldType.isAnnotationPresent(Pojo.class)) {
-						
-						StringBuilder builder = new StringBuilder()
-						.append("Pojo injection failed on ")
-						.append(field.getName())
-						.append(". Please provide the missing class attribute on @InjectPojo. ")
-						.append(" Or else specify the default implementation using @Pojo on ")
-						.append(fieldType.getName())
-						.append(". ");
-						
-						throw new InjectionException(builder.toString());
-					}
+				if(!fieldType.isAnnotationPresent(Pojo.class)) {
 					
-					pojoType = fieldType.getAnnotation(Pojo.class).value();
-				}
-				else {
+					StringBuilder builder = new StringBuilder()
+					.append("Pojo injection failed on ")
+					.append(field.getName())
+					.append(". Please provide the missing class attribute on @InjectPojo. ")
+					.append(" Or else specify the default implementation using @Pojo on ")
+					.append(fieldType.getName())
+					.append(". ");
 					
-					pojoType = field.getAnnotation(InjectPojo.class).value();
+					throw new InjectionException(builder.toString());
 				}
 				
-				field.set(config.getContext(), pojoType.newInstance());
-			} 
-			catch (Exception e) {
-				
-				Log.e(getClass().getName(), "Injection Failed!", e);
+				pojoType = fieldType.getAnnotation(Pojo.class).value();
 			}
+			else {
+				
+				pojoType = annotation.value();
+			}
+			
+			field.set(config.getContext(), pojoType.newInstance());
+		}
+		catch(Exception e) {
+			
+			throw new InjectionException(e);
 		}
 	}
 }

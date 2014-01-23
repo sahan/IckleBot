@@ -21,12 +21,11 @@ package com.lonepulse.icklebot.injector.explicit;
  */
 
 import java.lang.reflect.Field;
-import java.util.Set;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.lonepulse.icklebot.annotation.inject.InjectSystemService;
+import com.lonepulse.icklebot.injector.InjectionException;
 import com.lonepulse.icklebot.injector.Injector;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
 import com.lonepulse.icklebot.util.ContextUtils;
@@ -39,33 +38,25 @@ import com.lonepulse.icklebot.util.ContextUtils;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-class ExplicitSystemServiceInjector implements Injector {
+class ExplicitSystemServiceInjector extends ExplicitInjectionProvider<InjectSystemService> {
 	
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void inject(Configuration config) {
-
-		Context baseContext = ContextUtils.discover(config.getContext());
+	protected ExplicitSystemServiceInjector() {
 		
-		Set<Field> fields = config.getInjectionTargets(InjectionCategory.SYSTEM_SERVICE);
-				
-		for (Field field : fields) {
+		super(InjectionCategory.SYSTEM_SERVICE);
+	}
+	
+	@Override
+	protected void inject(Configuration config, InjectSystemService annotation, Field field) {
+
+		try {
+		
+			Context baseContext = ContextUtils.discover(config.getContext());
+			field.set(config.getContext(), baseContext.getSystemService(annotation.value()));
+		}
+		catch(Exception e) {
 			
-			if(!field.isAccessible()) field.setAccessible(true);
-			
-			try {
-				
-				String serviceName = field.getAnnotation(InjectSystemService.class).value();
-				
-				field.set(config.getContext(), baseContext.getSystemService(serviceName));
-			} 
-			catch (Exception e) {
-				
-				Log.e(getClass().getName(), "Injection Failed!", e);
-			}
+			throw new InjectionException(e);
 		}
 	}
 }
