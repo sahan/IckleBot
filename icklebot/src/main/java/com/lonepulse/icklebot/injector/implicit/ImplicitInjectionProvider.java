@@ -1,4 +1,4 @@
-package com.lonepulse.icklebot.injector.explicit;
+package com.lonepulse.icklebot.injector.implicit;
 
 /*
  * #%L
@@ -20,9 +20,7 @@ package com.lonepulse.icklebot.injector.explicit;
  * #L%
  */
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
 import java.util.Set;
 
 import android.util.Log;
@@ -33,50 +31,37 @@ import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
 import com.lonepulse.icklebot.util.FieldUtils;
 
 /**
- * <p>An abstract {@link InjectionProvider} which supports injection with {@link InjectionMode#EXPLICIT}.</p>
+ * <p>An abstract {@link InjectionProvider} which supports injection with {@link InjectionMode#IMPLICIT}.</p>
  * 
- * <p><b>Note</b> that all implementations need to be final.</p>
- * 
- * @param <T>
- * 			the {@link Annotation} which identifies dependency requests served by this provider implementation
- * <br><br>
  * @version 1.1.0
  * <br><br>
  * @since 1.2.1
  * <br><br>
  * @author <a href="http://sahan.me">Lahiru Sahan Jayasinghe</a>
  */
-public abstract class ExplicitInjectionProvider<T extends Annotation> implements InjectionProvider {
+public abstract class ImplicitInjectionProvider implements InjectionProvider {
 
 	
 	private InjectionCategory injectionCategory;
-	private Class<T> annotationType;
 	
 	
 	/**
-	 * <p>Instantiates a new {@link ExplicitInjectionProvider} with the given {@link InjectionCategory} 
-	 * which is used to collect .</p>
-	 *
-	 * @param injectionCategory
+	 * <p>Instantiates a new {@link ImplicitInjectionProvider} with the given {@link InjectionCategory}.</p>
 	 *
 	 * @since 1.2.4
 	 */
-	@SuppressWarnings("unchecked") //safe cast from a known generic type
-	protected ExplicitInjectionProvider(InjectionCategory injectionCategory) {
+	protected ImplicitInjectionProvider(InjectionCategory injectionCategory) {
 		
 		this.injectionCategory = injectionCategory;
-		
-		this.annotationType = (Class<T>)((ParameterizedType)
-			getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}
 	
 	/**
-	 * <p>Delegates to {@link #inject(Configuration, Annotation, Field)} for each field injection. Any 
+	 * <p>Delegates to {@link #inject(Configuration, Field)} for each field injection. Any 
 	 * {@link RuntimeException}s are caught and logged with {@link Log#e(String, String, Throwable)} 
 	 * with information field and context names.</p>
 	 * 
 	 * <p>Implementations that wish to alter the default behaviour may override this method and invoke 
-	 * {@link #inject(Configuration, Annotation, Field)} as they see fit.</p> 
+	 * {@link #inject(Configuration, Field)} as they see fit.</p> 
 	 * 
 	 * {@inheritDoc}
 	 */
@@ -90,7 +75,7 @@ public abstract class ExplicitInjectionProvider<T extends Annotation> implements
 			
 			try {
 				
-				FieldUtils.setValue(target, field, inject(config, field.getAnnotation(annotationType), field));
+				FieldUtils.setValue(target, field, inject(config, field));
 			} 
 			catch (Exception e) {
 				
@@ -111,13 +96,8 @@ public abstract class ExplicitInjectionProvider<T extends Annotation> implements
 	 * 			the annotation on the {@link Field} which explicitly identifies the dependency request 
 	 * 			or provides additional metadata required for the injection 
 	 * <br><br> 
-	 * @param field
-	 * 			the {@link Field} which requested a dependency served by this provider implementation; 
-	 * 			if the {@link Field} is inaccessible an attempt will be made to assert accessibility 
-	 * 			with {@link Field#setAccessible(true)}
-	 * <br><br> 
 	 * @return the requested dependency which will be subsequently injected into the field
 	 * @since 1.2.1
 	 */
-	protected abstract Object inject(Configuration config, T annotation, Field field);
+	protected abstract Object inject(Configuration config, Field field);
 }

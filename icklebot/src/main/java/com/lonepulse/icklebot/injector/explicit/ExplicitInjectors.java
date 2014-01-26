@@ -25,17 +25,17 @@ import android.app.Application;
 import android.util.Log;
 
 import com.lonepulse.icklebot.injector.InjectionException;
-import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.injector.InjectionProvider;
 
 /**
- * <p>Maintains a set of {@link Injector} <i>singletons</i> which are used 
+ * <p>Maintains a set of {@link InjectionProvider} <i>singletons</i> which are used 
  * by any {@link Activity} which implements the {@link Activity}.</p>
  * 
  * @version 1.1.1
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public enum ExplicitInjectors implements Injector {
+public enum ExplicitInjectors implements InjectionProvider {
 
 	/**
 	 * <p>This {@link Injector} is responsible for injecting the 
@@ -100,11 +100,11 @@ public enum ExplicitInjectors implements Injector {
 	
 	
 	/**
-	 * <p>The wrapped {@link Injector} <i>singleton</i>.</p>
+	 * <p>The wrapped {@link InjectionProvider} <i>singleton</i>.</p>
 	 * 
 	 * @since 1.0.0
 	 */
-	private Injector injector;
+	private InjectionProvider injector;
 	
 	/**
 	 * <p>A parameterized constructor which initializes the 
@@ -115,7 +115,7 @@ public enum ExplicitInjectors implements Injector {
 	 * <br><br>
 	 * @since 1.0.0
 	 */
-	private ExplicitInjectors(Injector injector) {
+	private ExplicitInjectors(InjectionProvider injector) {
 		
 		this.injector = injector;
 	}
@@ -128,11 +128,11 @@ public enum ExplicitInjectors implements Injector {
 	 * @since 1.0.0
 	 */
 	@Override
-	public void inject(Configuration config) throws InjectionException {
+	public void run(Configuration config) throws InjectionException {
 		
 		try {
 			
-			injector.inject(config);
+			injector.run(config);
 		}
 		catch(Exception e) {
 			
@@ -141,7 +141,7 @@ public enum ExplicitInjectors implements Injector {
 			stringBuilder.append("Injection using ");
 			stringBuilder.append(injector.getClass().getName());
 			stringBuilder.append(" failed on activity ");
-			stringBuilder.append(config.getContext().getClass().getName());
+			stringBuilder.append(config.getTarget().getClass().getName());
 			stringBuilder.append(". ");
 			
 			Log.e(getClass().getName(), stringBuilder.toString(), e);

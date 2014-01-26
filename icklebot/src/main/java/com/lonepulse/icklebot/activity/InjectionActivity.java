@@ -23,7 +23,7 @@ package com.lonepulse.icklebot.activity;
 import android.os.Bundle;
 
 import com.lonepulse.icklebot.injector.InjectionUtils;
-import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.injector.InjectionProvider;
 
 /**
  * <p>This profile offers dependency injection features.
@@ -36,13 +36,13 @@ abstract class InjectionActivity extends ThreadingActivity {
 
 	
 	/**
-	 * <p>The {@link Injector.Configuration} for this {@link IckleActivity}.</p>
+	 * <p>The {@link InjectionProvider.Configuration} for this {@link IckleActivity}.</p>
 	 * 
 	 * @since 1.1.0
 	 */
-	private final Injector.Configuration INJECTOR_CONFIGURATION;
+	private final InjectionProvider.Configuration INJECTOR_CONFIGURATION;
 	{
-		INJECTOR_CONFIGURATION = Injector.Configuration.newInstance(this);
+		INJECTOR_CONFIGURATION = InjectionProvider.Configuration.newInstance(this);
 	}
 	
 	

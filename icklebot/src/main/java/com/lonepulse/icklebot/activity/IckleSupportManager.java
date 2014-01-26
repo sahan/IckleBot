@@ -30,7 +30,7 @@ import android.os.Bundle;
 import com.lonepulse.icklebot.event.EventLinker;
 import com.lonepulse.icklebot.event.EventUtils;
 import com.lonepulse.icklebot.injector.InjectionUtils;
-import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.injector.InjectionProvider;
 import com.lonepulse.icklebot.state.StateUtils;
 import com.lonepulse.icklebot.task.TaskUtils;
 import com.lonepulse.icklebot.util.ContextUtils;
@@ -186,7 +186,7 @@ public interface IckleSupportManager extends Serializable {
 				built = true;
 			}
 			
-			if(injectionSupportEnabled) InjectionUtils.inject(Injector.Configuration.newInstance(context));
+			if(injectionSupportEnabled) InjectionUtils.inject(InjectionProvider.Configuration.newInstance(context));
 			if(eventSupportEnabled) EventUtils.link(EventLinker.Configuration.newInstance(context));
 			
 			return new IckleSupportManager() {

@@ -32,37 +32,37 @@ import android.util.Log;
 import android.view.animation.AnimationUtils;
 
 import com.lonepulse.icklebot.annotation.inject.InjectView;
-import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.injector.InjectionProvider;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
 import com.lonepulse.icklebot.util.ContextUtils;
 import com.lonepulse.icklebot.util.ReflectiveR;
 
 /**
- * <p>An implementation of {@link Injector} which is responsible 
+ * <p>An implementation of {@link InjectionProvider} which is responsible 
  * for injecting {@link InjectView}s.</p>
  * 
  * @version 1.1.0 
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-class ImplicitResourceInjector implements Injector {
+class ImplicitResourceInjector implements InjectionProvider {
 
 	
 	/**
 	 * <p>Maintains all the {@link InjectionProvider}s which are used for <b>implicit injection</b>. 
 	 */
-	private static final Map<InjectionCategory, Injector.InjectionProvider> IMPLICIT_INJECTION_STRATEGIES;
+	private static final Map<InjectionCategory, InjectionProvider.InjectionProvider> IMPLICIT_INJECTION_STRATEGIES;
 	
 	static
 	{
-		IMPLICIT_INJECTION_STRATEGIES = new HashMap<InjectionCategory, Injector.InjectionProvider>();
+		IMPLICIT_INJECTION_STRATEGIES = new HashMap<InjectionCategory, InjectionProvider.InjectionProvider>();
 		
-		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_VIEW, new Injector.InjectionProvider() {
+		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_VIEW, new InjectionProvider.InjectionProvider() {
 			
 			@Override
 			public void run(Configuration config) {
 			
-				Object context = config.getContext();
+				Object context = config.getTarget();
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_VIEW);
 				
 				for (Field field : fields) {
@@ -97,12 +97,12 @@ class ImplicitResourceInjector implements Injector {
 			}
 		});
 		
-		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_STRING, new Injector.InjectionProvider() {
+		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_STRING, new InjectionProvider.InjectionProvider() {
 			
 			@Override
 			public void run(Configuration config) {
 				
-				Context baseContext = ContextUtils.discover(config.getContext());
+				Context baseContext = ContextUtils.discover(config.getTarget());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_STRING);
 				
 				for (Field field : fields) {
@@ -112,7 +112,7 @@ class ImplicitResourceInjector implements Injector {
 						if(!field.isAccessible()) field.setAccessible(true);
 						
 						int id = ReflectiveR.string(baseContext, field.getName());
-						field.set(config.getContext(), baseContext.getString(id));
+						field.set(config.getTarget(), baseContext.getString(id));
 					}
 					catch (Exception e) {
 						
@@ -129,12 +129,12 @@ class ImplicitResourceInjector implements Injector {
 			}
 		});
 		
-		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_DRAWABLE, new Injector.InjectionProvider() {
+		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_DRAWABLE, new InjectionProvider.InjectionProvider() {
 			
 			@Override
 			public void run(Configuration config) {
 				
-				Context baseContext = ContextUtils.discover(config.getContext());
+				Context baseContext = ContextUtils.discover(config.getTarget());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_DRAWABLE);
 				
 				for (Field field : fields) {
@@ -144,7 +144,7 @@ class ImplicitResourceInjector implements Injector {
 						if(!field.isAccessible()) field.setAccessible(true);
 						
 						int id = ReflectiveR.drawable(baseContext, field.getName());
-						field.set(config.getContext(), baseContext.getResources().getDrawable(id));
+						field.set(config.getTarget(), baseContext.getResources().getDrawable(id));
 					}
 					catch (Exception e) {
 						
@@ -161,12 +161,12 @@ class ImplicitResourceInjector implements Injector {
 			}
 		});
 
-		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_COLOR, new Injector.InjectionProvider() {
+		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_COLOR, new InjectionProvider.InjectionProvider() {
 			
 			@Override
 			public void run(Configuration config) {
 				
-				Context baseContext = ContextUtils.discover(config.getContext());
+				Context baseContext = ContextUtils.discover(config.getTarget());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_COLOR);
 				
 				for (Field field : fields) {
@@ -176,7 +176,7 @@ class ImplicitResourceInjector implements Injector {
 						if(!field.isAccessible()) field.setAccessible(true);
 						
 						int id = ReflectiveR.color(baseContext, field.getName());
-						field.set(config.getContext(), baseContext.getResources().getColor(id));
+						field.set(config.getTarget(), baseContext.getResources().getColor(id));
 					}
 					catch (Exception e) {
 						
@@ -193,12 +193,12 @@ class ImplicitResourceInjector implements Injector {
 			}
 		});
 		
-		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_INTEGER, new Injector.InjectionProvider() {
+		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_INTEGER, new InjectionProvider.InjectionProvider() {
 			
 			@Override
 			public void run(Configuration config) {
 				
-				Context baseContext = ContextUtils.discover(config.getContext());
+				Context baseContext = ContextUtils.discover(config.getTarget());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_INTEGER);
 				
 				for (Field field : fields) {
@@ -208,7 +208,7 @@ class ImplicitResourceInjector implements Injector {
 						if(!field.isAccessible()) field.setAccessible(true);
 						
 						int id = ReflectiveR.integer(baseContext, field.getName());
-						field.set(config.getContext(), baseContext.getResources().getInteger(id));
+						field.set(config.getTarget(), baseContext.getResources().getInteger(id));
 					}
 					catch (Exception e) {
 						
@@ -225,12 +225,12 @@ class ImplicitResourceInjector implements Injector {
 			}
 		});
 		
-		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_DIMENSION, new Injector.InjectionProvider() {
+		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_DIMENSION, new InjectionProvider.InjectionProvider() {
 			
 			@Override
 			public void run(Configuration config) {
 				
-				Context baseContext = ContextUtils.discover(config.getContext());
+				Context baseContext = ContextUtils.discover(config.getTarget());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_DIMENSION);
 				
 				for (Field field : fields) {
@@ -240,7 +240,7 @@ class ImplicitResourceInjector implements Injector {
 						if(!field.isAccessible()) field.setAccessible(true);
 						
 						int id = ReflectiveR.dimen(baseContext, field.getName());
-						field.set(config.getContext(), baseContext.getResources().getDimension(id));
+						field.set(config.getTarget(), baseContext.getResources().getDimension(id));
 					}
 					catch (Exception e) {
 						
@@ -257,12 +257,12 @@ class ImplicitResourceInjector implements Injector {
 			}
 		});
 		
-		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_BOOLEAN, new Injector.InjectionProvider() {
+		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_BOOLEAN, new InjectionProvider.InjectionProvider() {
 			
 			@Override
 			public void run(Configuration config) {
 				
-				Context baseContext = ContextUtils.discover(config.getContext());
+				Context baseContext = ContextUtils.discover(config.getTarget());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_BOOLEAN);
 				
 				for (Field field : fields) {
@@ -272,7 +272,7 @@ class ImplicitResourceInjector implements Injector {
 						if(!field.isAccessible()) field.setAccessible(true);
 						
 						int id = ReflectiveR.bool(baseContext, field.getName());
-						field.set(config.getContext(), baseContext.getResources().getBoolean(id));
+						field.set(config.getTarget(), baseContext.getResources().getBoolean(id));
 					}
 					catch (Exception e) {
 						
@@ -289,12 +289,12 @@ class ImplicitResourceInjector implements Injector {
 			}
 		});
 		
-		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_ARRAY, new Injector.InjectionProvider() {
+		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_ARRAY, new InjectionProvider.InjectionProvider() {
 			
 			@Override
 			public void run(Configuration config) {
 				
-				Context baseContext = ContextUtils.discover(config.getContext());
+				Context baseContext = ContextUtils.discover(config.getTarget());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_ARRAY);
 				
 				for (Field field : fields) {
@@ -307,11 +307,11 @@ class ImplicitResourceInjector implements Injector {
 						
 						if(field.getType().equals(String[].class)) {
 							
-							field.set(config.getContext(), baseContext.getResources().getStringArray(id));
+							field.set(config.getTarget(), baseContext.getResources().getStringArray(id));
 						}
 						else if(field.getType().equals(int[].class) || field.getType().equals(Integer[].class)) {
 							
-							field.set(config.getContext(), baseContext.getResources().getIntArray(id));
+							field.set(config.getTarget(), baseContext.getResources().getIntArray(id));
 						}
 					}
 					catch (Exception e) {
@@ -329,12 +329,12 @@ class ImplicitResourceInjector implements Injector {
 			}
 		});
 		
-		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_ANIMATION, new Injector.InjectionProvider() {
+		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_ANIMATION, new InjectionProvider.InjectionProvider() {
 			
 			@Override
 			public void run(Configuration config) {
 				
-				Context baseContext = ContextUtils.discover(config.getContext());
+				Context baseContext = ContextUtils.discover(config.getTarget());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_ANIMATION);
 				
 				for (Field field : fields) {
@@ -344,7 +344,7 @@ class ImplicitResourceInjector implements Injector {
 						if(!field.isAccessible()) field.setAccessible(true);
 						
 						int id = ReflectiveR.anim(baseContext, field.getName());
-						field.set(config.getContext(), AnimationUtils.loadAnimation(baseContext, id));
+						field.set(config.getTarget(), AnimationUtils.loadAnimation(baseContext, id));
 					}
 					catch (Exception e) {
 						
@@ -361,12 +361,12 @@ class ImplicitResourceInjector implements Injector {
 			}
 		});
 		
-		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_ANIMATOR, new Injector.InjectionProvider() {
+		IMPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_ANIMATOR, new InjectionProvider.InjectionProvider() {
 			
 			@Override
 			public void run(Configuration config) {
 				
-				Context baseContext = ContextUtils.discover(config.getContext());
+				Context baseContext = ContextUtils.discover(config.getTarget());
 				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_ANIMATOR);
 				
 				for (Field field : fields) {
@@ -376,7 +376,7 @@ class ImplicitResourceInjector implements Injector {
 						if(!field.isAccessible()) field.setAccessible(true);
 						
 						int id = ReflectiveR.animator(baseContext, field.getName());
-						field.set(config.getContext(), AnimatorInflater.loadAnimator(baseContext, id));
+						field.set(config.getTarget(), AnimatorInflater.loadAnimator(baseContext, id));
 					}
 					catch (Exception e) {
 						
@@ -400,7 +400,7 @@ class ImplicitResourceInjector implements Injector {
 	@Override
 	public void inject(Configuration config) {
 
-		Collection<Injector.InjectionProvider> strategies = IMPLICIT_INJECTION_STRATEGIES.values();
+		Collection<InjectionProvider.InjectionProvider> strategies = IMPLICIT_INJECTION_STRATEGIES.values();
 		
 		for (InjectionProvider strategy : strategies) {
 			

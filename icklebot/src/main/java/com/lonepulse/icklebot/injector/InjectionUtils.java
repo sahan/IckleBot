@@ -58,14 +58,14 @@ public final class InjectionUtils {
 	 * 	<li>POJO Injection</li>
 	 * </ol>
 	 */
-	public static void inject(Injector.Configuration config) {
+	public static void inject(InjectionProvider.Configuration config) {
 
 		long millis = System.currentTimeMillis();
 
-		if(ProfileService.getInstance(config.getContext()).isActive(config.getContext(), Profile.INJECTION)) {
+		if(ProfileService.getInstance(config.getTarget()).isActive(config.getTarget(), Profile.INJECTION)) {
 		
-			ExplicitInjectors.CONFIGURATION.inject(config);
-			ExplicitInjectors.LAYOUT.inject(config);
+			ExplicitInjectors.CONFIGURATION.run(config);
+			ExplicitInjectors.LAYOUT.run(config);
 			
 			if(config.getInjectionMode().equals(InjectionMode.EXPLICIT)) {
 				
@@ -85,28 +85,28 @@ public final class InjectionUtils {
 	
 	/**
 	 * <p>Performs <b>Explicit Injection</b> using the set of 
-	 * {@link Injector}s at {@link ExplicitInjectors}.
+	 * {@link InjectionProvider}s at {@link ExplicitInjectors}.
 	 * 
 	 * @param config
-	 * 			the {@link Injector.Configuration} to be used
+	 * 			the {@link InjectionProvider.Configuration} to be used
 	 */
-	private static void injectExplicitly(Injector.Configuration config) {
+	private static void injectExplicitly(InjectionProvider.Configuration config) {
 		
-		ExplicitInjectors.APPLICATION.inject(config);
-		ExplicitInjectors.RESOURCES.inject(config);
-		ExplicitInjectors.SYSTEM_SERVICES.inject(config);
-		ExplicitInjectors.ICKLE_SERVICES.inject(config);
-		ExplicitInjectors.POJOS.inject(config);
+		ExplicitInjectors.APPLICATION.run(config);
+		ExplicitInjectors.RESOURCES.run(config);
+		ExplicitInjectors.SYSTEM_SERVICES.run(config);
+		ExplicitInjectors.ICKLE_SERVICES.run(config);
+		ExplicitInjectors.POJOS.run(config);
 	}
 	
 	/**
 	 * <p>Performs <b>Implicit Injection</b> using the set of 
-	 * {@link Injector}s at {@link TaskManagers}.
+	 * {@link InjectionProvider}s at {@link TaskManagers}.
 	 * 
 	 * @param config
-	 * 			the {@link Injector.Configuration} to be used
+	 * 			the {@link InjectionProvider.Configuration} to be used
 	 */
-	private static void injectImplicitly(Injector.Configuration config) {
+	private static void injectImplicitly(InjectionProvider.Configuration config) {
 		
 		ImplicitInjectors.APPLICATION.inject(config);		
 		ImplicitInjectors.RESOURCES.inject(config);

@@ -44,11 +44,11 @@ import com.lonepulse.icklebot.annotation.inject.InjectString;
 import com.lonepulse.icklebot.annotation.inject.InjectSystemService;
 import com.lonepulse.icklebot.annotation.inject.InjectView;
 import com.lonepulse.icklebot.annotation.inject.Layout;
-import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.injector.InjectionProvider;
 
 /**
  * <p>Identifies the <i>category</i> associated with a dependency request. This is used to resolve the 
- * {@link Injector.InjectionProvider} used for injection.</p>
+ * {@link InjectionProvider.InjectionProvider} used for injection.</p>
  * 
  * @version 1.4.0
  * <br><br>

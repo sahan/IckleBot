@@ -20,11 +20,11 @@ package com.lonepulse.icklebot;
  * #L%
  */
 
-import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.injector.InjectionProvider;
 
 /**
  * <p>A {@link RuntimeException} which signals an unexpected failure 
- * in an {@link Injector}. These are usually unrecoverable and as such 
+ * in an {@link InjectionProvider}. These are usually unrecoverable and as such 
  * must be notified to the user in a polite manner.</p> 
  * 
  * @version 1.0.0

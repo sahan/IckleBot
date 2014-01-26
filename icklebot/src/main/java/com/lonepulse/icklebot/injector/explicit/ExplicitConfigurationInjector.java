@@ -27,12 +27,12 @@ import android.view.WindowManager;
 import com.lonepulse.icklebot.annotation.inject.Fullscreen;
 import com.lonepulse.icklebot.annotation.inject.Title;
 import com.lonepulse.icklebot.annotation.inject.WindowFeatures;
-import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.injector.InjectionProvider;
 import com.lonepulse.icklebot.util.ContextUtils;
 import com.lonepulse.icklebot.util.TypeUtils;
 
 /**
- * <p>An implementation of {@link Injector} which is responsible 
+ * <p>An implementation of {@link InjectionProvider} which is responsible 
  * for injecting the <i>title</i> of an {@link Activity} using 
  * the {@link Configuration} metadata.</p> 
  * 
@@ -40,7 +40,7 @@ import com.lonepulse.icklebot.util.TypeUtils;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-class ExplicitConfigurationInjector implements Injector {
+class ExplicitConfigurationInjector implements InjectionProvider {
 
 	
 	/**
@@ -49,7 +49,7 @@ class ExplicitConfigurationInjector implements Injector {
 	@Override
 	public void run(Configuration config) {
 		
-		Activity injectionActivity = ContextUtils.asActivity(config.getContext());
+		Activity injectionActivity = ContextUtils.asActivity(config.getTarget());
 		
 		configureTitle(injectionActivity);
 		configureWindowFeatures(injectionActivity);

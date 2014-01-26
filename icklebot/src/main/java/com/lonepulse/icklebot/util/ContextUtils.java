@@ -31,6 +31,7 @@ import android.app.Application;
 import android.app.Fragment;
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
 
 /**
  * <p>A utility class which performs some common operations involved 
@@ -323,5 +324,28 @@ public final class ContextUtils {
 		
 		else 
 			return ContextUtils.asActivity(context).getApplication();
+	}
+	
+	/**
+	 * <p>Resolves the context of the given target object and find the {@link View} identified by the 
+	 * specified ID. The given target's context should be an {@link Activity}, {@link FragmentActivity}, 
+	 * {@link Fragment} or support {@link android.support.v4.app.Fragment}.</p>
+	 *
+	 * @param target
+	 * 			the target object from which the specified {@link View} is to be retrieved
+	 * <br><br>
+	 * @param id
+	 * 			the integer ID of the {@link View} to retrieve from the given target
+	 * <br><br> 			
+	 * @return the {@link View} on the given target identified by the ID, else {@code null} if the 
+	 * 		   {@link View} was not found
+	 * <br><br>
+	 * @since 1.2.1
+	 */
+	public static View findViewById(Object target, int id) {
+		
+		return isActivity(target)? asActivity(target).findViewById(id) : 
+			   isFragment(target)? asFragment(target).getView().findViewById(id) : 
+			   isSupportFragment(target)? asSupportFragment(target).getView().findViewById(id) : null;
 	}
 }

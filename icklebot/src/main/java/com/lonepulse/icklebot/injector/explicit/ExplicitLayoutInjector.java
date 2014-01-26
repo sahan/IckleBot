@@ -23,19 +23,17 @@ package com.lonepulse.icklebot.injector.explicit;
 import java.lang.reflect.Field;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.lonepulse.icklebot.annotation.inject.Layout;
-import com.lonepulse.icklebot.injector.InjectionException;
-import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.injector.InjectionProvider;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
 import com.lonepulse.icklebot.util.ContextUtils;
 import com.lonepulse.icklebot.util.TypeUtils;
 
 /**
- * <p>An implementation of {@link Injector} which is responsible 
+ * <p>An implementation of {@link InjectionProvider} which is responsible 
  * for injecting the <i>layout</i> of an {@link Activity} using 
  * the {@link Layout} metadata.</p> 
  * 
@@ -57,7 +55,7 @@ class ExplicitLayoutInjector extends ExplicitInjectionProvider<Layout> {
 	@Override
 	public void run(Configuration config) {
 		
-		Object context = config.getContext();
+		Object context = config.getTarget();
 		
 		if(ContextUtils.isActivity(context)) {
 			
@@ -73,21 +71,8 @@ class ExplicitLayoutInjector extends ExplicitInjectionProvider<Layout> {
 	}
 
 	@Override
-	protected void inject(Configuration config, Layout annotation, Field field) {
+	protected Object inject(Configuration config, Layout annotation, Field field) {
 		
-		try {
-			
-			Object context = config.getContext();
-			Context baseContext = ContextUtils.discover(context);
-			
-			int id = field.getAnnotation(Layout.class).value();
-			View layoutView = LayoutInflater.from(baseContext).inflate(id, null);
-		
-			field.set(context, layoutView);
-		} 
-		catch (Exception e) {
-			
-			throw new InjectionException(e);
-		}
+		return LayoutInflater.from(config.getContext()).inflate(annotation.value(), null);
 	}
 }

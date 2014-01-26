@@ -35,7 +35,7 @@ import com.lonepulse.icklebot.injector.DuplicateInjectionException;
  * <p>A utility class which performs some common operations involved 
  * in discovering <i>{@link Field} metadata</i>.</p> 
  * 
- * @version 1.0.0
+ * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
@@ -189,5 +189,37 @@ public final class FieldUtils {
 		}
 		
 		return expectedType.cast(valueObject);
+	}
+	
+	/**
+	 * <p>Sets the value of a {@link Field} <b>forcibly</b> by overriding the accessibility if required 
+	 * and translates any exceptions to a stacktract preserved {@link RuntimeException}.</p>
+	 *
+	 * @param target
+	 * 			the {@link Object} on which the {@link Field} occurs
+	 * <br><br> 
+	 * @param field
+	 * 			the {@link Field} to which a value is to be assigned
+	 * <br><br> 
+	 * @param value
+	 * 			the value to be assigned to the {@link Field} 
+	 * <br><br> 
+	 * @since 1.2.1
+	 */
+	public static <T> void setValue(Object target, Field field, T value) {
+		
+		try {
+		
+			if(field.isAccessible()) {
+				
+				field.setAccessible(true);
+			}
+			
+			field.set(target, value);
+		}
+		catch(Exception e) {
+		
+			new RuntimeException(e);
+		}
 	}
 }

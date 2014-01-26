@@ -27,7 +27,7 @@ import android.view.View;
 
 import com.lonepulse.icklebot.activity.IckleActivity;
 import com.lonepulse.icklebot.injector.InjectionUtils;
-import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.injector.InjectionProvider;
 
 /**
  * <p>This profile offers dependency injection features.
@@ -40,22 +40,22 @@ abstract class InjectionFragment extends ThreadingFragment {
 	
 	
 	/**
-	 * <p>The {@link Injector.Configuration} for this {@link IckleActivity}.</p>
+	 * <p>The {@link InjectionProvider.Configuration} for this {@link IckleActivity}.</p>
 	 * 
 	 * @since 1.1.0
 	 */
-	private Injector.Configuration INJECTOR_CONFIGURATION;
+	private InjectionProvider.Configuration INJECTOR_CONFIGURATION;
 
 	
 	/**
-	 * <p>Initializes the {@link Injector.Configuration} for this {@link Fragment}.
+	 * <p>Initializes the {@link InjectionProvider.Configuration} for this {@link Fragment}.
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
 		
-		INJECTOR_CONFIGURATION = Injector.Configuration.newInstance(this);
+		INJECTOR_CONFIGURATION = InjectionProvider.Configuration.newInstance(this);
 	}
 	
 	/**

@@ -21,47 +21,53 @@ package com.lonepulse.icklebot.injector.implicit;
  */
 
 import java.lang.reflect.Field;
-import java.util.Set;
-
-import android.util.Log;
 
 import com.lonepulse.icklebot.annotation.inject.Pojo;
-import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.injector.InjectionException;
+import com.lonepulse.icklebot.injector.InjectionProvider;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
 
 /**
- * <p>An implementation of {@link Injector} which is responsible 
+ * <p>An implementation of {@link InjectionProvider} which is responsible 
  * for injecting <i>POJOs</i> <b>implicitly</b>.</p>
  * 
  * @version 1.0.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-class ImplicitPojoInjector implements Injector {
+class ImplicitPojoInjector extends ImplicitInjectionProvider {
 
 	
-	/**
-	 * {@inheritDoc}
-	 */
+	public ImplicitPojoInjector() {
+	
+		super(InjectionCategory.POJO);
+	}
+	
 	@Override
-	public void inject(Configuration config) {
+	protected Object inject(Configuration config, Field field) {
 		
-		Set<Field> fields = config.getInjectionTargets(InjectionCategory.POJO);	
-		
-		for (Field field : fields) {
+		try {
 			
-			Pojo pojo = field.getType().getAnnotation(Pojo.class);
-		
-			try {
+			Class<?> fieldType = field.getType();
 			
-				if(!field.isAccessible()) field.setAccessible(true);
+			if(!fieldType.isAnnotationPresent(Pojo.class)) {
+					
+				StringBuilder builder = new StringBuilder()
+				.append("Pojo injection failed on ")
+				.append(field.getName())
+				.append(". Please provide the missing class attribute on @InjectPojo. ")
+				.append(" Or else specify the default implementation using @Pojo on ")
+				.append(fieldType.getName())
+				.append(". ");
 				
-				field.set(config.getContext(), pojo.value().newInstance());
-			} 
-			catch (Exception e) {
-				
-				Log.e(getClass().getName(), "Injection Failed!", e);
+				throw new InjectionException(builder.toString());
 			}
+				
+			return fieldType.getAnnotation(Pojo.class).value().newInstance();
+		}
+		catch(Exception e) {
+			
+			throw new InjectionException(e);
 		}
 	}
 }

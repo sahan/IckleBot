@@ -48,10 +48,10 @@ import com.lonepulse.icklebot.util.ContextUtils;
  * <br><br>
  * @author <a href="http://sahan.me">Lahiru Sahan Jayasinghe</a>
  */
-public interface Injector {
+public interface InjectionProvider {
 	
 	/**
-	 * <p>Retails information about the injection bindings for a single context. The information includes 
+	 * <p>Retails information about the injection bindings for a single target. The information includes 
 	 * the target fields grouped into their categories by {@link InjectionCategory}.</p>
 	 * 
 	 * @version 1.1.0
@@ -63,53 +63,55 @@ public interface Injector {
 	public static final class Configuration {
 		
 		private final InjectionMode injectionMode;
-		private final Object context;
+		private final Object target;
+		private final Context context;
 		private final Map<InjectionCategory, Set<Field>> injectionTargets;
 		
 		/**
-		 * <p>Creates a <b>new</b> {@link Injector.Configuration} for the given context. The supplied 
-		 * context should either be an {@link Activity}, {@link FragmentActivity}, {@link Fragment} or 
+		 * <p>Creates a <b>new</b> {@link InjectionProvider.Configuration} for the given target. The supplied 
+		 * target should either be an {@link Activity}, {@link FragmentActivity}, {@link Fragment} or 
 		 * {@link SupportFragment}.</p>
 		 * 
-		 * @param context
+		 * @param target
 		 * 			the {@link Context} which requested dependency injection
 		 * <br><br>
-		 * @return a new {@link Injector.Configuration} for the supplied context
+		 * @return a new {@link InjectionProvider.Configuration} for the supplied target
 		 * <br><br>
 		 * @throws IllegalArgumentException
-		 * 			if the supplied context is {@code null}
+		 * 			if the supplied target is {@code null}
 		 * <br><br>
 		 * @throws IllegalContextException
-		 * 			if the supplied context is not an {@link Activity}, {@link FragmentActivity}, 
+		 * 			if the supplied target is not an {@link Activity}, {@link FragmentActivity}, 
 		 * 			{@link Fragment} or {@link SupportFragment}
 		 * <br><br>
 		 * @since 1.1.0
 		 */
-		public static Configuration newInstance(Object context) {
+		public static Configuration newInstance(Object target) {
 			
-			if(context == null) {
+			if(target == null) {
 				
-				new IllegalArgumentException("A context must be supplied.");
+				new IllegalArgumentException("A target must be supplied.");
 			}
 
-			if(!ContextUtils.isActivity(context)
-				&& !ContextUtils.isFragment(context)
-				&& !ContextUtils.isSupportFragment(context)) { 
+			if(!ContextUtils.isActivity(target)
+				&& !ContextUtils.isFragment(target)
+				&& !ContextUtils.isSupportFragment(target)) { 
 				
 				Set<Class<?>> applicableContexts = new HashSet<Class<?>>();
 				applicableContexts.add(Activity.class);
 				applicableContexts.add(Fragment.class);
 				applicableContexts.add(android.support.v4.app.Fragment.class);
 				
-				throw new IllegalContextException(context, applicableContexts);
+				throw new IllegalContextException(target, applicableContexts);
 			}
 			
-			return new Configuration(context);
+			return new Configuration(target);
 		}
 
-		private Configuration(Object context) {
+		private Configuration(Object target) {
 			
-			this.context = context;
+			this.target = target;
+			this.context = ContextUtils.discover(target);
 			this.injectionTargets = new HashMap<InjectionCategory, Set<Field>>();
 			
 			for (InjectionCategory injectionCategory : InjectionCategory.values()) {
@@ -117,24 +119,24 @@ public interface Injector {
 				this.injectionTargets.put(injectionCategory, new HashSet<Field>());
 			}
 			
-			this.injectionMode = context.getClass()
+			this.injectionMode = target.getClass()
 				.isAnnotationPresent(InjectAll.class)? InjectionMode.IMPLICIT :InjectionMode.EXPLICIT;
 			
 			InjectionResolver injectionResolver = InjectionResolvers.get(this.injectionMode);
 			
-			Field[] fields = context.getClass().getDeclaredFields();
+			Field[] fields = target.getClass().getDeclaredFields();
 			
 			for (Field field : fields) {
 				
-				InjectionCategory injectionCategory = injectionResolver.resolve(context, field);
+				InjectionCategory injectionCategory = injectionResolver.resolve(target, field);
 				injectionTargets.get(injectionCategory).add(field);
 			}
 		}
 		
 		/**
-		 * <p>Retrieves the {@link InjectionMode} for this {@link Injector.Configuration}.</p>
+		 * <p>Retrieves the {@link InjectionMode} for this {@link InjectionProvider.Configuration}.</p>
 		 * 
-		 * @return the {@link InjectionMode} for this {@link Injector.Configuration}
+		 * @return the {@link InjectionMode} for this {@link InjectionProvider.Configuration}
 		 * <br><br>
 		 * @since 1.0.0
 		 */		
@@ -144,22 +146,34 @@ public interface Injector {
 		}
 
 		/**
-		 * <p>Retrieves the context for this {@link Injector.Configuration}.</p>
+		 * <p>Retrieves the target for this {@link InjectionProvider.Configuration}.</p>
 		 * 
-		 * @return the context for this {@link Injector.Configuration}
+		 * @return the target for this {@link InjectionProvider.Configuration}
 		 * <br><br>
 		 * @since 1.0.0
 		 */ 
-		public Object getContext() {
+		public Object getTarget() {
+			
+			return target;
+		}
+		
+		/**
+		 * <p>Retrieves the {@link Context} for this {@link InjectionProvider.Configuration}.</p>
+		 * 
+		 * @return the {@link Context} for this {@link InjectionProvider.Configuration}
+		 * <br><br>
+		 * @since 1.0.0
+		 */ 
+		public Context getContext() {
 			
 			return context;
 		}
 
 		/**
-		 * <p>Retrieves all the injection targets for this {@link Injector.Configuration} which is a 
-		 * map of {@link InjectionCategory} versus context {@link Field}s.</p>
+		 * <p>Retrieves all the injection targets for this {@link InjectionProvider.Configuration} which is a 
+		 * map of {@link InjectionCategory} versus target {@link Field}s.</p>
 		 * 
-		 * @return the injection targets for this {@link Injector.Configuration}
+		 * @return the injection targets for this {@link InjectionProvider.Configuration}
 		 * <br><br>
 		 * @since 1.0.0
 		 */ 
@@ -169,7 +183,7 @@ public interface Injector {
 		}
 		
 		/**
-		 * <p>Retrieves the targeted context {@link Field}s for the given {@link InjectionCategory}.</p> 
+		 * <p>Retrieves the targeted target {@link Field}s for the given {@link InjectionCategory}.</p> 
 		 * 
 		 * @param injectionCategory
 		 * 			the {@link InjectionCategory} which identifies the targeted fields to retrieve	
@@ -185,16 +199,16 @@ public interface Injector {
 	 }
 
 	/**
-	 * <p>Takes an {@link Injector.Configuration} and injects the dependent <i>resources</i> which this 
+	 * <p>Takes an {@link InjectionProvider.Configuration} and injects the dependent <i>resources</i> which this 
 	 * implementation is responsible for.</p>
 	 * 
 	 * @param config
-	 * 			the {@link Injector.Configuration} which supplies the information for injection
+	 * 			the {@link InjectionProvider.Configuration} which supplies the information for injection
 	 * <br><br>
 	 * @throws InjectionException
 	 * 			if injection failed on at least one of the dependent fields
 	 * <br><br>
 	 * @since 1.0.0
 	 */
-	void run(final Injector.Configuration config); 
+	void run(final InjectionProvider.Configuration config); 
 }

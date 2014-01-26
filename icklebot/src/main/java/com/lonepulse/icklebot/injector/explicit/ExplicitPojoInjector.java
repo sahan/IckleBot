@@ -25,11 +25,11 @@ import java.lang.reflect.Field;
 import com.lonepulse.icklebot.annotation.inject.InjectPojo;
 import com.lonepulse.icklebot.annotation.inject.Pojo;
 import com.lonepulse.icklebot.injector.InjectionException;
-import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.injector.InjectionProvider;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
 
 /**
- * <p>An implementation of {@link Injector} which is responsible 
+ * <p>An implementation of {@link InjectionProvider} which is responsible 
  * for injecting <i>POJOs</i>.</p>
  * 
  * @version 1.0.0
@@ -45,7 +45,7 @@ class ExplicitPojoInjector extends ExplicitInjectionProvider<InjectPojo> {
 	}
 	
 	@Override
-	protected void inject(Configuration config, InjectPojo annotation, Field field) {
+	protected Object inject(Configuration config, InjectPojo annotation, Field field) {
 	
 		try {
 		
@@ -74,7 +74,7 @@ class ExplicitPojoInjector extends ExplicitInjectionProvider<InjectPojo> {
 				pojoType = annotation.value();
 			}
 			
-			field.set(config.getContext(), pojoType.newInstance());
+			return pojoType.newInstance();
 		}
 		catch(Exception e) {
 			

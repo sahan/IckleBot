@@ -26,10 +26,10 @@ import android.util.Log;
 
 import com.lonepulse.icklebot.annotation.inject.InjectAll;
 import com.lonepulse.icklebot.injector.InjectionException;
-import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.injector.InjectionProvider;
 
 /**
- * <p>Maintains a set of {@link Injector} <i>singletons</i> which are used 
+ * <p>Maintains a set of {@link InjectionProvider} <i>singletons</i> which are used 
  * by any {@link Activity} which implements the {@link Activity} 
  * and has requested <b>Implicit Injection</b> via {@link InjectAll}.</p>
  * 
@@ -37,7 +37,7 @@ import com.lonepulse.icklebot.injector.Injector;
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-public enum ImplicitInjectors implements Injector {
+public enum ImplicitInjectors implements InjectionProvider {
 
 	/**
 	 * <p>This {@link Injector} is responsible for injecting 
@@ -87,11 +87,11 @@ public enum ImplicitInjectors implements Injector {
 	
 	
 	/**
-	 * <p>The wrapped {@link Injector} <i>singleton</i>.</pS>
+	 * <p>The wrapped {@link InjectionProvider} <i>singleton</i>.</pS>
 	 * 
 	 * @since 1.0.0
 	 */
-	private Injector implicitInjector;
+	private InjectionProvider implicitInjector;
 	
 	/**
 	 * <p>A parameterized constructor which initializes the 
@@ -102,14 +102,14 @@ public enum ImplicitInjectors implements Injector {
 	 * <br><br>
 	 * @since 1.0.0
 	 */
-	private ImplicitInjectors(Injector implicitInjector) {
+	private ImplicitInjectors(InjectionProvider implicitInjector) {
 		
 		this.implicitInjector = implicitInjector;
 	}
 
 	/**
 	 * <p>Delegate for invoking the {@link #implicitInjector}'s 
-	 * {@link Injector#inject(com.lonepulse.icklebot.injector.Injector.Configuration)} service.</p>
+	 * {@link InjectionProvider#inject(com.lonepulse.icklebot.injector.InjectionProvider.Configuration)} service.</p>
 	 * 
 	 * @since 1.0.0
 	 */
@@ -127,7 +127,7 @@ public enum ImplicitInjectors implements Injector {
 			stringBuilder.append("Injection using ");
 			stringBuilder.append(implicitInjector.getClass().getName());
 			stringBuilder.append(" failed on activity ");
-			stringBuilder.append(config.getContext().getClass().getName());
+			stringBuilder.append(config.getTarget().getClass().getName());
 			stringBuilder.append(". ");
 			
 			Log.e(getClass().getName(), stringBuilder.toString(), e);

@@ -22,92 +22,68 @@ package com.lonepulse.icklebot.injector.implicit;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.util.Set;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.lonepulse.icklebot.annotation.inject.IckleService;
 import com.lonepulse.icklebot.injector.InjectionException;
-import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.injector.InjectionProvider;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
-import com.lonepulse.icklebot.util.ContextUtils;
 
 /**
- * <p>An implementation of {@link Injector} which is responsible 
+ * <p>An implementation of {@link InjectionProvider} which is responsible 
  * for injecting <i>Ickle Services</i>.</p>
  * 
  * @version 1.1.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-class ImplicitIckleServiceInjector implements Injector {
+class ImplicitIckleServiceInjector extends ImplicitInjectionProvider {
 
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void inject(Configuration config) {
-
-		Set<Field> fields = config.getInjectionTargets(InjectionCategory.ICKLE_SERVICE);
-		Class<? extends Object> implementationClass = null;
+	protected ImplicitIckleServiceInjector() {
 		
-		for (Field field : fields) {
+		super(InjectionCategory.ICKLE_SERVICE);
+	}
+	
+	@Override
+	protected Object inject(Configuration config, Field field) {
+		
+		Class<?> contractClass = field.getType();
+		IckleService ickleService = contractClass.getAnnotation(IckleService.class);
+		Class<?> implementationClass = ickleService.value();
+		
+		try {
 			
 			try {
+			
+				return implementationClass.newInstance();
+			}
+			catch(InstantiationException ie) {
+			
+				Constructor<?> constructor = implementationClass.getConstructor(Context.class);
 				
-				if(!field.isAccessible()) field.setAccessible(true);
-				
-				Class<? extends Object> contractClass = field.getType();
-				IckleService ickleService = contractClass.getAnnotation(IckleService.class);
-				implementationClass = ickleService.value();
-				
-				try {
+				if(constructor == null) {
 					
-					field.set(config.getContext(), implementationClass.newInstance());
-				}
-				catch(InstantiationException ie) {
-					
-					Constructor<? extends Object> constructor = implementationClass.getConstructor(Context.class);
-					
-					if(constructor == null) {
-						
-						StringBuilder errorContext = new StringBuilder()
-						.append("The Ickle Service implementation ")
-						.append(implementationClass.getSimpleName())
-						.append(" must expose a public no-argument constructor ")
-						.append("or a constructor which takes only a single ")
-						.append(Context.class.getName())
-						.append(". ");
-						
-						throw new InjectionException(new InstantiationException(errorContext.toString()));
-					}
-					else {
-					
-						Context baseContext = ContextUtils.discover(config.getContext());
-						field.set(config.getContext(), constructor.newInstance(baseContext));
-					}
-				}
-			} 
-			catch (Exception e) {
-				
-				StringBuilder errorContext = new StringBuilder()
-				.append("Ickle Service injection failed");
-				
-				if(implementationClass != null) {
-					
-					errorContext.append(" for ")
-					.append(implementationClass.getName())
+					StringBuilder errorContext = new StringBuilder()
+					.append("The Ickle Service implementation ")
+					.append(implementationClass.getSimpleName())
+					.append(" must expose a public no-argument constructor ")
+					.append("or a constructor which takes only a single ")
+					.append(Context.class.getName())
 					.append(". ");
+					
+					throw new InjectionException(new InstantiationException(errorContext.toString()));
 				}
 				else {
-					
-					errorContext.append(". ");
-				}
 				
-				Log.e(getClass().getName(), errorContext.toString(), e);
+					return constructor.newInstance(config.getContext());
+				}
 			}
+		}
+		catch (Exception e) {
+			
+			throw (e instanceof InjectionException)? (InjectionException)e :new InjectionException(e);
 		}
 	}
 }

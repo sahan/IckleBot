@@ -29,12 +29,11 @@ import com.lonepulse.icklebot.annotation.inject.IckleService;
 import com.lonepulse.icklebot.annotation.inject.InjectIckleService;
 import com.lonepulse.icklebot.injector.IllegalValueTypeException;
 import com.lonepulse.icklebot.injector.InjectionException;
-import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.injector.InjectionProvider;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
-import com.lonepulse.icklebot.util.ContextUtils;
 
 /**
- * <p>An implementation of {@link Injector} which is responsible for injecting 
+ * <p>An implementation of {@link InjectionProvider} which is responsible for injecting 
  * <b>Ickle Services</b>.
  * 
  * @version 1.1.0
@@ -50,9 +49,9 @@ class ExplicitIckleServiceInjector extends ExplicitInjectionProvider<InjectIckle
 	}
 
 	@Override
-	protected void inject(Configuration config, InjectIckleService annotation, Field field) {
+	protected Object inject(Configuration config, InjectIckleService annotation, Field field) {
 		
-		Class<? extends Object> contractClass = field.getType();
+		Class<?> contractClass = field.getType();
 		
 		if(!contractClass.isAnnotationPresent(IckleService.class)) {
 			
@@ -66,17 +65,17 @@ class ExplicitIckleServiceInjector extends ExplicitInjectionProvider<InjectIckle
 		}
 		
 		IckleService ickleService = contractClass.getAnnotation(IckleService.class);
-		Class<? extends Object> implementationClass = ickleService.value();
+		Class<?> implementationClass = ickleService.value();
 		
 		try {
 			
 			try {
 			
-				field.set(config.getContext(), implementationClass.newInstance());
+				return implementationClass.newInstance();
 			}
 			catch(InstantiationException ie) {
 			
-				Constructor<? extends Object> constructor = implementationClass.getConstructor(Context.class);
+				Constructor<?> constructor = implementationClass.getConstructor(Context.class);
 				
 				if(constructor == null) {
 					
@@ -92,8 +91,7 @@ class ExplicitIckleServiceInjector extends ExplicitInjectionProvider<InjectIckle
 				}
 				else {
 				
-					Context baseContext = ContextUtils.discover(config.getContext());
-					field.set(config.getContext(), constructor.newInstance(baseContext));
+					return constructor.newInstance(config.getContext());
 				}
 			}
 		}

@@ -22,16 +22,12 @@ package com.lonepulse.icklebot.injector.explicit;
 
 import java.lang.reflect.Field;
 
-import android.content.Context;
-
 import com.lonepulse.icklebot.annotation.inject.InjectSystemService;
-import com.lonepulse.icklebot.injector.InjectionException;
-import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.injector.InjectionProvider;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
-import com.lonepulse.icklebot.util.ContextUtils;
 
 /**
- * <p>An implementation of {@link Injector} which is responsible 
+ * <p>An implementation of {@link InjectionProvider} which is responsible 
  * for injecting <i>POJOs</i>.</p>
  * 
  * @version 1.0.0
@@ -47,16 +43,8 @@ class ExplicitSystemServiceInjector extends ExplicitInjectionProvider<InjectSyst
 	}
 	
 	@Override
-	protected void inject(Configuration config, InjectSystemService annotation, Field field) {
-
-		try {
+	protected Object inject(Configuration config, InjectSystemService annotation, Field field) {
 		
-			Context baseContext = ContextUtils.discover(config.getContext());
-			field.set(config.getContext(), baseContext.getSystemService(annotation.value()));
-		}
-		catch(Exception e) {
-			
-			throw new InjectionException(e);
-		}
+		return config.getContext().getSystemService(annotation.value());
 	}
 }

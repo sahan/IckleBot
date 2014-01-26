@@ -20,15 +20,13 @@ package com.lonepulse.icklebot.injector.explicit;
  * #L%
  */
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.animation.AnimatorInflater;
-import android.content.Context;
-import android.util.Log;
+import android.content.res.Resources;
 import android.view.animation.AnimationUtils;
 
 import com.lonepulse.icklebot.annotation.inject.InjectAnimation;
@@ -41,12 +39,12 @@ import com.lonepulse.icklebot.annotation.inject.InjectDrawable;
 import com.lonepulse.icklebot.annotation.inject.InjectInteger;
 import com.lonepulse.icklebot.annotation.inject.InjectString;
 import com.lonepulse.icklebot.annotation.inject.InjectView;
-import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.injector.InjectionProvider;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
 import com.lonepulse.icklebot.util.ContextUtils;
 
 /**
- * <p>The {@link Injector} responsible for the <b>explicit injection</b>.</p>
+ * <p>The {@link InjectionProvider} responsible for the <b>explicit injection</b>.</p>
  * 
  * @version 1.2.0 
  * <br><br>
@@ -54,384 +52,119 @@ import com.lonepulse.icklebot.util.ContextUtils;
  * <br><br>
  * @author <a href="http://sahan.me">Lahiru Sahan Jayasinghe</a>
  */
-class ExplicitResourceInjector implements Injector {
+class ExplicitResourceInjector implements InjectionProvider {
 	
 
-	private static final Map<InjectionCategory, Injector.InjectionProvider> EXPLICIT_INJECTION_STRATEGIES;
-	
+	private static final List<ExplicitInjectionProvider<? extends Annotation>> EXPLICIT_INJECTION_STRATEGIES;
 	
 	static
 	{
-		EXPLICIT_INJECTION_STRATEGIES = new HashMap<InjectionCategory, Injector.InjectionProvider>();
+		EXPLICIT_INJECTION_STRATEGIES = new ArrayList<ExplicitInjectionProvider<? extends Annotation>>();
 		
-		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_VIEW, new Injector.InjectionProvider() {
+		EXPLICIT_INJECTION_STRATEGIES.add(new ExplicitInjectionProvider<InjectView>(InjectionCategory.RESOURCE_VIEW) {
 			
 			@Override
-			public void run(Injector.Configuration config) {
-
-				Object context = config.getContext();
-				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_VIEW);
-				
-				for (Field field : fields) {
-				
-					try {
-					
-						if(!field.isAccessible()) field.setAccessible(true);
-						
-						int id = field.getAnnotation(InjectView.class).value();
-						
-						if(ContextUtils.isActivity(context))
-							field.set(context, ContextUtils.asActivity(context).findViewById(id));
-						
-						else if(ContextUtils.isFragment(context)) 
-							field.set(context, ContextUtils.asFragment(context).getView().findViewById(id));
-						
-						else if(ContextUtils.isSupportFragment(context)) 
-							field.set(context, ContextUtils.asSupportFragment(context).getView().findViewById(id));
-					}
-					catch (Exception e) {
-						
-						StringBuilder errorContext = new StringBuilder()
-						.append("Explicit resource injection with ")
-						.append(InjectView.class.getSimpleName())
-						.append(" failed on ")
-						.append(context.getClass().getName())
-						.append(" for ")
-						.append(field.getName())
-						.append(". ");
-						
-						e.printStackTrace();
-						Log.e(getClass().getName(), errorContext.toString(), e);
-					}
-				}
+			protected Object inject(Configuration config, InjectView annotation, Field field) {
+			
+				Object target = config.getTarget();
+				return ContextUtils.findViewById(target, annotation.value()); 			
 			}
 		});
 		
-		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_STRING, new Injector.InjectionProvider() {
+		EXPLICIT_INJECTION_STRATEGIES.add(new ExplicitInjectionProvider<InjectString>(InjectionCategory.RESOURCE_STRING) {
 			
 			@Override
-			public void run(Injector.Configuration config) {
+			protected Object inject(Configuration config, InjectString annotation, Field field) {
 				
-				Context baseContext = ContextUtils.discover(config.getContext());
-				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_STRING);
-				
-				for (Field field : fields) {
-					
-					try {
-						
-						if(!field.isAccessible()) field.setAccessible(true);
-						
-						field.set(config.getContext(), 
-								baseContext.getString(field.getAnnotation(InjectString.class).value()));
-					}
-					catch (Exception e) {
-						
-						StringBuilder errorContext = new StringBuilder()
-						.append("Explicit resource injection with ")
-						.append(InjectString.class.getSimpleName())
-						.append(" failed on ")
-						.append(baseContext.getClass().getName())
-						.append(" for ")
-						.append(field.getName())
-						.append(". ");
-
-						Log.e(getClass().getName(), errorContext.toString(), e);
-					}
-				}
+				return config.getContext().getString(annotation.value());
 			}
 		});
 		
-		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_DRAWABLE, new Injector.InjectionProvider() {
+		EXPLICIT_INJECTION_STRATEGIES.add(new ExplicitInjectionProvider<InjectDrawable>(InjectionCategory.RESOURCE_DRAWABLE) {
 			
 			@Override
-			public void run(Injector.Configuration config) {
+			protected Object inject(Configuration config, InjectDrawable annotation, Field field) {
 				
-				Context baseContext = ContextUtils.discover(config.getContext());
-				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_DRAWABLE);
-				
-				for (Field field : fields) {
-					
-					try {
-						
-						if(!field.isAccessible()) field.setAccessible(true);
-						
-						int id = field.getAnnotation(InjectDrawable.class).value();
-						field.set(config.getContext(), baseContext.getResources().getDrawable(id));
-					}
-					catch (Exception e) {
-						
-						StringBuilder errorContext = new StringBuilder()
-						.append("Explicit resource injection with ")
-						.append(InjectDrawable.class.getSimpleName())
-						.append(" failed on ")
-						.append(baseContext.getClass().getName())
-						.append(" for ")
-						.append(field.getName())
-						.append(". ");
-						
-						Log.e(getClass().getName(), errorContext.toString(), e);
-					}
-				}
-			}
-		});
-
-		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_COLOR, new Injector.InjectionProvider() {
-			
-			@Override
-			public void run(Injector.Configuration config) {
-				
-				Context baseContext = ContextUtils.discover(config.getContext());
-				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_COLOR);
-				
-				for (Field field : fields) {
-					
-					try {
-						
-						if(!field.isAccessible()) field.setAccessible(true);
-						
-						int id = field.getAnnotation(InjectColor.class).value();
-						field.set(config.getContext(), baseContext.getResources().getColor(id));
-					}
-					catch (Exception e) {
-						
-						StringBuilder errorContext = new StringBuilder()
-						.append("Explicit resource injection with ")
-						.append(InjectColor.class.getSimpleName())
-						.append(" failed on ")
-						.append(baseContext.getClass().getName())
-						.append(" for ")
-						.append(field.getName())
-						.append(". ");
-						
-						Log.e(getClass().getName(), errorContext.toString(), e);
-					}
-				}
+				return config.getContext().getResources().getDrawable(annotation.value());
 			}
 		});
 		
-		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_INTEGER, new Injector.InjectionProvider() {
+		EXPLICIT_INJECTION_STRATEGIES.add(new ExplicitInjectionProvider<InjectColor>(InjectionCategory.RESOURCE_COLOR) {
 			
 			@Override
-			public void run(Injector.Configuration config) {
+			protected Object inject(Configuration config, InjectColor annotation, Field field) {
 				
-				Context baseContext = ContextUtils.discover(config.getContext());
-				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_INTEGER);
-				
-				for (Field field : fields) {
-					
-					try {
-						
-						if(!field.isAccessible()) field.setAccessible(true);
-						
-						int id = field.getAnnotation(InjectInteger.class).value();
-						field.set(config.getContext(), baseContext.getResources().getInteger(id));
-					}
-					catch (Exception e) {
-						
-						StringBuilder errorContext = new StringBuilder()
-						.append("Explicit resource injection with ")
-						.append(InjectInteger.class.getSimpleName())
-						.append(" failed on ")
-						.append(baseContext.getClass().getName())
-						.append(" for ")
-						.append(field.getName())
-						.append(". ");
-						
-						Log.e(getClass().getName(), errorContext.toString(), e);
-					}
-				}
+				return config.getContext().getResources().getColor(annotation.value());
 			}
 		});
 		
-		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_DIMENSION, new Injector.InjectionProvider() {
+		EXPLICIT_INJECTION_STRATEGIES.add(new ExplicitInjectionProvider<InjectInteger>(InjectionCategory.RESOURCE_INTEGER) {
 			
 			@Override
-			public void run(Injector.Configuration config) {
+			protected Object inject(Configuration config, InjectInteger annotation, Field field) {
 				
-				Context baseContext = ContextUtils.discover(config.getContext());
-				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_DIMENSION);
-				
-				for (Field field : fields) {
-					
-					try {
-						
-						if(!field.isAccessible()) field.setAccessible(true);
-						
-						int id = field.getAnnotation(InjectDimension.class).value();
-						field.set(config.getContext(), baseContext.getResources().getDimension(id));
-					}
-					catch (Exception e) {
-						
-						StringBuilder errorContext = new StringBuilder()
-						.append("Explicit resource injection with ")
-						.append(InjectDimension.class.getSimpleName())
-						.append(" failed on ")
-						.append(baseContext.getClass().getName())
-						.append(" for ")
-						.append(field.getName())
-						.append(". ");
-						
-						Log.e(getClass().getName(), errorContext.toString(), e);
-					}
-				}
+				return config.getContext().getResources().getInteger(annotation.value());
 			}
 		});
 		
-		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_BOOLEAN, new Injector.InjectionProvider() {
+		EXPLICIT_INJECTION_STRATEGIES.add(new ExplicitInjectionProvider<InjectDimension>(InjectionCategory.RESOURCE_DIMENSION) {
 			
 			@Override
-			public void run(Injector.Configuration config) {
+			protected Object inject(Configuration config, InjectDimension annotation, Field field) {
 				
-				Context baseContext = ContextUtils.discover(config.getContext());
-				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_BOOLEAN);
-				
-				for (Field field : fields) {
-					
-					try {
-						
-						if(!field.isAccessible()) field.setAccessible(true);
-						
-						int id = field.getAnnotation(InjectBoolean.class).value();
-						field.set(config.getContext(), baseContext.getResources().getBoolean(id));
-					}
-					catch (Exception e) {
-						
-						StringBuilder errorContext = new StringBuilder()
-						.append("Explicit resource injection with ")
-						.append(InjectBoolean.class.getSimpleName())
-						.append(" failed on ")
-						.append(baseContext.getClass().getName())
-						.append(" for ")
-						.append(field.getName())
-						.append(". ");
-						
-						Log.e(getClass().getName(), errorContext.toString(), e);
-					}
-				}
+				return config.getContext().getResources().getDimension(annotation.value());
 			}
 		});
 		
-		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_ARRAY, new Injector.InjectionProvider() {
+		EXPLICIT_INJECTION_STRATEGIES.add(new ExplicitInjectionProvider<InjectBoolean>(InjectionCategory.RESOURCE_BOOLEAN) {
 			
 			@Override
-			public void run(Injector.Configuration config) {
+			protected Object inject(Configuration config, InjectBoolean annotation, Field field) {
 				
-				Context baseContext = ContextUtils.discover(config.getContext());
-				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_ARRAY);
-				
-				for (Field field : fields) {
-					
-					try {
-						
-						if(!field.isAccessible()) field.setAccessible(true);
-						
-						int id = field.getAnnotation(InjectArray.class).value();
-						
-						if(field.getType().equals(String[].class)) {
-							
-							field.set(config.getContext(), baseContext.getResources().getStringArray(id));
-						}
-						else if(field.getType().equals(int[].class) || field.getType().equals(Integer[].class)) {
-							
-							field.set(config.getContext(), baseContext.getResources().getIntArray(id));
-						}
-					}
-					catch (Exception e) {
-						
-						StringBuilder errorContext = new StringBuilder()
-						.append("Explicit resource injection with ")
-						.append(InjectArray.class.getSimpleName())
-						.append(" failed on ")
-						.append(baseContext.getClass().getName())
-						.append(" for ")
-						.append(field.getName())
-						.append(". ");
-						
-						Log.e(getClass().getName(), errorContext.toString(), e);
-					}
-				}
+				return config.getContext().getResources().getBoolean(annotation.value());
 			}
 		});
 		
-		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_ANIMATION, new Injector.InjectionProvider() {
+		EXPLICIT_INJECTION_STRATEGIES.add(new ExplicitInjectionProvider<InjectArray>(InjectionCategory.RESOURCE_ARRAY) {
 			
 			@Override
-			public void run(Injector.Configuration config) {
+			protected Object inject(Configuration config, InjectArray annotation, Field field) {
 				
-				Context baseContext = ContextUtils.discover(config.getContext());
-				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_ANIMATION);
+				int id = annotation.value();
+				Class<?> type = field.getType();
+				Resources res = config.getContext().getResources();
 				
-				for (Field field : fields) {
-					
-					try {
-						
-						if(!field.isAccessible()) field.setAccessible(true);
-						
-						int id = field.getAnnotation(InjectAnimation.class).value();
-						field.set(config.getContext(), AnimationUtils.loadAnimation(baseContext, id));
-					}
-					catch (Exception e) {
-						
-						StringBuilder errorContext = new StringBuilder()
-						.append("Explicit resource injection with ")
-						.append(InjectAnimation.class.getSimpleName())
-						.append(" failed on ")
-						.append(baseContext.getClass().getName())
-						.append(" for ")
-						.append(field.getName())
-						.append(". ");
-						
-						Log.e(getClass().getName(), errorContext.toString(), e);
-					}
-				}
+				return type.equals(String[].class)? res.getStringArray(id) : 
+					   type.equals(int[].class) || type.equals(Integer[].class)? res.getIntArray(id) :null;  
 			}
 		});
 		
-		EXPLICIT_INJECTION_STRATEGIES.put(InjectionCategory.RESOURCE_ANIMATOR, new Injector.InjectionProvider() {
+		EXPLICIT_INJECTION_STRATEGIES.add(new ExplicitInjectionProvider<InjectAnimation>(InjectionCategory.RESOURCE_ANIMATION) {
 			
 			@Override
-			public void run(Injector.Configuration config) {
+			protected Object inject(Configuration config, InjectAnimation annotation, Field field) {
 				
-				Context baseContext = ContextUtils.discover(config.getContext());
-				Set<Field> fields = config.getInjectionTargets(InjectionCategory.RESOURCE_ANIMATOR);
+				return AnimationUtils.loadAnimation(config.getContext(), annotation.value());
+			}
+		});
+		
+		EXPLICIT_INJECTION_STRATEGIES.add(new ExplicitInjectionProvider<InjectAnimator>(InjectionCategory.RESOURCE_ANIMATOR) {
+			
+			@Override
+			protected Object inject(Configuration config, InjectAnimator annotation, Field field) {
 				
-				for (Field field : fields) {
-					
-					try {
-						
-						if(!field.isAccessible()) field.setAccessible(true);
-						
-						int id = field.getAnnotation(InjectAnimator.class).value();
-						field.set(config.getContext(), AnimatorInflater.loadAnimator(baseContext, id)); 
-					}
-					catch (Exception e) {
-						
-						StringBuilder errorContext = new StringBuilder()
-						.append("Explicit resource injection with ")
-						.append(InjectAnimator.class.getSimpleName())
-						.append(" failed on ")
-						.append(baseContext.getClass().getName())
-						.append(" for ")
-						.append(field.getName())
-						.append(". ");
-						
-						Log.e(getClass().getName(), errorContext.toString(), e);
-					}
-				}
+				return AnimatorInflater.loadAnimator(config.getContext(), annotation.value());
 			}
 		});
 	}
-	
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void inject(Configuration config) {
+	public void run(Configuration config) {
 		
-		Collection<Injector.InjectionProvider> strategies = EXPLICIT_INJECTION_STRATEGIES.values();
-		
-		for (InjectionProvider strategy : strategies) {
+		for (ExplicitInjectionProvider<?> strategy : EXPLICIT_INJECTION_STRATEGIES) {
 			
 			strategy.run(config);
 		}

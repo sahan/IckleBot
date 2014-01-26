@@ -24,10 +24,10 @@ import android.app.Activity;
 import android.util.Log;
 
 import com.lonepulse.icklebot.annotation.inject.InjectAll;
-import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.injector.InjectionProvider;
 
 /**
- * <p>Maintains a set of {@link Injector} <i>singletons</i> which are used 
+ * <p>Maintains a set of {@link InjectionProvider} <i>singletons</i> which are used 
  * by any {@link Activity} which implements the {@link Activity} 
  * and has requested <b>Implicit Injection</b> via {@link InjectAll}.</p>
  * 

@@ -21,49 +21,31 @@ package com.lonepulse.icklebot.injector.implicit;
  */
 
 import java.lang.reflect.Field;
-import java.util.Set;
 
 import android.app.Application;
-import android.content.Context;
-import android.util.Log;
 
-import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.injector.InjectionProvider;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
-import com.lonepulse.icklebot.util.ContextUtils;
 
 /**
- * <p>An implementation of {@link Injector} which is responsible 
+ * <p>An implementation of {@link InjectionProvider} which is responsible 
  * for injecting the {@link Application} instance being used.</p>
  * 
  * @version 1.0.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
-class ImplicitApplicationInjector implements Injector {
+class ImplicitApplicationInjector extends ImplicitInjectionProvider {
 
 	
-	/**
-	 * {@inheritDoc}
-	 */
+	protected ImplicitApplicationInjector() {
+		
+		super(InjectionCategory.APPLICATION);
+	}
+
 	@Override
-	public void inject(Configuration config) {
-	
-		Context baseContext = ContextUtils.discover(config.getContext());
+	protected Object inject(Configuration config, Field field) {
 		
-		Set<Field> fields = config.getInjectionTargets(InjectionCategory.APPLICATION);		
-		
-		for (Field field : fields) {
-		
-			try {
-				
-				if(!field.isAccessible()) field.setAccessible(true);
-				
-				field.set(config.getContext(), baseContext.getApplicationContext());
-			} 
-			catch (Exception e) {
-				
-				Log.e(getClass().getName(), "Injection Failed!", e);
-			}
-		}
+		return field.getType().cast(config.getContext().getApplicationContext());
 	}
 }

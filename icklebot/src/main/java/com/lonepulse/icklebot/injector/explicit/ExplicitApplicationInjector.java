@@ -25,13 +25,11 @@ import java.lang.reflect.Field;
 import android.app.Application;
 
 import com.lonepulse.icklebot.annotation.inject.InjectApplication;
-import com.lonepulse.icklebot.injector.InjectionException;
-import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.injector.InjectionProvider;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
-import com.lonepulse.icklebot.util.ContextUtils;
 
 /**
- * <p>An implementation of {@link Injector} which is responsible 
+ * <p>An implementation of {@link InjectionProvider} which is responsible 
  * for injecting the {@link Application} instance being used.</p>
  * 
  * @version 1.0.0
@@ -47,17 +45,8 @@ class ExplicitApplicationInjector extends ExplicitInjectionProvider<InjectApplic
 	}
 
 	@Override
-	protected void inject(Configuration config, InjectApplication annotation, Field field) {
+	protected Object inject(Configuration config, InjectApplication annotation, Field field) {
 		
-		Object context = config.getContext();
-		
-		try {
-			
-			field.set(context, field.getType().cast(ContextUtils.asActivity(context).getApplication()));
-		} 
-		catch (Exception e) {
-		
-			throw new InjectionException(e);
-		}
+		return field.getType().cast(config.getContext().getApplicationContext());
 	}
 }

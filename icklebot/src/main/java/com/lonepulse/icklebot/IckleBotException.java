@@ -20,11 +20,11 @@ package com.lonepulse.icklebot;
  * #L%
  */
 
-import com.lonepulse.icklebot.injector.Injector;
+import com.lonepulse.icklebot.injector.InjectionProvider;
 
 /**
  * <p>This {@link Exception} is thrown when injection processing fails 
- * in an {@link Injector}. These may be handled and an alternative 
+ * in an {@link InjectionProvider}. These may be handled and an alternative 
  * solution provided - in some cases the failure may be recoverable.</p> 
  * 
  * @version 1.0.0
