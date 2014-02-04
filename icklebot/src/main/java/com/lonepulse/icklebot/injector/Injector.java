@@ -20,23 +20,24 @@ package com.lonepulse.icklebot.injector;
  * #L%
  */
 
-import java.lang.reflect.Field;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 
+import com.lonepulse.icklebot.annotation.IckleInherited;
 import com.lonepulse.icklebot.annotation.inject.InjectAll;
 import com.lonepulse.icklebot.event.resolver.EventCategory;
 import com.lonepulse.icklebot.injector.resolver.InjectionCategory;
 import com.lonepulse.icklebot.injector.resolver.InjectionResolver;
 import com.lonepulse.icklebot.injector.resolver.InjectionResolvers;
 import com.lonepulse.icklebot.util.ContextUtils;
+
+import java.lang.reflect.Field;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>This is the common contract which all injectors must implement.</p>
@@ -145,18 +146,21 @@ public interface Injector {
 			
 			else 
 				this.injectionMode = InjectionMode.EXPLICIT;
-			
-			Field[] fields = context.getClass().getDeclaredFields();
 
 			InjectionResolver injectionResolver 
 				= (this.injectionMode == InjectionMode.EXPLICIT)? 
 					InjectionResolvers.EXPLICIT :InjectionResolvers.IMPLICIT;
-			
-			for (Field field : fields) {
-				
-				InjectionCategory injectionCategory = injectionResolver.resolve(context, field);
-				injectionTargets.get(injectionCategory).add(field);
-			}
+
+            Class<?> currentClass = context.getClass();
+
+            do {
+                Field[] fields = currentClass.getDeclaredFields();
+                for (Field field : fields) {
+                    InjectionCategory injectionCategory = injectionResolver.resolve(context, field);
+                    injectionTargets.get(injectionCategory).add(field);
+                }
+                currentClass = currentClass.getSuperclass();
+            } while(currentClass != null && currentClass.isAnnotationPresent(IckleInherited.class));
 		}
 		
 		/**

@@ -20,74 +20,78 @@ package com.lonepulse.icklebot.util;
  * #L%
  */
 
+import android.app.Activity;
+import android.util.Log;
+
+import com.lonepulse.icklebot.annotation.IckleInherited;
+import com.lonepulse.icklebot.injector.DuplicateInjectionException;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import android.app.Activity;
-import android.util.Log;
-
-import com.lonepulse.icklebot.injector.DuplicateInjectionException;
-
 /**
  * <p>A utility class which performs some common operations involved 
  * in discovering <i>{@link Field} metadata</i>.</p> 
- * 
+ *
  * @version 1.0.0
  * <br><br>
  * @author <a href="mailto:lahiru@lonepulse.com">Lahiru Sahan Jayasinghe</a>
  */
 public final class FieldUtils {
 
-	
+
 	/**
-	 * <p>Constructor visibility is restricted to prevent 
+	 * <p>Constructor visibility is restricted to prevent
 	 * nonsensical instantiation.</p>
 	 */
 	private FieldUtils() {
 	}
-	
-	
+
+
 	/**
-	 * <p>Takes the {@link Activity} and discovers which of 
-	 * it's instance {@link Field}s are annotated with the given 
+	 * <p>Takes the {@link Activity} and discovers which of
+	 * it's instance {@link Field}s are annotated with the given
 	 * annotation (represented by supplied {@link Class}).</p>
-	 * 
-	 * @param context	
+	 *
+	 * @param context
 	 * 			the context whose {@link Field}s are to be scanned
 	 * <br><br>
 	 * @param annotation
 	 * 			the {@link Class} of the {@link Annotation} to look for
 	 * <br><br>
-	 * @return all the {@link Field}s which are <i>annotated</i> with 
+	 * @return all the {@link Field}s which are <i>annotated</i> with
 	 * 			the passed {@link Annotation}
 	 * <br><br>
 	 * @since 1.0.0
 	 */
 	public static Set<Field> getAllFields(Object context,
 										  Class<? extends Annotation> annotation) {
-		
-		Set<Field> annotatedFields = new HashSet<Field>();
-		
-		Field[] fields = context.getClass().getDeclaredFields();
-		
-		for (Field field : fields) {
-			
-			if(field.isAnnotationPresent(annotation)) {
-				
-				annotatedFields.add(field);
-			}
-		}
-		
+
+        Set<Field> annotatedFields = new HashSet<Field>();
+
+        Class<?> currentClass = context.getClass();
+
+        do {
+            Field[] fields = currentClass.getDeclaredFields();
+            for (Field field : fields) {
+                if(field.isAnnotationPresent(annotation)) {
+
+                    annotatedFields.add(field);
+                }
+            }
+            currentClass = currentClass.getSuperclass();
+        } while(currentClass != null && currentClass.isAnnotationPresent(IckleInherited.class));
+
 		return annotatedFields;
 	}
-	
+
 	/**
-	 * <p>Takes the target {@link Activity} and finds the <b>only</b> 
+	 * <p>Takes the target {@link Activity} and finds the <b>only</b>
 	 * field which is marked for injection with the given annotation.</p>
-	 * 
+	 *
 	 * @param context
 	 * 			the context whose {@link Field}s are to be scanned
 	 * <br><br>
@@ -103,31 +107,31 @@ public final class FieldUtils {
 	 */
 	public static Field getUniqeField(Object context,
 									  Class<? extends Annotation> annotation) {
-		
+
 		Set<Field> fields = FieldUtils.getAllFields(context, annotation);
-		
+
 		if(fields.isEmpty()) {
-			
+
 			return null;
 		}
 		else if(fields.size() > 1) {
-			
+
 			throw new DuplicateInjectionException(context.getClass(), annotation);
 		}
-		
+
 		return new ArrayList<Field>(fields).get(0);
 	}
-	
+
 	/**
-	 * <p>Takes a {@link Field} and retrieves it's value on the 
-	 * given {@link Activity} if it's type is compatible with the 
+	 * <p>Takes a {@link Field} and retrieves it's value on the
+	 * given {@link Activity} if it's type is compatible with the
 	 * expected type referred to by the given {@link Class}.</p>
-	 * 
-	 * @param context	
+	 *
+	 * @param context
 	 * 			the context whose {@link Field}s are to be scanned
 	 * <br><br>
 	 * @param expectedType
-	 * 			the {@link Class} of the field type which is <i>legal</i> 
+	 * 			the {@link Class} of the field type which is <i>legal</i>
 	 * 			for the annotation
 	 * <br><br>
 	 * @param field
@@ -135,8 +139,8 @@ public final class FieldUtils {
 	 * <br><br>
 	 * @return the value of the {@link Field}
 	 * <br><br>
-	 * @throws ClassCastException 
-	 * 			when {@link Field} value cannot be cast to the 
+	 * @throws ClassCastException
+	 * 			when {@link Field} value cannot be cast to the
 	 * 			expected type
 	 * <br><br>
 	 * @since 1.0.0
@@ -144,50 +148,50 @@ public final class FieldUtils {
 	public static <T extends Object> T getFieldValue(Object context,
 													 Class<T> expectedType,
 													 Field field) {
-		
+
 		if (!field.isAccessible())  {
-			
+
 			StringBuilder msg = new StringBuilder();
 			msg.append("Forcing accessibility for field ");
 			msg.append(field.getName());
 			msg.append(" on ");
 			msg.append(context.getClass().getName());
 			msg.append(". ");
-			
+
 			Log.w(FieldUtils.class.getName(), msg.toString());
-			
+
 			field.setAccessible(true);
 		}
 
 		Object valueObject = null;
-		
+
 		try {
-			
+
 			valueObject = field.get(context);
-		} 
+		}
 		catch (IllegalArgumentException iae) {
-			
+
 			StringBuilder msg = new StringBuilder();
 			msg.append("Activity ");
 			msg.append(context.getClass().getName());
 			msg.append(" is incompatible with the field ");
 			msg.append(field.getName());
 			msg.append(". ");
-			
+
 			Log.e(FieldUtils.class.getName(), msg.toString(), iae);
-		} 
+		}
 		catch (IllegalAccessException iae) {
-			
+
 			StringBuilder msg = new StringBuilder();
 			msg.append("Field ");
 			msg.append(field.getName());
 			msg.append(" on ");
 			msg.append(context.getClass().getName());
 			msg.append(" cannot be accessed. ");
-			
+
 			Log.e(FieldUtils.class.getName(), msg.toString(), iae);
 		}
-		
+
 		return expectedType.cast(valueObject);
 	}
 }
